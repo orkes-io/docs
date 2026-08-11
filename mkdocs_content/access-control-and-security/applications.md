@@ -10,9 +10,6 @@ keywords: "Orkes Conductor, workflow orchestration, Managing Applications, role 
 
 Applications are non-human identities for programs that call Orkes Conductor: workers, services, CI/CD jobs, scripts, gateway services, and test harnesses. Each application can have access keys and resource permissions, so production automation does not depend on human user credentials.
 
-!!! tip "5-minute path"
-    Create one application per runtime responsibility, grant only the required roles and resource permissions, generate an access key, store the secret securely, and rotate keys on a schedule.
-
 Each application can have one or more key/secret pairs for SDK and API authentication. See [Authentication and Access Keys](/content/sdks/authentication) for client setup.
 
 ## Applications as service accounts
@@ -101,7 +98,7 @@ Manage applications programmatically with the [Applications API](/content/refere
 
 ## Example application setup
 
-<details>
+<details markdown="1">
 <summary>Example</summary>
 
 In this example, two programs have access to Orkes Conductor workflows. Both of these workflows rely on the same task, Task X, which is performed by a worker application, Worker X.

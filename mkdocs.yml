@@ -9,82 +9,189 @@ docs_dir: mkdocs_content
 site_dir: build
 
 nav:
-  - Home: index.md
-  - Quickstart:
-    - Run Your First Workflow: quickstarts.md
-    - Concepts: quickstarts/concepts.md
-    - Architecture: conductor-architecture.md
-    - Durable Execution: quickstarts/durable-execution.md
-    - JSON + Code Native: quickstarts/json-code-native.md
-    - Workflows: quickstarts/workflows.md
-    - Tasks: quickstarts/tasks.md
-    - Task Lifecycle: quickstarts/task-lifecycle.md
-    - Workers: quickstarts/workers.md
+  - Home:
+    - Home: index.md
+    - FAQ: faqs/general-faqs.md
+  - Getting Started:
+    - Overview: quickstart.md
+    - Connect to Conductor: quickstart/connect.md
+    - Build with Your AI Coding Agent: developer-guides/conductor-skills.md
+    - "Your First Workflow & Worker": quickstart/first-worker.md
+    - Your First Agent: quickstart/first-agent.md
+    - Bring Your Framework Agent: quickstart/framework-agents.md
+    - Run a Workflow from JSON: quickstarts.md
+    - Conductor for AI Assistants: devguide/ai/conductor-for-ai-assistants.md
     - Install and Set Up Orkes Conductor: get-orkes-conductor.md
-  - Developer Guides:
-    - Workflows:
-      - Workflows: developer-guides/workflows.md
-      - Write Workflows Using Code: developer-guides/write-workflows-using-code.md
-      - Import BPMN Files as Workflows: developer-guides/convert-bpmn-to-workflows.md
-      - Versioning Workflows: developer-guides/versioning-workflows.md
-      - Executing Workflows: developer-guides/running-workflows.md
-      - Scheduling Workflows: developer-guides/scheduling-workflows.md
-      - Sending Signals to Workflows: developer-guides/sending-signals-to-workflows.md
+  - Platform:
+    - Core Concepts: devguide/concepts.md
+    - Why Conductor: core-concepts.md
+    - Architecture: devguide/architecture.md
+    - Durable Execution: quickstart/durable-execution.md
+    - JSON + Code Native: quickstart/json-code-native.md
+    - Task Lifecycle: quickstart/task-lifecycle.md
+    - Deploy:
+      - Production Deployment: devguide/running/deploy.md
+      - From Source: devguide/running/source.md
+      - Hosted: devguide/running/hosted.md
+      - CI/CD Integration: developer-guides/integration-with-cicd.md
+      - Best Practices: devguide/bestpractices.md
+    - Configuration: documentation/configuration/appconf.md
+    - Observability:
+      - Server Metrics: developer-guides/metrics-and-observability.md
+      - Client Metrics: documentation/metrics/client.md
+    - Advanced:
+      - Extending Conductor: documentation/advanced/extend.md
+      - Isolation Groups: documentation/advanced/isolationgroups.md
+      - Archiving Workflows: documentation/advanced/archival-of-workflows.md
+      - External Payload Storage: documentation/advanced/externalpayloadstorage.md
+      - File Storage: documentation/advanced/file-storage.md
+      - Redis: documentation/advanced/redis.md
+      - PostgreSQL: documentation/advanced/postgresql.md
+      - OpenSearch: documentation/advanced/opensearch.md
+  - Workflows:
+    - Overview: devguide/workflows.md
+    - Workflows: quickstart/workflows.md
+    - Tasks: quickstart/tasks.md
+    - Workers: quickstart/workers.md
+    - Build:
+      - Creating Workflows: developer-guides/write-workflows-using-code.md
+      - Choosing Tasks: devguide/how-tos/Tasks/choosing-tasks.md
+      - Creating Tasks: devguide/how-tos/Tasks/creating-tasks.md
+      - Task Inputs: developer-guides/passing-inputs-to-task-in-conductor.md
       - Schema Validation: developer-guides/schema-validation.md
+      - Managing Workflow Versions: developer-guides/versioning-workflows.md
+      - Testing Workflows: developer-guides/unit-and-regression-tests.md
+    - Run:
+      - Starting Workflows: developer-guides/running-workflows.md
+      - Choosing a Trigger: devguide/how-tos/Workflows/choosing-a-trigger.md
+      - Scheduling Workflows: developer-guides/scheduling-workflows.md
+      - Handling Errors: error-handling.md
+    - Operate:
+      - Viewing Executions: devguide/how-tos/Workflows/viewing-workflow-executions.md
+      - Searching Workflows: devguide/how-tos/Workflows/searching-workflows.md
+      - Debugging Workflows: developer-guides/debugging-workflows.md
+      - Guide to Scaling Workers: developer-guides/scaling-workers.md
+    - Workflows:
+      - Import BPMN Files as Workflows: developer-guides/convert-bpmn-to-workflows.md
       - Using Secrets: developer-guides/secrets-in-conductor.md
       - Using Environment Variables: developer-guides/using-environment-variables.md
       - Idempotency: idempotency.md
-      - Handling Failures: error-handling.md
-      - Search / Query Executions: developer-guides/debugging-workflows.md
-      - Unit and Regression Tests: developer-guides/unit-and-regression-tests.md
-      - Metrics and Observability: developer-guides/metrics-and-observability.md
-      - CI/CD Best Practices: developer-guides/integration-with-cicd.md
     - Tasks:
-      - Tasks: developer-guides/tasks.md
-      - Parameter Mapping: developer-guides/passing-inputs-to-task-in-conductor.md
       - Masking Parameters: developer-guides/masking-parameters.md
-      - Task Input Templates: developer-guides/task-input-templates.md
       - Caching Task Outputs: faqs/task-cache-output.md
-      - Rate Limits: rate-limits.md
-      - Writing Workers for Conductor Workflows: developer-guides/using-workers.md
-      - Guide to Scaling Workers: developer-guides/scaling-workers.md
-      - "Routing Tasks (Task-to-domain)": developer-guides/task-to-domain.md
+      - Task Definition: developer-guides/rate-limits.md
+      - Task Domains: developer-guides/task-to-domain.md
+  - Agents:
+    - Overview: devguide/ai.md
+    - Agent Concepts: devguide/concepts/agents.md
+    - Durable Agents: ai-cookbook/durable-agents.md
+    - Why Conductor for Agents: ai-cookbook/why-conductor.md
+    - Build:
+      - Conductor Agents: devguide/ai/conductor-agents.md
+      - Framework Agent Bridges: devguide/ai/agent-framework-recipes.md
+      - Build Agentic Workflow Graph: ai-cookbook/first-ai-agent.md
+      - LLM Orchestration: developer-guides/ai-orchestration.md
+      - Durable Adaptive Graphs: ai-cookbook/dynamic-workflows.md
+      - "Multi-Agent Architecture": devguide/ai/multi-agent-architecture.md
+    - Operate:
+      - Agent Configuration: devguide/ai/agent-configuration.md
+      - Deploying Agents: devguide/ai/deploying-agents.md
+      - Scheduling Agents: devguide/ai/scheduling-agents.md
+      - Token Efficiency: ai-cookbook/token-efficiency.md
+    - Govern:
+      - Agent Guardrails: devguide/ai/agent-guardrails.md
+      - Agent Evals: devguide/ai/agent-evals.md
+      - "Human-in-the-Loop": ai-cookbook/human-in-the-loop.md
+      - Failure Semantics: ai-cookbook/failure-semantics.md
+    - Production Agent Architecture: ai-cookbook/production-agent-architecture.md
     - "HITL & AI Orchestration":
-      - Human Task Orchestration: developer-guides/orchestrating-human-tasks.md
-      - Using AI Models or LLMs: developer-guides/using-llms-in-your-orkes-conductor-workflows.md
-      - Using Vector Databases: developer-guides/using-vector-databases-in-your-orkes-conductor-workflows.md
+      - Human Task Orchestration: reference-docs/operators/human.md
+      - Using Vector Databases: reference-docs/ai-tasks.md
       - Creating AI Prompts: developer-guides/creating-and-managing-gen-ai-prompt-templates.md
+    - Agentic Workflow Engine: agentic-workflow-engine.md
+  - Design Patterns:
+    - Overview: devguide/cookbook.md
+    - Workflow Patterns:
+      - Microservice Orchestration: cookbook/microservice-orchestration.md
+      - Dynamic Parallelism: cookbook/dynamic-parallelism.md
+      - "Wait & Timer Patterns": cookbook/wait-and-timers.md
+      - "Task Timeouts & Retries": cookbook/task-timeouts-and-retries.md
+      - "Saga & Compensation": devguide/cookbook/saga-compensation.md
+      - "Polling a Long-Running Job": devguide/cookbook/http-poll-long-running-job.md
+      - Scheduled Workflows: cookbook/workflow-scheduling.md
+      - Dynamic Workflows in Code: cookbook/dynamic-workflows.md
+      - "Event-Driven Patterns": cookbook/event-driven.md
+    - Agentic Patterns:
+      - Overview: devguide/ai/cookbook.md
+      - RAG Agent: devguide/ai/cookbook/rag-agent.md
+      - MCP Tool Calling: devguide/ai/cookbook/mcp-tool-calling.md
+      - A2A Agent Orchestration: devguide/ai/cookbook/a2a-orchestration.md
+      - HITL Workflow: devguide/ai/cookbook/hitl-approval.md
+      - LLM with Guardrails: devguide/ai/cookbook/llm-guardrails.md
+      - Deep Research Agent: devguide/ai/cookbook/deep-research.md
+      - A2A Delegation: devguide/ai/cookbook/remote-a2a-delegation.md
+      - LLM Workflows: ai-cookbook/ai-llm-recipes.md
+      - AI Workflow Routing: devguide/cookbook/ai-workflow-routing.md
+    - Agent Recipes:
+      - Tool Calling Agent: devguide/ai/cookbook/agent-tool-calling.md
+      - Agent with Guardrails: devguide/ai/cookbook/agent-guardrails.md
+      - "Multi-Agent Handoff": devguide/ai/cookbook/agent-handoff.md
+      - Agent with Memory: devguide/ai/cookbook/agent-memory.md
+      - Agent with CLI Tools: devguide/ai/cookbook/agent-cli-tools.md
+      - Massively Parallel Agents: devguide/ai/cookbook/agent-scatter-gather.md
+      - Conductor Agent: devguide/ai/cookbook/reusable-conductor-agent.md
+      - LangChain Investigator: devguide/ai/cookbook/langchain-entitlement-investigator.md
+      - ADK Triage: devguide/ai/cookbook/google-adk-order-triage.md
+      - Specialist Review: devguide/ai/cookbook/parallel-specialist-review.md
+      - Agent Approval: devguide/ai/cookbook/human-approved-action.md
+      - Agent Cancellation: devguide/ai/cookbook/conductor-agent-cancellation.md
+    - Cookbook: category/tutorials.md
+    - Document Approval: _routes/templates/examples/document-approvals.md
+    - "Long-Running APIs": tutorials/long-running-apis.md
+    - PagerDuty Alert Workflow: _routes/templates/alerting/scanning-an-endpoint-and-triggering-pagerduty-alert.md
+    - Gateway tutorials:
+      - Gateway Tutorials: tutorials/mcp.md
+      - Build a Feedback API: tutorials/expose-feedback-workflow-as-api.md
+      - Build an MCP Ticket Service: tutorials/expose-ticket-service-using-mcp-gateway.md
+    - AI Tutorials:
+      - AI Tutorials: tutorials/ai.md
+      - "AI-Powered Translator": developer-guides/quickstart-ai-orchestration.md
+      - Agentic Interview App: tutorials/agentic-interview-app.md
+      - Document Classification: _routes/templates/document-classifier.md
+      - Question Answering Workflow: tutorials/question-answering-with-embeddings.md
+      - Document Retrieval Workflow: tutorials/document-retrieval-workflow.md
+      - Pull Request Summary Workflow: tutorials/pull-request-summary-workflow.md
+      - Text Indexing and Search Workflow: tutorials/text-indexing-search-workflow.md
+      - Loan Approval Workflow: _routes/templates/examples/finance.md
+      - Handling Fraud Disputes: _routes/templates/examples/fraud-dispute.md
+  - SDK:
+    - Overview: sdks/sdk-index.md
+    - Java: sdks/java.md
+    - Python: sdks/python.md
+    - Go: sdks/golang.md
+    - JavaScript: sdks/javascript.md
+    - "C#": sdks/csharp.md
+    - Ruby: sdks/ruby.md
+    - Rust: sdks/rust.md
+  - Integrations:
+    - Overview: devguide/integrations.md
+    - "Event-Driven Orchestration":
+      - Overview: devguide/how-tos/event-bus.md
+      - Publish Events: event-driven-orchestration/publish-events.md
+      - Consume and Route Events: event-driven-orchestration/receive-events.md
+      - Incoming Webhooks: developer-guides/webhook-integration.md
+      - Send Signals: developer-guides/sending-signals-to-workflows.md
+      - Workflow Status Events: conceptual-guides/workflow-and-task-status.md
+    - MCP Integration: devguide/ai/mcp-guide.md
+    - A2A Integration: devguide/ai/a2a-integration.md
     - "API Gateway & Service Orchestration":
       - "API Gateway & Service Orchestration": developer-guides/mcp-api-gateway.md
       - API Gateway: developer-guides/api-gateway.md
       - MCP Gateway: developer-guides/mcp-gateway.md
-      - Gateway Metrics: developer-guides/gateway-metrics.md
       - Remote Services: remote-services.md
-  - AI Agents:
-    - Agentic Workflow Engine: agentic-workflow-engine.md
-    - Why Conductor: why-conductor-for-ai-agents.md
-    - Build with AI Agents: conductor-skills.md
-    - Production Agents:
-      - Production Agents: ai-agents/production-agent-architecture.md
-      - Build Your First AI Agent: ai-agents/first-ai-agent.md
-      - Durable Agents: ai-agents/durable-agents.md
-      - "Human-in-the-Loop": ai-agents/human-in-the-loop.md
-      - Dynamic Workflows: ai-agents/dynamic-workflows.md
-      - Failure Semantics: ai-agents/failure-semantics.md
-      - Token Efficiency: ai-agents/token-efficiency.md
-    - AI Cookbook:
-      - AI Cookbook: ai-orchestration.md
-      - "AI & LLM Recipes": ai-orchestration/ai-llm-recipes.md
-      - LLM Orchestration: ai-orchestration/llm-orchestration.md
-  - Event Orchestration:
-    - "Event-Driven Orchestration": category/event-driven-orchestration.md
     - Receive Events:
-      - Receive Events: category/event-driven-orchestration/receive-events.md
-      - Webhooks: developer-guides/webhook-integration.md
       - Event Handlers: developer-guides/event-handler.md
     - Publish Events:
-      - Publish Events: category/event-driven-orchestration/publish-events.md
-      - Event Publishing Recipes: eventing.md
       - Change Data Capture: developer-guides/enabling-cdc-on-conductor-workflows.md
     - Message Broker Integrations:
       - Message Broker Integrations: category/integrations/message-broker.md
@@ -118,46 +225,145 @@ nav:
         - Get All Webhooks: reference-docs/api/webhooks/get-all-webhooks.md
         - Add Tags to Webhook: reference-docs/api/webhooks/add-tags-to-webhook.md
         - Get Tags from Webhook: reference-docs/api/webhooks/get-tags-from-webhook.md
+    - Integration Catalog:
+      - Integrations:
+        - Integrations: category/integrations.md
+        - AI / LLM:
+          - AI / LLM Integrations: category/integrations/ai-llm.md
+          - Ollama: integrations/ai-llm/ollama.md
+          - Azure Open AI: integrations/ai-llm/azure-open-ai.md
+          - Open AI: integrations/ai-llm/open-ai.md
+          - Perplexity: integrations/ai-llm/perplexity.md
+          - Grok: integrations/ai-llm/grok.md
+          - Cohere: integrations/ai-llm/cohere.md
+          - Mistral: integrations/ai-llm/mistral.md
+          - Anthropic Claude: integrations/ai-llm/anthropic-claude.md
+          - Google Vertex AI: integrations/ai-llm/vertex-ai.md
+          - Google Gemini AI: integrations/ai-llm/google-gemini-ai.md
+          - Hugging Face: integrations/ai-llm/hugging-face.md
+          - AWS Bedrock Anthropic: integrations/ai-llm/aws-bedrock-anthropic.md
+          - AWS Bedrock Cohere: integrations/ai-llm/aws-bedrock-cohere.md
+          - AWS Bedrock Titan: integrations/ai-llm/aws-bedrock-titan.md
+        - Vector Databases:
+          - Vector Databases Integrations: category/integrations/vector-databases.md
+          - Pinecone: integrations/vector-databases/pinecone.md
+          - Weaviate: integrations/vector-databases/weaviate.md
+          - Postgres Vector Database: integrations/vector-databases/postgres-vector-database.md
+          - Mongo Vector Database: integrations/vector-databases/mongo-vector-database.md
+        - Cloud Providers:
+          - Cloud Providers: category/integrations/cloud-provider.md
+          - AWS: integrations/cloud-provider/aws.md
+          - GCP: integrations/cloud-provider/gcp.md
+        - RDBMS:
+          - RDBMS Integrations: category/integrations/rdbms.md
+          - Relational Database: integrations/rdbms/relational-database.md
+        - Email/Git:
+          - Email/Git: category/integrations/email.md
+          - SendGrid Email: integrations/email/sendgrid.md
+          - Git Repository: integrations/git-repository.md
+        - Connected Apps:
+          - Connected Apps: category/integrations/connected-apps.md
+          - Productivity:
+            - Productivity: category/integrations/productivity.md
+            - Google Slides:
+              - Google Slides: integrations/google-slides.md
+              - Google Slides Operations Reference: integrations/google-slides-operations.md
+            - Google Sheets:
+              - Google Sheets: integrations/google-sheets.md
+              - Google Sheets Operations Reference: integrations/google-sheets-operations.md
+            - Notion:
+              - Notion: integrations/notion.md
+              - Notion Operations Reference: integrations/notion-operations.md
+            - Slack:
+              - Slack: integrations/slack.md
+              - Slack Operations Reference: integrations/slack-operations.md
+            - Google Calendar:
+              - Google Calendar: integrations/google-calendar.md
+              - Google Calendar Operations Reference: integrations/google-calendar-operations.md
+            - Google Drive:
+              - Google Drive: integrations/google-drive.md
+              - Google Drive Operations Reference: integrations/google-drive-operations.md
+            - Google Docs:
+              - Google Docs: integrations/google-docs.md
+              - Google Docs Operations Reference: integrations/google-docs-operations.md
+          - Project Management:
+            - Project Management: category/integrations/project-management.md
+            - Discourse:
+              - Discourse: integrations/discourse.md
+              - Discourse Operations Reference: integrations/discourse-operations.md
+            - Jira:
+              - Jira: integrations/jira.md
+              - Jira Operations Reference: integrations/jira-operations.md
+          - CMS:
+            - CMS: category/integrations/cms.md
+            - WordPress:
+              - WordPress: integrations/wordpress.md
+              - WordPress Operations Reference: integrations/wordpress-operations.md
+          - Cloud:
+            - Cloud: category/integrations/cloud.md
+            - Azure Storage:
+              - Azure Storage: integrations/azure-storage.md
+              - Azure Storage Operations Reference: integrations/azure-storage-operations.md
+            - Azure Functions:
+              - Azure Functions: integrations/azure-functions.md
+              - Azure Functions Operations Reference: integrations/azure-functions-operations.md
+            - Google Cloud Storage:
+              - Google Cloud Storage: integrations/google-cloud-storage.md
+              - Google Cloud Storage Operations Reference: integrations/google-cloud-storage-operations.md
+            - Google Cloud Functions:
+              - Google Cloud Functions: integrations/google-cloud-functions.md
+              - Google Cloud Functions Operations Reference: integrations/google-cloud-functions-operations.md
+            - AWS Lambda:
+              - AWS Lambda: integrations/aws-lambda.md
+              - AWS Lambda Operations Reference: integrations/aws-lambda-operations.md
+            - AWS S3:
+              - AWS S3: integrations/aws-s3.md
+              - AWS S3 Operations Reference: integrations/aws-s3-operations.md
+          - Source Control:
+            - Source Control: category/integrations/source-control.md
+            - GitHub:
+              - GitHub: integrations/github.md
+              - GitHub Operations Reference: integrations/github-operations.md
+          - Community:
+            - Community: category/integrations/community.md
+            - Common Room:
+              - Common Room: integrations/common-room.md
+              - Common Room Operations Reference: integrations/common-room-operations.md
+          - CRM:
+            - CRM: category/integrations/crm.md
+            - HubSpot:
+              - HubSpot: integrations/hubspot.md
+              - HubSpot Operations Reference: integrations/hubspot-operations.md
+          - Database:
+            - Database: category/integrations/database.md
+            - MySQL:
+              - MySQL: integrations/mysql.md
+              - MySQL Operations Reference: integrations/mysql-operations.md
+            - PostgreSQL:
+              - PostgreSQL: integrations/postgresql.md
+              - PostgreSQL Operations Reference: integrations/postgresql-operations.md
+            - Redis:
+              - Redis: integrations/redis.md
+              - Redis Operations Reference: integrations/redis-operations.md
+          - Payment:
+            - Payment: category/integrations/payment.md
+            - Stripe:
+              - Stripe: integrations/stripe.md
+              - Stripe Operations Reference: integrations/stripe-operations.md
   - Security:
     - Role Based Access Control: category/access-control-and-security.md
     - Managing Users and Groups: access-control-and-security/users-and-groups.md
     - "Application-Level Access": access-control-and-security/applications.md
     - "Tag-Based Access": access-control-and-security/tags.md
-  - Cookbook:
-    - Cookbook: category/tutorials.md
-    - Microservice orchestration: cookbook/microservice-orchestration.md
-    - Dynamic parallelism: cookbook/dynamic-parallelism.md
-    - Wait and timer patterns: cookbook/wait-and-timers.md
-    - Task timeouts and retries: cookbook/task-timeouts-and-retries.md
-    - Scheduled workflows: cookbook/workflow-scheduling.md
-    - Dynamic workflows as code: cookbook/dynamic-workflows.md
-    - Document Approval: _routes/templates/examples/document-approvals.md
-    - "Long-Running APIs": tutorials/long-running-apis.md
-    - PagerDuty Alert Workflow: _routes/templates/alerting/scanning-an-endpoint-and-triggering-pagerduty-alert.md
-    - Gateway tutorials:
-      - Gateway Tutorials: tutorials/mcp.md
-      - Build a Feedback API: tutorials/expose-feedback-workflow-as-api.md
-      - Build an MCP Ticket Service: tutorials/expose-ticket-service-using-mcp-gateway.md
-    - AI Tutorials:
-      - AI Tutorials: tutorials/ai.md
-      - "AI-Powered Translator": developer-guides/quickstart-ai-orchestration.md
-      - Agentic Interview App: tutorials/agentic-interview-app.md
-      - Document Classification: _routes/templates/document-classifier.md
-      - Question Answering Workflow: tutorials/question-answering-with-embeddings.md
-      - Document Retrieval Workflow: tutorials/document-retrieval-workflow.md
-      - Pull Request Summary Workflow: tutorials/pull-request-summary-workflow.md
-      - Text Indexing and Search Workflow: tutorials/text-indexing-search-workflow.md
-      - Loan Approval Workflow: _routes/templates/examples/finance.md
-      - Handling Fraud Disputes: _routes/templates/examples/fraud-dispute.md
-  - SDKs:
-    - SDKs: category/sdks.md
-    - Python: sdks/python.md
-    - Java: sdks/java.md
-    - JavaScript: sdks/javascript.md
-    - "C#": sdks/csharp.md
-    - Go: sdks/golang.md
-    - Ruby: sdks/ruby.md
-    - Rust: sdks/rust.md
+  - Learn:
+    - Overview: learn.md
+    - Contribute:
+      - Overview: resources/contribute.md
+      - Repositories: resources/contribute/repositories.md
+      - Contribution Guide: resources/contributing.md
+      - Best Practices: resources/contribute/best-practices.md
+      - Code of Conduct: resources/contribute/code-of-conduct.md
+    - Get Help: resources/contribute/get-help.md
   - Reference:
     - Task Reference:
       - Task Reference: category/reference-docs.md
@@ -166,26 +372,26 @@ nav:
         - Operators: category/reference-docs/operators.md
         - Switch: reference-docs/operators/switch.md
         - Do While: reference-docs/operators/do-while.md
-        - Wait: reference-docs/operators/wait.md
-        - Dynamic: reference-docs/operators/dynamic.md
-        - Set Variable: reference-docs/operators/set-variable.md
-        - Sub Workflow: reference-docs/operators/sub-workflow.md
-        - Terminate Workflow: reference-docs/operators/terminate-workflow.md
-        - Terminate: reference-docs/operators/terminate.md
         - Fork/Join: reference-docs/operators/fork-join.md
         - Dynamic Fork: reference-docs/operators/dynamic-fork.md
         - Join: reference-docs/operators/join.md
+        - Dynamic: reference-docs/operators/dynamic.md
+        - Sub Workflow: reference-docs/operators/sub-workflow.md
         - Start Workflow: reference-docs/operators/start-workflow.md
-        - Human: reference-docs/operators/human.md
-        - Get Workflow: reference-docs/operators/get-workflow.md
+        - Terminate Workflow: reference-docs/operators/terminate-workflow.md
+        - Terminate: reference-docs/operators/terminate.md
+        - Wait: reference-docs/operators/wait.md
         - Yield: reference-docs/operators/yield.md
+        - Set Variable: reference-docs/operators/set-variable.md
+        - Get Workflow: reference-docs/operators/get-workflow.md
+        - Exclusive Join: documentation/configuration/workflowdef/operators/exclusive-join-task.md
       - System Tasks:
         - System Tasks: category/reference-docs/system-tasks.md
-        - Event: reference-docs/system-tasks/event.md
-        - HTTP: reference-docs/system-tasks/http.md
+        - Publish events with the Event task: reference-docs/system-tasks/event.md
+        - HTTP Task: reference-docs/system-tasks/http.md
         - HTTP Poll: reference-docs/system-tasks/http-poll.md
-        - Inline: reference-docs/system-tasks/inline.md
-        - JSON JQ Transform: reference-docs/system-tasks/jq-transform.md
+        - Inline Task: reference-docs/system-tasks/inline.md
+        - JSON JQ Transform Task: reference-docs/system-tasks/jq-transform.md
         - Business Rule: reference-docs/system-tasks/business-rule.md
         - SendGrid: reference-docs/system-tasks/sendgrid.md
         - Wait For Webhook: reference-docs/system-tasks/wait-for-webhook.md
@@ -194,47 +400,26 @@ nav:
         - Get Signed JWT: reference-docs/system-tasks/get-signed-jwt.md
         - Update Task: reference-docs/system-tasks/update-task.md
         - gRPC: reference-docs/system-tasks/grpc.md
+        - Kafka Publish: documentation/configuration/workflowdef/systemtasks/kafka-publish-task.md
+        - "No-op": documentation/configuration/workflowdef/systemtasks/noop-task.md
+        - Pull Workflow Messages: documentation/configuration/workflowdef/systemtasks/pull-workflow-messages-task.md
         - Alerting Tasks:
           - Alerting Tasks: category/reference-docs/alerting-tasks.md
           - Opsgenie: reference-docs/system-tasks/opsgenie.md
           - Query Processor: reference-docs/system-tasks/query-processor.md
-        - AI Tasks:
-          - AI Tasks: category/reference-docs/ai-tasks.md
-          - LLM Text Complete: reference-docs/ai-tasks/llm-text-complete.md
-          - LLM Generate Embeddings: reference-docs/ai-tasks/llm-generate-embeddings.md
-          - LLM Store Embeddings: reference-docs/ai-tasks/llm-store-embeddings.md
-          - LLM Get Embeddings: reference-docs/ai-tasks/llm-get-embeddings.md
-          - LLM Index Document: reference-docs/ai-tasks/llm-index-document.md
-          - Get Document: reference-docs/ai-tasks/llm-get-document.md
-          - LLM Index Text: reference-docs/ai-tasks/llm-index-text.md
-          - LLM Search Index: reference-docs/ai-tasks/llm-search-index.md
-          - LLM Chat Complete: reference-docs/ai-tasks/llm-chat-complete.md
-          - Chunk Text: reference-docs/ai-tasks/chunk-text.md
-          - List Files: reference-docs/ai-tasks/list-files.md
-          - Parse Document: reference-docs/ai-tasks/parse-document.md
+    - Workflow Definition:
+      - Workflow Definition: documentation/configuration/workflowdef.md
+      - Schemas: documentation/configuration/schemas.md
     - API Reference:
       - API Reference: category/ref-docs/api.md
       - Authentication: sdks/authentication.md
+      - Conductor Agents API: documentation/api/agents.md
+      - Bulk API: documentation/api/bulk.md
+      - Files API: documentation/api/files.md
       - Metadata:
         - Metadata: reference-docs/api/metadata.md
-        - Create Task Definition: reference-docs/api/metadata/creating-task-definitions.md
-        - Update Task Definition: reference-docs/api/metadata/update-task-definitions.md
-        - Delete Task Definition: reference-docs/api/metadata/delete-task-definition.md
-        - Get All Task Definitions: reference-docs/api/metadata/get-all-task-definitions.md
-        - Get Task Definition: reference-docs/api/metadata/get-task-definition.md
-        - Create Workflow Definition: reference-docs/api/metadata/creating-workflow-definition.md
-        - Update Workflow Definition: reference-docs/api/metadata/update-workflow-definitions.md
-        - Import BPMN to Workflows: reference-docs/api/metadata/import-bpmn.md
-        - Delete Workflow Definition: reference-docs/api/metadata/delete-workflow-definition.md
-        - Get All Workflow Definitions: reference-docs/api/metadata/get-all-workflow-definitions.md
-        - Get Workflow Definition: reference-docs/api/metadata/get-workflow-definition.md
       - Tasks:
         - Tasks: reference-docs/api/task.md
-        - Get Task by ID: reference-docs/api/task/get-task.md
-        - Log Task Execution: reference-docs/api/task/add-task-log.md
-        - Update Task Status in Workflow: reference-docs/api/task/update-task-status-in-workflow.md
-        - Signal Running Task Asynchronously: reference-docs/api/task/signal-running-task-asynchronously.md
-        - Signal Running Task Synchronously: reference-docs/api/task/signal-running-task-synchronously.md
         - Task Queue:
           - Task Queue: reference-docs/api/task/task-queue.md
           - Get Poll Data for All Tasks: reference-docs/api/task/task-queue/get-poll-data-for-all-task.md
@@ -242,24 +427,7 @@ nav:
           - Get Task Queue Size for a Task Type: reference-docs/api/task/task-queue/get-task-queue-size-for-individual-tasks.md
       - Workflows:
         - Workflows: reference-docs/api/workflow.md
-        - Execute Workflow Asynchronously: reference-docs/api/workflow/start-workflow-execution.md
-        - Execute Workflow Synchronously: reference-docs/api/workflow/synchronous-workflow-execution.md
-        - Get Workflow by ID: reference-docs/api/workflow/get-workflow-by-id.md
-        - Get Workflows by Correlation ID: reference-docs/api/workflow/get-workflows-by-correlation-id.md
-        - Get Workflow Size: reference-docs/api/workflow/get-workflow-size.md
-        - Update Variable: reference-docs/api/workflow/update-variable.md
-        - Upgrade Workflow: reference-docs/api/workflow/upgrade-workflow.md
-        - Skip Task in Workflow Execution: reference-docs/api/workflow/skip-task-from-workflow.md
-        - Pause Workflow: reference-docs/api/workflow/pause-workflow.md
-        - Resume Workflow: reference-docs/api/workflow/resume-workflow.md
-        - Terminate Workflow API: reference-docs/api/workflow/terminate-workflow.md
-        - Rerun Workflow: reference-docs/api/workflow/rerun-workflow.md
-        - Restart Workflow: reference-docs/api/workflow/restart-workflow.md
-        - Retry Failed Workflow: reference-docs/api/workflow/retry-failed-workflow.md
-        - Delete Workflow Execution: reference-docs/api/workflow/delete-workflow.md
-        - Search Workflow Executions: reference-docs/api/workflow/search-workflow-executions.md
-        - Test Workflow: reference-docs/api/workflow/test-workflow.md
-        - Test Workflow Synchronously: reference-docs/api/workflow/test-workflow-synchronously.md
+        - Start Workflow API: reference-docs/api/workflow/start-workflow-execution.md
       - Users:
         - Users: reference-docs/api/users.md
         - Create/Update User: reference-docs/api/users/create-user.md
@@ -352,30 +520,6 @@ nav:
         - Delete Tags from an Environment Variable: reference-docs/api/environment-variables/delete-tags-from-environment-variable.md
       - Schedule:
         - Schedule: reference-docs/api/schedule.md
-        - Create Schedule: reference-docs/api/schedule/create-schedule.md
-        - Get Schedule: reference-docs/api/schedule/get-schedule.md
-        - Pause Schedule: reference-docs/api/schedule/pause-schedule.md
-        - Resume Schedule: reference-docs/api/schedule/resume-schedule.md
-        - Pause Schedules in Bulk: reference-docs/api/schedule/bulk-pause-schedule.md
-        - Resume Schedules in Bulk: reference-docs/api/schedule/bulk-resume-schedule.md
-        - Delete Schedule: reference-docs/api/schedule/delete-schedule.md
-        - Add Tags to a Schedule: reference-docs/api/schedule/add-tags-to-schedule.md
-        - Delete Tags from a Schedule: reference-docs/api/schedule/delete-tags-from-schedule.md
-        - Get Tags from a Schedule: reference-docs/api/schedule/get-tags-from-schedule.md
-        - Get Schedules by Tag: reference-docs/api/schedule/get-schedules-using-tags.md
-        - Search Schedule Definitions with Pagination: reference-docs/api/schedule/search-schedule-definitions.md
-        - Search Schedule Executions: reference-docs/api/schedule/search-schedule-executions.md
-        - Get All Schedules: reference-docs/api/schedule/get-all-schedules.md
-        - Get Next Few Schedules: reference-docs/api/schedule/get-next-few-schedules.md
-      - Webhook:
-        - Webhook: reference-docs/api/webhooks.md
-        - Create Webhook: reference-docs/api/webhooks/create-webhook.md
-        - Update Webhook: reference-docs/api/webhooks/update-webhook.md
-        - Get Webhook by ID: reference-docs/api/webhooks/get-webhook.md
-        - Delete Webhook: reference-docs/api/webhooks/delete-webhook.md
-        - Get All Webhooks: reference-docs/api/webhooks/get-all-webhooks.md
-        - Add Tags to Webhook: reference-docs/api/webhooks/add-tags-to-webhook.md
-        - Get Tags from Webhook: reference-docs/api/webhooks/get-tags-from-webhook.md
       - Human Task:
         - Human Task: reference-docs/api/human-tasks.md
         - Get Human Task: reference-docs/api/human-tasks/get-task.md
@@ -451,145 +595,7 @@ nav:
         - Get Tags from Prompt: reference-docs/api/prompts/get-tags-from-prompt.md
         - Delete Tags from Prompt: reference-docs/api/prompts/delete-tags-from-prompt.md
         - Test Prompts: reference-docs/api/prompts/test-prompts.md
-    - FAQs: category/faqs.md
     - Glossary: glossary.md
-  - Integrations:
-    - Integrations:
-      - Integrations: category/integrations.md
-      - AI / LLM:
-        - AI / LLM Integrations: category/integrations/ai-llm.md
-        - Ollama: integrations/ai-llm/ollama.md
-        - Azure Open AI: integrations/ai-llm/azure-open-ai.md
-        - Open AI: integrations/ai-llm/open-ai.md
-        - Perplexity: integrations/ai-llm/perplexity.md
-        - Grok: integrations/ai-llm/grok.md
-        - Cohere: integrations/ai-llm/cohere.md
-        - Mistral: integrations/ai-llm/mistral.md
-        - Anthropic Claude: integrations/ai-llm/anthropic-claude.md
-        - Google Vertex AI: integrations/ai-llm/vertex-ai.md
-        - Google Gemini AI: integrations/ai-llm/google-gemini-ai.md
-        - Hugging Face: integrations/ai-llm/hugging-face.md
-        - AWS Bedrock Anthropic: integrations/ai-llm/aws-bedrock-anthropic.md
-        - AWS Bedrock Cohere: integrations/ai-llm/aws-bedrock-cohere.md
-        - AWS Bedrock Titan: integrations/ai-llm/aws-bedrock-titan.md
-      - Vector Databases:
-        - Vector Databases Integrations: category/integrations/vector-databases.md
-        - Pinecone: integrations/vector-databases/pinecone.md
-        - Weaviate: integrations/vector-databases/weaviate.md
-        - Postgres Vector Database: integrations/vector-databases/postgres-vector-database.md
-        - Mongo Vector Database: integrations/vector-databases/mongo-vector-database.md
-      - Message Broker:
-        - Message Broker Integrations: category/integrations/message-broker.md
-        - Apache Kafka: integrations/message-broker/apache-kafka.md
-        - Confluent Kafka: integrations/message-broker/confluent-kafka.md
-        - Amazon MSK: integrations/message-broker/amazon-msk.md
-        - AMQP / RabbitMQ: integrations/message-broker/amqp.md
-        - NATS Messaging: integrations/message-broker/nats-messaging.md
-        - AWS SQS: integrations/message-broker/aws-sqs.md
-        - Azure Service Bus: integrations/message-broker/azure-service-bus.md
-        - GCP Pub/Sub: integrations/message-broker/gcp-pub-sub.md
-        - IBM MQ: integrations/message-broker/ibm-mq.md
-      - Cloud Providers:
-        - Cloud Providers: category/integrations/cloud-provider.md
-        - AWS: integrations/cloud-provider/aws.md
-        - GCP: integrations/cloud-provider/gcp.md
-      - RDBMS:
-        - RDBMS Integrations: category/integrations/rdbms.md
-        - Relational Database: integrations/rdbms/relational-database.md
-      - Email/Git:
-        - Email/Git: category/integrations/email.md
-        - SendGrid Email: integrations/email/sendgrid.md
-        - Git Repository: integrations/git-repository.md
-      - Connected Apps:
-        - Connected Apps: category/integrations/connected-apps.md
-        - Productivity:
-          - Productivity: category/integrations/productivity.md
-          - Google Slides:
-            - Google Slides: integrations/google-slides.md
-            - Google Slides Operations Reference: integrations/google-slides-operations.md
-          - Google Sheets:
-            - Google Sheets: integrations/google-sheets.md
-            - Google Sheets Operations Reference: integrations/google-sheets-operations.md
-          - Notion:
-            - Notion: integrations/notion.md
-            - Notion Operations Reference: integrations/notion-operations.md
-          - Slack:
-            - Slack: integrations/slack.md
-            - Slack Operations Reference: integrations/slack-operations.md
-          - Google Calendar:
-            - Google Calendar: integrations/google-calendar.md
-            - Google Calendar Operations Reference: integrations/google-calendar-operations.md
-          - Google Drive:
-            - Google Drive: integrations/google-drive.md
-            - Google Drive Operations Reference: integrations/google-drive-operations.md
-          - Google Docs:
-            - Google Docs: integrations/google-docs.md
-            - Google Docs Operations Reference: integrations/google-docs-operations.md
-        - Project Management:
-          - Project Management: category/integrations/project-management.md
-          - Discourse:
-            - Discourse: integrations/discourse.md
-            - Discourse Operations Reference: integrations/discourse-operations.md
-          - Jira:
-            - Jira: integrations/jira.md
-            - Jira Operations Reference: integrations/jira-operations.md
-        - CMS:
-          - CMS: category/integrations/cms.md
-          - WordPress:
-            - WordPress: integrations/wordpress.md
-            - WordPress Operations Reference: integrations/wordpress-operations.md
-        - Cloud:
-          - Cloud: category/integrations/cloud.md
-          - Azure Storage:
-            - Azure Storage: integrations/azure-storage.md
-            - Azure Storage Operations Reference: integrations/azure-storage-operations.md
-          - Azure Functions:
-            - Azure Functions: integrations/azure-functions.md
-            - Azure Functions Operations Reference: integrations/azure-functions-operations.md
-          - Google Cloud Storage:
-            - Google Cloud Storage: integrations/google-cloud-storage.md
-            - Google Cloud Storage Operations Reference: integrations/google-cloud-storage-operations.md
-          - Google Cloud Functions:
-            - Google Cloud Functions: integrations/google-cloud-functions.md
-            - Google Cloud Functions Operations Reference: integrations/google-cloud-functions-operations.md
-          - AWS Lambda:
-            - AWS Lambda: integrations/aws-lambda.md
-            - AWS Lambda Operations Reference: integrations/aws-lambda-operations.md
-          - AWS S3:
-            - AWS S3: integrations/aws-s3.md
-            - AWS S3 Operations Reference: integrations/aws-s3-operations.md
-        - Source Control:
-          - Source Control: category/integrations/source-control.md
-          - GitHub:
-            - GitHub: integrations/github.md
-            - GitHub Operations Reference: integrations/github-operations.md
-        - Community:
-          - Community: category/integrations/community.md
-          - Common Room:
-            - Common Room: integrations/common-room.md
-            - Common Room Operations Reference: integrations/common-room-operations.md
-        - CRM:
-          - CRM: category/integrations/crm.md
-          - HubSpot:
-            - HubSpot: integrations/hubspot.md
-            - HubSpot Operations Reference: integrations/hubspot-operations.md
-        - Database:
-          - Database: category/integrations/database.md
-          - MySQL:
-            - MySQL: integrations/mysql.md
-            - MySQL Operations Reference: integrations/mysql-operations.md
-          - PostgreSQL:
-            - PostgreSQL: integrations/postgresql.md
-            - PostgreSQL Operations Reference: integrations/postgresql-operations.md
-          - Redis:
-            - Redis: integrations/redis.md
-            - Redis Operations Reference: integrations/redis-operations.md
-        - Payment:
-          - Payment: category/integrations/payment.md
-          - Stripe:
-            - Stripe: integrations/stripe.md
-            - Stripe Operations Reference: integrations/stripe-operations.md
-  - Blog: https://orkes.io/blog/
 
 not_in_nav: |
   search.md
@@ -643,6 +649,118 @@ extra_css:
 
 plugins:
   - search
+  - redirects:
+      redirect_maps:
+        ai-cookbook/llm-orchestration.md: developer-guides/ai-orchestration.md
+        developer-guides/using-llms-in-your-orkes-conductor-workflows.md: developer-guides/ai-orchestration.md
+        conceptual-guides/architecture.md: core-concepts.md
+        quickstart/concepts.md: core-concepts.md
+        developer-guides/tasks-in-workflows.md: quickstart/tasks.md
+        developer-guides/using-workers.md: quickstart/workers.md
+        developer-guides/workflows.md: quickstart/workflows.md
+        event-driven-orchestration.md: cookbook/event-driven.md
+        developer-guides/task-input-templates.md: developer-guides/passing-inputs-to-task-in-conductor.md
+        developer-guides/workflow-version-behavior-on-execution.md: developer-guides/versioning-workflows.md
+        developer-guides/workflow-versioning.md: developer-guides/versioning-workflows.md
+        reference-docs/api/metadata/creating-task-definitions.md: reference-docs/api/metadata.md
+        reference-docs/api/metadata/creating-workflow-definition.md: reference-docs/api/metadata.md
+        reference-docs/api/metadata/delete-task-definition.md: reference-docs/api/metadata.md
+        reference-docs/api/metadata/delete-workflow-definition.md: reference-docs/api/metadata.md
+        reference-docs/api/metadata/get-all-task-definitions.md: reference-docs/api/metadata.md
+        reference-docs/api/metadata/get-all-workflow-definitions.md: reference-docs/api/metadata.md
+        reference-docs/api/metadata/get-task-definition.md: reference-docs/api/metadata.md
+        reference-docs/api/metadata/get-workflow-definition.md: reference-docs/api/metadata.md
+        reference-docs/api/metadata/import-bpmn.md: reference-docs/api/metadata.md
+        reference-docs/api/metadata/update-task-definitions.md: reference-docs/api/metadata.md
+        reference-docs/api/metadata/update-workflow-definitions.md: reference-docs/api/metadata.md
+        reference-docs/api/schedule/add-tags-to-schedule.md: reference-docs/api/schedule.md
+        reference-docs/api/schedule/create-schedule.md: reference-docs/api/schedule.md
+        reference-docs/api/schedule/delete-schedule.md: reference-docs/api/schedule.md
+        reference-docs/api/schedule/delete-tags-from-schedule.md: reference-docs/api/schedule.md
+        reference-docs/api/schedule/get-all-schedules.md: reference-docs/api/schedule.md
+        reference-docs/api/schedule/get-nex-few-schedules.md: reference-docs/api/schedule.md
+        reference-docs/api/schedule/get-schedule.md: reference-docs/api/schedule.md
+        reference-docs/api/schedule/get-schedules-using-tags.md: reference-docs/api/schedule.md
+        reference-docs/api/schedule/get-tags-from-schedule.md: reference-docs/api/schedule.md
+        reference-docs/api/schedule/pause-schedule.md: reference-docs/api/schedule.md
+        reference-docs/api/schedule/pause-schedule-bulk.md: reference-docs/api/schedule.md
+        reference-docs/api/schedule/resume-schedule.md: reference-docs/api/schedule.md
+        reference-docs/api/schedule/resume-schedule-bulk.md: reference-docs/api/schedule.md
+        reference-docs/api/schedule/search-schedule-definitions.md: reference-docs/api/schedule.md
+        reference-docs/api/schedule/search-schedule-executions.md: reference-docs/api/schedule.md
+        reference-docs/api/task/add-task-log.md: reference-docs/api/task.md
+        reference-docs/api/task/get-task.md: reference-docs/api/task.md
+        reference-docs/api/task/signal-running-task-asynchronously.md: reference-docs/api/task.md
+        reference-docs/api/task/signal-running-task-synchronously.md: reference-docs/api/task.md
+        reference-docs/api/task/update-task-status-in-workflow.md: reference-docs/api/task.md
+        reference-docs/api/workflow/delete-workflow.md: reference-docs/api/workflow.md
+        reference-docs/api/workflow/get-workflow-by-id.md: reference-docs/api/workflow.md
+        reference-docs/api/workflow/get-workflow-size.md: reference-docs/api/workflow.md
+        reference-docs/api/workflow/get-workflows-by-correlation-id.md: reference-docs/api/workflow.md
+        reference-docs/api/workflow/pause-workflow.md: reference-docs/api/workflow.md
+        reference-docs/api/workflow/rerun-workflow.md: reference-docs/api/workflow.md
+        reference-docs/api/workflow/restart-workflow.md: reference-docs/api/workflow.md
+        reference-docs/api/workflow/resume-workflow.md: reference-docs/api/workflow.md
+        reference-docs/api/workflow/retry-failed-workflow.md: reference-docs/api/workflow.md
+        reference-docs/api/workflow/search-workflow-executions.md: reference-docs/api/workflow.md
+        reference-docs/api/workflow/skip-task-from-workflow.md: reference-docs/api/workflow.md
+        reference-docs/api/workflow/synchronous-workflow-execution.md: reference-docs/api/workflow.md
+        reference-docs/api/workflow/terminate-workflow.md: reference-docs/api/workflow.md
+        reference-docs/api/workflow/test-workflow.md: reference-docs/api/workflow.md
+        reference-docs/api/workflow/test-workflow-synchronously.md: reference-docs/api/workflow.md
+        reference-docs/api/workflow/update-variable.md: reference-docs/api/workflow.md
+        reference-docs/api/workflow/upgrade-workflow.md: reference-docs/api/workflow.md
+        developer-guides/using-vector-databases-in-your-orkes-conductor-workflows.md: reference-docs/ai-tasks.md
+        reference-docs/ai-tasks/chunk-text.md: reference-docs/ai-tasks.md
+        reference-docs/ai-tasks/list-files.md: reference-docs/ai-tasks.md
+        reference-docs/ai-tasks/llm-chat-complete.md: reference-docs/ai-tasks.md
+        reference-docs/ai-tasks/llm-generate-embeddings.md: reference-docs/ai-tasks.md
+        reference-docs/ai-tasks/llm-get-document.md: reference-docs/ai-tasks.md
+        reference-docs/ai-tasks/llm-get-embeddings.md: reference-docs/ai-tasks.md
+        reference-docs/ai-tasks/llm-index-document.md: reference-docs/ai-tasks.md
+        reference-docs/ai-tasks/llm-index-text.md: reference-docs/ai-tasks.md
+        reference-docs/ai-tasks/llm-search-index.md: reference-docs/ai-tasks.md
+        reference-docs/ai-tasks/llm-store-embeddings.md: reference-docs/ai-tasks.md
+        reference-docs/ai-tasks/llm-text-complete.md: reference-docs/ai-tasks.md
+        reference-docs/ai-tasks/parse-document.md: reference-docs/ai-tasks.md
+        developer-guides/orchestrating-human-tasks.md: reference-docs/operators/human.md
+        quickstart/first-workflow.md: quickstarts.md
+        ai-orchestration.md: developer-guides/ai-orchestration.md
+        conductor-architecture.md: core-concepts.md
+        conductor-skills.md: developer-guides/conductor-skills.md
+        developer-guides/error-handling.md: error-handling.md
+        rate-limits.md: developer-guides/rate-limits.md
+        why-conductor-for-ai-agents.md: ai-cookbook/why-conductor.md
+        ai-agents/durable-agents.md: ai-cookbook/production-agent-architecture.md
+        ai-agents/dynamic-workflows.md: ai-cookbook/dynamic-workflows.md
+        ai-agents/failure-semantics.md: ai-cookbook/failure-semantics.md
+        ai-agents/first-ai-agent.md: ai-cookbook/first-ai-agent.md
+        ai-agents/human-in-the-loop.md: ai-cookbook/human-in-the-loop.md
+        ai-agents/production-agent-architecture.md: ai-cookbook/production-agent-architecture.md
+        ai-agents/token-efficiency.md: ai-cookbook/token-efficiency.md
+        ai-orchestration/ai-llm-recipes.md: devguide/ai/cookbook.md
+        ai-orchestration/llm-orchestration.md: developer-guides/ai-orchestration.md
+        category/event-driven-orchestration.md: cookbook/event-driven.md
+        category/faqs.md: faqs/general-faqs.md
+        category/sdks.md: sdks/sdk-index.md
+        category/event-driven-orchestration/publish-events.md: event-driven-orchestration/publish-events.md
+        category/event-driven-orchestration/receive-events.md: event-driven-orchestration/receive-events.md
+        category/reference-docs/ai-tasks.md: reference-docs/ai-tasks.md
+        developer-guides/task-and-workflow-status-in-conductor.md: conceptual-guides/workflow-and-task-status.md
+        developer-guides/tasks.md: quickstart/tasks.md
+        faqs/directed-acyclic-graph.md: conceptual-guides/directed-acyclic-graph.md
+        faqs/workflow-versioning.md: developer-guides/versioning-workflows.md
+        quickstarts/concepts.md: core-concepts.md
+        quickstarts/durable-execution.md: quickstart/durable-execution.md
+        quickstarts/json-code-native.md: quickstart/json-code-native.md
+        quickstarts/task-lifecycle.md: quickstart/task-lifecycle.md
+        quickstarts/tasks.md: quickstart/tasks.md
+        quickstarts/workers.md: quickstart/workers.md
+        quickstarts/workflows.md: quickstart/workflows.md
+        reference-docs/api/schedule/bulk-pause-schedule.md: reference-docs/api/schedule.md
+        reference-docs/api/schedule/bulk-resume-schedule.md: reference-docs/api/schedule.md
+        reference-docs/api/schedule/get-next-few-schedules.md: reference-docs/api/schedule.md
+  - macros
 
 markdown_extensions:
   - admonition
@@ -653,12 +771,16 @@ markdown_extensions:
   - pymdownx.highlight:
       anchor_linenums: true
   - pymdownx.inlinehilite
-  - pymdownx.snippets
+  - pymdownx.snippets:
+      base_path:
+        - /Users/nicklotz/orkes-docs/.cache/conductor-oss
+        - .
+      check_paths: false
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid
           class: mermaid
-          format: !!python/name:pymdownx.superfences.fence_code_format
+          format: !!python/name:main.mermaid_fence
   - pymdownx.tabbed:
       alternate_style: true
   - pymdownx.details
