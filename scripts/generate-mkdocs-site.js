@@ -3580,6 +3580,9 @@ body[data-md-color-scheme="default"] .md-header--shadow ~ .md-tabs {
 .md-header .md-social__link {
   color: var(--c-header-text) !important;
 }
+.md-tabs__item {
+  padding: 0 0.15rem;
+}
 .md-tabs__link {
   color: var(--c-header-muted) !important;
   border: 1px solid transparent;
@@ -3587,7 +3590,8 @@ body[data-md-color-scheme="default"] .md-header--shadow ~ .md-tabs {
   display: inline-flex;
   align-items: center;
   min-height: 1.8rem;
-  padding: 0.25rem 0.62rem;
+  font-size: 0.66rem;
+  padding: 0.25rem 0.5rem;
   transition: color 140ms ease, background 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
 }
 .md-tabs__item--active > .md-tabs__link,
