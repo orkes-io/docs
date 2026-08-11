@@ -1718,7 +1718,24 @@ function convertEntry(entry) {
   return `${buildFrontMatter(frontMatter, route, pageTitle)}${cleaned}${related}`;
 }
 
+// The homepage mirrors the OSS docs home (conductor-oss/conductor docs/index.md)
+// so the merged site and the OSS site share one landing design. The OSS body is
+// used verbatim; only the frontmatter is replaced to keep the Orkes description
+// and the full-width hide flags.
 function makeHomePage() {
+  const ossHome = read(path.join(OSS_DOCS, "index.md"));
+  const body = ossHome.replace(/^---[\s\S]*?---\s*/, "");
+  return `---
+hide:
+  - navigation
+  - toc
+description: "Orkes Conductor documentation for building durable workflows, API orchestration, microservice orchestration, and AI agent orchestration."
+---
+
+${body}`;
+}
+
+function makeHomePageLegacyUnused() {
   return `---
 hide:
   - navigation
@@ -2504,18 +2521,227 @@ function createCookbookGeneratedPages() {
   );
 }
 
+// Top-level navigation mirrors the OSS docs (conductor-oss/conductor
+// mkdocs.yml) so both sites share one organization. Enterprise-only content is
+// layered on top: a Security tab (rbacSidebar), the Integration Catalog inside
+// the Integrations tab, and the curated enterprise Reference (referenceSidebar,
+// which already blends OSS overviews with the kept per-endpoint pages). Items
+// use OSS doc ids; navFromItems resolves them to merged output paths.
+// Resolve an OSS docs-relative id to the docId it registered under. Shared
+// pages that the merge serves at enterprise routes register a mapped docId, so
+// look the source file up in docIdBySource before falling back to the raw id.
+const resolveOssId = (id) => {
+  if (outByDocId.has(id)) return id;
+  for (const rel of [id + ".md", id + "/index.md"]) {
+    const mapped = docIdBySource.get(rel);
+    if (mapped && outByDocId.has(mapped)) return mapped;
+  }
+  return id;
+};
+const d = (id, label) => {
+  const rid = resolveOssId(id);
+  return label ? { type: "doc", id: rid, label } : rid;
+};
+const cat = (label, items) => ({ type: "category", label, items });
+
+function ossNavTabs() {
+  return [
+  ["Getting Started", [
+    d("quickstart", "Overview"),
+    d("quickstart/connect", "Connect to Conductor"),
+    d("devguide/how-tos/conductor-skills", "Build with Your AI Coding Agent"),
+    d("quickstart/first-worker", "Your First Workflow & Worker"),
+    d("quickstart/first-agent", "Your First Agent"),
+    d("quickstart/framework-agents", "Bring Your Framework Agent"),
+    d("quickstart/first-workflow", "Run a Workflow from JSON"),
+    d("devguide/ai/conductor-for-ai-assistants", "Conductor for AI Assistants"),
+  ]],
+  ["Platform", [
+    d("devguide/concepts", "Core Concepts"),
+    d("devguide/concepts/conductor", "Why Conductor"),
+    d("devguide/architecture", "Architecture"),
+    d("architecture/durable-execution", "Durable Execution"),
+    d("architecture/json-native", "JSON + Code Native"),
+    d("devguide/architecture/tasklifecycle", "Task Lifecycle"),
+    cat("Deploy", [
+      d("devguide/running/deploy", "Production Deployment"),
+      d("devguide/running/source", "From Source"),
+      d("devguide/running/hosted", "Hosted"),
+      d("devguide/how-tos/cicd-integration", "CI/CD Integration"),
+      d("devguide/bestpractices", "Best Practices"),
+    ]),
+    d("documentation/configuration/appconf", "Configuration"),
+    cat("Observability", [
+      d("documentation/metrics/server", "Server Metrics"),
+      d("documentation/metrics/client", "Client Metrics"),
+    ]),
+    cat("Advanced", [
+      d("documentation/advanced/extend"),
+      d("documentation/advanced/isolationgroups"),
+      d("documentation/advanced/archival-of-workflows"),
+      d("documentation/advanced/externalpayloadstorage"),
+      d("documentation/advanced/file-storage"),
+      d("documentation/advanced/redis"),
+      d("documentation/advanced/postgresql"),
+      d("documentation/advanced/opensearch"),
+    ]),
+  ]],
+  ["Workflows", [
+    d("devguide/workflows", "Overview"),
+    d("devguide/concepts/workflows", "Workflows"),
+    d("devguide/concepts/tasks", "Tasks"),
+    d("devguide/concepts/workers", "Workers"),
+    cat("Build", [
+      d("devguide/how-tos/Workflows/creating-workflows", "Creating Workflows"),
+      d("devguide/how-tos/Tasks/choosing-tasks", "Choosing Tasks"),
+      d("devguide/how-tos/Tasks/creating-tasks", "Creating Tasks"),
+      d("devguide/how-tos/Tasks/task-inputs", "Task Inputs"),
+      d("devguide/how-tos/schema-validation", "Schema Validation"),
+      d("devguide/how-tos/Workflows/versioning-workflows", "Managing Workflow Versions"),
+      d("devguide/how-tos/Workflows/testing-workflows", "Testing Workflows"),
+    ]),
+    cat("Run", [
+      d("devguide/how-tos/Workflows/starting-workflows", "Starting Workflows"),
+      d("devguide/how-tos/Workflows/choosing-a-trigger", "Choosing a Trigger"),
+      d("devguide/how-tos/Workflows/scheduling-workflows", "Scheduling Workflows"),
+      d("devguide/how-tos/Workflows/handling-errors", "Handling Errors"),
+    ]),
+    cat("Operate", [
+      d("devguide/how-tos/Workflows/viewing-workflow-executions", "Viewing Executions"),
+      d("devguide/how-tos/Workflows/searching-workflows", "Searching Workflows"),
+      d("devguide/how-tos/Workflows/debugging-workflows", "Debugging Workflows"),
+      d("devguide/how-tos/Workers/scaling-workers", "Guide to Scaling Workers"),
+    ]),
+  ]],
+  ["Agents", [
+    d("devguide/ai", "Overview"),
+    d("devguide/concepts/agents", "Agent Concepts"),
+    d("devguide/ai/durable-agents", "Durable Agents"),
+    d("devguide/ai/why-conductor", "Why Conductor for Agents"),
+    cat("Build", [
+      d("devguide/ai/conductor-agents", "Conductor Agents"),
+      d("devguide/ai/agent-framework-recipes", "Framework Agent Bridges"),
+      d("devguide/ai/first-ai-agent", "Build Agentic Workflow Graph"),
+      d("devguide/ai/llm-orchestration", "LLM Orchestration"),
+      d("devguide/ai/dynamic-workflows", "Durable Adaptive Graphs"),
+      d("devguide/ai/multi-agent-architecture", "Multi-Agent Architecture"),
+    ]),
+    cat("Operate", [
+      d("devguide/ai/agent-configuration", "Agent Configuration"),
+      d("devguide/ai/deploying-agents", "Deploying Agents"),
+      d("devguide/ai/scheduling-agents", "Scheduling Agents"),
+      d("devguide/ai/token-efficiency", "Token Efficiency"),
+    ]),
+    cat("Govern", [
+      d("devguide/ai/agent-guardrails", "Agent Guardrails"),
+      d("devguide/ai/agent-evals", "Agent Evals"),
+      d("devguide/ai/human-in-the-loop", "Human-in-the-Loop"),
+      d("devguide/ai/failure-semantics", "Failure Semantics"),
+    ]),
+    d("devguide/ai/production-agent-architecture", "Production Agent Architecture"),
+  ]],
+  ["Design Patterns", [
+    d("devguide/cookbook", "Overview"),
+    cat("Workflow Patterns", [
+      d("devguide/cookbook/microservice-orchestration", "Microservice Orchestration"),
+      d("devguide/cookbook/dynamic-parallelism", "Dynamic Parallelism"),
+      d("devguide/cookbook/wait-and-timers", "Wait & Timer Patterns"),
+      d("devguide/cookbook/task-timeouts-and-retries", "Task Timeouts & Retries"),
+      d("devguide/cookbook/saga-compensation", "Saga & Compensation"),
+      d("devguide/cookbook/http-poll-long-running-job", "Polling a Long-Running Job"),
+      d("devguide/cookbook/workflow-scheduling", "Scheduled Workflows"),
+      d("devguide/cookbook/dynamic-workflows", "Dynamic Workflows in Code"),
+      d("devguide/cookbook/event-driven", "Event-Driven Patterns"),
+    ]),
+    cat("Agentic Patterns", [
+      d("devguide/ai/cookbook", "Overview"),
+      d("devguide/ai/cookbook/rag-agent", "RAG Agent"),
+      d("devguide/ai/cookbook/mcp-tool-calling", "MCP Tool Calling"),
+      d("devguide/ai/cookbook/a2a-orchestration", "A2A Agent Orchestration"),
+      d("devguide/ai/cookbook/hitl-approval", "HITL Workflow"),
+      d("devguide/ai/cookbook/llm-guardrails", "LLM with Guardrails"),
+      d("devguide/ai/cookbook/deep-research", "Deep Research Agent"),
+      d("devguide/ai/cookbook/remote-a2a-delegation", "A2A Delegation"),
+      d("devguide/cookbook/ai-llm", "LLM Workflows"),
+      d("devguide/cookbook/ai-workflow-routing", "AI Workflow Routing"),
+    ]),
+    cat("Agent Recipes", [
+      d("devguide/ai/cookbook/agent-tool-calling", "Tool Calling Agent"),
+      d("devguide/ai/cookbook/agent-guardrails", "Agent with Guardrails"),
+      d("devguide/ai/cookbook/agent-handoff", "Multi-Agent Handoff"),
+      d("devguide/ai/cookbook/agent-memory", "Agent with Memory"),
+      d("devguide/ai/cookbook/agent-cli-tools", "Agent with CLI Tools"),
+      d("devguide/ai/cookbook/agent-scatter-gather", "Massively Parallel Agents"),
+      d("devguide/ai/cookbook/reusable-conductor-agent", "Conductor Agent"),
+      d("devguide/ai/cookbook/langchain-entitlement-investigator", "LangChain Investigator"),
+      d("devguide/ai/cookbook/google-adk-order-triage", "ADK Triage"),
+      d("devguide/ai/cookbook/parallel-specialist-review", "Specialist Review"),
+      d("devguide/ai/cookbook/human-approved-action", "Agent Approval"),
+      d("devguide/ai/cookbook/conductor-agent-cancellation", "Agent Cancellation"),
+    ]),
+  ]],
+  ["SDK", [
+    d("documentation/clientsdks", "Overview"),
+    d("documentation/clientsdks/java-sdk", "Java"),
+    d("documentation/clientsdks/python-sdk", "Python"),
+    d("documentation/clientsdks/go-sdk", "Go"),
+    d("documentation/clientsdks/js-sdk", "JavaScript"),
+    d("documentation/clientsdks/csharp-sdk", "C#"),
+    d("documentation/clientsdks/ruby-sdk", "Ruby"),
+    d("documentation/clientsdks/rust-sdk", "Rust"),
+  ]],
+  ];
+}
+
 function buildNav() {
   createCookbookGeneratedPages();
 
   const nav = [];
   const navSeen = new Set(["index.md"]);
-  nav.push({ Home: "index.md" });
-  for (const [label, sidebarId] of topSections) {
-    nav.push({ [label]: navFromItems(sidebars[sidebarId], navSeen) });
+  nav.push({
+    Home: [{ Home: "index.md" }, ...navFromItems([d("devguide/faq", "FAQ")], navSeen)],
+  });
+  for (const [label, items] of ossNavTabs()) {
+    nav.push({ [label]: navFromItems(items, navSeen) });
   }
 
-  nav.push({ Integrations: navFromItems(sidebars.integrationsSidebar, navSeen) });
-  nav.push({ Blog: "https://orkes.io/blog/" });
+  nav.push({
+    Integrations: navFromItems(
+      [
+        d("devguide/integrations", "Overview"),
+        cat("Event-Driven Orchestration", [
+          d("devguide/how-tos/event-bus", "Overview"),
+          d("devguide/how-tos/publish-events", "Publish Events"),
+          d("devguide/how-tos/consume-route-events", "Consume and Route Events"),
+          d("devguide/how-tos/incoming-webhooks", "Incoming Webhooks"),
+          d("devguide/cookbook/sending-signals", "Send Signals"),
+          d("devguide/how-tos/workflow-status-events", "Workflow Status Events"),
+        ]),
+        d("devguide/ai/mcp-guide", "MCP Integration"),
+        d("devguide/ai/a2a-integration", "A2A Integration"),
+        cat("Integration Catalog", sidebars.integrationsSidebar),
+      ],
+      navSeen,
+    ),
+  });
+  nav.push({ Security: navFromItems(sidebars.rbacSidebar, navSeen) });
+  nav.push({
+    Learn: navFromItems(
+      [
+        d("learn", "Overview"),
+        cat("Contribute", [
+          d("resources/contribute", "Overview"),
+          d("resources/contribute/repositories", "Repositories"),
+          d("resources/contributing", "Contribution Guide"),
+          d("resources/contribute/best-practices", "Best Practices"),
+          d("resources/contribute/code-of-conduct", "Code of Conduct"),
+        ]),
+        d("resources/contribute/get-help", "Get Help"),
+      ],
+      navSeen,
+    ),
+  });
+  nav.push({ Reference: navFromItems(sidebars.referenceSidebar, navSeen) });
 
   // Keep legacy indexed category URLs even when their groups are intentionally
   // removed from the visible navigation.
