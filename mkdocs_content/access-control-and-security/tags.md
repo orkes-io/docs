@@ -10,9 +10,6 @@ keywords: "Orkes Conductor, workflow orchestration, Managing Tags, role based ac
 
 Tags organize resources and make access control easier to manage at scale. A tag uses the `key:value` format and can be applied to workflows, tasks, user forms, event handlers, schedules, secrets, webhooks, prompts, environment variables, integrations, applications, and API/MCP Gateway services.
 
-!!! tip "5-minute path"
-    Choose a small tag taxonomy, apply tags to related resources, grant permissions to the tag, and review tag membership as part of release or access-control reviews.
-
 Common tag patterns:
 
 | Tag | Use |
@@ -58,13 +55,6 @@ The tags dashboard provides a complete overview of all tags in the cluster and t
 1. Go to **Definitions** > **Tags Dashboard** from the left navigation menu on your Conductor cluster.
 
 The page displays the total number of tags in the cluster, along with the count of resources associated with each tag.
-
-Useful review questions:
-
-- Does every production workflow have an owner tag?
-- Are sensitive resources tagged consistently?
-- Do tag permissions grant access to resources that no longer belong in the group?
-- Are deprecated resources still inheriting access through old tags?
 
 ## Bulk-access to resources using tags
 
