@@ -2701,29 +2701,70 @@ function buildNav() {
   nav.push({
     Home: [{ Home: "index.md" }, ...navFromItems([d("devguide/faq", "FAQ")], navSeen)],
   });
+
+  const tabChildren = {};
   for (const [label, items] of ossNavTabs()) {
-    nav.push({ [label]: navFromItems(items, navSeen) });
+    tabChildren[label] = navFromItems(items, navSeen);
+    nav.push({ [label]: tabChildren[label] });
   }
 
-  nav.push({
-    Integrations: navFromItems(
-      [
-        d("devguide/integrations", "Overview"),
-        cat("Event-Driven Orchestration", [
-          d("devguide/how-tos/event-bus", "Overview"),
-          d("devguide/how-tos/publish-events", "Publish Events"),
-          d("devguide/how-tos/consume-route-events", "Consume and Route Events"),
-          d("devguide/how-tos/incoming-webhooks", "Incoming Webhooks"),
-          d("devguide/cookbook/sending-signals", "Send Signals"),
-          d("devguide/how-tos/workflow-status-events", "Workflow Status Events"),
-        ]),
-        d("devguide/ai/mcp-guide", "MCP Integration"),
-        d("devguide/ai/a2a-integration", "A2A Integration"),
-        cat("Integration Catalog", sidebars.integrationsSidebar),
-      ],
-      navSeen,
-    ),
-  });
+  // Reserve the Integrations tab's OSS entries before enterprise sidebars are
+  // appended elsewhere, so pages like the A2A and MCP guides land here.
+  const integrationsChildren = navFromItems(
+    [
+      d("devguide/integrations", "Overview"),
+      cat("Event-Driven Orchestration", [
+        d("devguide/how-tos/event-bus", "Overview"),
+        d("devguide/how-tos/publish-events", "Publish Events"),
+        d("devguide/how-tos/consume-route-events", "Consume and Route Events"),
+        d("devguide/how-tos/incoming-webhooks", "Incoming Webhooks"),
+        d("devguide/cookbook/sending-signals", "Send Signals"),
+        d("devguide/how-tos/workflow-status-events", "Workflow Status Events"),
+      ]),
+      d("devguide/ai/mcp-guide", "MCP Integration"),
+      d("devguide/ai/a2a-integration", "A2A Integration"),
+    ],
+    navSeen,
+  );
+
+  // Layer enterprise-only pages into the OSS tabs. The global dedupe in
+  // navFromItems drops every page the OSS structure already lists, so
+  // appending a whole enterprise sidebar leaves only its enterprise-only
+  // remainder, with its own group labels intact. Developer Guides is routed
+  // per top-level group by topic.
+  const labelOf = (item) =>
+    (typeof item === "string" ? item : item.label || item.id || item.href || "").toLowerCase();
+  const guideExtras = { Workflows: [], Agents: [], Integrations: [], Platform: [] };
+  for (const item of sidebars.guidesSidebar) {
+    const s = labelOf(item);
+    let tab = "Workflows";
+    if (/\bai\b|agent|prompt|llm|vector|rag/.test(s)) tab = "Agents";
+    else if (/event|webhook|gateway|signal|cdc/.test(s)) tab = "Integrations";
+    else if (/metric|monitor|cluster|environment|secret|deploy|observ/.test(s)) tab = "Platform";
+    guideExtras[tab].push(item);
+  }
+
+  tabChildren["Getting Started"].push(...navFromItems(sidebars.quickstartSidebar, navSeen));
+  tabChildren.Platform.push(
+    ...navFromItems([...guideExtras.Platform, ...sidebars.deploySidebar], navSeen),
+  );
+  tabChildren.Workflows.push(...navFromItems(guideExtras.Workflows, navSeen));
+  tabChildren.Agents.push(
+    ...navFromItems([...guideExtras.Agents, ...sidebars.aiSidebar], navSeen),
+  );
+  tabChildren["Design Patterns"].push(
+    ...navFromItems([...sidebars.cookbookSidebar, ...sidebars.aiCookbookSidebar], navSeen),
+  );
+  tabChildren.SDK.push(...navFromItems(sidebars.sdksSidebar, navSeen));
+
+  integrationsChildren.push(
+    ...navFromItems([...guideExtras.Integrations, ...sidebars.eventingSidebar], navSeen),
+  );
+  integrationsChildren.push(
+    ...navFromItems([cat("Integration Catalog", sidebars.integrationsSidebar)], navSeen),
+  );
+  nav.push({ Integrations: integrationsChildren });
+
   nav.push({ Security: navFromItems(sidebars.rbacSidebar, navSeen) });
   nav.push({
     Learn: navFromItems(
@@ -2737,6 +2778,7 @@ function buildNav() {
           d("resources/contribute/code-of-conduct", "Code of Conduct"),
         ]),
         d("resources/contribute/get-help", "Get Help"),
+        ...sidebars.contributeSidebar,
       ],
       navSeen,
     ),

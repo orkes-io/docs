@@ -21,6 +21,7 @@ nav:
     - Bring Your Framework Agent: quickstart/framework-agents.md
     - Run a Workflow from JSON: quickstarts.md
     - Conductor for AI Assistants: devguide/ai/conductor-for-ai-assistants.md
+    - Install and Set Up Orkes Conductor: get-orkes-conductor.md
   - Platform:
     - Core Concepts: devguide/concepts.md
     - Why Conductor: core-concepts.md
@@ -70,6 +71,16 @@ nav:
       - Searching Workflows: devguide/how-tos/Workflows/searching-workflows.md
       - Debugging Workflows: developer-guides/debugging-workflows.md
       - Guide to Scaling Workers: developer-guides/scaling-workers.md
+    - Workflows:
+      - Import BPMN Files as Workflows: developer-guides/convert-bpmn-to-workflows.md
+      - Using Secrets: developer-guides/secrets-in-conductor.md
+      - Using Environment Variables: developer-guides/using-environment-variables.md
+      - Idempotency: idempotency.md
+    - Tasks:
+      - Masking Parameters: developer-guides/masking-parameters.md
+      - Caching Task Outputs: faqs/task-cache-output.md
+      - Task Definition: developer-guides/rate-limits.md
+      - Task Domains: developer-guides/task-to-domain.md
   - Agents:
     - Overview: devguide/ai.md
     - Agent Concepts: devguide/concepts/agents.md
@@ -93,6 +104,11 @@ nav:
       - "Human-in-the-Loop": ai-cookbook/human-in-the-loop.md
       - Failure Semantics: ai-cookbook/failure-semantics.md
     - Production Agent Architecture: ai-cookbook/production-agent-architecture.md
+    - "HITL & AI Orchestration":
+      - Human Task Orchestration: reference-docs/operators/human.md
+      - Using Vector Databases: reference-docs/ai-tasks.md
+      - Creating AI Prompts: developer-guides/creating-and-managing-gen-ai-prompt-templates.md
+    - Agentic Workflow Engine: agentic-workflow-engine.md
   - Design Patterns:
     - Overview: devguide/cookbook.md
     - Workflow Patterns:
@@ -129,6 +145,25 @@ nav:
       - Specialist Review: devguide/ai/cookbook/parallel-specialist-review.md
       - Agent Approval: devguide/ai/cookbook/human-approved-action.md
       - Agent Cancellation: devguide/ai/cookbook/conductor-agent-cancellation.md
+    - Cookbook: category/tutorials.md
+    - Document Approval: _routes/templates/examples/document-approvals.md
+    - "Long-Running APIs": tutorials/long-running-apis.md
+    - PagerDuty Alert Workflow: _routes/templates/alerting/scanning-an-endpoint-and-triggering-pagerduty-alert.md
+    - Gateway tutorials:
+      - Gateway Tutorials: tutorials/mcp.md
+      - Build a Feedback API: tutorials/expose-feedback-workflow-as-api.md
+      - Build an MCP Ticket Service: tutorials/expose-ticket-service-using-mcp-gateway.md
+    - AI Tutorials:
+      - AI Tutorials: tutorials/ai.md
+      - "AI-Powered Translator": developer-guides/quickstart-ai-orchestration.md
+      - Agentic Interview App: tutorials/agentic-interview-app.md
+      - Document Classification: _routes/templates/document-classifier.md
+      - Question Answering Workflow: tutorials/question-answering-with-embeddings.md
+      - Document Retrieval Workflow: tutorials/document-retrieval-workflow.md
+      - Pull Request Summary Workflow: tutorials/pull-request-summary-workflow.md
+      - Text Indexing and Search Workflow: tutorials/text-indexing-search-workflow.md
+      - Loan Approval Workflow: _routes/templates/examples/finance.md
+      - Handling Fraud Disputes: _routes/templates/examples/fraud-dispute.md
   - SDK:
     - Overview: sdks/sdk-index.md
     - Java: sdks/java.md
@@ -149,6 +184,47 @@ nav:
       - Workflow Status Events: conceptual-guides/workflow-and-task-status.md
     - MCP Integration: devguide/ai/mcp-guide.md
     - A2A Integration: devguide/ai/a2a-integration.md
+    - "API Gateway & Service Orchestration":
+      - "API Gateway & Service Orchestration": developer-guides/mcp-api-gateway.md
+      - API Gateway: developer-guides/api-gateway.md
+      - MCP Gateway: developer-guides/mcp-gateway.md
+      - Remote Services: remote-services.md
+    - Receive Events:
+      - Event Handlers: developer-guides/event-handler.md
+    - Publish Events:
+      - Change Data Capture: developer-guides/enabling-cdc-on-conductor-workflows.md
+    - Message Broker Integrations:
+      - Message Broker Integrations: category/integrations/message-broker.md
+      - Apache Kafka: integrations/message-broker/apache-kafka.md
+      - Confluent Kafka: integrations/message-broker/confluent-kafka.md
+      - Amazon MSK: integrations/message-broker/amazon-msk.md
+      - AMQP / RabbitMQ: integrations/message-broker/amqp.md
+      - NATS Messaging: integrations/message-broker/nats-messaging.md
+      - AWS SQS: integrations/message-broker/aws-sqs.md
+      - Azure Service Bus: integrations/message-broker/azure-service-bus.md
+      - GCP Pub/Sub: integrations/message-broker/gcp-pub-sub.md
+      - IBM MQ: integrations/message-broker/ibm-mq.md
+    - Webhook Examples:
+      - Webhook Examples: category/event-driven-orchestration/webhook-examples.md
+      - Custom Webhook with cURL: _routes/templates/examples/custom-conductor-webhook-using-curl.md
+      - Incoming Webhook with Postman: _routes/templates/examples/incoming-webhook-using-postman.md
+      - Webhook Idempotency Keys: tutorials/using-idempotency-keys-in-webhook-triggered-workflows.md
+      - GitHub Webhook: tutorials/github-webhook.md
+      - Stripe Webhook: tutorials/stripe-webhook.md
+      - SendGrid Webhook: tutorials/using-sendgrid-webhooks.md
+      - Microsoft Teams Webhook: tutorials/microsoft-teams-webhook.md
+      - Slack Webhook: _routes/templates/daily-scrum-automation-using-standup-bot.md
+    - API Reference:
+      - Eventing API Reference: category/event-driven-orchestration/api-reference.md
+      - Webhook API:
+        - Webhook API: reference-docs/api/webhooks.md
+        - Create Webhook: reference-docs/api/webhooks/create-webhook.md
+        - Update Webhook: reference-docs/api/webhooks/update-webhook.md
+        - Get Webhook by ID: reference-docs/api/webhooks/get-webhook.md
+        - Delete Webhook: reference-docs/api/webhooks/delete-webhook.md
+        - Get All Webhooks: reference-docs/api/webhooks/get-all-webhooks.md
+        - Add Tags to Webhook: reference-docs/api/webhooks/add-tags-to-webhook.md
+        - Get Tags from Webhook: reference-docs/api/webhooks/get-tags-from-webhook.md
     - Integration Catalog:
       - Integrations:
         - Integrations: category/integrations.md
@@ -174,17 +250,6 @@ nav:
           - Weaviate: integrations/vector-databases/weaviate.md
           - Postgres Vector Database: integrations/vector-databases/postgres-vector-database.md
           - Mongo Vector Database: integrations/vector-databases/mongo-vector-database.md
-        - Message Broker:
-          - Message Broker Integrations: category/integrations/message-broker.md
-          - Apache Kafka: integrations/message-broker/apache-kafka.md
-          - Confluent Kafka: integrations/message-broker/confluent-kafka.md
-          - Amazon MSK: integrations/message-broker/amazon-msk.md
-          - AMQP / RabbitMQ: integrations/message-broker/amqp.md
-          - NATS Messaging: integrations/message-broker/nats-messaging.md
-          - AWS SQS: integrations/message-broker/aws-sqs.md
-          - Azure Service Bus: integrations/message-broker/azure-service-bus.md
-          - GCP Pub/Sub: integrations/message-broker/gcp-pub-sub.md
-          - IBM MQ: integrations/message-broker/ibm-mq.md
         - Cloud Providers:
           - Cloud Providers: category/integrations/cloud-provider.md
           - AWS: integrations/cloud-provider/aws.md
@@ -316,7 +381,6 @@ nav:
         - Terminate Workflow: reference-docs/operators/terminate-workflow.md
         - Terminate: reference-docs/operators/terminate.md
         - Wait: reference-docs/operators/wait.md
-        - Human: reference-docs/operators/human.md
         - Yield: reference-docs/operators/yield.md
         - Set Variable: reference-docs/operators/set-variable.md
         - Get Workflow: reference-docs/operators/get-workflow.md
@@ -343,8 +407,6 @@ nav:
           - Alerting Tasks: category/reference-docs/alerting-tasks.md
           - Opsgenie: reference-docs/system-tasks/opsgenie.md
           - Query Processor: reference-docs/system-tasks/query-processor.md
-        - AI Tasks:
-          - AI Tasks: reference-docs/ai-tasks.md
     - Workflow Definition:
       - Workflow Definition: documentation/configuration/workflowdef.md
       - Schemas: documentation/configuration/schemas.md
@@ -458,15 +520,6 @@ nav:
         - Delete Tags from an Environment Variable: reference-docs/api/environment-variables/delete-tags-from-environment-variable.md
       - Schedule:
         - Schedule: reference-docs/api/schedule.md
-      - Webhook:
-        - Webhook: reference-docs/api/webhooks.md
-        - Create Webhook: reference-docs/api/webhooks/create-webhook.md
-        - Update Webhook: reference-docs/api/webhooks/update-webhook.md
-        - Get Webhook by ID: reference-docs/api/webhooks/get-webhook.md
-        - Delete Webhook: reference-docs/api/webhooks/delete-webhook.md
-        - Get All Webhooks: reference-docs/api/webhooks/get-all-webhooks.md
-        - Add Tags to Webhook: reference-docs/api/webhooks/add-tags-to-webhook.md
-        - Get Tags from Webhook: reference-docs/api/webhooks/get-tags-from-webhook.md
       - Human Task:
         - Human Task: reference-docs/api/human-tasks.md
         - Get Human Task: reference-docs/api/human-tasks/get-task.md
