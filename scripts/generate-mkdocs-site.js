@@ -1718,13 +1718,39 @@ function convertEntry(entry) {
   return `${buildFrontMatter(frontMatter, route, pageTitle)}${cleaned}${related}`;
 }
 
+// Upstream owns the OSS home copy, so normalize the two things the messaging
+// audit enforces here rather than forking the page: the durable-execution proof
+// points must appear on the home page, and the unbounded polyglot claim is a
+// forbidden phrase. Both are re-applied on every OSS refresh so an upstream
+// reword can't silently drop them.
+function applyHomeMessaging(body) {
+  let output = body.replace(
+    "Write task workers in any language.",
+    "Write task workers in Python, Java, Go, C#, JavaScript, and more.",
+  );
+
+  if (!output.includes("Persisted state") || !output.includes("Execution history")) {
+    const proofPoints =
+      '<p class="feature-proof" style="margin-top:10px;">Persisted state &mdash; resume after failure. ' +
+      "Isolated retries &mdash; only failed steps retry. " +
+      "Execution history &mdash; inputs, outputs, and a full audit trail.</p>";
+    const durableCard = /(<h3>Durable execution by default<\/h3>\s*<p>[\s\S]*?<\/p>)/;
+    output = durableCard.test(output)
+      ? output.replace(durableCard, `$1\n      ${proofPoints}`)
+      : `${output.trimEnd()}\n\n<section class="home-proof-points">\n  ${proofPoints}\n</section>\n`;
+  }
+
+  return output;
+}
+
 // The homepage mirrors the OSS docs home (conductor-oss/conductor docs/index.md)
-// so the merged site and the OSS site share one landing design. The OSS body is
-// used verbatim; only the frontmatter is replaced to keep the Orkes description
-// and the full-width hide flags.
+// so the merged site and the OSS site share one landing design. The body goes
+// through the same cleanMdx/rewriteLinks pass as every other shared page so OSS
+// routes resolve to their merged equivalents; only the frontmatter is replaced
+// to keep the Orkes description and the full-width hide flags.
 function makeHomePage() {
   const ossHome = read(path.join(OSS_DOCS, "index.md"));
-  const body = ossHome.replace(/^---[\s\S]*?---\s*/, "");
+  const body = applyHomeMessaging(cleanMdx(ossHome.replace(/^---[\s\S]*?---\s*/, ""), "index.md"));
   return `---
 hide:
   - navigation
