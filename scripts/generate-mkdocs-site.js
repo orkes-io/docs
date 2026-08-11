@@ -2556,36 +2556,6 @@ function ossNavTabs() {
     d("quickstart/first-workflow", "Run a Workflow from JSON"),
     d("devguide/ai/conductor-for-ai-assistants", "Conductor for AI Assistants"),
   ]],
-  ["Platform", [
-    d("devguide/concepts", "Core Concepts"),
-    d("devguide/concepts/conductor", "Why Conductor"),
-    d("devguide/architecture", "Architecture"),
-    d("architecture/durable-execution", "Durable Execution"),
-    d("architecture/json-native", "JSON + Code Native"),
-    d("devguide/architecture/tasklifecycle", "Task Lifecycle"),
-    cat("Deploy", [
-      d("devguide/running/deploy", "Production Deployment"),
-      d("devguide/running/source", "From Source"),
-      d("devguide/running/hosted", "Hosted"),
-      d("devguide/how-tos/cicd-integration", "CI/CD Integration"),
-      d("devguide/bestpractices", "Best Practices"),
-    ]),
-    d("documentation/configuration/appconf", "Configuration"),
-    cat("Observability", [
-      d("documentation/metrics/server", "Server Metrics"),
-      d("documentation/metrics/client", "Client Metrics"),
-    ]),
-    cat("Advanced", [
-      d("documentation/advanced/extend"),
-      d("documentation/advanced/isolationgroups"),
-      d("documentation/advanced/archival-of-workflows"),
-      d("documentation/advanced/externalpayloadstorage"),
-      d("documentation/advanced/file-storage"),
-      d("documentation/advanced/redis"),
-      d("documentation/advanced/postgresql"),
-      d("documentation/advanced/opensearch"),
-    ]),
-  ]],
   ["Workflows", [
     d("devguide/workflows", "Overview"),
     d("devguide/concepts/workflows", "Workflows"),
@@ -2640,21 +2610,9 @@ function ossNavTabs() {
     ]),
     d("devguide/ai/production-agent-architecture", "Production Agent Architecture"),
   ]],
-  ["Design Patterns", [
-    d("devguide/cookbook", "Overview"),
-    cat("Workflow Patterns", [
-      d("devguide/cookbook/microservice-orchestration", "Microservice Orchestration"),
-      d("devguide/cookbook/dynamic-parallelism", "Dynamic Parallelism"),
-      d("devguide/cookbook/wait-and-timers", "Wait & Timer Patterns"),
-      d("devguide/cookbook/task-timeouts-and-retries", "Task Timeouts & Retries"),
-      d("devguide/cookbook/saga-compensation", "Saga & Compensation"),
-      d("devguide/cookbook/http-poll-long-running-job", "Polling a Long-Running Job"),
-      d("devguide/cookbook/workflow-scheduling", "Scheduled Workflows"),
-      d("devguide/cookbook/dynamic-workflows", "Dynamic Workflows in Code"),
-      d("devguide/cookbook/event-driven", "Event-Driven Patterns"),
-    ]),
+  ["AI Cookbook", [
+    d("devguide/ai/cookbook", "Overview"),
     cat("Agentic Patterns", [
-      d("devguide/ai/cookbook", "Overview"),
       d("devguide/ai/cookbook/rag-agent", "RAG Agent"),
       d("devguide/ai/cookbook/mcp-tool-calling", "MCP Tool Calling"),
       d("devguide/ai/cookbook/a2a-orchestration", "A2A Agent Orchestration"),
@@ -2680,6 +2638,20 @@ function ossNavTabs() {
       d("devguide/ai/cookbook/conductor-agent-cancellation", "Agent Cancellation"),
     ]),
   ]],
+  ["Design Patterns", [
+    d("devguide/cookbook", "Overview"),
+    cat("Workflow Patterns", [
+      d("devguide/cookbook/microservice-orchestration", "Microservice Orchestration"),
+      d("devguide/cookbook/dynamic-parallelism", "Dynamic Parallelism"),
+      d("devguide/cookbook/wait-and-timers", "Wait & Timer Patterns"),
+      d("devguide/cookbook/task-timeouts-and-retries", "Task Timeouts & Retries"),
+      d("devguide/cookbook/saga-compensation", "Saga & Compensation"),
+      d("devguide/cookbook/http-poll-long-running-job", "Polling a Long-Running Job"),
+      d("devguide/cookbook/workflow-scheduling", "Scheduled Workflows"),
+      d("devguide/cookbook/dynamic-workflows", "Dynamic Workflows in Code"),
+      d("devguide/cookbook/event-driven", "Event-Driven Patterns"),
+    ]),
+  ]],
   ["SDK", [
     d("documentation/clientsdks", "Overview"),
     d("documentation/clientsdks/java-sdk", "Java"),
@@ -2690,6 +2662,39 @@ function ossNavTabs() {
     d("documentation/clientsdks/ruby-sdk", "Ruby"),
     d("documentation/clientsdks/rust-sdk", "Rust"),
   ]],
+  ];
+}
+
+function platformTabItems() {
+  return [
+    d("devguide/concepts", "Core Concepts"),
+    d("devguide/concepts/conductor", "Why Conductor"),
+    d("devguide/architecture", "Architecture"),
+    d("architecture/durable-execution", "Durable Execution"),
+    d("architecture/json-native", "JSON + Code Native"),
+    d("devguide/architecture/tasklifecycle", "Task Lifecycle"),
+    cat("Deploy", [
+      d("devguide/running/deploy", "Production Deployment"),
+      d("devguide/running/source", "From Source"),
+      d("devguide/running/hosted", "Hosted"),
+      d("devguide/how-tos/cicd-integration", "CI/CD Integration"),
+      d("devguide/bestpractices", "Best Practices"),
+    ]),
+    d("documentation/configuration/appconf", "Configuration"),
+    cat("Observability", [
+      d("documentation/metrics/server", "Server Metrics"),
+      d("documentation/metrics/client", "Client Metrics"),
+    ]),
+    cat("Advanced", [
+      d("documentation/advanced/extend"),
+      d("documentation/advanced/isolationgroups"),
+      d("documentation/advanced/archival-of-workflows"),
+      d("documentation/advanced/externalpayloadstorage"),
+      d("documentation/advanced/file-storage"),
+      d("documentation/advanced/redis"),
+      d("documentation/advanced/postgresql"),
+      d("documentation/advanced/opensearch"),
+    ]),
   ];
 }
 
@@ -2745,16 +2750,12 @@ function buildNav() {
   }
 
   tabChildren["Getting Started"].push(...navFromItems(sidebars.quickstartSidebar, navSeen));
-  tabChildren.Platform.push(
-    ...navFromItems([...guideExtras.Platform, ...sidebars.deploySidebar], navSeen),
-  );
   tabChildren.Workflows.push(...navFromItems(guideExtras.Workflows, navSeen));
   tabChildren.Agents.push(
     ...navFromItems([...guideExtras.Agents, ...sidebars.aiSidebar], navSeen),
   );
-  tabChildren["Design Patterns"].push(
-    ...navFromItems([...sidebars.cookbookSidebar, ...sidebars.aiCookbookSidebar], navSeen),
-  );
+  tabChildren["Design Patterns"].push(...navFromItems(sidebars.cookbookSidebar, navSeen));
+  tabChildren["AI Cookbook"].push(...navFromItems(sidebars.aiCookbookSidebar, navSeen));
   tabChildren.SDK.push(...navFromItems(sidebars.sdksSidebar, navSeen));
 
   integrationsChildren.push(
@@ -2784,6 +2785,11 @@ function buildNav() {
     ),
   });
   nav.push({ Reference: navFromItems(sidebars.referenceSidebar, navSeen) });
+  const platformChildren = navFromItems(platformTabItems(), navSeen);
+  platformChildren.push(
+    ...navFromItems([...guideExtras.Platform, ...sidebars.deploySidebar], navSeen),
+  );
+  nav.push({ Platform: platformChildren });
 
   // Keep legacy indexed category URLs even when their groups are intentionally
   // removed from the visible navigation.

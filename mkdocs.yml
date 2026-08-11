@@ -21,33 +21,13 @@ nav:
     - Bring Your Framework Agent: quickstart/framework-agents.md
     - Run a Workflow from JSON: quickstarts.md
     - Conductor for AI Assistants: devguide/ai/conductor-for-ai-assistants.md
-    - Install and Set Up Orkes Conductor: get-orkes-conductor.md
-  - Platform:
-    - Core Concepts: devguide/concepts.md
-    - Why Conductor: core-concepts.md
-    - Architecture: devguide/architecture.md
+    - Concepts: core-concepts.md
     - Durable Execution: quickstart/durable-execution.md
     - JSON + Code Native: quickstart/json-code-native.md
     - Task Lifecycle: quickstart/task-lifecycle.md
-    - Deploy:
-      - Production Deployment: devguide/running/deploy.md
-      - From Source: devguide/running/source.md
-      - Hosted: devguide/running/hosted.md
-      - CI/CD Integration: developer-guides/integration-with-cicd.md
-      - Best Practices: devguide/bestpractices.md
-    - Configuration: documentation/configuration/appconf.md
-    - Observability:
-      - Server Metrics: developer-guides/metrics-and-observability.md
-      - Client Metrics: documentation/metrics/client.md
-    - Advanced:
-      - Extending Conductor: documentation/advanced/extend.md
-      - Isolation Groups: documentation/advanced/isolationgroups.md
-      - Archiving Workflows: documentation/advanced/archival-of-workflows.md
-      - External Payload Storage: documentation/advanced/externalpayloadstorage.md
-      - File Storage: documentation/advanced/file-storage.md
-      - Redis: documentation/advanced/redis.md
-      - PostgreSQL: documentation/advanced/postgresql.md
-      - OpenSearch: documentation/advanced/opensearch.md
+    - Install and Set Up Orkes Conductor: get-orkes-conductor.md
+    - Core Concepts: devguide/concepts.md
+    - Conductor Architecture: devguide/architecture.md
   - Workflows:
     - Overview: devguide/workflows.md
     - Workflows: quickstart/workflows.md
@@ -109,20 +89,9 @@ nav:
       - Using Vector Databases: reference-docs/ai-tasks.md
       - Creating AI Prompts: developer-guides/creating-and-managing-gen-ai-prompt-templates.md
     - Agentic Workflow Engine: agentic-workflow-engine.md
-  - Design Patterns:
-    - Overview: devguide/cookbook.md
-    - Workflow Patterns:
-      - Microservice Orchestration: cookbook/microservice-orchestration.md
-      - Dynamic Parallelism: cookbook/dynamic-parallelism.md
-      - "Wait & Timer Patterns": cookbook/wait-and-timers.md
-      - "Task Timeouts & Retries": cookbook/task-timeouts-and-retries.md
-      - "Saga & Compensation": devguide/cookbook/saga-compensation.md
-      - "Polling a Long-Running Job": devguide/cookbook/http-poll-long-running-job.md
-      - Scheduled Workflows: cookbook/workflow-scheduling.md
-      - Dynamic Workflows in Code: cookbook/dynamic-workflows.md
-      - "Event-Driven Patterns": cookbook/event-driven.md
+  - AI Cookbook:
+    - Overview: devguide/ai/cookbook.md
     - Agentic Patterns:
-      - Overview: devguide/ai/cookbook.md
       - RAG Agent: devguide/ai/cookbook/rag-agent.md
       - MCP Tool Calling: devguide/ai/cookbook/mcp-tool-calling.md
       - A2A Agent Orchestration: devguide/ai/cookbook/a2a-orchestration.md
@@ -145,6 +114,18 @@ nav:
       - Specialist Review: devguide/ai/cookbook/parallel-specialist-review.md
       - Agent Approval: devguide/ai/cookbook/human-approved-action.md
       - Agent Cancellation: devguide/ai/cookbook/conductor-agent-cancellation.md
+  - Design Patterns:
+    - Overview: devguide/cookbook.md
+    - Workflow Patterns:
+      - Microservice Orchestration: cookbook/microservice-orchestration.md
+      - Dynamic Parallelism: cookbook/dynamic-parallelism.md
+      - "Wait & Timer Patterns": cookbook/wait-and-timers.md
+      - "Task Timeouts & Retries": cookbook/task-timeouts-and-retries.md
+      - "Saga & Compensation": devguide/cookbook/saga-compensation.md
+      - "Polling a Long-Running Job": devguide/cookbook/http-poll-long-running-job.md
+      - Scheduled Workflows: cookbook/workflow-scheduling.md
+      - Dynamic Workflows in Code: cookbook/dynamic-workflows.md
+      - "Event-Driven Patterns": cookbook/event-driven.md
     - Cookbook: category/tutorials.md
     - Document Approval: _routes/templates/examples/document-approvals.md
     - "Long-Running APIs": tutorials/long-running-apis.md
@@ -596,6 +577,26 @@ nav:
         - Delete Tags from Prompt: reference-docs/api/prompts/delete-tags-from-prompt.md
         - Test Prompts: reference-docs/api/prompts/test-prompts.md
     - Glossary: glossary.md
+  - Platform:
+    - Deploy:
+      - Production Deployment: devguide/running/deploy.md
+      - From Source: devguide/running/source.md
+      - Hosted: devguide/running/hosted.md
+      - CI/CD Integration: developer-guides/integration-with-cicd.md
+      - Best Practices: devguide/bestpractices.md
+    - Configuration: documentation/configuration/appconf.md
+    - Observability:
+      - Server Metrics: developer-guides/metrics-and-observability.md
+      - Client Metrics: documentation/metrics/client.md
+    - Advanced:
+      - Extending Conductor: documentation/advanced/extend.md
+      - Isolation Groups: documentation/advanced/isolationgroups.md
+      - Archiving Workflows: documentation/advanced/archival-of-workflows.md
+      - External Payload Storage: documentation/advanced/externalpayloadstorage.md
+      - File Storage: documentation/advanced/file-storage.md
+      - Redis: documentation/advanced/redis.md
+      - PostgreSQL: documentation/advanced/postgresql.md
+      - OpenSearch: documentation/advanced/opensearch.md
 
 not_in_nav: |
   search.md
@@ -760,6 +761,16 @@ plugins:
         reference-docs/api/schedule/bulk-pause-schedule.md: reference-docs/api/schedule.md
         reference-docs/api/schedule/bulk-resume-schedule.md: reference-docs/api/schedule.md
         reference-docs/api/schedule/get-next-few-schedules.md: reference-docs/api/schedule.md
+        developer-guides/gateway-metrics.md: developer-guides/mcp-api-gateway.md
+        category/integrations/connections-and-resources.md: category/integrations.md
+        developer-guides/advanced-workflows.md: developer-guides/building-workflows.md
+        developer-guides/monitoring-task-queues.md: developer-guides/metrics-and-observability.md
+        inputs-outputs.md: developer-guides/passing-inputs-to-task-in-conductor.md
+        reference-docs/api/synchronous-workflow-execution.md: reference-docs/api/workflow.md
+        reference-docs/api/workflow/pause-worflow.md: reference-docs/api/workflow.md
+        sdks/clojure.md: sdks/sdk-index.md
+        templates/agentic-research.md: category/tutorials.md
+        templates/claims-workflow.md: category/tutorials.md
   - macros
 
 markdown_extensions:

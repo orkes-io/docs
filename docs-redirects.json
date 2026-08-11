@@ -107,5 +107,15 @@
   "quickstarts/workflows": "quickstart/workflows",
   "reference-docs/api/schedule/bulk-pause-schedule": "reference-docs/api/schedule",
   "reference-docs/api/schedule/bulk-resume-schedule": "reference-docs/api/schedule",
-  "reference-docs/api/schedule/get-next-few-schedules": "reference-docs/api/schedule"
+  "reference-docs/api/schedule/get-next-few-schedules": "reference-docs/api/schedule",
+  "developer-guides/gateway-metrics": "developer-guides/mcp-api-gateway",
+  "category/integrations/connections-and-resources": "category/integrations",
+  "developer-guides/advanced-workflows": "developer-guides/building-workflows",
+  "developer-guides/monitoring-task-queues": "developer-guides/metrics-and-observability",
+  "inputs-outputs": "developer-guides/passing-inputs-to-task-in-conductor",
+  "reference-docs/api/synchronous-workflow-execution": "reference-docs/api/workflow",
+  "reference-docs/api/workflow/pause-worflow": "reference-docs/api/workflow",
+  "sdks/clojure": "sdks/sdk-index",
+  "templates/agentic-research": "category/tutorials",
+  "templates/claims-workflow": "category/tutorials"
 }
