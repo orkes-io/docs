@@ -3,13 +3,9 @@ slug: "/developer-guides/guardrails"
 description: "Learn how to scrub or validate text going into or out of an LLM task using input and output guardrails, so PII and other sensitive content never reaches the model or the caller."
 ---
 
-# Guardrails
+# LLM Task Guardrails
 
-Guardrails let you scrub or validate text going into or out of an LLM task, without adding an extra step to your workflow. A guardrail runs as a pre-call (input) or post-call (output) hook inside the task itself — the workflow's task list still shows just the one LLM task.
-
-:::tip 5-minute path
-Add an `inputGuardrail` and/or `outputGuardrail` to a supported LLM task's input parameters, choose a `type` (`JAVASCRIPT`, `HTTP`, or `WORKFLOW`), set `failureMode` to `FAIL` for anything protecting sensitive data, then run the task once with input that should trigger the rule to confirm it's actually scrubbed.
-:::
+LLM task guardrails let you scrub or validate text going into or out of an LLM task, without adding an extra step to your workflow. A guardrail runs as a pre-call (input) or post-call (output) hook inside the task itself — the workflow's task list still shows just the one LLM task.
 
 ## Supported tasks
 
@@ -128,3 +124,8 @@ Conductor runs `pii_scrub_workflow` (version 3) with input `{"prompt": "<text>"}
 - Pin a `version` on `WORKFLOW` guardrails used in production so an unrelated update to the latest version can't silently change scrubbing behavior.
 - Each guardrail call is its own sub-workflow execution tagged `correlationId: guardrail:<taskId>` — use that to audit what was scrubbed for a given LLM task run.
 - Guardrail/task-type combinations are validated at save time, not at execution time — a misconfigured guardrail is caught before the workflow ever runs.
+
+## Related pages
+
+- [Agent Guardrails](/content/devguide/ai/agent-guardrails) — native `AgentConfig`/`ToolConfig` guardrails for Conductor Agents built with the Agent SDK, not the LLM task params documented on this page.
+- [LLM with Guardrails](/content/devguide/ai/cookbook/llm-guardrails) — a workflow-pattern recipe that fences an `LLM_CHAT_COMPLETE` call using ordinary tasks (a deterministic screen, policy checks, and a bounded repair), for cases where you want each check visible as its own task in the graph.

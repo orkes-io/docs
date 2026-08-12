@@ -151,7 +151,7 @@ const sidebars = {
                         {
                             type: 'doc',
                             id: 'developer-guides/guardrails',
-                            label: 'Guardrails',
+                            label: 'LLM Task Guardrails',
                         },
                         {
                             type: 'doc',
