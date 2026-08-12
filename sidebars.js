@@ -150,6 +150,11 @@ const sidebars = {
                         },
                         {
                             type: 'doc',
+                            id: 'developer-guides/guardrails',
+                            label: 'Guardrails',
+                        },
+                        {
+                            type: 'doc',
                             id: 'developer-guides/ai-orchestration',
                             label: 'Using AI Models or LLMs',
                         },

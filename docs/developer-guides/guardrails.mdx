@@ -1,0 +1,130 @@
+---
+slug: "/developer-guides/guardrails"
+description: "Learn how to scrub or validate text going into or out of an LLM task using input and output guardrails, so PII and other sensitive content never reaches the model or the caller."
+---
+
+# Guardrails
+
+Guardrails let you scrub or validate text going into or out of an LLM task, without adding an extra step to your workflow. A guardrail runs as a pre-call (input) or post-call (output) hook inside the task itself — the workflow's task list still shows just the one LLM task.
+
+:::tip 5-minute path
+Add an `inputGuardrail` and/or `outputGuardrail` to a supported LLM task's input parameters, choose a `type` (`JAVASCRIPT`, `HTTP`, or `WORKFLOW`), set `failureMode` to `FAIL` for anything protecting sensitive data, then run the task once with input that should trigger the rule to confirm it's actually scrubbed.
+:::
+
+## Supported tasks
+
+| Task | `inputGuardrail` | `outputGuardrail` |
+|---|---|---|
+| [LLM Chat Complete](/content/reference-docs/ai-tasks/llm-chat-complete) | ✅ | ✅ |
+| [LLM Text Complete](/content/reference-docs/ai-tasks/llm-text-complete) | ✅ | ✅ |
+| [LLM Generate Embeddings](/content/reference-docs/ai-tasks/llm-generate-embeddings) | ✅ | ❌ (output is a numeric vector, not text) |
+| [Parse Document](/content/reference-docs/ai-tasks/parse-document) | ❌ (input is a file, not scrubbable text) | ✅ |
+
+Configuring an unsupported combination (for example, `inputGuardrail` on Parse Document, or either guardrail on a task type not listed here) is rejected when you save the workflow definition — it does not fail silently at runtime.
+
+## Configuration
+
+Add `inputGuardrail` and/or `outputGuardrail` to the task's input parameters:
+
+```json
+"inputGuardrail": {
+  "type": "JAVASCRIPT",
+  "target": "$.prompt.replace(/\\d{13,19}/g, '[REDACTED]')",
+  "failureMode": "FAIL"
+}
+```
+
+| Field | Description | Required |
+|---|---|---|
+| `type` | Supportes types are `JAVASCRIPT`, `HTTP`, or `WORKFLOW`. | Yes |
+| `target` | A JS expression, a URL, or a workflow name, depending on `type`. | Yes |
+| `version` | `WORKFLOW` type only — pins a specific workflow version. Defaults to the latest version. | No |
+| `headers` | `HTTP` type only — extra request headers (for example, an API key) sent with the scrub request. | No |
+| `failureMode` | `FAIL` (default) or `WARN`. See [Failure modes](#failure-modes). | No |
+
+## Guardrail types
+
+- **`JAVASCRIPT`** — evaluates the expression inline (GraalJS) against the text, available as `$.prompt`. Best for simple, self-contained rules like a regex redaction.
+- **`HTTP`** — sends `POST {"prompt": "<text>"}` to `target` and expects a JSON response containing `{"prompt": "<scrubbed text>"}`. Use this to call an external PII/DLP scanning service.
+- **`WORKFLOW`** — runs the named workflow with input `{"prompt": "<text>"}` and expects `prompt` in its output. The workflow must already be registered — this is checked when the LLM task's workflow definition is saved.
+
+## What gets scrubbed
+
+For a chat-complete task, the input guardrail runs separately against every piece of text sent to the model:
+
+- The resolved system instructions.
+- `userInput`, if set.
+- Each `user`-role message in `messages`.
+
+The output guardrail runs once, against the model's final response text.
+
+Each guardrail invocation executes as an independent, trigger-and-wait sub-workflow, tagged `correlationId: guardrail:<taskId>` — so every scrub is visible and auditable in workflow execution history, linked back to the LLM task that triggered it.
+
+## Failure modes
+
+| Mode | Behavior when the guardrail fails or returns no result |
+|---|---|
+| `FAIL` (default) | The LLM task fails. The model is never called. |
+| `WARN` | The failure is logged, and the task proceeds using the original, unscrubbed text. |
+
+Use `FAIL` for guardrails protecting sensitive data (for example, PII or financial data) — a broken guardrail should never silently let unredacted content through. `WARN` suits non-critical guardrails where availability matters more than strict enforcement.
+
+## Examples
+
+<details markdown="1">
+<summary>Redact card numbers with an inline JAVASCRIPT guardrail</summary>
+
+```json
+"inputGuardrail": {
+  "type": "JAVASCRIPT",
+  "target": "$.prompt.replace(/\\d{13,19}/g, '[REDACTED]')",
+  "failureMode": "FAIL"
+}
+```
+
+Any 13–19 digit run in the resolved system instructions, `userInput`, or user messages is replaced with `[REDACTED]` before the model sees it. Because `failureMode` is `FAIL`, a broken expression fails the task instead of forwarding unredacted text.
+
+</details>
+
+<details markdown="1">
+<summary>Call an external DLP service with an HTTP guardrail</summary>
+
+```json
+"outputGuardrail": {
+  "type": "HTTP",
+  "target": "https://dlp.internal.example.com/scrub",
+  "headers": {
+    "Authorization": "Bearer ${workflow.secrets.dlp_api_key}"
+  },
+  "failureMode": "FAIL"
+}
+```
+
+Conductor sends `POST {"prompt": "<model response>"}` to the DLP service and expects `{"prompt": "<scrubbed response>"}` back. Store the service credential as a [secret](/content/developer-guides/secrets-in-conductor) rather than inlining it in `headers`.
+
+</details>
+
+<details markdown="1">
+<summary>Route through a registered workflow with a WORKFLOW guardrail</summary>
+
+```json
+"inputGuardrail": {
+  "type": "WORKFLOW",
+  "target": "pii_scrub_workflow",
+  "version": 3,
+  "failureMode": "WARN"
+}
+```
+
+Conductor runs `pii_scrub_workflow` (version 3) with input `{"prompt": "<text>"}` as a trigger-and-wait sub-workflow and expects `prompt` in its output. Because `failureMode` is `WARN`, if the sub-workflow fails or is deregistered, the LLM task proceeds with the original, unscrubbed text instead of failing outright — appropriate here only because this guardrail isn't the last line of defense for sensitive data.
+
+</details>
+
+## Production notes
+
+- Use `failureMode: FAIL` for any guardrail protecting sensitive data — `WARN` lets unscrubbed text through silently when the guardrail itself breaks.
+- Prefer `JAVASCRIPT` for simple, self-contained rules (regex redaction); reach for `HTTP` or `WORKFLOW` only when the scrubbing logic needs an external service, model, or shared workflow.
+- Store any credential a guardrail needs (API keys, tokens) as a [secret](/content/developer-guides/secrets-in-conductor) and reference it in `headers`, never inline.
+- Pin a `version` on `WORKFLOW` guardrails used in production so an unrelated update to the latest version can't silently change scrubbing behavior.
+- Each guardrail call is its own sub-workflow execution tagged `correlationId: guardrail:<taskId>` — use that to audit what was scrubbed for a given LLM task run.
+- Guardrail/task-type combinations are validated at save time, not at execution time — a misconfigured guardrail is caught before the workflow ever runs.
