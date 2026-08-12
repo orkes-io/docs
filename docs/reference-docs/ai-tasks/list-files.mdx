@@ -34,7 +34,7 @@ Configure these parameters for the List Files task.
 
 The following are generic configuration parameters that can be applied to the task and are not specific to the List Files task.
 
-<details>
+<details markdown="1">
 <summary>Other generic parameters</summary>
 
 Here are other parameters for configuring the task behavior.
@@ -69,24 +69,11 @@ The List Files task will return the following parameters.
 | --------- | ----------- |
 | files | An array of absolute file paths listed from the input location. | 
 
-## Adding a List Files task in UI
-
-**To add a List Files task:**
-
-1. In your workflow, select the (**+**) icon and add a **List Files** task.
-2. In **Input Location**, enter the location of the files to be listed.
-3. (Optional) For private URLs, in **Integration Name**, select the integration already added to the cluster from where the files are to be listed.
-4. (Optional) In **File Types**, select the file type to be listed. Select all or leave blank to include all types.
-5. (Optional) In **Output Location**, enter an output location to store the list of files as a text file.
-6. (Optional) In **Advanced Integration Configuration**, select **+ Add Integration** when multiple integrations are needed. The **key** represents the type of integration (for example, git, aws, gcp), and the **value** specifies the name of the corresponding integration. 
-
-<center><p><img src="/content/img/list-file-task-ui.png" alt="List Files Task" width="100%" height="auto"/></p></center>
-
 ## Examples
 
 Here are some examples for using the List Files task.
 
-<details>
+<details markdown="1">
 <summary>Using List Files task</summary>
 
 To illustrate the use of the List Files task, consider the following workflow that lists all Markdown (.md) files from a public GitHub repository.
@@ -139,7 +126,7 @@ Each element in the files array represents one file path from the input location
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>List files from a private GitHub repository</summary>
 
 In this example, we will:
@@ -198,7 +185,7 @@ The output will contain a `files` array with the absolute paths of all listed `.
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>List files from a private GitHub repository and store them in an AWS S3 bucket</summary>
 
 In this example, we will:

@@ -26,7 +26,7 @@ Configure these parameters for the Chunk Text task.
 
 The following are generic configuration parameters that can be applied to the task and are not specific to the Chunk Text task.
 
-<details>
+<details markdown="1">
 <summary>Caching parameters</summary>
 
 You can cache the task outputs using the following parameters. Refer to [Caching Task Outputs](/faqs/task-cache-output) for a full guide.
@@ -38,7 +38,7 @@ You can cache the task outputs using the following parameters. Refer to [Caching
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>Other generic parameters</summary>
 
 Here are other parameters for configuring the task behavior.
@@ -74,23 +74,11 @@ The Chunk Text task will return the following parameters.
 | --------- | ----------- |
 | text | An array of chunked text segments. Each element in the array represents one chunk of the original text. | 
 
-## Adding a Chunk Text task in UI
-
-**To add a Chunk Text task:**
-
-1. In your workflow, select the (**+**) icon and add a **Chunk Text** task.
-2. In the **Text Input** field, enter or paste the text you want to chunk. The field displays a character counter below the input box.
-3. Optionally **Enable syntax highlighting** if your text contains code.
-4. In **Chunk Size**, specify the maximum number of characters per chunk (100-10,000). The slider helps select the chunk size range visually. The UI also displays the **Estimated chunks** and **Characters per chunk** based on the input.
-5. In **Media Type**, select a document format or choose **Auto-detect (Recommended)** to automatically determine the best chunking strategy.
-
-<center><p><img src="/content/img/chunk-test-task-ui.png" alt="Chunk Text Task" width="100%" height="auto"/></p></center>
-
 ## Examples
 
 Here are some examples for using the Chunk Text task.
 
-<details>
+<details markdown="1">
 <summary>Using Chunk Text task</summary>
 
 To illustrate the use of the Chunk Text task in a workflow, consider a workflow that splits a long paragraph into smaller text chunks for downstream processing, such as embedding generation or summarization.

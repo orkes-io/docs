@@ -37,7 +37,7 @@ Configure these parameters for the LLM Search Index task.
 
 The following are generic configuration parameters that can be applied to the task and are not specific to the LLM Search Index task.
 
-<details>
+<details markdown="1">
 <summary>Caching parameters</summary>
 
 You can cache the task outputs using the following parameters. Refer to [Caching Task Outputs](/faqs/task-cache-output) for a full guide.
@@ -49,7 +49,7 @@ You can cache the task outputs using the following parameters. Refer to [Caching
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>Other generic parameters</summary>
 
 Here are other parameters for configuring the task behavior.
@@ -95,22 +95,11 @@ The LLM Search Index task will return the following parameters.
 | parentDocId | An identifier that denotes a parent document in hierarchical or relational data structures. | 
 | text | The actual content retrieved. |
 
-## Adding an LLM Search Index task in UI
-
-**To add an LLM Search Index task:**
-
-1. In your workflow, select the (**+**) icon and add an **LLM Search Index** task.
-2. In **Vector Database Configuration**, select the **Vector database**, **Index**, and **Namespace** to retrieve the embeddings.
-3. In **Embedding Model**, select the **Embedding model provider**, and **Embedding model** to generate the embeddings.
-4. In **Search Parameter**, enter the **Query**, **Max Results**, and **Dimensions**.
-
-<center><p><img src="/content/img/llm-search-index-ui-method.png" alt="LLM Search Index Task - UI" width="80%" height="auto"/></p></center>
-
 ## Examples
 
 Here are some examples for using the LLM Search Index task.
 
-<details>
+<details markdown="1">
 <summary>Using an LLM Search Index task in a workflow</summary>
 
 See an example of [building a document retrieval workflow using Orkes Conductor](http://orkes.io/content/tutorials/document-retrieval-workflow).
