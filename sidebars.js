@@ -159,9 +159,9 @@ const sidebars = {
                             label: 'Using AI Models or LLMs',
                         },
                         {
-                            type: 'link',
-                            label: 'Using Vector Databases',
-                            href: '/category/reference-docs/ai-tasks',
+                            type: 'doc',
+                            id: 'documentation/configuration/workflowdef/systemtasks/ai-tasks',
+                            label: 'AI Tasks',
                         },
                         {
                             type: 'doc',
