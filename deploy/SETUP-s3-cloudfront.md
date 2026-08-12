@@ -72,6 +72,11 @@ Create an environment named **`marketing-non-prod`** with these **Variables**:
 | `MARKETING_CF_DIST_ID` | the non-prod distribution ID |
 | `DOCS_SITE_URL` | `https://<non-prod-cf-domain>/content/` |
 
+Do **not** set `DOCS_ENABLE_ANALYTICS` here. Google Tag Manager is off unless a
+build opts in, which keeps non-prod traffic out of the production GA4 property.
+To smoke-test tags against a throwaway container, set `DOCS_GTM_ID` to that
+container instead of pointing non-prod at the real one.
+
 ## 5. Run it
 - Push to `docs_site_revamp` (or run the workflow manually via **workflow_dispatch**).
 - Test: `https://<non-prod-cf-domain>/content/quickstarts`.
@@ -84,3 +89,15 @@ Mirror this in the **marketing-prod** account — its own bucket
 distribution, and a `marketing-prod` GitHub Environment. Then either add a
 `prod` job/trigger to this workflow or a separate one. Only at that point do you
 repoint `orkes.io` `/content` off the portal-baked Docusaurus.
+
+**Set `DOCS_ENABLE_ANALYTICS: 1` on that prod job.** Nothing sets it today, so
+every current build ships with no analytics at all — miss this at cutover and
+`orkes.io/content` goes live unmeasured. It injects Google Tag Manager
+(`GTM-M4Q6Z3R2`, overridable via `DOCS_GTM_ID`) into `<head>`. The container owns
+GA4 and Google Ads; the site deliberately does not load `gtag.js` itself, since
+the Docusaurus build configured `G-4400JPTLRF` both on-page and inside the
+container and double-counted `page_view`.
+
+One duplicate survives on the container side and can only be fixed in the GTM
+console: a GA4 event tag named `page_view` on an All Pages trigger, on top of the
+config tag's `send_page_view`. Clear that before or shortly after cutover.
