@@ -1,0 +1,93 @@
+name: Deploy Docs to S3 — prod
+
+# Builds the MkDocs site with base=/content and publishes it to the S3 bucket in
+# the marketing-prod account, then invalidates the /content/* path on the prod
+# marketing CloudFront distribution. Mirrors deploy-docs-s3.yml (non-prod).
+#
+# This bucket is NOT public yet — orkes.io/content is still served by the
+# portal-baked Docusaurus build. Until the distribution is repointed, deploying
+# here is safe and replaces deploying by hand from a laptop.
+#
+# !! AT CUTOVER: change the push trigger to `branches: [main]` BEFORE repointing
+# CloudFront. Left as-is, every merge into the integration branch would publish
+# straight to the live site. Config lives in the `marketing-prod` GitHub
+# Environment (see deploy/SETUP-s3-cloudfront.md).
+
+on:
+  push:
+    branches: [refactor/docs-oss-enterprise-merge] # → [main] at cutover
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write # OIDC → AWS
+
+concurrency:
+  group: docs-s3-prod
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Build (base=/content) → S3 + invalidate
+    runs-on: ubuntu-latest
+    environment: marketing-prod
+    env:
+      DOCS_BASE_URL: /content
+      DOCS_SITE_URL: ${{ vars.DOCS_SITE_URL }} # https://orkes.io/content/ ; unset falls back to the same
+      # Google Tag Manager is off in every other build (dev, non-prod, Pages
+      # preview) so their traffic stays out of the production GA4 property.
+      # This is the one job that turns it on — drop it and prod ships unmeasured.
+      DOCS_ENABLE_ANALYTICS: "1"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Fetch shared OSS docs
+        run: npm run fetch:oss-docs
+
+      - name: Build site (base=/content)
+        run: npm run build
+
+      - name: Audit generated site
+        run: npm run audit:docs
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      # Hashed, content-addressed Material assets → cache 1 year, immutable.
+      - name: Sync immutable assets
+        run: |
+          aws s3 sync build/ "s3://${{ vars.DOCS_BUCKET }}/content/" \
+            --delete \
+            --cache-control "public, max-age=31536000, immutable" \
+            --exclude "*" --include "assets/*"
+
+      # Everything else (HTML, images, search index) → short cache; prune stale.
+      - name: Sync HTML + the rest
+        run: |
+          aws s3 sync build/ "s3://${{ vars.DOCS_BUCKET }}/content/" \
+            --delete \
+            --cache-control "public, max-age=300" \
+            --exclude "assets/*"
+
+      - name: Invalidate CloudFront /content/*
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id "${{ vars.MARKETING_CF_DIST_ID }}" \
+            --paths "/content/*"

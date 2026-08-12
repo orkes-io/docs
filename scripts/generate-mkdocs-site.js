@@ -27,10 +27,10 @@ const DEVELOPER_EDITION_URL =
 const GTM_CONTAINER_ID = process.env.DOCS_GTM_ID || "GTM-M4Q6Z3R2";
 // Off unless a deploy opts in, so local dev servers, the non-prod S3 build, and
 // the GitHub Pages preview never send page_view into the production property.
-// NOTE: nothing sets DOCS_ENABLE_ANALYTICS today, so every current build ships
-// without analytics. Production orkes.io/content is still the Docusaurus build,
-// deployed outside this repo; the MkDocs production deploy must set it to 1 at
-// cutover or the site goes live unmeasured. See deploy/SETUP-s3-cloudfront.md.
+// Only .github/workflows/deploy-docs-prod-s3.yml sets it. That workflow is
+// manual-dispatch only and does not serve orkes.io/content yet (production is
+// still the Docusaurus build, deployed outside this repo), so in practice every
+// build today ships unmeasured. See deploy/SETUP-s3-cloudfront.md.
 const ANALYTICS_ENABLED = /^(1|true|yes)$/i.test(process.env.DOCS_ENABLE_ANALYTICS || "");
 const AGENTSPAN_RELATIONSHIP_COPY =
   "Agentspan is the developer-facing agent runtime. Conductor OSS is the durable workflow engine underneath. Orkes Conductor is the managed enterprise platform for operating Conductor-based systems at scale.";
