@@ -352,11 +352,6 @@
       "route": "reference-docs/api/task"
     },
     {
-      "source": "documentation/configuration/workflowdef/systemtasks/ai-tasks.md",
-      "docId": "reference-docs/ai-tasks",
-      "route": "reference-docs/ai-tasks"
-    },
-    {
       "source": "devguide/ai/llm-orchestration.md",
       "docId": "developer-guides/ai-orchestration",
       "route": "developer-guides/ai-orchestration"
