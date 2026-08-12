@@ -19,6 +19,19 @@ const SITE_DESCRIPTION =
 const DOCS_LAST_MODIFIED = process.env.DOCS_LAST_MODIFIED || "2026-05-14";
 const DEVELOPER_EDITION_URL =
   "https://developer.orkescloud.com/?ga_id=GA1.1.114307086.1749276711&amp;utm_source=google&amp;utm_medium=organic&amp;_gl=1*mi3s3s*_gcl_au*MTU0NDU1MTQuMTc3ODM5MTkyMw..";
+// Analytics is GTM-only by design. The container already owns GA4
+// (G-4400JPTLRF) and Google Ads (AW-10838690947), so the site deliberately does
+// not load gtag.js directly the way the legacy Docusaurus build did — that setup
+// configured the same GA4 property both on-page and again inside the container,
+// duplicating page_view. Keep the container as the single tag source.
+const GTM_CONTAINER_ID = process.env.DOCS_GTM_ID || "GTM-M4Q6Z3R2";
+// Off unless a deploy opts in, so local dev servers, the non-prod S3 build, and
+// the GitHub Pages preview never send page_view into the production property.
+// NOTE: nothing sets DOCS_ENABLE_ANALYTICS today, so every current build ships
+// without analytics. Production orkes.io/content is still the Docusaurus build,
+// deployed outside this repo; the MkDocs production deploy must set it to 1 at
+// cutover or the site goes live unmeasured. See deploy/SETUP-s3-cloudfront.md.
+const ANALYTICS_ENABLED = /^(1|true|yes)$/i.test(process.env.DOCS_ENABLE_ANALYTICS || "");
 const AGENTSPAN_RELATIONSHIP_COPY =
   "Agentspan is the developer-facing agent runtime. Conductor OSS is the durable workflow engine underneath. Orkes Conductor is the managed enterprise platform for operating Conductor-based systems at scale.";
 
@@ -3433,6 +3446,28 @@ function writeOverrides() {
   }
   </script>`,
   );
+  // Google Tag Manager, injected via Material's analytics block so it lands in
+  // <head> ahead of the page content. Material's own partial is kept so a future
+  // extra.analytics config still works. No <noscript> iframe: Material needs JS
+  // to render at all, so a no-JS pageview is not measurable here anyway.
+  if (ANALYTICS_ENABLED) {
+    main = main.replace(
+      "{% block extrahead %}",
+      `{% block analytics %}
+  {% include "partials/integrations/analytics.html" %}
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','${GTM_CONTAINER_ID}');</script>
+  <!-- End Google Tag Manager -->
+{% endblock %}
+
+{% block extrahead %}`,
+    );
+  }
+
   write(mainPath, main);
 
   const notFoundPath = path.join(OVERRIDES_DIR, "404.html");
