@@ -15,6 +15,7 @@ Event handlers in Orkes Conductor listen for messages from message brokers and t
 - Update variables
 - Fail a task
 - Start a new workflow
+- Start an agent
 
 :::tip 5-minute path
 To get an event handler running quickly: configure the broker integration, choose the sink string, write a condition, choose one action, and test with a representative payload. Add idempotency and monitoring before moving to production.
@@ -42,7 +43,7 @@ Before configuring an event handler, ensure the following:
 | event | The event queue sink in the format:<br/> **message-broker-type:integration-name:topic/queue-name**.<br/>Where,<ul><li>**message-broker-type**: The message broker type from where the payload is being received. Supported types:<ul><li>amqp</li><li>sqs</li><li>azure</li><li>kafka</li><li>nats</li><li>gcp_pubsub</li><li>ibm_mq</li></ul></li><li>**integration-name**: The integration name added to the cluster.</li><li>**topic/queue-name**: The name of the queue or topic where the payload is being received.</li></ul><TableNote title="Warning">When configuring via the Conductor UI, the **Event** field lists only message broker integrations configured in your cluster. Select the required integration and append the topic name or queue name. Failure to do so may result in execution errors, as the payload won't have a valid destination.</TableNote> | Required. | 
 | condition | An ECMAScript (JavaScript) function to control message processing. The function should return `true` for the event handler to process the message. [Learn more about filtering events](#filter-events-with-conditions). | Required. | 
 | evaluatorType | The type of evaluator for the condition. Currently supports `javascript`. | Required. | 
-| actions | An array of actions to perform. Each action requires specific input parameters. Supported actions include:<ul><li>[complete_task](/content/developer-guides/event-handler#complete-task)</li><li>[terminate_workflow](/content/developer-guides/event-handler#terminate-workflow)</li><li>[update_workflow_variables](/content/developer-guides/event-handler#update-variables)</li><li>[fail_task](/content/developer-guides/event-handler#fail-task)</li><li>[start_workflow](/content/developer-guides/event-handler#start-workflow)</li></ul> | Required. |
+| actions | An array of actions to perform. Each action requires specific input parameters. Supported actions include:<ul><li>[complete_task](/content/developer-guides/event-handler#complete-task)</li><li>[terminate_workflow](/content/developer-guides/event-handler#terminate-workflow)</li><li>[update_workflow_variables](/content/developer-guides/event-handler#update-variables)</li><li>[fail_task](/content/developer-guides/event-handler#fail-task)</li><li>[start_workflow](/content/developer-guides/event-handler#start-workflow)</li><li>[start_agent](/content/developer-guides/event-handler#start-agent)</li></ul> | Required. |
 | active | Whether the event handler is enabled. Set to `true` to enable the event handler or `false` to disable it. | Required. |
 
 4. Select **Save** > **Confirm Save**.
@@ -399,3 +400,48 @@ If ordering matters for your use case:
 - Use a consistent partition key for messages that must be processed in order, so they land on the same partition.
 - Use `idempotencyKey` on the `start_workflow` action to prevent duplicate workflows from being created if a message is redelivered.
 - Handle ordering inside the workflow; pass a sequence number or timestamp in the event payload and use it within the workflow to detect and respond to out-of-order execution.
+
+### Start Agent
+
+:::info Available since
+- v5.5.0 and later
+:::
+
+Starts a new execution of an agent — a workflow definition that has been registered/built as an agent. The target name must resolve to an agent-type workflow definition; pointing this at a regular (non-agent) workflow returns an "Agent not found" error.
+
+**Example Payload**
+
+```json
+{
+  "name": "sample-event-handler",
+  "description": "Sample event handler",
+  "event": "kafka:sampleConfig:sampleName",
+  "evaluatorType": "javascript",
+  "condition": "true",
+  "actions": [
+    {
+      "action": "start_agent",
+      "start_agent": {
+        "name": "agentName",
+        "version": 2,
+        "prompt": "${userPrompt}",
+        "sessionId": "${sessionId}",
+        "idempotencyKey": "${eventId}"
+      }
+    }
+  ]
+}
+```
+
+**Parameters**
+
+| Parameter | Description | Required/ Optional |
+| --------- | ----------- | ----------------- |
+| actions. **action** | The action to be triggered on receiving events. Set this to `start_agent`. | Required. |
+| actions. start_agent. **name** | The name of the agent to execute. This must be a definition already registered as an agent. Supports `${fieldName}` substitution from the event payload. | Required. |
+| actions. start_agent. **version** | The version of the agent to be executed. If unspecified, the latest version will be used. | Optional. |
+| actions. start_agent. **prompt** | The prompt passed to the agent as input. Supports `${fieldName}` substitution from the event payload. | Optional. |
+| actions. start_agent. **sessionId** | Associate this run with an existing agent session. Supports `${fieldName}` substitution from the event payload. | Optional. |
+| actions. start_agent. **idempotencyKey** | A unique, user-generated key to prevent duplicate agent executions. Supports `${fieldName}` substitution from the event payload. If an execution with the same key already exists, its execution ID is returned instead of starting a new run. | Optional. |
+| actions. start_agent. **media** | A list of media references (e.g., file or image URLs) passed to the agent as input. Supports `${fieldName}` substitution from the event payload. | Optional. |
+| actions. **context** | Additional context data passed to the agent as input. Supports `${fieldName}` substitution from the event payload. | Optional. |
