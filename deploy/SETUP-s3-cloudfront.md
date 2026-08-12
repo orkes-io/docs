@@ -86,17 +86,30 @@ container instead of pointing non-prod at the real one.
 ## Later: promoting to prod (not now)
 Mirror this in the **marketing-prod** account — its own bucket
 (`orkes-docs-prod`), the `/content/*` behavior + function on the **prod**
-distribution, and a `marketing-prod` GitHub Environment. Then either add a
-`prod` job/trigger to this workflow or a separate one. Only at that point do you
-repoint `orkes.io` `/content` off the portal-baked Docusaurus.
+distribution, and a `marketing-prod` GitHub Environment. Only at that point do
+you repoint `orkes.io` `/content` off the portal-baked Docusaurus.
 
-**Set `DOCS_ENABLE_ANALYTICS: 1` on that prod job.** Nothing sets it today, so
-every current build ships with no analytics at all — miss this at cutover and
-`orkes.io/content` goes live unmeasured. It injects Google Tag Manager
-(`GTM-M4Q6Z3R2`, overridable via `DOCS_GTM_ID`) into `<head>`. The container owns
-GA4 and Google Ads; the site deliberately does not load `gtag.js` itself, since
-the Docusaurus build configured `G-4400JPTLRF` both on-page and inside the
-container and double-counted `page_view`.
+The workflow already exists: **`.github/workflows/deploy-docs-prod-s3.yml`**.
+Same build and audit steps as non-prod, `environment: marketing-prod`, and for
+now it pushes on `refactor/docs-oss-enterprise-merge` — the prod bucket is not
+public yet, so this just replaces deploying to it by hand.
+
+> **Before repointing CloudFront, change that trigger to `branches: [main]`.**
+> Otherwise every merge into the integration branch publishes to the live site.
+
+Populate the `marketing-prod` Environment with the same five
+variables as the table above, with `DOCS_SITE_URL` set to
+`https://orkes.io/content/` — if you leave it unset the build falls back to that
+same value, so it is safe either way.
+
+That workflow is also the only build that sets **`DOCS_ENABLE_ANALYTICS: "1"`**,
+which injects Google Tag Manager (`GTM-M4Q6Z3R2`, overridable via `DOCS_GTM_ID`)
+into `<head>`. Every other build — dev, non-prod, Pages preview — ships without
+analytics by design. If you replace or rewrite this job, keep that variable or
+prod goes live unmeasured. The container owns GA4 and Google Ads; the site
+deliberately does not load `gtag.js` itself, since the Docusaurus build
+configured `G-4400JPTLRF` both on-page and inside the container and
+double-counted `page_view`.
 
 One duplicate survives on the container side and can only be fixed in the GTM
 console: a GA4 event tag named `page_view` on an All Pages trigger, on top of the
