@@ -302,6 +302,11 @@ const sidebars = {
             id: 'access-control-and-security/tags',
             label: 'Tag-Based Access',
         },
+        {
+            type: 'doc',
+            id: 'access-control-and-security/audit-logs',
+            label: 'Audit Logs',
+        },
     ],
 
     // ==========================================================================
