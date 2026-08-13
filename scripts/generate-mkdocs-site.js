@@ -2757,11 +2757,33 @@ function buildNav() {
     navSeen,
   );
 
-  // Layer enterprise-only pages into the OSS tabs. The global dedupe in
-  // navFromItems drops every page the OSS structure already lists, so
-  // appending a whole enterprise sidebar leaves only its enterprise-only
-  // remainder, with its own group labels intact. Developer Guides is routed
-  // per top-level group by topic.
+  // Materialize every OSS tab template BEFORE appending any enterprise
+  // sidebar. The global dedupe in navFromItems is first-claimant-wins, so a
+  // later-built OSS tab (Platform, Learn) would otherwise lose pages to stale
+  // enterprise sidebar entries that alias the same docs — that is exactly how
+  // the old quickstartSidebar stole the Platform concepts pages into Getting
+  // Started. Tabs are still pushed to nav in display order below.
+  const platformChildren = navFromItems(platformTabItems(), navSeen);
+  const learnChildren = navFromItems(
+    [
+      d("learn", "Overview"),
+      cat("Contribute", [
+        d("resources/contribute", "Overview"),
+        d("resources/contribute/repositories", "Repositories"),
+        d("resources/contributing", "Contribution Guide"),
+        d("resources/contribute/best-practices", "Best Practices"),
+        d("resources/contribute/code-of-conduct", "Code of Conduct"),
+      ]),
+      d("resources/contribute/get-help", "Get Help"),
+    ],
+    navSeen,
+  );
+
+  // Layer enterprise-only pages into the OSS tabs. After the reserve pass
+  // above, appending a whole enterprise sidebar leaves only its
+  // enterprise-only remainder. Developer Guides is routed per top-level group
+  // by topic. Survivors are grouped under an "Orkes Enterprise" section so
+  // the seam between shared OSS docs and enterprise-only docs stays visible.
   const labelOf = (item) =>
     (typeof item === "string" ? item : item.label || item.id || item.href || "").toLowerCase();
   const guideExtras = { Workflows: [], Agents: [], Integrations: [], Platform: [] };
@@ -2774,46 +2796,30 @@ function buildNav() {
     guideExtras[tab].push(item);
   }
 
-  tabChildren["Getting Started"].push(...navFromItems(sidebars.quickstartSidebar, navSeen));
-  tabChildren.Workflows.push(...navFromItems(guideExtras.Workflows, navSeen));
-  tabChildren.Agents.push(
-    ...navFromItems([...guideExtras.Agents, ...sidebars.aiSidebar], navSeen),
-  );
-  tabChildren["Design Patterns"].push(...navFromItems(sidebars.cookbookSidebar, navSeen));
-  tabChildren["AI Cookbook"].push(...navFromItems(sidebars.aiCookbookSidebar, navSeen));
-  tabChildren.SDK.push(...navFromItems(sidebars.sdksSidebar, navSeen));
+  const pushEnterprise = (children, items) => {
+    const extras = navFromItems(items, navSeen);
+    if (extras.length) children.push({ "Orkes Enterprise": extras });
+  };
 
-  integrationsChildren.push(
-    ...navFromItems([...guideExtras.Integrations, ...sidebars.eventingSidebar], navSeen),
-  );
-  integrationsChildren.push(
-    ...navFromItems([cat("Integration Catalog", sidebars.integrationsSidebar)], navSeen),
-  );
+  pushEnterprise(tabChildren["Getting Started"], sidebars.quickstartSidebar);
+  pushEnterprise(tabChildren.Workflows, guideExtras.Workflows);
+  pushEnterprise(tabChildren.Agents, [...guideExtras.Agents, ...sidebars.aiSidebar]);
+  pushEnterprise(tabChildren["Design Patterns"], sidebars.cookbookSidebar);
+  pushEnterprise(tabChildren["AI Cookbook"], sidebars.aiCookbookSidebar);
+  pushEnterprise(tabChildren.SDK, sidebars.sdksSidebar);
+
+  pushEnterprise(integrationsChildren, [
+    ...guideExtras.Integrations,
+    ...sidebars.eventingSidebar,
+    cat("Integration Catalog", sidebars.integrationsSidebar),
+  ]);
   nav.push({ Integrations: integrationsChildren });
 
   nav.push({ Security: navFromItems(sidebars.rbacSidebar, navSeen) });
-  nav.push({
-    Learn: navFromItems(
-      [
-        d("learn", "Overview"),
-        cat("Contribute", [
-          d("resources/contribute", "Overview"),
-          d("resources/contribute/repositories", "Repositories"),
-          d("resources/contributing", "Contribution Guide"),
-          d("resources/contribute/best-practices", "Best Practices"),
-          d("resources/contribute/code-of-conduct", "Code of Conduct"),
-        ]),
-        d("resources/contribute/get-help", "Get Help"),
-        ...sidebars.contributeSidebar,
-      ],
-      navSeen,
-    ),
-  });
+  pushEnterprise(learnChildren, sidebars.contributeSidebar);
+  nav.push({ Learn: learnChildren });
   nav.push({ Reference: navFromItems(sidebars.referenceSidebar, navSeen) });
-  const platformChildren = navFromItems(platformTabItems(), navSeen);
-  platformChildren.push(
-    ...navFromItems([...guideExtras.Platform, ...sidebars.deploySidebar], navSeen),
-  );
+  pushEnterprise(platformChildren, [...guideExtras.Platform, ...sidebars.deploySidebar]);
   nav.push({ Platform: platformChildren });
 
   // Keep legacy indexed category URLs even when their groups are intentionally
