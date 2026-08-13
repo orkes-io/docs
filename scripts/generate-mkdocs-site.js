@@ -2798,7 +2798,7 @@ function buildNav() {
 
   const pushEnterprise = (children, items) => {
     const extras = navFromItems(items, navSeen);
-    if (extras.length) children.push({ "Orkes Enterprise": extras });
+    if (extras.length) children.push({ Enterprise: extras });
   };
 
   pushEnterprise(tabChildren["Getting Started"], sidebars.quickstartSidebar);
@@ -3632,6 +3632,28 @@ body[data-md-color-scheme="default"] .md-header--shadow ~ .md-tabs {
 .md-header .md-source__repository,
 .md-header .md-social__link {
   color: var(--c-header-text) !important;
+}
+/* "Enterprise" nav sections (tagged in postprocess): mark the seam between
+   shared OSS docs and enterprise-only docs with the Orkes accent instead of a
+   plain topical header. */
+.md-nav__item--enterprise {
+  margin-top: 1.1em;
+  padding-top: 1em;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+}
+.md-nav__item--enterprise > label.md-nav__link {
+  color: var(--c-accent) !important;
+}
+.md-nav__item--enterprise > label.md-nav__link .md-ellipsis::before {
+  content: "";
+  display: inline-block;
+  width: 0.45em;
+  height: 0.45em;
+  margin-right: 0.5em;
+  border-radius: 1.5px;
+  background: var(--c-accent);
+  transform: rotate(45deg);
+  vertical-align: 0.05em;
 }
 .md-tabs__item {
   padding: 0 0.15rem;
