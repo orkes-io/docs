@@ -2257,6 +2257,7 @@ function ossNavTabs() {
       d("devguide/how-tos/Workflows/starting-workflows", "Starting Workflows"),
       d("devguide/how-tos/Workflows/choosing-a-trigger", "Choosing a Trigger"),
       d("devguide/how-tos/Workflows/scheduling-workflows", "Scheduling Workflows"),
+      d("devguide/cookbook/sending-signals", "Send Signals"),
       d("devguide/how-tos/Workflows/handling-errors", "Handling Errors"),
     ]),
     cat("Operate", [
@@ -2474,7 +2475,6 @@ function buildNav() {
         d("devguide/how-tos/publish-events", "Publish Events"),
         d("devguide/how-tos/consume-route-events", "Consume and Route Events"),
         d("devguide/how-tos/incoming-webhooks", "Incoming Webhooks"),
-        d("devguide/cookbook/sending-signals", "Send Signals"),
         d("devguide/how-tos/workflow-status-events", "Workflow Status Events"),
       ]),
       d("devguide/ai/mcp-guide", "MCP Integration"),
