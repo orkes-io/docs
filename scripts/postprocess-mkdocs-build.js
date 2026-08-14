@@ -119,6 +119,14 @@ function rewriteHtml(file) {
     /\b(href|src|content)=["']([^"']+)["']/g,
     (all, attr, href) => `${attr}="${toCanonicalPath(href, currentRoute)}"`,
   );
+  // Tag the generated "Enterprise" nav sections so CSS can style the
+  // enterprise seam differently from ordinary topical sections. Material
+  // emits no per-section class, so match the section whose title is exactly
+  // "Enterprise" (whitespace-only between the li opening and its label).
+  html = html.replace(
+    /<li class="md-nav__item md-nav__item--section md-nav__item--nested">((?:(?!<li\b)[\s\S])*?md-ellipsis">\s*Enterprise\s*<)/g,
+    '<li class="md-nav__item md-nav__item--section md-nav__item--nested md-nav__item--enterprise">$1',
+  );
   fs.writeFileSync(file, html);
 }
 

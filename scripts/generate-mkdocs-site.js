@@ -15,7 +15,7 @@ const LEGACY_SITE_URLS = ["https://orkes.io/content/", "http://orkes.io/content/
 const BASE_URL = normalizeBaseUrl(process.env.DOCS_BASE_URL || "/content");
 const SITE_URL = normalizeSiteUrl(process.env.DOCS_SITE_URL || "https://orkes.io/content/");
 const SITE_DESCRIPTION =
-  "Orkes Conductor is the managed enterprise platform for Conductor OSS, a durable workflow engine for production AI agents and distributed systems.";
+  "Orkes Conductor is the enterprise platform for Conductor OSS, available fully managed or in your own environment, a durable workflow engine for production AI agents and distributed systems.";
 const DOCS_LAST_MODIFIED = process.env.DOCS_LAST_MODIFIED || "2026-05-14";
 const DEVELOPER_EDITION_URL =
   "https://developer.orkescloud.com/?ga_id=GA1.1.114307086.1749276711&amp;utm_source=google&amp;utm_medium=organic&amp;_gl=1*mi3s3s*_gcl_au*MTU0NDU1MTQuMTc3ODM5MTkyMw..";
@@ -32,8 +32,8 @@ const GTM_CONTAINER_ID = process.env.DOCS_GTM_ID || "GTM-M4Q6Z3R2";
 // still the Docusaurus build, deployed outside this repo), so in practice every
 // build today ships unmeasured. See deploy/SETUP-s3-cloudfront.md.
 const ANALYTICS_ENABLED = /^(1|true|yes)$/i.test(process.env.DOCS_ENABLE_ANALYTICS || "");
-const AGENTSPAN_RELATIONSHIP_COPY =
-  "Agentspan is the developer-facing agent runtime. Conductor OSS is the durable workflow engine underneath. Orkes Conductor is the managed enterprise platform for operating Conductor-based systems at scale.";
+const AGENT_RUNTIME_RELATIONSHIP_COPY =
+  "Conductor OSS is the durable workflow engine with a built-in agent runtime. Orkes Conductor is the enterprise platform built on it, available as a fully managed cloud or deployed in your own environment.";
 
 // Home page only — Sora + JetBrains Mono, scoped to .home-wrapper via CSS (rest of the site keeps the OSS base font)
 const HOME_PAGE_FONT_IMPORT =
@@ -1516,31 +1516,11 @@ function appendBeforeNextSteps(body, addition) {
 function enhancePositioningPage(body, route) {
   let output = body;
 
-  if (route === "ai-orchestration") {
+  const platformVariant = platformCalloutVariant(route);
+  if (platformVariant) {
     output = insertAfterIntro(
       output,
-      [
-        "## Where Conductor fits",
-        "",
-        "Use your agent framework for reasoning, prompts, graph composition, and model-specific loops. Use Conductor for execution: persisted state, task queues, retries, timeouts, durable human waits, replay, governance, and audit history.",
-        "",
-        AGENTSPAN_RELATIONSHIP_COPY,
-        "",
-        "Conductor is the durable runtime under production agents and distributed workflows. It is not a replacement for every agent framework, and it should not be positioned as one. Keep the framework where it helps the model reason; add Conductor where the work must finish reliably.",
-      ].join("\n"),
-    );
-    output = output.replace(
-      "If you run agents on a framework like LangChain, CrewAI, or LangGraph without a durable execution backend, you are responsible for:",
-      "If you run agents only inside an in-process or non-durable runtime, you are responsible for:",
-    );
-    output = output.replace(
-      "Conductor makes every agent a durable agent — one that survives crashes, retries, and infrastructure failures without losing progress.",
-      "Conductor lets you run agents as durable workflows that can survive crashes, retries, and infrastructure failures without losing completed progress.",
-    );
-    output = output.replace(/any MCP server/g, "any MCP-compatible server");
-    output = output.replace(
-      "Supports built-in tools: web search, code execution, file search, extended thinking.",
-      "Provider and model specific tool features such as web search, code execution, file search, or extended thinking can be passed through when the configured provider supports them.",
+      platformVariant === "concept" ? PLATFORM_CONCEPT_CALLOUT : PLATFORM_OPS_CALLOUT,
     );
   }
 
@@ -1614,21 +1594,6 @@ function enhancePositioningPage(body, route) {
     output = output.replace(
       "Code-based workflow engines require generated code to be compiled, tested, and deployed before it runs — a friction that fundamentally limits how dynamically an AI system can operate.",
       "Code-first workflow approaches often require generated workflow code to be compiled, tested, and deployed before it runs, which adds friction when an AI system needs to create or change orchestration at runtime.",
-    );
-  }
-
-  if (route === "conductor-skills") {
-    output = appendBeforeNextSteps(
-      output,
-      [
-        "## Conductor Skills and Agentspan",
-        "",
-        "Conductor Skills help AI coding agents create, run, monitor, debug, and manage Conductor workflows and workers. They are authoring and operations instructions for coding agents.",
-        "",
-        AGENTSPAN_RELATIONSHIP_COPY,
-        "",
-        "Do not describe Conductor Skills as the agent runtime. Conductor Skills are instructions for AI coding agents. Agentspan is runtime integration for agent applications that need durable execution through Conductor.",
-      ].join("\n"),
     );
   }
 
@@ -1731,29 +1696,15 @@ function convertEntry(entry) {
   return `${buildFrontMatter(frontMatter, route, pageTitle)}${cleaned}${related}`;
 }
 
-// Upstream owns the OSS home copy, so normalize the two things the messaging
-// audit enforces here rather than forking the page: the durable-execution proof
-// points must appear on the home page, and the unbounded polyglot claim is a
-// forbidden phrase. Both are re-applied on every OSS refresh so an upstream
-// reword can't silently drop them.
+// Upstream owns the OSS home copy, so normalize the one claim the messaging
+// audit enforces here rather than forking the page: the unbounded polyglot
+// claim is a forbidden phrase, re-applied on every OSS refresh so an upstream
+// reword can't silently reintroduce it.
 function applyHomeMessaging(body) {
-  let output = body.replace(
+  return body.replace(
     "Write task workers in any language.",
     "Write task workers in Python, Java, Go, C#, JavaScript, and more.",
   );
-
-  if (!output.includes("Persisted state") || !output.includes("Execution history")) {
-    const proofPoints =
-      '<p class="feature-proof" style="margin-top:10px;">Persisted state &mdash; resume after failure. ' +
-      "Isolated retries &mdash; only failed steps retry. " +
-      "Execution history &mdash; inputs, outputs, and a full audit trail.</p>";
-    const durableCard = /(<h3>Durable execution by default<\/h3>\s*<p>[\s\S]*?<\/p>)/;
-    output = durableCard.test(output)
-      ? output.replace(durableCard, `$1\n      ${proofPoints}`)
-      : `${output.trimEnd()}\n\n<section class="home-proof-points">\n  ${proofPoints}\n</section>\n`;
-  }
-
-  return output;
 }
 
 // The homepage mirrors the OSS docs home (conductor-oss/conductor docs/index.md)
@@ -1772,313 +1723,6 @@ description: "Orkes Conductor documentation for building durable workflows, API 
 ---
 
 ${body}`;
-}
-
-function makeHomePageLegacyUnused() {
-  return `---
-hide:
-  - navigation
-  - toc
-description: "Orkes Conductor documentation for building durable workflows, API orchestration, microservice orchestration, and AI agent orchestration."
----
-
-<div class="home-wrapper">
-
-<!-- ===================== HERO ===================== -->
-<section class="hp-section" style="padding-top:44px;">
-  <div class="hp-wrap">
-    <div class="hp-eyebrow-hero">Orkes Conductor</div>
-    <h1 class="hp-title" style="font-size:44px;margin-bottom:18px;">Start building with Orkes Conductor</h1>
-    <p class="hp-hero-sub">Everything you need to orchestrate durable workflows and production AI agents &mdash; from prototype to production.</p>
-    <div style="margin-bottom:38px;">
-      <a href="${DEVELOPER_EDITION_URL}" class="hp-cta-pill">Start for free <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
-    </div>
-
-    <!-- ===================== CHOOSE HOW YOU BUILD ===================== -->
-    <div class="hp-eyebrow-section">Platform</div>
-    <h2 class="hp-section-title">Choose how you build</h2>
-    <p class="hp-section-sub">Choose how you want to build &mdash; model durable business logic, or ship autonomous agents.</p>
-    <div class="hp-choose-grid">
-      <a href="${BASE_URL}/quickstarts" class="hp-choose-card">
-        <div class="hp-choose-icon"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8"><circle cx="5" cy="6" r="2.2"></circle><circle cx="5" cy="18" r="2.2"></circle><circle cx="19" cy="12" r="2.2"></circle><path d="M7.2 6.6 16.8 11M7.2 17.4 16.8 13"></path></svg></div>
-        <h3>Build Workflows</h3>
-        <p>Model business logic as durable workflows &mdash; sequential, parallel, conditional, and event-driven.</p>
-        <div class="hp-code-block"><pre><code><span style="color:var(--pun)">{</span>
-  <span style="color:var(--kw)">"name"</span><span style="color:var(--pun)">:</span> <span style="color:var(--str)">"hello_workflow"</span><span style="color:var(--pun)">,</span>
-  <span style="color:var(--kw)">"version"</span><span style="color:var(--pun)">:</span> <span style="color:var(--dec)">1</span><span style="color:var(--pun)">,</span>
-  <span style="color:var(--kw)">"tasks"</span><span style="color:var(--pun)">:</span> <span style="color:var(--pun)">[</span>
-    <span style="color:var(--pun)">{</span>
-      <span style="color:var(--kw)">"name"</span><span style="color:var(--pun)">:</span> <span style="color:var(--str)">"fetch_data"</span><span style="color:var(--pun)">,</span>
-      <span style="color:var(--kw)">"type"</span><span style="color:var(--pun)">:</span> <span style="color:var(--str)">"HTTP"</span>
-    <span style="color:var(--pun)">},</span>
-    <span style="color:var(--pun)">{</span>
-      <span style="color:var(--kw)">"name"</span><span style="color:var(--pun)">:</span> <span style="color:var(--str)">"parse_response"</span><span style="color:var(--pun)">,</span>
-      <span style="color:var(--kw)">"type"</span><span style="color:var(--pun)">:</span> <span style="color:var(--str)">"INLINE"</span>
-    <span style="color:var(--pun)">}</span>
-  <span style="color:var(--pun)">]</span>
-<span style="color:var(--pun)">}</span></code></pre></div>
-        <div class="hp-feature-list">
-          <div>Persisted state &mdash; resume after failure</div>
-          <div>Isolated retries &mdash; only failed steps retry</div>
-          <div>Execution history &mdash; inputs, outputs, and a full audit trail</div>
-          <div>Polyglot workers &mdash; Python, Java, Go, and more</div>
-        </div>
-        <span class="hp-text-cta">Build your first workflow &rarr;</span>
-      </a>
-      <a href="${BASE_URL}/ai-agents/first-ai-agent" class="hp-choose-card">
-        <div class="hp-choose-icon"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8"><path d="M12 3v3M5 8l1.6 1.6M19 8l-1.6 1.6M12 21a5 5 0 0 0 5-5c0-3-2-4-2-7a3 3 0 0 0-6 0c0 3-2 4-2 7a5 5 0 0 0 5 5Z"></path></svg></div>
-        <h3>Build AI Agents</h3>
-        <p>Build tool-calling agents with the Conductor Agent SDK &mdash; durable by default, with automatic crash recovery.</p>
-        <div class="hp-code-block"><pre><code><span style="color:var(--kw)">from</span> agentspan.agents <span style="color:var(--kw)">import</span> Agent<span style="color:var(--pun)">,</span> AgentRuntime<span style="color:var(--pun)">,</span> tool
-
-<span style="color:var(--dec)">@tool</span>
-<span style="color:var(--kw)">def</span> <span style="color:var(--fn)">get_weather</span><span style="color:var(--pun)">(</span>city<span style="color:var(--pun)">:</span> <span style="color:var(--typ)">str</span><span style="color:var(--pun)">)</span> -&gt; <span style="color:var(--typ)">dict</span><span style="color:var(--pun)">:</span>
-    <span style="color:var(--str)">"""Get current weather for a city."""</span>
-    ...
-
-agent <span style="color:var(--pun)">=</span> <span style="color:var(--fn)">Agent</span><span style="color:var(--pun)">(</span>
-    name<span style="color:var(--pun)">=</span><span style="color:var(--str)">"weatherbot"</span><span style="color:var(--pun)">,</span>
-    model<span style="color:var(--pun)">=</span><span style="color:var(--str)">"anthropic/claude-sonnet-4-6"</span><span style="color:var(--pun)">,</span>
-    tools<span style="color:var(--pun)">=</span><span style="color:var(--pun)">[</span>get_weather<span style="color:var(--pun)">],</span>
-<span style="color:var(--pun)">)</span></code></pre></div>
-        <div class="hp-feature-list">
-          <div>Durable agent state &mdash; resumes after a crash, no lost progress</div>
-          <div>Human-in-the-loop approvals and waits</div>
-          <div class="hp-inline-chip">Decorate a typed function with <span class="hp-chip">@tool</span> &mdash; its docstring tells the LLM what it does.</div>
-        </div>
-        <span class="hp-text-cta">Build your first agent &rarr;</span>
-      </a>
-    </div>
-
-    <!-- ===================== SDK STRIP ===================== -->
-    <div class="hp-sdk-header">
-      <span class="hp-sdk-eyebrow">Developer first</span>
-      <h2>SDKs in your favorite language</h2>
-      <p>Native clients for the languages your team already ships.</p>
-    </div>
-
-    <input type="radio" name="hp-sdklang" id="hp-sdk-python" class="hp-sdk-input" checked>
-    <input type="radio" name="hp-sdklang" id="hp-sdk-java" class="hp-sdk-input">
-    <input type="radio" name="hp-sdklang" id="hp-sdk-js" class="hp-sdk-input">
-    <input type="radio" name="hp-sdklang" id="hp-sdk-go" class="hp-sdk-input">
-    <input type="radio" name="hp-sdklang" id="hp-sdk-csharp" class="hp-sdk-input">
-
-    <div class="hp-sdk-card" style="margin-bottom:66px;">
-      <div class="hp-sdk-tabbar">
-        <label for="hp-sdk-python" class="hp-sdk-tab">Python</label>
-        <label for="hp-sdk-java" class="hp-sdk-tab">Java</label>
-        <label for="hp-sdk-js" class="hp-sdk-tab">JavaScript</label>
-        <label for="hp-sdk-go" class="hp-sdk-tab">Go</label>
-        <label for="hp-sdk-csharp" class="hp-sdk-tab">C#</label>
-      </div>
-
-      <div class="hp-sdk-panel" data-panel="python">
-        <div class="hp-sdk-install-col">
-          <div class="hp-sdk-install-label">Install</div>
-          <pre class="hp-sdk-install-cmd"><code>pip install conductor-python</code></pre>
-          <p class="hp-sdk-caption">Decorate a function with @worker_task &mdash; Conductor handles polling, retries, and threads.</p>
-          <a class="hp-sdk-link" href="${BASE_URL}/sdks/python">Python SDK reference &rarr;</a>
-        </div>
-        <div class="hp-sdk-code-col">
-          <div class="hp-editor-chrome"><span class="hp-dot red"></span><span class="hp-dot yellow"></span><span class="hp-dot green"></span><span class="hp-filename">greet_worker</span></div>
-          <pre><code>from conductor.client.worker.worker_task import worker_task
-
-@worker_task(task_definition_name="greet")
-def greet(name: str) -&gt; str:
-    return f"Hello, {name}!"</code></pre>
-        </div>
-      </div>
-
-      <div class="hp-sdk-panel" data-panel="java">
-        <div class="hp-sdk-install-col">
-          <div class="hp-sdk-install-label">Install</div>
-          <pre class="hp-sdk-install-cmd"><code>implementation 'org.conductoross:conductor-client:5.0.1'</code></pre>
-          <p class="hp-sdk-caption">Annotate a method with @WorkerTask &mdash; Conductor handles polling, retries, and thread management.</p>
-          <a class="hp-sdk-link" href="${BASE_URL}/sdks/java">Java SDK reference &rarr;</a>
-        </div>
-        <div class="hp-sdk-code-col">
-          <div class="hp-editor-chrome"><span class="hp-dot red"></span><span class="hp-dot yellow"></span><span class="hp-dot green"></span><span class="hp-filename">greet_worker</span></div>
-          <pre><code>@WorkerTask("greet")
-public String greet(@InputParam("name") String name) {
-    return "Hello, " + name + "!";
-}</code></pre>
-        </div>
-      </div>
-
-      <div class="hp-sdk-panel" data-panel="js">
-        <div class="hp-sdk-install-col">
-          <div class="hp-sdk-install-label">Install</div>
-          <pre class="hp-sdk-install-cmd"><code>npm install @io-orkes/conductor-javascript</code></pre>
-          <p class="hp-sdk-caption">Decorate an async function with @worker and return a task result.</p>
-          <a class="hp-sdk-link" href="${BASE_URL}/sdks/javascript">JavaScript SDK reference &rarr;</a>
-        </div>
-        <div class="hp-sdk-code-col">
-          <div class="hp-editor-chrome"><span class="hp-dot red"></span><span class="hp-dot yellow"></span><span class="hp-dot green"></span><span class="hp-filename">greet_worker</span></div>
-          <pre><code>import { worker } from "@io-orkes/conductor-javascript";
-
-@worker({ taskDefName: "greet" })
-async function greet(task: Task) {
-  return {
-    status: "COMPLETED",
-    outputData: { result: \`Hello \${task.inputData.name}\` },
-  };
-}</code></pre>
-        </div>
-      </div>
-
-      <div class="hp-sdk-panel" data-panel="go">
-        <div class="hp-sdk-install-col">
-          <div class="hp-sdk-install-label">Install</div>
-          <pre class="hp-sdk-install-cmd"><code>go get github.com/conductor-sdk/conductor-go</code></pre>
-          <p class="hp-sdk-caption">Register a plain function as a worker &mdash; Conductor runs the polling loop.</p>
-          <a class="hp-sdk-link" href="${BASE_URL}/sdks/golang">Go SDK reference &rarr;</a>
-        </div>
-        <div class="hp-sdk-code-col">
-          <div class="hp-editor-chrome"><span class="hp-dot red"></span><span class="hp-dot yellow"></span><span class="hp-dot green"></span><span class="hp-filename">greet_worker</span></div>
-          <pre><code>func Greet(task *model.Task) (interface{}, error) {
-    return map[string]interface{}{
-        "hello": "Hello, " + fmt.Sprintf("%v", task.InputData["person_to_be_greated"]),
-    }, nil
-}</code></pre>
-        </div>
-      </div>
-
-      <div class="hp-sdk-panel" data-panel="csharp">
-        <div class="hp-sdk-install-col">
-          <div class="hp-sdk-install-label">Install</div>
-          <pre class="hp-sdk-install-cmd"><code>dotnet add package conductor-csharp</code></pre>
-          <p class="hp-sdk-caption">Implement IWorkflowTask for a class-based worker with full control over execution.</p>
-          <a class="hp-sdk-link" href="${BASE_URL}/sdks/csharp">C# SDK reference &rarr;</a>
-        </div>
-        <div class="hp-sdk-code-col">
-          <div class="hp-editor-chrome"><span class="hp-dot red"></span><span class="hp-dot yellow"></span><span class="hp-dot green"></span><span class="hp-filename">greet_worker</span></div>
-          <pre><code>public class GreetWorker : IWorkflowTask
-{
-    public string TaskType =&gt; "greet";
-    public WorkflowTaskExecutorConfiguration WorkerSettings { get; } = new();
-
-    public TaskResult Execute(Task task)
-    {
-        var name = task.InputData["name"];
-        var result = task.Completed();
-        result.OutputData = new Dictionary&lt;string, object&gt; { ["result"] = $"Hello, {name}!" };
-        return result;
-    }
-}</code></pre>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- ===================== DEVELOPER JOURNEY ===================== -->
-    <div class="hp-eyebrow-section" style="margin-top:66px;">Developer journey</div>
-    <h2 class="hp-section-title" style="margin-bottom:26px;">From idea to production</h2>
-    <div class="hp-journey">
-
-      <div class="hp-journey-step">
-        <div class="hp-journey-badge">1</div>
-        <h3>Get Started</h3>
-        <div class="hp-journey-links">
-          <a href="${BASE_URL}/quickstarts" class="hp-journey-chip">Run Your First Workflow</a>
-          <a href="${BASE_URL}/get-orkes-conductor" class="hp-journey-chip">Install and Set Up</a>
-          <a href="${BASE_URL}/quickstarts/concepts" class="hp-journey-chip">Concepts</a>
-        </div>
-      </div>
-
-      <div class="hp-journey-step">
-        <div class="hp-journey-badge">2</div>
-        <h3>Build Workflows &amp; Tasks</h3>
-        <div class="hp-journey-links">
-          <a href="${BASE_URL}/quickstart/workflows" class="hp-journey-chip">Workflows</a>
-          <a href="${BASE_URL}/developer-guides/tasks" class="hp-journey-chip">Tasks</a>
-          <a href="${BASE_URL}/quickstart/workers" class="hp-journey-chip">Workers</a>
-        </div>
-      </div>
-
-      <div class="hp-journey-step">
-        <div class="hp-journey-badge">3</div>
-        <h3>Make It Reliable</h3>
-        <div class="hp-journey-links">
-          <a href="${BASE_URL}/cookbook/task-timeouts-and-retries" class="hp-journey-chip">Retries &amp; Timeouts</a>
-          <a href="${BASE_URL}/error-handling" class="hp-journey-chip">Error Handling</a>
-          <a href="${BASE_URL}/rate-limits" class="hp-journey-chip">Rate Limits</a>
-        </div>
-      </div>
-
-      <div class="hp-journey-step">
-        <div class="hp-journey-badge">4</div>
-        <h3>Operate &amp; Secure</h3>
-        <div class="hp-journey-links">
-          <a href="${BASE_URL}/developer-guides/integration-with-cicd" class="hp-journey-chip">CI/CD Integration</a>
-          <a href="${BASE_URL}/category/access-control-and-security" class="hp-journey-chip">RBAC</a>
-          <a href="${BASE_URL}/developer-guides/secrets-in-conductor" class="hp-journey-chip">Secrets Management</a>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- ===================== WHAT'S NEW + COMMUNITY ===================== -->
-    <div class="hp-eyebrow-section" style="margin-top:66px;">Resources</div>
-    <h2 class="hp-section-title" style="margin-bottom:22px;">Keep learning</h2>
-    <div class="hp-resources-grid">
-
-    <div class="hp-resource-card">
-      <span class="hp-resource-kicker">Product updates</span>
-      <h3>Changelog</h3>
-      <div class="hp-changelog-list">
-        <a class="hp-changelog-item" href="https://orkes.io/changelog">
-          <div class="hp-changelog-meta">
-            <span class="hp-changelog-dot"></span><span class="hp-changelog-date">Jun 26, 2026</span><span class="hp-changelog-tag">Integrations</span>
-          </div>
-          <div class="hp-changelog-headline">Connect workflows to Slack, GitHub, Jira &amp; more</div>
-        </a>
-        <a class="hp-changelog-item" href="https://orkes.io/changelog">
-          <div class="hp-changelog-meta">
-            <span class="hp-changelog-date">Jun 05, 2026</span><span class="hp-changelog-tag">Integrations</span>
-          </div>
-          <div class="hp-changelog-headline">Connect workflows to Google Workspace, Notion &amp; more</div>
-        </a>
-        <a class="hp-changelog-item" href="https://orkes.io/changelog">
-          <div class="hp-changelog-meta">
-            <span class="hp-changelog-date">May 01, 2026</span><span class="hp-changelog-tag">Platform</span>
-          </div>
-          <div class="hp-changelog-headline">AI Assistant supports Claude and OpenAI</div>
-        </a>
-      </div>
-      <a class="hp-resource-cta" href="https://orkes.io/changelog">View changelog &rarr;</a>
-    </div>
-
-    <div class="hp-resource-card">
-      <span class="hp-resource-kicker">Learning</span>
-      <h3>Academy</h3>
-      <p>Learn workflow orchestration with hands-on labs, structured paths, and certification from Orkes.</p>
-      <div class="hp-resource-links">
-        <a href="https://orkes.io/academy/introduction">Introduction <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--faint)" stroke-width="2"><path d="M9 6l6 6-6 6"></path></svg></a>
-        <a href="https://orkes.io/academy/architecture-design">Architecture &amp; Design <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--faint)" stroke-width="2"><path d="M9 6l6 6-6 6"></path></svg></a>
-        <a href="https://orkes.io/academy/projects">Projects <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--faint)" stroke-width="2"><path d="M9 6l6 6-6 6"></path></svg></a>
-      </div>
-      <a class="hp-resource-cta" href="https://orkes.io/academy">Explore courses &rarr;</a>
-    </div>
-
-    <div class="hp-resource-card">
-      <span class="hp-resource-kicker">Articles</span>
-      <h3>Blog</h3>
-      <p>Technical use cases, community posts, and product updates from the Orkes team.</p>
-      <div class="hp-resource-links">
-        <a href="https://orkes.io/blog/how-to-build-a-screenshot-to-react-ai-agent">How to Build a UI Screenshot-to-Code AI Agent <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--faint)" stroke-width="2"><path d="M9 6l6 6-6 6"></path></svg></a>
-        <a href="https://orkes.io/blog/what-is-loop-engineering">What Is Loop Engineering? <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--faint)" stroke-width="2"><path d="M9 6l6 6-6 6"></path></svg></a>
-        <a href="https://orkes.io/blog/building-durable-loops-with-conductor-part-1">Building Durable Loops with Conductor, Part 1 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--faint)" stroke-width="2"><path d="M9 6l6 6-6 6"></path></svg></a>
-      </div>
-      <a class="hp-resource-cta" href="https://orkes.io/blog/">Read blogs &rarr;</a>
-    </div>
-
-    </div>
-
-  </div>
-</section>
-
-</div>
-`;
 }
 
 function generatedPageCopy(route, title, description, flatChildren) {
@@ -2613,6 +2257,7 @@ function ossNavTabs() {
       d("devguide/how-tos/Workflows/starting-workflows", "Starting Workflows"),
       d("devguide/how-tos/Workflows/choosing-a-trigger", "Choosing a Trigger"),
       d("devguide/how-tos/Workflows/scheduling-workflows", "Scheduling Workflows"),
+      d("devguide/cookbook/sending-signals", "Send Signals"),
       d("devguide/how-tos/Workflows/handling-errors", "Handling Errors"),
     ]),
     cat("Operate", [
@@ -2704,6 +2349,39 @@ function ossNavTabs() {
   ];
 }
 
+// The enterprise Platform tab intentionally DIVERGES from the OSS Platform
+// tab: everything operational is wrapped in a "Self-hosting (Conductor OSS)"
+// group, and the OSS "Hosted" page (whose message is "use Orkes cloud") is
+// unlisted here because it is circular on the Orkes site. Do not "fix" this
+// back to a verbatim mirror during a parity sync. The id lists below also
+// drive the per-page managed-vs-self-hosted callouts — keep them in step
+// with the entries.
+const PLATFORM_CONCEPT_IDS = [
+  "devguide/concepts",
+  "devguide/concepts/conductor",
+  "devguide/architecture",
+  "architecture/durable-execution",
+  "architecture/json-native",
+  "devguide/architecture/tasklifecycle",
+];
+const PLATFORM_OPS_IDS = [
+  "devguide/running/deploy",
+  "devguide/running/source",
+  "devguide/how-tos/cicd-integration",
+  "devguide/bestpractices",
+  "documentation/configuration/appconf",
+  "documentation/metrics/server",
+  "documentation/metrics/client",
+  "documentation/advanced/extend",
+  "documentation/advanced/isolationgroups",
+  "documentation/advanced/archival-of-workflows",
+  "documentation/advanced/externalpayloadstorage",
+  "documentation/advanced/file-storage",
+  "documentation/advanced/redis",
+  "documentation/advanced/postgresql",
+  "documentation/advanced/opensearch",
+];
+
 function platformTabItems() {
   return [
     d("devguide/concepts", "Core Concepts"),
@@ -2712,30 +2390,65 @@ function platformTabItems() {
     d("architecture/durable-execution", "Durable Execution"),
     d("architecture/json-native", "JSON + Code Native"),
     d("devguide/architecture/tasklifecycle", "Task Lifecycle"),
-    cat("Deploy", [
-      d("devguide/running/deploy", "Production Deployment"),
-      d("devguide/running/source", "From Source"),
-      d("devguide/running/hosted", "Hosted"),
-      d("devguide/how-tos/cicd-integration", "CI/CD Integration"),
-      d("devguide/bestpractices", "Best Practices"),
-    ]),
-    d("documentation/configuration/appconf", "Configuration"),
-    cat("Observability", [
-      d("documentation/metrics/server", "Server Metrics"),
-      d("documentation/metrics/client", "Client Metrics"),
-    ]),
-    cat("Advanced", [
-      d("documentation/advanced/extend"),
-      d("documentation/advanced/isolationgroups"),
-      d("documentation/advanced/archival-of-workflows"),
-      d("documentation/advanced/externalpayloadstorage"),
-      d("documentation/advanced/file-storage"),
-      d("documentation/advanced/redis"),
-      d("documentation/advanced/postgresql"),
-      d("documentation/advanced/opensearch"),
+    cat("Self-hosting (Conductor OSS)", [
+      cat("Deploy", [
+        d("devguide/running/deploy", "Production Deployment"),
+        d("devguide/running/source", "From Source"),
+        d("devguide/how-tos/cicd-integration", "CI/CD Integration"),
+        d("devguide/bestpractices", "Best Practices"),
+      ]),
+      d("documentation/configuration/appconf", "Configuration"),
+      cat("Observability", [
+        d("documentation/metrics/server", "Server Metrics"),
+        d("documentation/metrics/client", "Client Metrics"),
+      ]),
+      cat("Advanced", [
+        d("documentation/advanced/extend"),
+        d("documentation/advanced/isolationgroups"),
+        d("documentation/advanced/archival-of-workflows"),
+        d("documentation/advanced/externalpayloadstorage"),
+        d("documentation/advanced/file-storage"),
+        d("documentation/advanced/redis"),
+        d("documentation/advanced/postgresql"),
+        d("documentation/advanced/opensearch"),
+      ]),
     ]),
   ];
 }
+
+// Route → callout variant for every page in the enterprise Platform tab.
+// Resolved lazily because routeBySource is populated during setup; several
+// of these pages serve at mapped legacy routes (e.g. documentation/metrics/
+// server.md → developer-guides/metrics-and-observability).
+let platformCalloutRoutes = null;
+function platformCalloutVariant(route) {
+  if (!platformCalloutRoutes) {
+    platformCalloutRoutes = new Map();
+    const routeOf = (id) =>
+      routeBySource.get(`${id}.md`) ?? routeBySource.get(`${id}/index.md`);
+    for (const id of PLATFORM_CONCEPT_IDS) {
+      const r = routeOf(id);
+      if (r !== undefined) platformCalloutRoutes.set(r, "concept");
+    }
+    for (const id of PLATFORM_OPS_IDS) {
+      const r = routeOf(id);
+      if (r !== undefined) platformCalloutRoutes.set(r, "ops");
+    }
+  }
+  return platformCalloutRoutes.get(route);
+}
+
+const PLATFORM_CONCEPT_CALLOUT = [
+  '!!! note "Applies to both editions"',
+  "",
+  "    This page describes the Conductor engine that powers both open-source Conductor and Orkes Conductor. Operational defaults mentioned here, such as Redis or Elasticsearch, are specifics of the open-source distribution; Orkes Conductor deployments run the Orkes platform stack.",
+].join("\n");
+
+const PLATFORM_OPS_CALLOUT = [
+  '!!! note "Self-hosted Conductor"',
+  "",
+  "    This page covers operating the open-source Conductor server yourself. Orkes Conductor, whether Orkes-hosted or customer-hosted in your own environment, is installed and operated differently; see [Install and Set Up Orkes Conductor](/content/get-orkes-conductor).",
+].join("\n");
 
 function buildNav() {
   createCookbookGeneratedPages();
@@ -2762,7 +2475,6 @@ function buildNav() {
         d("devguide/how-tos/publish-events", "Publish Events"),
         d("devguide/how-tos/consume-route-events", "Consume and Route Events"),
         d("devguide/how-tos/incoming-webhooks", "Incoming Webhooks"),
-        d("devguide/cookbook/sending-signals", "Send Signals"),
         d("devguide/how-tos/workflow-status-events", "Workflow Status Events"),
       ]),
       d("devguide/ai/mcp-guide", "MCP Integration"),
@@ -2771,11 +2483,37 @@ function buildNav() {
     navSeen,
   );
 
-  // Layer enterprise-only pages into the OSS tabs. The global dedupe in
-  // navFromItems drops every page the OSS structure already lists, so
-  // appending a whole enterprise sidebar leaves only its enterprise-only
-  // remainder, with its own group labels intact. Developer Guides is routed
-  // per top-level group by topic.
+  // Materialize every OSS tab template BEFORE appending any enterprise
+  // sidebar. The global dedupe in navFromItems is first-claimant-wins, so a
+  // later-built OSS tab (Platform, Learn) would otherwise lose pages to stale
+  // enterprise sidebar entries that alias the same docs — that is exactly how
+  // the old quickstartSidebar stole the Platform concepts pages into Getting
+  // Started. Tabs are still pushed to nav in display order below.
+  const platformChildren = navFromItems(platformTabItems(), navSeen);
+  // Intentionally unlisted on the enterprise site (the page's message is "use
+  // Orkes cloud", which is circular here). Claim the id so enterprise sidebar
+  // extras don't resurrect it under an Enterprise group; the URL stays live.
+  navFromItems([d("devguide/running/hosted", "Hosted")], navSeen);
+  const learnChildren = navFromItems(
+    [
+      d("learn", "Overview"),
+      cat("Contribute", [
+        d("resources/contribute", "Overview"),
+        d("resources/contribute/repositories", "Repositories"),
+        d("resources/contributing", "Contribution Guide"),
+        d("resources/contribute/best-practices", "Best Practices"),
+        d("resources/contribute/code-of-conduct", "Code of Conduct"),
+      ]),
+      d("resources/contribute/get-help", "Get Help"),
+    ],
+    navSeen,
+  );
+
+  // Layer enterprise-only pages into the OSS tabs. After the reserve pass
+  // above, appending a whole enterprise sidebar leaves only its
+  // enterprise-only remainder. Developer Guides is routed per top-level group
+  // by topic. Survivors are grouped under an "Orkes Enterprise" section so
+  // the seam between shared OSS docs and enterprise-only docs stays visible.
   const labelOf = (item) =>
     (typeof item === "string" ? item : item.label || item.id || item.href || "").toLowerCase();
   const guideExtras = { Workflows: [], Agents: [], Integrations: [], Platform: [] };
@@ -2788,46 +2526,30 @@ function buildNav() {
     guideExtras[tab].push(item);
   }
 
-  tabChildren["Getting Started"].push(...navFromItems(sidebars.quickstartSidebar, navSeen));
-  tabChildren.Workflows.push(...navFromItems(guideExtras.Workflows, navSeen));
-  tabChildren.Agents.push(
-    ...navFromItems([...guideExtras.Agents, ...sidebars.aiSidebar], navSeen),
-  );
-  tabChildren["Design Patterns"].push(...navFromItems(sidebars.cookbookSidebar, navSeen));
-  tabChildren["AI Cookbook"].push(...navFromItems(sidebars.aiCookbookSidebar, navSeen));
-  tabChildren.SDK.push(...navFromItems(sidebars.sdksSidebar, navSeen));
+  const pushEnterprise = (children, items) => {
+    const extras = navFromItems(items, navSeen);
+    if (extras.length) children.push({ Enterprise: extras });
+  };
 
-  integrationsChildren.push(
-    ...navFromItems([...guideExtras.Integrations, ...sidebars.eventingSidebar], navSeen),
-  );
-  integrationsChildren.push(
-    ...navFromItems([cat("Integration Catalog", sidebars.integrationsSidebar)], navSeen),
-  );
+  pushEnterprise(tabChildren["Getting Started"], sidebars.quickstartSidebar);
+  pushEnterprise(tabChildren.Workflows, guideExtras.Workflows);
+  pushEnterprise(tabChildren.Agents, [...guideExtras.Agents, ...sidebars.aiSidebar]);
+  pushEnterprise(tabChildren["Design Patterns"], sidebars.cookbookSidebar);
+  pushEnterprise(tabChildren["AI Cookbook"], sidebars.aiCookbookSidebar);
+  pushEnterprise(tabChildren.SDK, sidebars.sdksSidebar);
+
+  pushEnterprise(integrationsChildren, [
+    ...guideExtras.Integrations,
+    ...sidebars.eventingSidebar,
+    cat("Integration Catalog", sidebars.integrationsSidebar),
+  ]);
   nav.push({ Integrations: integrationsChildren });
 
   nav.push({ Security: navFromItems(sidebars.rbacSidebar, navSeen) });
-  nav.push({
-    Learn: navFromItems(
-      [
-        d("learn", "Overview"),
-        cat("Contribute", [
-          d("resources/contribute", "Overview"),
-          d("resources/contribute/repositories", "Repositories"),
-          d("resources/contributing", "Contribution Guide"),
-          d("resources/contribute/best-practices", "Best Practices"),
-          d("resources/contribute/code-of-conduct", "Code of Conduct"),
-        ]),
-        d("resources/contribute/get-help", "Get Help"),
-        ...sidebars.contributeSidebar,
-      ],
-      navSeen,
-    ),
-  });
+  pushEnterprise(learnChildren, sidebars.contributeSidebar);
+  nav.push({ Learn: learnChildren });
   nav.push({ Reference: navFromItems(sidebars.referenceSidebar, navSeen) });
-  const platformChildren = navFromItems(platformTabItems(), navSeen);
-  platformChildren.push(
-    ...navFromItems([...guideExtras.Platform, ...sidebars.deploySidebar], navSeen),
-  );
+  pushEnterprise(platformChildren, [...guideExtras.Platform, ...sidebars.deploySidebar]);
   nav.push({ Platform: platformChildren });
 
   // Keep legacy indexed category URLs even when their groups are intentionally
@@ -3641,6 +3363,28 @@ body[data-md-color-scheme="default"] .md-header--shadow ~ .md-tabs {
 .md-header .md-social__link {
   color: var(--c-header-text) !important;
 }
+/* "Enterprise" nav sections (tagged in postprocess): mark the seam between
+   shared OSS docs and enterprise-only docs with the Orkes accent instead of a
+   plain topical header. */
+.md-nav__item--enterprise {
+  margin-top: 1.1em;
+  padding-top: 1em;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+}
+.md-nav__item--enterprise > label.md-nav__link {
+  color: var(--c-accent) !important;
+}
+.md-nav__item--enterprise > label.md-nav__link .md-ellipsis::before {
+  content: "";
+  display: inline-block;
+  width: 0.45em;
+  height: 0.45em;
+  margin-right: 0.5em;
+  border-radius: 1.5px;
+  background: var(--c-accent);
+  transform: rotate(45deg);
+  vertical-align: 0.05em;
+}
 .md-tabs__item {
   padding: 0 0.15rem;
 }
@@ -4318,17 +4062,17 @@ function writeLlmsTxt() {
     `Source documentation: ${SITE_URL}`,
     `Full documentation dump: ${SITE_URL}llms-full.txt`,
     "Product: Orkes Conductor",
-    "Positioning: Managed enterprise platform for Conductor OSS, a durable workflow engine for production AI agents and distributed systems.",
+    "Positioning: Enterprise platform for Conductor OSS, available fully managed or in your own environment, a durable workflow engine for production AI agents and distributed systems.",
     "",
     "## What is Orkes Conductor?",
     "",
-    "Orkes Conductor is the managed enterprise version of Conductor OSS. It orchestrates production workflows, distributed applications, microservices, APIs, human approvals, and AI agents with durable execution and operational visibility.",
+    "Orkes Conductor is the enterprise version of Conductor OSS, available as a fully managed cloud or deployed in your own environment. It orchestrates production workflows, distributed applications, microservices, APIs, human approvals, and AI agents with durable execution and operational visibility.",
     "",
     "Conductor OSS is the actively maintained open-source durable workflow engine under the Conductor OSS community. Orkes contributes maintenance, engineering, documentation, and enterprise support; the original Netflix project history is part of the origin story, not the current maintenance model.",
     "",
-    AGENTSPAN_RELATIONSHIP_COPY,
+    AGENT_RUNTIME_RELATIONSHIP_COPY,
     "",
-    "Conductor Skills are authoring and operations instructions for AI coding agents. They are not the runtime. Agentspan is runtime integration for agent applications that need durable execution through Conductor.",
+    "Conductor Skills are authoring and operations instructions for AI coding agents. They are not the runtime. Conductor's built-in agent runtime provides durable execution for agent applications.",
     "",
     "Conductor is not a replacement for agent frameworks. Use frameworks for reasoning, prompts, graph composition, and model-specific loops; use Conductor for durable execution, persisted state, task queues, retries, timeouts, long waits, human approval, replay, governance, and audit history.",
     "",

@@ -530,11 +530,6 @@ function auditMessagingGuardrails(htmlFiles) {
   if (!home.includes(`${BASE_PATH}/agentic-workflow-engine`)) {
     errors.push("/: homepage does not link to the agentic workflow engine page");
   }
-  const homeText = stripTags(home);
-  if (!homeText.includes("Persisted state") || !homeText.includes("Execution history")) {
-    errors.push("/: homepage missing durable execution proof points");
-  }
-
   const forbiddenPhrases = [
     "Internet Scale Execution",
     "Conductor eliminates all of this",
