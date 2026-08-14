@@ -1516,6 +1516,14 @@ function appendBeforeNextSteps(body, addition) {
 function enhancePositioningPage(body, route) {
   let output = body;
 
+  const platformVariant = platformCalloutVariant(route);
+  if (platformVariant) {
+    output = insertAfterIntro(
+      output,
+      platformVariant === "concept" ? PLATFORM_CONCEPT_CALLOUT : PLATFORM_OPS_CALLOUT,
+    );
+  }
+
   if (route === "ai-orchestration/mcp-integration") {
     output = insertAfterIntro(
       output,
@@ -2340,6 +2348,39 @@ function ossNavTabs() {
   ];
 }
 
+// The enterprise Platform tab intentionally DIVERGES from the OSS Platform
+// tab: everything operational is wrapped in a "Self-hosting (Conductor OSS)"
+// group, and the OSS "Hosted" page (whose message is "use Orkes cloud") is
+// unlisted here because it is circular on the Orkes site. Do not "fix" this
+// back to a verbatim mirror during a parity sync. The id lists below also
+// drive the per-page managed-vs-self-hosted callouts — keep them in step
+// with the entries.
+const PLATFORM_CONCEPT_IDS = [
+  "devguide/concepts",
+  "devguide/concepts/conductor",
+  "devguide/architecture",
+  "architecture/durable-execution",
+  "architecture/json-native",
+  "devguide/architecture/tasklifecycle",
+];
+const PLATFORM_OPS_IDS = [
+  "devguide/running/deploy",
+  "devguide/running/source",
+  "devguide/how-tos/cicd-integration",
+  "devguide/bestpractices",
+  "documentation/configuration/appconf",
+  "documentation/metrics/server",
+  "documentation/metrics/client",
+  "documentation/advanced/extend",
+  "documentation/advanced/isolationgroups",
+  "documentation/advanced/archival-of-workflows",
+  "documentation/advanced/externalpayloadstorage",
+  "documentation/advanced/file-storage",
+  "documentation/advanced/redis",
+  "documentation/advanced/postgresql",
+  "documentation/advanced/opensearch",
+];
+
 function platformTabItems() {
   return [
     d("devguide/concepts", "Core Concepts"),
@@ -2348,30 +2389,65 @@ function platformTabItems() {
     d("architecture/durable-execution", "Durable Execution"),
     d("architecture/json-native", "JSON + Code Native"),
     d("devguide/architecture/tasklifecycle", "Task Lifecycle"),
-    cat("Deploy", [
-      d("devguide/running/deploy", "Production Deployment"),
-      d("devguide/running/source", "From Source"),
-      d("devguide/running/hosted", "Hosted"),
-      d("devguide/how-tos/cicd-integration", "CI/CD Integration"),
-      d("devguide/bestpractices", "Best Practices"),
-    ]),
-    d("documentation/configuration/appconf", "Configuration"),
-    cat("Observability", [
-      d("documentation/metrics/server", "Server Metrics"),
-      d("documentation/metrics/client", "Client Metrics"),
-    ]),
-    cat("Advanced", [
-      d("documentation/advanced/extend"),
-      d("documentation/advanced/isolationgroups"),
-      d("documentation/advanced/archival-of-workflows"),
-      d("documentation/advanced/externalpayloadstorage"),
-      d("documentation/advanced/file-storage"),
-      d("documentation/advanced/redis"),
-      d("documentation/advanced/postgresql"),
-      d("documentation/advanced/opensearch"),
+    cat("Self-hosting (Conductor OSS)", [
+      cat("Deploy", [
+        d("devguide/running/deploy", "Production Deployment"),
+        d("devguide/running/source", "From Source"),
+        d("devguide/how-tos/cicd-integration", "CI/CD Integration"),
+        d("devguide/bestpractices", "Best Practices"),
+      ]),
+      d("documentation/configuration/appconf", "Configuration"),
+      cat("Observability", [
+        d("documentation/metrics/server", "Server Metrics"),
+        d("documentation/metrics/client", "Client Metrics"),
+      ]),
+      cat("Advanced", [
+        d("documentation/advanced/extend"),
+        d("documentation/advanced/isolationgroups"),
+        d("documentation/advanced/archival-of-workflows"),
+        d("documentation/advanced/externalpayloadstorage"),
+        d("documentation/advanced/file-storage"),
+        d("documentation/advanced/redis"),
+        d("documentation/advanced/postgresql"),
+        d("documentation/advanced/opensearch"),
+      ]),
     ]),
   ];
 }
+
+// Route → callout variant for every page in the enterprise Platform tab.
+// Resolved lazily because routeBySource is populated during setup; several
+// of these pages serve at mapped legacy routes (e.g. documentation/metrics/
+// server.md → developer-guides/metrics-and-observability).
+let platformCalloutRoutes = null;
+function platformCalloutVariant(route) {
+  if (!platformCalloutRoutes) {
+    platformCalloutRoutes = new Map();
+    const routeOf = (id) =>
+      routeBySource.get(`${id}.md`) ?? routeBySource.get(`${id}/index.md`);
+    for (const id of PLATFORM_CONCEPT_IDS) {
+      const r = routeOf(id);
+      if (r !== undefined) platformCalloutRoutes.set(r, "concept");
+    }
+    for (const id of PLATFORM_OPS_IDS) {
+      const r = routeOf(id);
+      if (r !== undefined) platformCalloutRoutes.set(r, "ops");
+    }
+  }
+  return platformCalloutRoutes.get(route);
+}
+
+const PLATFORM_CONCEPT_CALLOUT = [
+  '!!! note "Applies to both editions"',
+  "",
+  "    This page describes the Conductor engine that powers both open-source Conductor and Orkes Conductor. Defaults mentioned here, such as Redis or Elasticsearch, refer to self-hosted deployments. On Orkes Conductor the platform layer is managed for you.",
+].join("\n");
+
+const PLATFORM_OPS_CALLOUT = [
+  '!!! note "Self-hosted Conductor"',
+  "",
+  "    This page covers operating open-source Conductor yourself. On Orkes Conductor, persistence, scaling, upgrades, and monitoring are managed for you.",
+].join("\n");
 
 function buildNav() {
   createCookbookGeneratedPages();
@@ -2414,6 +2490,10 @@ function buildNav() {
   // the old quickstartSidebar stole the Platform concepts pages into Getting
   // Started. Tabs are still pushed to nav in display order below.
   const platformChildren = navFromItems(platformTabItems(), navSeen);
+  // Intentionally unlisted on the enterprise site (the page's message is "use
+  // Orkes cloud", which is circular here). Claim the id so enterprise sidebar
+  // extras don't resurrect it under an Enterprise group; the URL stays live.
+  navFromItems([d("devguide/running/hosted", "Hosted")], navSeen);
   const learnChildren = navFromItems(
     [
       d("learn", "Overview"),
