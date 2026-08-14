@@ -15,7 +15,7 @@ const LEGACY_SITE_URLS = ["https://orkes.io/content/", "http://orkes.io/content/
 const BASE_URL = normalizeBaseUrl(process.env.DOCS_BASE_URL || "/content");
 const SITE_URL = normalizeSiteUrl(process.env.DOCS_SITE_URL || "https://orkes.io/content/");
 const SITE_DESCRIPTION =
-  "Orkes Conductor is the managed enterprise platform for Conductor OSS, a durable workflow engine for production AI agents and distributed systems.";
+  "Orkes Conductor is the enterprise platform for Conductor OSS, available fully managed or in your own environment, a durable workflow engine for production AI agents and distributed systems.";
 const DOCS_LAST_MODIFIED = process.env.DOCS_LAST_MODIFIED || "2026-05-14";
 const DEVELOPER_EDITION_URL =
   "https://developer.orkescloud.com/?ga_id=GA1.1.114307086.1749276711&amp;utm_source=google&amp;utm_medium=organic&amp;_gl=1*mi3s3s*_gcl_au*MTU0NDU1MTQuMTc3ODM5MTkyMw..";
@@ -33,7 +33,7 @@ const GTM_CONTAINER_ID = process.env.DOCS_GTM_ID || "GTM-M4Q6Z3R2";
 // build today ships unmeasured. See deploy/SETUP-s3-cloudfront.md.
 const ANALYTICS_ENABLED = /^(1|true|yes)$/i.test(process.env.DOCS_ENABLE_ANALYTICS || "");
 const AGENT_RUNTIME_RELATIONSHIP_COPY =
-  "Conductor OSS is the durable workflow engine with a built-in agent runtime. Orkes Conductor is the managed enterprise platform for operating Conductor-based systems at scale.";
+  "Conductor OSS is the durable workflow engine with a built-in agent runtime. Orkes Conductor is the enterprise platform built on it, available as a fully managed cloud or deployed in your own environment.";
 
 // Home page only — Sora + JetBrains Mono, scoped to .home-wrapper via CSS (rest of the site keeps the OSS base font)
 const HOME_PAGE_FONT_IMPORT =
@@ -2440,13 +2440,13 @@ function platformCalloutVariant(route) {
 const PLATFORM_CONCEPT_CALLOUT = [
   '!!! note "Applies to both editions"',
   "",
-  "    This page describes the Conductor engine that powers both open-source Conductor and Orkes Conductor. Defaults mentioned here, such as Redis or Elasticsearch, refer to self-hosted deployments. On Orkes Conductor the platform layer is managed for you.",
+  "    This page describes the Conductor engine that powers both open-source Conductor and Orkes Conductor. Operational defaults mentioned here, such as Redis or Elasticsearch, are specifics of the open-source distribution; Orkes Conductor deployments run the Orkes platform stack.",
 ].join("\n");
 
 const PLATFORM_OPS_CALLOUT = [
   '!!! note "Self-hosted Conductor"',
   "",
-  "    This page covers operating open-source Conductor yourself. On Orkes Conductor, persistence, scaling, upgrades, and monitoring are managed for you.",
+  "    This page covers operating the open-source Conductor server yourself. Orkes Conductor, whether Orkes-hosted or customer-hosted in your own environment, is installed and operated differently; see [Install and Set Up Orkes Conductor](/content/get-orkes-conductor).",
 ].join("\n");
 
 function buildNav() {
@@ -4062,11 +4062,11 @@ function writeLlmsTxt() {
     `Source documentation: ${SITE_URL}`,
     `Full documentation dump: ${SITE_URL}llms-full.txt`,
     "Product: Orkes Conductor",
-    "Positioning: Managed enterprise platform for Conductor OSS, a durable workflow engine for production AI agents and distributed systems.",
+    "Positioning: Enterprise platform for Conductor OSS, available fully managed or in your own environment, a durable workflow engine for production AI agents and distributed systems.",
     "",
     "## What is Orkes Conductor?",
     "",
-    "Orkes Conductor is the managed enterprise version of Conductor OSS. It orchestrates production workflows, distributed applications, microservices, APIs, human approvals, and AI agents with durable execution and operational visibility.",
+    "Orkes Conductor is the enterprise version of Conductor OSS, available as a fully managed cloud or deployed in your own environment. It orchestrates production workflows, distributed applications, microservices, APIs, human approvals, and AI agents with durable execution and operational visibility.",
     "",
     "Conductor OSS is the actively maintained open-source durable workflow engine under the Conductor OSS community. Orkes contributes maintenance, engineering, documentation, and enterprise support; the original Netflix project history is part of the origin story, not the current maintenance model.",
     "",
