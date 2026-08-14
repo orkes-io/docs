@@ -2526,19 +2526,25 @@ function buildNav() {
     guideExtras[tab].push(item);
   }
 
+  // Getting Started keeps its enterprise extras under a labeled "Enterprise"
+  // section (Dilip's call); every other tab appends its enterprise-only
+  // remainder inline, keeping the sidebar's own group labels.
   const pushEnterprise = (children, items) => {
     const extras = navFromItems(items, navSeen);
     if (extras.length) children.push({ Enterprise: extras });
   };
+  const pushExtras = (children, items) => {
+    children.push(...navFromItems(items, navSeen));
+  };
 
   pushEnterprise(tabChildren["Getting Started"], sidebars.quickstartSidebar);
-  pushEnterprise(tabChildren.Workflows, guideExtras.Workflows);
-  pushEnterprise(tabChildren.Agents, [...guideExtras.Agents, ...sidebars.aiSidebar]);
-  pushEnterprise(tabChildren["Design Patterns"], sidebars.cookbookSidebar);
-  pushEnterprise(tabChildren["AI Cookbook"], sidebars.aiCookbookSidebar);
-  pushEnterprise(tabChildren.SDK, sidebars.sdksSidebar);
+  pushExtras(tabChildren.Workflows, guideExtras.Workflows);
+  pushExtras(tabChildren.Agents, [...guideExtras.Agents, ...sidebars.aiSidebar]);
+  pushExtras(tabChildren["Design Patterns"], sidebars.cookbookSidebar);
+  pushExtras(tabChildren["AI Cookbook"], sidebars.aiCookbookSidebar);
+  pushExtras(tabChildren.SDK, sidebars.sdksSidebar);
 
-  pushEnterprise(integrationsChildren, [
+  pushExtras(integrationsChildren, [
     ...guideExtras.Integrations,
     ...sidebars.eventingSidebar,
     cat("Integration Catalog", sidebars.integrationsSidebar),
@@ -2546,10 +2552,10 @@ function buildNav() {
   nav.push({ Integrations: integrationsChildren });
 
   nav.push({ Security: navFromItems(sidebars.rbacSidebar, navSeen) });
-  pushEnterprise(learnChildren, sidebars.contributeSidebar);
+  pushExtras(learnChildren, sidebars.contributeSidebar);
   nav.push({ Learn: learnChildren });
   nav.push({ Reference: navFromItems(sidebars.referenceSidebar, navSeen) });
-  pushEnterprise(platformChildren, [...guideExtras.Platform, ...sidebars.deploySidebar]);
+  pushExtras(platformChildren, [...guideExtras.Platform, ...sidebars.deploySidebar]);
   nav.push({ Platform: platformChildren });
 
   // Keep legacy indexed category URLs even when their groups are intentionally
