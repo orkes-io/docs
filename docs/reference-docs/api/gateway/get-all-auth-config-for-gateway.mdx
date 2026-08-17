@@ -1,0 +1,59 @@
+---
+sidebar_position: 5
+slug: "/reference-docs/api/gateway/get-all-auth-config-for-gateway"
+description: "Learn how to retrieve all auth configuration for gateway."
+---
+
+# Get All Auth Config for Gateway
+
+**Endpoint**: `GET /api/gateway/config/auth`
+
+Retrieves all auth configuration settings for Gateway.
+
+## Response
+
+Returns an array of gateway objects, each including its id, authentication type, application ID associated with, and more configuration details.
+
+## Examples
+
+<details markdown="1">
+<summary>Get all auth config for Gateway</summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-SERVER-CLUSTER>/api/gateway/config/auth' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+[
+  {
+    "id": "no-auth",
+    "authenticationType": "NONE",
+    "passthrough": false,
+    "fallbackToDefaultAuth": false,
+    "tokenInWorkflowInput": false,
+    "applicationId": "643cc628-5a73-47bd-8a0c-7d6d58da4fdd",
+    "createdBy": "john.doe@acme.com",
+    "orgId": "fd7s"
+  },
+  {
+    "id": "gateway",
+    "authenticationType": "NONE",
+    "passthrough": false,
+    "fallbackToDefaultAuth": false,
+    "tokenInWorkflowInput": false,
+    "applicationId": "643cc628-5a73-47bd-8a0c-7d6d58da4fdd",
+    "createdBy": "john.doe@acme.com",
+    "updatedBy": "john.doe@acme.com",
+    "orgId": "fd7s"
+  }
+]
+```
+
+</details>

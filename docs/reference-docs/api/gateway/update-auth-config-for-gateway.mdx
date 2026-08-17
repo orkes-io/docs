@@ -1,0 +1,50 @@
+---
+sidebar_position: 2
+slug: "/reference-docs/api/gateway/update-auth-config-for-gateway"
+description: "Learn how to edit an auth config for gateway."
+---
+
+# Update Auth Config for Gateway
+
+**Endpoint**: `POST /api/config/auth/{id}`
+
+Updates an authentication configuration of a gateway service.
+
+## Request body
+
+| Parameter | Description | Type | Required/ Optional |
+| --------- | ------------ | ---- | ------------------- |
+| id | The unique identifier for the authentication configuration. | string | Required. |
+| authenticationType | The type of authentication. Supported values:<ul><li>`NONE`: No authentication is enforced, and the API will be accessible to anyone.</li><li>`API_KEY`: Enforces basic authentication using an API key.</li></ul> | string | Required. |
+| apiKeys | A unique API key for authentication. | string | Required. |
+| applicationId | The unique identifier of the application, which generates an access key and JWT token. The Gateway will use this token to authenticate with the Conductor. The service using this authentication will inherit the application’s permissions.<br/><br/>The application must already exist in Conductor, and you can retrieve its ID using [Get All Applications](/reference-docs/api/applications/get-all-applications), and get the `id` field for your application. | string | Required. |
+
+## Response
+
+Returns 200 OK, indicating that the auth config was updated successfully.
+
+## Examples
+
+<details markdown="1">
+<summary>Update an auth config for Gateway</summary>
+
+**Request**
+
+```shell
+curl -X 'PUT' \
+  'https://<YOUR-SERVER-URL>/api/gateway/config/auth/test-env' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "applicationId": "default-orkes-application",
+  "authenticationType": "NONE",
+  "id": "test-env"
+}'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the auth config was updated successfully.
+
+</details>
