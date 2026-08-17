@@ -1,0 +1,91 @@
+---
+sidebar_position: 18
+slug: "/reference-docs/ai-tasks/list-mcp-tools"
+description: "Learn how the List MCP Tools task connects to an MCP server and returns the list of tools it exposes."
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# List MCP Tools
+
+The List MCP Tools task connects to an MCP (Model Context Protocol) server and returns the list of tools it exposes, along with details about each tool. Use it to discover what tools an MCP server offers before invoking them from a workflow or an agent.
+
+## Task parameters 
+
+Configure these parameters for the List MCP Tools task.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- |
+| inputParameters.**mcpServer** | The URL of the MCP server to query. | Required. |
+| inputParameters.**headers** | A map of HTTP headers to send with the request, such as authentication headers required by the MCP server. | Optional. |
+
+The following are generic configuration parameters that can be applied to the task and are not specific to the List MCP Tools task.
+
+<details markdown="1">
+<summary>Caching parameters</summary>
+
+You can cache the task outputs using the following parameters. Refer to [Caching Task Outputs](/faqs/task-cache-output) for a full guide.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| cacheConfig.**ttlInSecond** | The time to live in seconds, which is the duration for the output to be cached. | Required if using *cacheConfig*. |
+| cacheConfig.**key** | The cache key is a unique identifier for the cached output and must be constructed exclusively from the task’s input parameters.<br/>It can be a string concatenation that contains the task’s input keys, such as `${uri}-${method}` or `re_${uri}_${method}`. | Required if using *cacheConfig*. |
+
+</details>
+
+<details markdown="1">
+<summary>Other generic parameters</summary>
+
+Here are other parameters for configuring the task behavior.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| optional | Whether the task is optional. <br/><br/>If set to `true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. | 
+
+</details>
+
+## Task configuration
+
+This is the task configuration for a List MCP Tools task.
+
+```json
+{
+  "name": "list_mcp_tools",
+  "taskReferenceName": "list_mcp_tools_ref",
+  "inputParameters": {
+    "mcpServer": "<YOUR-MCP-SERVER-URL>",
+    "headers": {}
+  },
+  "type": "LIST_MCP_TOOLS"
+}
+```
+
+## Task output
+
+The List MCP Tools task will return the following parameters.
+
+| Parameter | Description | 
+| --------- | ----------- | 
+| tools | Array of tools exposed by the MCP server, including its parameters. |
+
+## Examples
+
+Here are some examples for using the List MCP Tools task.
+
+<details markdown="1">
+<summary>Using a List MCP Tools task in a workflow</summary>
+
+```json
+{
+  "name": "list_mcp_tools",
+  "taskReferenceName": "list_mcp_tools_ref",
+  "inputParameters": {
+    "mcpServer": "https://xxxx.developer.orkescloud.com/feedback-service/mcp",
+    "headers": {}
+  },
+  "type": "LIST_MCP_TOOLS"
+}
+```
+
+</details>

@@ -1,0 +1,133 @@
+---
+sidebar_position: 16
+slug: "/reference-docs/ai-tasks/generate-video"
+description: "Learn how the Generate Video task generates video from a text prompt or an input image using a configured AI model integration."
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Generate Video
+
+The Generate Video task generates video from a text prompt or an input image using a configured AI model integration. It supports OpenAI and Google Gemini/Vertex as video-generation providers, using the Sora and Veo model families respectively.
+
+Unlike [Generate Image](/reference-docs/ai-tasks/generate-image) and [Generate Audio](/reference-docs/ai-tasks/generate-audio), this task runs asynchronously: after starting a video generation job with the provider, the task polls periodically until the job reaches a terminal state, then returns the generated video as output, either as a URL or base64-encoded data. Use it to produce short video clips, product demos, or animated content as part of a workflow, or to extend a generated image into a video sequence.
+
+Because it runs asynchronously, the task remains in an `IN_PROGRESS` state while the provider's job is running, and its execution time depends on the provider and the requested video length.
+
+:::info Prerequisites
+
+Before using this task, you must have created an appropriate AI model integration in Orkes Conductor for your chosen provider (OpenAI, Google Gemini, or Google Vertex). Integrate the required provider with Orkes Conductor before configuring this task.
+
+- [OpenAI](/integrations/ai-llm/open-ai)
+- [Google Gemini](/integrations/ai-llm/google-gemini-ai)
+- [Google Vertex](/integrations/ai-llm/vertex-ai)
+:::
+
+## Task parameters 
+
+Configure these parameters for the Generate Video task.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- |
+| inputParameters.**llmProvider** | The integration name of the AI model provider configured with your Conductor cluster. | Required. |
+| inputParameters.**model** | The model or deployment name registered under the integration (e.g. `sora-2`, `veo-3`). | Required. |
+| inputParameters.**prompt** | The video description. | Required. |
+| inputParameters.**inputImage** | A base64-encoded image or image URL to use as the starting frame for image-to-video generation. | Optional. |
+| inputParameters.**aspectRatio** | Aspect ratio of the generated video, e.g. `16:9`. | Optional. |
+| inputParameters.**resolution** | Output resolution of the generated video. | Optional. |
+| inputParameters.**size** | Video dimensions, e.g. `1280x720`. | Optional. |
+| inputParameters.**width** | Video width in pixels, used as an alternative to `size`. Default is 1280. | Optional. |
+| inputParameters.**height** | Video height in pixels, used as an alternative to `size`. Default is 720. | Optional. |
+| inputParameters.**fps** | Frames per second of the generated video. Default is 24. | Optional. |
+| inputParameters.**duration** | Length of the generated video, in seconds. Default is 5. | Optional. |
+| inputParameters.**outputFormat** | Output video format. Default is `mp4`. | Optional. |
+| inputParameters.**seed** | Seed value for reproducible generation. | Optional. |
+| inputParameters.**n** | Number of video outputs to generate. Default is 1. | Optional. |
+| inputParameters.**thumbnailTimestamp** | Timestamp, in seconds, to capture the thumbnail from. | Optional. |
+| inputParameters.**generateAudio** | Whether to generate an audio track along with the video. | Optional. |
+| inputParameters.**generateThumbnail** | Whether to generate a thumbnail image for the video. Default is `true`. | Optional. |
+| inputParameters.**style** | Provider-specific style hint. For example, `cinematic`. | Optional. |
+| inputParameters.**motion** | Provider-specific motion hint. For example, `slow`, `medium`, `fast`. | Optional. |
+| inputParameters.**guidanceScale** | Provider-specific value controlling how closely the output follows the prompt. | Optional. |
+| inputParameters.**personGeneration** | Controls whether people can be generated in the video. For example, `dont_allow` or `allow_adult`. | Optional. |
+| inputParameters.**maxDurationSeconds** | Maximum allowed duration, in seconds. | Optional. |
+| inputParameters.**maxCostDollars** | Maximum allowed cost, in dollars. | Optional. |
+| inputParameters.**negativePrompt** | Description of elements to avoid in the generated video. | Optional. |
+
+The following are generic configuration parameters that can be applied to the task and are not specific to the Generate Video task.
+
+<details markdown="1">
+<summary>Caching parameters</summary>
+
+You can cache the task outputs using the following parameters. Refer to [Caching Task Outputs](/faqs/task-cache-output) for a full guide.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| cacheConfig.**ttlInSecond** | The time to live in seconds, which is the duration for the output to be cached. | Required if using *cacheConfig*. |
+| cacheConfig.**key** | The cache key is a unique identifier for the cached output and must be constructed exclusively from the task’s input parameters.<br/>It can be a string concatenation that contains the task’s input keys, such as `${uri}-${method}` or `re_${uri}_${method}`. | Required if using *cacheConfig*. |
+
+</details>
+
+<details markdown="1">
+<summary>Other generic parameters</summary>
+
+Here are other parameters for configuring the task behavior.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| optional | Whether the task is optional. <br/><br/>If set to `true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. | 
+
+</details>
+
+## Task configuration
+
+This is the task configuration for a Generate Video task.
+
+```json
+{
+  "name": "generate_video",
+  "taskReferenceName": "generate_video_ref",
+  "inputParameters": {
+    "llmProvider": "<YOUR-INTEGRATION-HERE>",
+    "model": "<YOUR-MODEL-HERE>",
+    "prompt": "<YOUR-PROMPT-HERE>",
+    "duration": 5,
+    "size": "1280x720"
+  },
+  "type": "GENERATE_VIDEO"
+}
+```
+
+## Task output
+
+The Generate Video task will return the following parameters.
+
+| Parameter | Description | 
+| --------- | ----------- | 
+| jobId | Identifier of the provider's video generation job, used while the task polls for completion. |
+| media | Array of generated videos. Each element contains either a location (URL to the generated video) or base64-encoded data, tagged with a `mimeType` such as `video/mp4`. |
+
+## Examples
+
+Here are some examples for using the Generate Video task.
+
+<details markdown="1">
+<summary>Using a Generate Video task in a workflow</summary>
+
+```json
+{
+  "name": "generate_video",
+  "taskReferenceName": "video",
+  "inputParameters": {
+    "llmProvider": "openai",
+    "model": "sora-2",
+    "prompt": "A drone shot flying over a mountain range at sunrise",
+    "duration": 5,
+    "size": "1280x720"
+  },
+  "type": "GENERATE_VIDEO"
+}
+```
+
+</details>

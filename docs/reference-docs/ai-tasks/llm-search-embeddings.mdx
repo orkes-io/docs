@@ -1,0 +1,118 @@
+---
+sidebar_position: 5
+slug: "/reference-docs/ai-tasks/llm-search-embeddings"
+description: "Learn how the LLM Search Embeddings task searches a vector database using a precomputed embedding or a natural-language query."
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# LLM Search Embeddings
+
+The LLM Search Embeddings task searches a vector database to find the closest matching results. You can search either with an embedding vector you've already computed, or with a natural-language query that the task embeds for you using a configured embedding model.
+
+The LLM Search Embeddings task accepts an embedding vector directly via the *embeddings* parameter. If embeddings are not provided, the task instead embeds the *query* parameter using the specified embedding model provider and model, then searches with the resulting vector. This makes it useful both for reusing a vector you've already generated (for example, via [LLM Generate Embeddings](/reference-docs/ai-tasks/llm-generate-embeddings)) and for searching directly from natural language.
+
+:::info Prerequisites
+
+- [Integrate the required vector database](/category/integrations/vector-databases) with Orkes Conductor.
+- If searching by natural-language *query* instead of a precomputed vector, also [integrate the required AI model](/category/integrations/ai-llm) with Orkes Conductor.
+:::
+
+## Task parameters 
+
+Configure these parameters for the LLM Search Embeddings task.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- |
+| inputParameters.**vectorDB** | The vector database to search.<br/><br/>**Note**: If you haven’t configured the vector database on your Orkes Conductor cluster, navigate to the **Integrations** tab and [configure your required provider](/category/integrations/vector-databases). | Required. |
+| inputParameters.**index** | The index in your vector database to search for relevant embeddings.<br/><br/>The terminology of the index field varies depending on the integration:<ul><li>For Weaviate, the index field indicates the collection name.</li><li>For other integrations, it denotes the index name.</li></ul> | Required. |
+| inputParameters.**namespace** | Namespaces are separate isolated environments within the database to manage and organize vector data effectively. Enter the namespace the task will utilize.<br/><br/>The usage and terminology of the namespace field vary depending on the integration:<ul><li>For Pinecone, the namespace field is applicable.</li><li>For Weaviate, the namespace field is not applicable.</li><li>For MongoDB, the namespace field is referred to as “Collection” in MongoDB.</li><li>For Postgres, the namespace field is referred to as “Table” in Postgres.</li></ul> | Required. |
+| inputParameters.**embeddingModelProvider** | The LLM provider used to embed *query*. Required only when searching by *query* instead of *embeddings*. | Optional. |
+| inputParameters.**embeddingModel** | The embedding model used to embed *query*. Required only when searching by *query* instead of *embeddings*. | Optional. |
+| inputParameters.**embeddings** | The embedding vector to search with. This should be from the same embedding model used to create the embeddings stored in the specified index. | Required. |
+| inputParameters.**query** | A natural-language query to embed and search with. Used only when *embeddings* is not set. | Optional. |
+| inputParameters.**maxResults** | The maximum number of results to return. A non-zero integer between 1 and 10000. | Required. |
+| inputParameters.**dimensions** | The size of the embedding vector. | Optional. |
+| inputParameters.**metadata** | A map of key-value pairs to filter results by document metadata. | Optional. |
+
+The following are generic configuration parameters that can be applied to the task and are not specific to the LLM Search Embeddings task.
+
+<details markdown="1">
+<summary>Caching parameters</summary>
+
+You can cache the task outputs using the following parameters. Refer to [Caching Task Outputs](/faqs/task-cache-output) for a full guide.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| cacheConfig.**ttlInSecond** | The time to live in seconds, which is the duration for the output to be cached. | Required if using *cacheConfig*. |
+| cacheConfig.**key** | The cache key is a unique identifier for the cached output and must be constructed exclusively from the task’s input parameters.<br/>It can be a string concatenation that contains the task’s input keys, such as `${uri}-${method}` or `re_${uri}_${method}`. | Required if using *cacheConfig*. |
+
+</details>
+
+<details markdown="1">
+<summary>Other generic parameters</summary>
+
+Here are other parameters for configuring the task behavior.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| optional | Whether the task is optional. <br/><br/>If set to `true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. | 
+
+</details>
+
+## Task configuration
+
+This is the task configuration for an LLM Search Embeddings task.
+
+```json
+{
+  "name": "llm_search_embeddings",
+  "taskReferenceName": "llm_search_embeddings_ref",
+  "inputParameters": {
+    "vectorDB": "pinecone",
+    "index": "doc-demo",
+    "namespace": "kb",
+    "embeddings": "${generate_embedding_ref.output.result}",
+    "maxResults": 10
+  },
+  "type": "LLM_SEARCH_EMBEDDINGS"
+}
+```
+
+## Task output
+
+The LLM Search Embeddings task will return the following parameters.
+
+| Parameter | Description | 
+| --------- | ----------- | 
+| result | A JSON array containing the results of the query. |
+| score | Represents a value quantifying the degree of likeness between a specific item and a query vector, facilitating ranking and ordering of results. Higher scores denote stronger relevance to the query vector. |
+| metadata | An object containing additional metadata related to the retrieved document. |
+| docId | The unique identifier of the queried document. |
+| parentDocId | An identifier that denotes a parent document in hierarchical or relational data structures. | 
+| text | The actual content retrieved. | 
+
+## Examples
+
+Here are some examples for using the LLM Search Embeddings task.
+
+<details markdown="1">
+<summary>Using an LLM Search Embeddings task in a workflow</summary>
+
+```json
+{
+  "name": "llm_search_embeddings",
+  "taskReferenceName": "llm_search_embeddings_ref",
+  "inputParameters": {
+    "vectorDB": "pinecone",
+    "index": "doc-demo",
+    "namespace": "kb",
+    "embeddings": "${generate_embedding_ref.output.result}",
+    "maxResults": 10
+  },
+  "type": "LLM_SEARCH_EMBEDDINGS"
+}
+```
+
+</details>

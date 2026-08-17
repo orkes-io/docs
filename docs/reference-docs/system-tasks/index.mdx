@@ -38,6 +38,7 @@ Conductor provides native AI system tasks with direct integration with 14+ LLM p
 | [LLM Generate Embeddings](/content/reference-docs/ai-tasks/llm-generate-embeddings) | `LLM_GENERATE_EMBEDDINGS` | Create vector embeddings from text or data using an AI model. |
 | [LLM Store Embeddings](/content/reference-docs/ai-tasks/llm-store-embeddings) | `LLM_STORE_EMBEDDINGS` | Store generated embeddings in a vector database for later retrieval. |
 | [LLM Get Embeddings](/content/reference-docs/ai-tasks/llm-get-embeddings) | `LLM_GET_EMBEDDINGS` | Retrieve stored embeddings from a vector database. |
+| [LLM Search Embeddings](/content/reference-docs/ai-tasks/llm-search-embeddings) | `LLM_SEARCH_EMBEDDINGS` | Search a vector database using a precomputed embedding or a natural-language query. |
 | [LLM Index Text](/content/reference-docs/ai-tasks/llm-index-text) | `LLM_INDEX_TEXT` | Index text content into a vector database for semantic search. |
 | [LLM Index Document](/content/reference-docs/ai-tasks/llm-index-document) | `LLM_INDEX_DOCUMENT` | Index documents into a vector database for semantic search and retrieval. |
 | [LLM Search Index](/content/reference-docs/ai-tasks/llm-search-index) | `LLM_SEARCH_INDEX` | Query a vector database to find documents relevant to a given query. |
@@ -45,6 +46,12 @@ Conductor provides native AI system tasks with direct integration with 14+ LLM p
 | [Parse Document](/content/reference-docs/ai-tasks/parse-document) | `PARSE_DOCUMENT` | Extract, convert, and structure documents into Markdown for AI processing. |
 | [Chunk Text](/content/reference-docs/ai-tasks/chunk-text) | `CHUNK_TEXT` | Split large text into smaller segments for efficient AI processing. |
 | [List Files](/content/reference-docs/ai-tasks/list-files) | `LIST_FILES` | Retrieve file listings from cloud storage, Git repositories, or websites for downstream processing. |
+| [Generate Image](/content/reference-docs/ai-tasks/generate-image) | `GENERATE_IMAGE` | Generate images from a text prompt using a configured AI model integration. |
+| [Generate Audio](/content/reference-docs/ai-tasks/generate-audio) | `GENERATE_AUDIO` | Convert text into synthesized speech or audio using a configured AI model integration. |
+| [Generate Video](/content/reference-docs/ai-tasks/generate-video) | `GENERATE_VIDEO` | Generate video from a text prompt or an input image using a configured AI model integration. |
+| [Generate PDF](/content/reference-docs/ai-tasks/generate-pdf) | `GENERATE_PDF` | Convert Markdown content into a styled PDF document. |
+| [List MCP Tools](/content/reference-docs/ai-tasks/list-mcp-tools) | `LIST_MCP_TOOLS` | Connect to an MCP server and list the tools it exposes. |
+| [Call MCP Tool](/content/reference-docs/ai-tasks/call-mcp-tool) | `CALL_MCP_TOOL` | Invoke a specific tool exposed by an MCP server and return its result. |
 
 **Supported providers:** Anthropic (Claude), OpenAI (GPT), Azure OpenAI, Google Gemini, AWS Bedrock, Mistral, Cohere, HuggingFace, Ollama, Perplexity, Grok (xAI), and more. Switch providers by changing a configuration parameter — no code changes required.
 
