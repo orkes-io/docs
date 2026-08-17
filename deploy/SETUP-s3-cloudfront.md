@@ -1,20 +1,25 @@
-# Docs → S3 + CloudFront (marketing non-prod)
+# Docs → S3 + CloudFront
 
-Serve the MkDocs docs at `https://<non-prod-cf-domain>/content/*` from an S3
-bucket, wired into the **non-prod marketing** CloudFront distribution.
+Serve the MkDocs docs at `/content/*` from an S3 bucket wired into a marketing
+CloudFront distribution. Two accounts, one setup, mirrored:
 
-**This is additive and does NOT touch production:** it does not affect
-`orkes.io`, the orkes-portal, or the docs repo's `main` (Docusaurus). Those keep
-working exactly as today.
+| | account | bucket | workflow | environment |
+|---|---|---|---|---|
+| non-prod | `marketing-non-prod` | `orkes-docs-test` | `deploy-docs-s3.yml` | `marketing-non-prod` |
+| prod | `marketing-prod` | `orkes-docs-prod` | `deploy-docs-prod-s3.yml` | `marketing-prod` |
 
-The workflow (`.github/workflows/deploy-docs-s3.yml`) builds with
-`DOCS_BASE_URL=/content`, uploads to `s3://<bucket>/content/`, and invalidates
-`/content/*`. Below is the one-time AWS + GitHub setup it depends on.
+Both build with `DOCS_BASE_URL=/content`, upload to `s3://<bucket>/content/`, and
+invalidate `/content/*`. Concrete account IDs, distribution IDs, and role ARNs
+live in the GitHub Environments, not in this file.
+
+**Neither touches the live site yet:** `orkes.io/content` is still served by the
+portal-baked Docusaurus build off `main`. Sections 1–5 below describe the
+non-prod setup; [prod](#prod) mirrors it and is already built.
 
 ---
 
 ## 1. S3 bucket (marketing-non-prod account)
-- Create a **private** bucket, e.g. `orkes-docs-nonprod` — Block all public
+- Create a **private** bucket, `orkes-docs-test` — Block all public
   access **on**. (It's served through CloudFront, never directly.)
 - Nothing else; the workflow uploads under a `content/` prefix.
 
@@ -34,7 +39,8 @@ The workflow (`.github/workflows/deploy-docs-s3.yml`) builds with
 ## 3. GitHub OIDC role (marketing-non-prod account)
 Create an IAM role the docs repo can assume via GitHub OIDC.
 
-**Trust policy** (restrict to this repo):
+**Trust policy** — scope `sub` to the GitHub Environment, not just the repo, so
+only jobs that declare `environment: marketing-non-prod` can assume the role:
 ```json
 { "Version": "2012-10-17", "Statement": [{
   "Effect": "Allow",
@@ -42,19 +48,30 @@ Create an IAM role the docs repo can assume via GitHub OIDC.
   "Action": "sts:AssumeRoleWithWebIdentity",
   "Condition": {
     "StringEquals": { "token.actions.githubusercontent.com:aud": "sts.amazonaws.com" },
-    "StringLike":  { "token.actions.githubusercontent.com:sub": "repo:orkes-io/docs:*" }
+    "StringLike":  { "token.actions.githubusercontent.com:sub": "repo:orkes-io/docs:environment:marketing-non-prod" }
   }
 }]}
 ```
 *(If the GitHub OIDC provider doesn't exist in the account yet, add it: URL
 `https://token.actions.githubusercontent.com`, audience `sts.amazonaws.com`.)*
 
-**Permissions policy:**
+> **`sub` must be written exactly as above.** GitHub sends
+> `repo:<owner>/<repo>:environment:<env>`. Numeric IDs belong to the separate
+> `repository_id` / `repository_owner_id` claims — splicing them into `sub` (e.g.
+> `repo:orkes-io@<owner_id>/docs@<repo_id>:*`) silently fails every assume with
+> `Not authorized to perform sts:AssumeRoleWithWebIdentity`. This exact typo cost
+> a debugging session on the prod role.
+
+**Permissions policy** — pin CloudFront to the one distribution; `"Resource": "*"`
+would let the docs deploy invalidate every distribution in the account:
 ```json
 { "Version": "2012-10-17", "Statement": [
   { "Effect": "Allow",
-    "Action": ["s3:PutObject","s3:DeleteObject","s3:ListBucket"],
-    "Resource": ["arn:aws:s3:::orkes-docs-nonprod","arn:aws:s3:::orkes-docs-nonprod/*"] },
+    "Action": ["s3:ListBucket"],
+    "Resource": "arn:aws:s3:::orkes-docs-test" },
+  { "Effect": "Allow",
+    "Action": ["s3:GetObject","s3:PutObject","s3:DeleteObject"],
+    "Resource": "arn:aws:s3:::orkes-docs-test/*" },
   { "Effect": "Allow",
     "Action": ["cloudfront:CreateInvalidation"],
     "Resource": "arn:aws:cloudfront::<ACCOUNT_ID>:distribution/<NONPROD_DIST_ID>" }
@@ -68,7 +85,7 @@ Create an environment named **`marketing-non-prod`** with these **Variables**:
 |---|---|
 | `AWS_ROLE_ARN` | the role ARN from step 3 |
 | `AWS_REGION` | e.g. `us-east-1` |
-| `DOCS_BUCKET` | `orkes-docs-nonprod` |
+| `DOCS_BUCKET` | `orkes-docs-test` |
 | `MARKETING_CF_DIST_ID` | the non-prod distribution ID |
 | `DOCS_SITE_URL` | `https://<non-prod-cf-domain>/content/` |
 
@@ -78,39 +95,58 @@ To smoke-test tags against a throwaway container, set `DOCS_GTM_ID` to that
 container instead of pointing non-prod at the real one.
 
 ## 5. Run it
-- Push to `docs_site_revamp` (or run the workflow manually via **workflow_dispatch**).
+- Push to `refactor/docs-oss-enterprise-merge` — that is the branch
+  `deploy-docs-s3.yml` triggers on.
 - Test: `https://<non-prod-cf-domain>/content/quickstarts`.
+
+> `workflow_dispatch` is declared but does not work yet: GitHub only offers the
+> **Run workflow** button for workflows present on the default branch, and
+> neither S3 workflow is on `main` until the MkDocs migration merges. Until then
+> the push trigger is the only way to run either one.
 
 ---
 
-## Later: promoting to prod (not now)
-Mirror this in the **marketing-prod** account — its own bucket
-(`orkes-docs-prod`), the `/content/*` behavior + function on the **prod**
-distribution, and a `marketing-prod` GitHub Environment. Only at that point do
-you repoint `orkes.io` `/content` off the portal-baked Docusaurus.
+<a id="prod"></a>
+## Prod (built, deploying, not yet public)
 
-The workflow already exists: **`.github/workflows/deploy-docs-prod-s3.yml`**.
-Same build and audit steps as non-prod, `environment: marketing-prod`, and for
-now it pushes on `refactor/docs-oss-enterprise-merge` — the prod bucket is not
-public yet, so this just replaces deploying to it by hand.
+The **marketing-prod** account mirrors sections 1–4 exactly: private bucket
+`orkes-docs-prod`, the `/content/*` behavior + clean-URL function on the prod
+marketing distribution, IAM role `orkes-docs-deploy-prod`, and a
+`marketing-prod` GitHub Environment holding the same five variables. Its trust
+policy scopes `sub` to `repo:orkes-io/docs:environment:marketing-prod` and its
+permissions policy pins CloudFront to the prod distribution.
 
-> **Before repointing CloudFront, change that trigger to `branches: [main]`.**
-> Otherwise every merge into the integration branch publishes to the live site.
+`.github/workflows/deploy-docs-prod-s3.yml` runs the same build and audit steps
+and currently pushes on `refactor/docs-oss-enterprise-merge`. The bucket is not
+public — `orkes.io/content` is still the portal-baked Docusaurus — so this simply
+replaces deploying to it by hand.
 
-Populate the `marketing-prod` Environment with the same five
-variables as the table above, with `DOCS_SITE_URL` set to
-`https://orkes.io/content/` — if you leave it unset the build falls back to that
-same value, so it is safe either way.
+### Cutover checklist
+1. **Change the prod trigger to `branches: [main]`** *before* repointing
+   CloudFront. Left as-is, every merge into the integration branch publishes
+   straight to the live site.
+2. Repoint the prod distribution's `/content/*` off the portal-baked Docusaurus,
+   then invalidate `/content/*` once.
+3. Clear the duplicate GA4 tag in GTM (see below).
 
-That workflow is also the only build that sets **`DOCS_ENABLE_ANALYTICS: "1"`**,
-which injects Google Tag Manager (`GTM-M4Q6Z3R2`, overridable via `DOCS_GTM_ID`)
-into `<head>`. Every other build — dev, non-prod, Pages preview — ships without
-analytics by design. If you replace or rewrite this job, keep that variable or
-prod goes live unmeasured. The container owns GA4 and Google Ads; the site
-deliberately does not load `gtag.js` itself, since the Docusaurus build
-configured `G-4400JPTLRF` both on-page and inside the container and
-double-counted `page_view`.
+### Analytics
+The prod workflow is the **only** build that sets `DOCS_ENABLE_ANALYTICS: "1"`,
+which injects Google Tag Manager (`GTM-M4Q6Z3R2`, overridable per-environment via
+`DOCS_GTM_ID`) into `<head>`. Dev, non-prod, and the Pages preview ship without
+analytics by design. If you rewrite this job, keep that variable or prod goes
+live unmeasured.
 
-One duplicate survives on the container side and can only be fixed in the GTM
-console: a GA4 event tag named `page_view` on an All Pages trigger, on top of the
-config tag's `send_page_view`. Clear that before or shortly after cutover.
+The container owns GA4 (`G-4400JPTLRF`) and Google Ads. The site deliberately
+does **not** load `gtag.js` itself: the Docusaurus build configured that property
+both on-page and again inside the container, sending `page_view` from multiple
+sources.
+
+Two consequences worth knowing:
+
+- Because the prod bucket already builds with analytics on, any traffic reaching
+  it pre-launch — QA, internal links — lands in the production GA4 property.
+  Filter it by IP in GA4, or point `DOCS_GTM_ID` at a throwaway container until
+  cutover.
+- One duplicate survives inside the container and is fixable only in the GTM
+  console: a GA4 event tag named `page_view` on an All Pages trigger, on top of
+  the config tag's `send_page_view`. Clear it before or shortly after cutover.
