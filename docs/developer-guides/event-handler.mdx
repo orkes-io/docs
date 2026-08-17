@@ -119,6 +119,17 @@ The following references resolve as shown:
 
 The same fields are accessible in the `condition` expression using `$.fieldName` syntax (for example, `$.updateTask == true`).
 
+## Permissions and execution identity
+
+When an event handler's `condition` evaluates to `true` and it runs an action, that action is authorized using the identity of whichever user or [application](/access-control-and-security/applications) created (or most recently saved) the event handler — not the identity embedded in the incoming message, and not a shared system identity. This means:
+
+- The creating identity must have whatever permissions the configured actions require (for example, EXECUTE access on the target workflow for `start_workflow`, or UPDATE access on the target task for `complete_task`/`fail_task`). If that identity's permissions change or are revoked, the event handler's actions start failing with authorization errors, even though the event handler's own definition hasn't changed.
+- If the creating user account is later deactivated or deleted, the event handler stops working — its actions cannot execute without a valid identity to authorize them.
+
+Because of this, avoid creating event handlers under a personal user account whose access could change or be removed later. Instead, create the event handler using a dedicated [application (service account)](/access-control-and-security/applications) with only the permissions its actions need. Applications aren't tied to an individual's employment or role, so they don't carry the same removal risk.
+
+**If an event handler is already owned by a user account**, saving the event handler's definition again (for example, via **Save** in the UI, or a `PUT` request to the same event handler) updates its owning identity to whichever user or application performs the save. To move ownership to a service account, have that application (or a user acting on its behalf, with UPDATE access to the event handler) re-save the event handler's existing configuration.
+
 ## Configuring actions 
 
 Actions are executed only after the event handler's `condition` evaluates to `true`. An event handler's `actions` array can trigger multiple actions based on the events received. Orkes Conductor supports the following action types:
