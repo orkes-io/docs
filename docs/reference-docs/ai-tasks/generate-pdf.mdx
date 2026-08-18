@@ -1,0 +1,106 @@
+---
+sidebar_position: 17
+slug: "/reference-docs/ai-tasks/generate-pdf"
+description: "Learn how the Generate PDF task converts Markdown content into a styled PDF document."
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Generate PDF
+
+The Generate PDF task converts Markdown content into a styled PDF document. This task renders the Markdown you provide directly into a PDF using a local rendering engine, and returns the generated document as output. Use it to produce reports, summaries, or exportable documents as part of a workflow. For example, converting an LLM-generated Markdown report into a downloadable PDF.
+
+## Task parameters 
+
+Configure these parameters for the Generate PDF task.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- |
+| inputParameters.**markdown** | The Markdown content to convert to a PDF. Supports tables, strikethrough, task lists, footnotes, and images. | Required. |
+| inputParameters.**pageSize** | Page size of the generated PDF. Supported values: `A4`, `A3`, `A5`, `LETTER`, `LEGAL`. Default is `A4`. | Optional. |
+| inputParameters.**theme** | Rendering theme. Supported values: `default`, `compact`. Default is `default`. | Optional. |
+| inputParameters.**baseFontSize** | Base font size, in points. Default is 11. | Optional. |
+| inputParameters.**marginTop** | Top margin, in points. Default is 72 (1 inch). | Optional. |
+| inputParameters.**marginRight** | Right margin, in points. Default is 72 (1 inch). | Optional. |
+| inputParameters.**marginBottom** | Bottom margin, in points. Default is 72 (1 inch). | Optional. |
+| inputParameters.**marginLeft** | Left margin, in points. Default is 72 (1 inch). | Optional. |
+| inputParameters.**pdfMetadata** | Document metadata to embed in the PDF. Supported keys: `title`, `author`, `subject`, `keywords`. | Optional. |
+| inputParameters.**outputLocation** | URI where the generated PDF should be stored. Defaults to the configured payload store location. | Optional. |
+| inputParameters.**imageBaseUrl** | Base URL used to resolve relative image paths referenced in the Markdown. | Optional. |
+
+The following are generic configuration parameters that can be applied to the task and are not specific to the Generate PDF task.
+
+<details markdown="1">
+<summary>Caching parameters</summary>
+
+You can cache the task outputs using the following parameters. Refer to [Caching Task Outputs](/faqs/task-cache-output) for a full guide.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| cacheConfig.**ttlInSecond** | The time to live in seconds, which is the duration for the output to be cached. | Required if using *cacheConfig*. |
+| cacheConfig.**key** | The cache key is a unique identifier for the cached output and must be constructed exclusively from the task’s input parameters.<br/>It can be a string concatenation that contains the task’s input keys, such as `${uri}-${method}` or `re_${uri}_${method}`. | Required if using *cacheConfig*. |
+
+</details>
+
+<details markdown="1">
+<summary>Other generic parameters</summary>
+
+Here are other parameters for configuring the task behavior.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| optional | Whether the task is optional. <br/><br/>If set to `true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. | 
+
+</details>
+
+## Task configuration
+
+This is the task configuration for a Generate PDF task.
+
+```json
+{
+  "name": "generate_pdf",
+  "taskReferenceName": "generate_pdf_ref",
+  "inputParameters": {
+    "markdown": "<YOUR-MARKDOWN-HERE>",
+    "pageSize": "A4"
+  },
+  "type": "GENERATE_PDF"
+}
+```
+
+## Task output
+
+The Generate PDF task will return the following parameters.
+
+| Parameter | Description | 
+| --------- | ----------- | 
+| media | Array containing the generated PDF. Contains either a location or base64-encoded data, tagged `mimeType: application/pdf`. |
+| result.location | Location of the stored PDF. |
+| result.sizeBytes | Size of the generated PDF, in bytes. |
+
+## Examples
+
+Here are some examples for using the Generate PDF task.
+
+<details markdown="1">
+<summary>Using a Generate PDF task in a workflow</summary>
+
+```json
+{
+  "name": "generate_pdf",
+  "taskReferenceName": "pdf",
+  "inputParameters": {
+    "markdown": "# Quarterly Sales Report\n\n## Summary\n\nRevenue grew 12% quarter-over-quarter, driven primarily by expansion in the EMEA region.",
+    "pageSize": "LETTER",
+    "pdfMetadata": {
+      "title": "Quarterly Sales Report",
+      "author": "Sales Analytics"
+    }
+  },
+  "type": "GENERATE_PDF"
+}
+```
+
+</details>

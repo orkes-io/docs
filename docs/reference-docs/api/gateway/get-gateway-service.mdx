@@ -1,0 +1,95 @@
+---
+sidebar_position: 8
+slug: "/reference-docs/api/gateway/get-gateway-service"
+description: "Learn how to retrieve a gateway service."
+---
+
+# Get Gateway Service
+
+**Endpoint**: `GET /api/gateway/config/services/{serviceId}`
+
+Retrieves the details of a specific gateway service.
+
+## Path parameters
+
+| Parameter | Description | Type | Required/ Optional |
+| --------- | ------------ | ---- | ------------------- |
+| serviceId | The service ID of the gateway service to retrieve. You can get the service ID from the `id` field of the [Get All Gateway Service’s output](/reference-docs/api/gateway/get-all-gateway-service). | string | Required. |
+
+## Response
+
+Returns a 200 OK response with service details, including its id, name, path, and route metadata.
+
+## Examples
+
+<details markdown="1">
+<summary>Get a gateway service</summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-SERVER-UR>/api/gateway/config/services/ticket-tools' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+{
+  "id": "ticket-tools",
+  "name": "Ticket Service",
+  "path": "/api/tickets",
+  "description": "",
+  "enabled": true,
+  "createTime": 1767874354657,
+  "updateTime": 1767874354657,
+  "tags": [],
+  "routes": [
+    {
+      "httpMethod": "POST",
+      "path": "/create",
+      "description": "",
+      "serviceId": "ticket-tools",
+      "mappedWorkflow": {
+        "name": "create_ticket_wf",
+        "version": 1,
+        "requestMetadataAsInput": true
+      },
+      "workflowMetadataInOutput": false,
+      "workflowExecutionMode": "SYNCHRONOUS",
+      "waitUntilTasks": "",
+      "timeoutInSeconds": 0,
+      "createTime": 1767874385130,
+      "updateTime": 1767874385130,
+      "createdBy": "john.doe@acme.com",
+      "queryParameters": [],
+      "orgId": "fd7s"
+    }
+  ],
+  "authConfigId": "rf",
+  "corsConfig": {
+    "accessControlAllowOrigin": [
+      "*"
+    ],
+    "accessControlAllowMethods": [
+      "GET",
+      "POST",
+      "PUT",
+      "DELETE",
+      "PATCH",
+      "OPTIONS"
+    ],
+    "accessControlAllowHeaders": [
+      "*"
+    ]
+  },
+  "createdBy": "john.doe@acme.com",
+  "mcpEnabled": true,
+  "basePath": "https://fd7s.developer.orkescloud.com/api/tickets",
+  "orgId": "fd7s"
+}
+```
+
+</details>

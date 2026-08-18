@@ -1,0 +1,149 @@
+---
+sidebar_position: 10
+slug: "/reference-docs/api/gateway/get-all-gateway-service"
+description: "Learn how to retrieve all gateway services."
+---
+
+# Get All Gateway Services
+
+**Endpoint**: `GET /api/gateway/config/services`
+
+Retrieves all gateway services.
+
+## Response
+
+Returns an array of gateway objects, each including its id, name, path, route, and other metadata.
+
+## Examples
+
+<details markdown="1">
+<summary>Get all Gateway services</summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/gateway/config/services' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+[
+  {
+    "id": "feedback-service",
+    "name": "Feedback Service",
+    "path": "/api/feedback",
+    "description": "",
+    "enabled": true,
+    "createTime": 1769063922519,
+    "updateTime": 1769063922519,
+    "tags": [],
+    "routes": [
+      {
+        "httpMethod": "POST",
+        "path": "/user-feedback/{user-id}",
+        "description": "",
+        "inputSchema": "{\"$schema\":\"http://json-schema.org/draft-07/schema\",\"type\":\"object\",\"properties\":{\"rating\":{\"type\":\"integer\",\"minimum\":1,\"maximum\":5},\"comment\":{\"type\":\"string\"}},\"required\":[\"rating\",\"comment\"]}",
+        "inputSchemaRef": {
+          "name": "FeedbackSchema",
+          "version": 1
+        },
+        "serviceId": "feedback-service",
+        "mappedWorkflow": {
+          "name": "Feedback",
+          "version": 1,
+          "requestMetadataAsInput": true
+        },
+        "workflowMetadataInOutput": false,
+        "workflowExecutionMode": "SYNCHRONOUS",
+        "waitUntilTasks": "",
+        "timeoutInSeconds": 0,
+        "createTime": 1769063956395,
+        "updateTime": 1769063956395,
+        "createdBy": "john.doe@acme.com",
+        "queryParameters": [],
+        "orgId": "fd7s"
+      }
+    ],
+    "authConfigId": "gateway",
+    "corsConfig": {
+      "accessControlAllowOrigin": [
+        "*"
+      ],
+      "accessControlAllowMethods": [
+        "GET",
+        "POST",
+        "PUT",
+        "DELETE",
+        "PATCH",
+        "OPTIONS"
+      ],
+      "accessControlAllowHeaders": [
+        "*"
+      ]
+    },
+    "createdBy": "john.doe@acme.com",
+    "mcpEnabled": false,
+    "basePath": "https://fd7s.developer.orkescloud.com/api/feedback",
+    "orgId": "fd7s"
+  },
+  {
+    "id": "ticket-tools",
+    "name": "Ticket Service",
+    "path": "/api/tickets",
+    "description": "",
+    "enabled": true,
+    "createTime": 1767874354657,
+    "updateTime": 1767874354657,
+    "tags": [],
+    "routes": [
+      {
+        "httpMethod": "POST",
+        "path": "/create",
+        "description": "",
+        "serviceId": "ticket-tools",
+        "mappedWorkflow": {
+          "name": "create_ticket_wf",
+          "version": 1,
+          "requestMetadataAsInput": true
+        },
+        "workflowMetadataInOutput": false,
+        "workflowExecutionMode": "SYNCHRONOUS",
+        "waitUntilTasks": "",
+        "timeoutInSeconds": 0,
+        "createTime": 1767874385130,
+        "updateTime": 1767874385130,
+        "createdBy": "john.doe@acme.com",
+        "queryParameters": [],
+        "orgId": "fd7s"
+      }
+    ],
+    "authConfigId": "rf",
+    "corsConfig": {
+      "accessControlAllowOrigin": [
+        "*"
+      ],
+      "accessControlAllowMethods": [
+        "GET",
+        "POST",
+        "PUT",
+        "DELETE",
+        "PATCH",
+        "OPTIONS"
+      ],
+      "accessControlAllowHeaders": [
+        "*"
+      ]
+    },
+    "createdBy": "john.doe@acme.com",
+    "mcpEnabled": true,
+    "basePath": "https://fd7s.developer.orkescloud.com/api/tickets",
+    "orgId": "fd7s"
+  }
+]
+```
+
+</details>

@@ -1,0 +1,45 @@
+---
+sidebar_position: 9
+slug: "/reference-docs/api/gateway/delete-gateway-service"
+description: "Learn how to delete a gateway service."
+---
+
+# Delete Gateway Service
+
+**Endpoint**: `GET /api/gateway/config/services/{serviceId}`
+
+Delete a gateway service
+
+## Path parameters
+
+| Parameter | Description | Type | Required/ Optional |
+| --------- | ------------ | ---- | ------------------- |
+| serviceId | The service ID of the gateway service to delete. You can get the service ID from the `id` field of the [Get All Gateway Service’s output](/reference-docs/api/gateway/get-all-gateway-service). | string | Required. |
+
+## Response
+
+Returns a 200 OK response with a message that service is deleted.
+
+## Examples
+
+<details markdown="1">
+<summary>Delete a gateway service</summary>
+
+**Request**
+
+```shell
+curl -X 'DELETE' \
+  'https://<YOUR-SERVER-URL>/api/gateway/config/services/ticket-tools' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+{
+  "message": "Service deleted"
+}
+```
+
+</details>
