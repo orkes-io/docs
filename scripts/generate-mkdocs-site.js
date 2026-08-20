@@ -1701,10 +1701,23 @@ function convertEntry(entry) {
 // claim is a forbidden phrase, re-applied on every OSS refresh so an upstream
 // reword can't silently reintroduce it.
 function applyHomeMessaging(body) {
-  return body.replace(
-    "Write task workers in any language.",
-    "Write task workers in Python, Java, Go, C#, JavaScript, and more.",
-  );
+  return body
+    .replace(
+      "Write task workers in any language.",
+      "Write task workers in Python, Java, Go, C#, JavaScript, and more.",
+    )
+    // Enterprise home diverges from the OSS home in one card: the OSS
+    // "Self-hosting" get-started card becomes the Orkes Conductor install
+    // card, pointing at the deployment-models page.
+    .replace(
+      /<a class="integration-action-card" href="[^"]*">\s*(?:(?!<\/a>)[\s\S])*?__title">Self-hosting<\/span>(?:(?!<\/a>)[\s\S])*?<\/a>/,
+      `<a class="integration-action-card" href="/content/get-orkes-conductor">
+      <span class="home-card-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg></span>
+      <span class="integration-action-card__title">Install Orkes Conductor</span>
+      <span>Run Orkes Conductor Orkes-hosted or customer-hosted in your own environment.</span>
+      <span class="home-card-cta">Set up Orkes Conductor &rarr;</span>
+    </a>`,
+    );
 }
 
 // The homepage mirrors the OSS docs home (conductor-oss/conductor docs/index.md)
