@@ -1714,7 +1714,7 @@ function applyHomeMessaging(body) {
       `<a class="integration-action-card" href="/content/get-orkes-conductor">
       <span class="home-card-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg></span>
       <span class="integration-action-card__title">Install Orkes Conductor</span>
-      <span>Run Orkes Conductor Orkes-hosted or customer-hosted in your own environment.</span>
+      <span>Run Conductor in your own environment or hosted by Orkes.</span>
       <span class="home-card-cta">Set up Orkes Conductor &rarr;</span>
     </a>`,
     );
