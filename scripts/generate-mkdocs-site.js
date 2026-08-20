@@ -2274,7 +2274,7 @@ function ossNavTabs() {
     d("devguide/ai/why-conductor", "Why Conductor for Agents"),
     cat("Build", [
       d("devguide/ai/conductor-agents", "Conductor Agents"),
-      d("devguide/ai/agent-framework-recipes", "Framework Agent Bridges"),
+      d("devguide/ai/agent-framework-recipes", "Framework Agents"),
       d("devguide/ai/first-ai-agent", "Build Agentic Workflow Graph"),
       d("devguide/ai/llm-orchestration", "LLM Orchestration"),
       d("devguide/ai/dynamic-workflows", "Durable Adaptive Graphs"),
