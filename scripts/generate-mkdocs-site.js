@@ -2472,7 +2472,7 @@ const PLATFORM_CONCEPT_CALLOUT = [
 ].join("\n");
 
 const PLATFORM_OPS_CALLOUT = [
-  '!!! note "Self-hosted Conductor"',
+  '!!! note "Open-source Conductor"',
   "",
   "    This page covers operating the open-source Conductor server yourself. Orkes Conductor, whether Orkes-hosted or customer-hosted in your own environment, is installed and operated differently; see [Install and Set Up Orkes Conductor](/content/get-orkes-conductor).",
 ].join("\n");
