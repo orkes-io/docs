@@ -533,6 +533,14 @@ function sourceDocId(sourceRel) {
   return docIdBySource.get(sourceRel) || docIdFromRel(sourceRel);
 }
 
+// Auto-discovered OSS pages that must not ship on the Orkes site: server-internal
+// design/build docs. Mirrors the upstream OSS mkdocs.yml not_in_nav curation.
+const EXCLUDED_OSS_SOURCES = new Set([
+  "wmq/workflow-message-queue.md",
+  "wmq/workflow-message-queue-architecture.md",
+  "documentation/advanced/annotation-processor.md",
+]);
+
 function collectSourceEntries() {
   if (!fs.existsSync(OSS_DOCS)) {
     throw new Error(
@@ -561,6 +569,7 @@ function collectSourceEntries() {
   for (const file of listMarkdownFiles(OSS_DOCS)) {
     const sourceRel = posixPath(path.relative(OSS_DOCS, file));
     if (mappedSources.has(sourceRel)) continue;
+    if (EXCLUDED_OSS_SOURCES.has(sourceRel)) continue;
     // Never surface the OSS site-root index — the Orkes homepage is generated
     // separately and written to index.md; letting OSS's index.md through here
     // would clobber it.
@@ -1533,6 +1542,124 @@ function enhancePositioningPage(body, route) {
         "    listener. On Orkes Conductor, publish workflow state changes with CDC",
         "    instead - see [Enabling CDC on Conductor Workflows](/content/developer-guides/enabling-cdc-on-conductor-workflows).",
       ].join("\n"),
+    );
+  }
+
+  if (route === "devguide/ai/a2a-integration") {
+    output = output.replace(
+      "## Call a remote agent from a workflow (client)",
+      [
+        "## Call a remote agent from a workflow (client)",
+        "",
+        '!!! note "Open-source server configuration"',
+        "",
+        "    The `conductor.*` properties shown on this page configure the open-source",
+        "    Conductor server; they are not settable on Orkes Conductor clusters.",
+      ].join("\n"),
+    );
+  }
+
+  if (route === "faqs/general-faqs") {
+    output = output.replace(
+      "This is almost always caused by running multiple Conductor server instances",
+      [
+        '!!! note "Open-source Conductor"',
+        "",
+        "    This answer applies to running the open-source Conductor server yourself.",
+        "    On an Orkes Conductor cluster these server properties are not user-settable.",
+        "",
+        "This is almost always caused by running multiple Conductor server instances",
+      ].join("\n"),
+    );
+    output = output.replace(
+      "In Conductor 3.x, ",
+      "**Open-source Conductor servers only:** in Conductor 3.x, ",
+    );
+    output = output.replace(
+      "## How do I configure a notification when my workflow completes or fails?",
+      [
+        "## How do I configure a notification when my workflow completes or fails?",
+        "",
+        '!!! note "Orkes Conductor"',
+        "",
+        "    On Orkes Conductor, stream workflow state changes with CDC - see",
+        "    [Enabling CDC on Conductor Workflows](/content/developer-guides/enabling-cdc-on-conductor-workflows).",
+      ].join("\n"),
+    );
+  }
+
+  if (route === "ai-cookbook/ai-llm-recipes") {
+    output = output.replace(
+      "### AI provider configuration",
+      [
+        "### AI provider configuration",
+        "",
+        '!!! note "Open-source Conductor"',
+        "",
+        "    The environment variables and `application.properties` below configure the",
+        "    open-source Conductor server. On Orkes Conductor, add your model provider and",
+        "    vector database as integrations instead - see",
+        "    [Vector Database Integrations](/content/category/integrations/vector-databases).",
+      ].join("\n"),
+    );
+  }
+
+  if (route === "error-handling") {
+    output = output.replace(
+      "## Implement a Workflow Status Listener",
+      [
+        "## Implement a Workflow Status Listener",
+        "",
+        '!!! note "Open-source Conductor"',
+        "",
+        "    Implementing this Java interface means building the open-source Conductor",
+        "    server yourself. On Orkes Conductor, stream workflow state changes with CDC",
+        "    instead - see [Enabling CDC on Conductor Workflows](/content/developer-guides/enabling-cdc-on-conductor-workflows).",
+      ].join("\n"),
+    );
+  }
+
+  if (route === "reference-docs/system-tasks/jdbc") {
+    output = output.replace(
+      "## Connection configuration",
+      [
+        "## Connection configuration",
+        "",
+        '!!! note "Open-source Conductor"',
+        "",
+        "    The `conductor.jdbc.instances` configuration below applies to the open-source",
+        "    Conductor server. On Orkes Conductor, connect your database as an integration",
+        "    and reference it with `integrationName` - see",
+        "    [Relational Database Integration](/content/integrations/rdbms/relational-database).",
+      ].join("\n"),
+    );
+  }
+
+  if (route === "devguide/running/deploy") {
+    output = output.replace(
+      "Conductor is open source and self-hosted: you run the server on your own infrastructure. This guide covers the deployment architecture, how to run the server with Docker, the backend configuration options, and how to scale and monitor a production installation.\n\n",
+      "",
+    );
+  }
+
+  if (route === "reference-docs/api/workflow") {
+    output = output.replace(
+      /See \[Workflow Message Queue\]\([^)]*\) and \[Pull Workflow Messages task\]/,
+      "See [Pull Workflow Messages task]",
+    );
+  }
+
+  if (route === "documentation/configuration/workflowdef/systemtasks/pull-workflow-messages-task") {
+    output = output.replace(
+      / See \[Workflow Message Queue\]\([^)]*\) for feature configuration and delivery semantics\./,
+      "",
+    );
+  }
+
+  if (route === "documentation/configuration/workflowdef") {
+    output = output.replace(
+      /To add a custom implementation of the Workflow Status Listener\. Refer to the \[Workflow Status Listener extension guide\]\(([^)]+)\)\./,
+      "To add a custom Java implementation on the open-source Conductor server, refer to the [Workflow Status Listener extension guide]($1). On Orkes Conductor, stream workflow state changes with [CDC](/content/developer-guides/enabling-cdc-on-conductor-workflows) instead.",
     );
   }
 

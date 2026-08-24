@@ -104,5 +104,7 @@
   "reference-docs/api/workflow/pause-worflow": "reference-docs/api/workflow",
   "sdks/clojure": "sdks/sdk-index",
   "templates/agentic-research": "category/tutorials",
-  "templates/claims-workflow": "category/tutorials"
+  "templates/claims-workflow": "category/tutorials",
+  "wmq/workflow-message-queue": "documentation/configuration/workflowdef/systemtasks/pull-workflow-messages-task",
+  "wmq/workflow-message-queue-architecture": "documentation/configuration/workflowdef/systemtasks/pull-workflow-messages-task"
 }
