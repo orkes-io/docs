@@ -178,8 +178,8 @@
     },
     {
       "source": "devguide/how-tos/workflow-status-events.md",
-      "docId": "conceptual-guides/workflow-and-task-status",
-      "route": "conceptual-guides/workflow-and-task-status"
+      "docId": "devguide/how-tos/workflow-status-events",
+      "route": "devguide/how-tos/workflow-status-events"
     },
     {
       "source": "devguide/cookbook/dynamic-parallelism.md",

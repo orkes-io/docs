@@ -1524,6 +1524,18 @@ function enhancePositioningPage(body, route) {
     );
   }
 
+  if (route === "devguide/how-tos/workflow-status-events") {
+    output = insertAfterIntro(
+      output,
+      [
+        '!!! note "Open-source server mechanism"',
+        "    This page configures the open-source Conductor server's workflow status",
+        "    listener. On Orkes Conductor, publish workflow state changes with CDC",
+        "    instead - see [Enabling CDC on Conductor Workflows](/content/developer-guides/enabling-cdc-on-conductor-workflows).",
+      ].join("\n"),
+    );
+  }
+
   if (route === "ai-orchestration/mcp-integration") {
     output = insertAfterIntro(
       output,
@@ -2277,6 +2289,8 @@ function ossNavTabs() {
       d("devguide/how-tos/Workflows/viewing-workflow-executions", "Viewing Executions"),
       d("devguide/how-tos/Workflows/searching-workflows", "Searching Workflows"),
       d("devguide/how-tos/Workflows/debugging-workflows", "Debugging Workflows"),
+      // Restored pre-merge enterprise page (see Aug 24 #general thread).
+      "conceptual-guides/workflow-and-task-status",
       d("devguide/how-tos/Workers/scaling-workers", "Guide to Scaling Workers"),
     ]),
   ]],
