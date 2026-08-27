@@ -2,7 +2,7 @@
 # Full-tree merge: the entire OSS docs/ is pulled and merged; only enterprise
 # content is authored in this repo. (Was a pinned commit + selective paths.)
 repo: https://github.com/conductor-oss/conductor.git
-ref: agent_docs
+ref: main
 cache_dir: .cache/conductor-oss
 paths:
   - docs
