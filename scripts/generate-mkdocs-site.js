@@ -539,6 +539,9 @@ const EXCLUDED_OSS_SOURCES = new Set([
   "wmq/workflow-message-queue.md",
   "wmq/workflow-message-queue-architecture.md",
   "documentation/advanced/annotation-processor.md",
+  // Superseded by the restored reference-docs/operators/human page; leaving
+  // this unmapped would surface it as an orphan with a title collision.
+  "documentation/configuration/workflowdef/systemtasks/human-task.md",
 ]);
 
 function collectSourceEntries() {
