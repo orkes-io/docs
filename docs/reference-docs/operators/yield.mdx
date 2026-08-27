@@ -11,7 +11,7 @@ import TabItem from '@theme/TabItem';
 
 The Yield task temporarily yields control of the workflow by pausing execution until it is explicitly resumed using [synchronous](/reference-docs/api/task/signal-running-task-synchronously) or [asynchronous](/reference-docs/api/task/signal-running-task-asynchronously) signal endpoints, typically in response to external conditions or events.
 
-When a workflow runs in synchronous consistency mode, and execution reaches a Yield task, Conductor immediately returns a response based on the `returnStrategy` in the [Execute Workflow Synchronously](/content/reference-docs/api/workflow/synchronous-workflow-execution#query-syntax) endpoint.
+When a workflow runs in synchronous consistency mode, and execution reaches a Yield task, Conductor immediately returns a response based on the `returnStrategy` in the [Execute Workflow Synchronously](/content/reference-docs/api/workflow/synchronous-workflow-execution#query-parameters) endpoint.
 
 :::info Note
 To achieve similar immediate-return behavior on a [Wait task](/content/reference-docs/operators/wait) with a duration, set `yield: true` in the Wait task's `inputParameters`. Unlike the Yield task, the Wait task continues running in the background for the specified duration. 

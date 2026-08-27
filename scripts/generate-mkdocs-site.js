@@ -1652,6 +1652,17 @@ function enhancePositioningPage(body, route) {
     );
   }
 
+  if (route === "reference-docs/api/workflow/start-workflow-execution") {
+    output = output.replace(
+      /\| `consistency` \| Query \|[^\n]*/,
+      "| `consistency` | Query | `SYNCHRONOUS`, `DURABLE`, or `REGION_DURABLE` - see [Execute Workflow Synchronously](/content/reference-docs/api/workflow/synchronous-workflow-execution) | No (default: `DURABLE`) |",
+    );
+    output = output.replace(
+      /\| `returnStrategy` \| Query \|[^\n]*/,
+      "| `returnStrategy` | Query | Which state to return when execution blocks on a [Yield](/content/reference-docs/operators/yield) task: `TARGET_WORKFLOW`, `BLOCKING_WORKFLOW`, `BLOCKING_TASK`, or `BLOCKING_TASK_INPUT` - see [Execute Workflow Synchronously](/content/reference-docs/api/workflow/synchronous-workflow-execution) | No (default: `TARGET_WORKFLOW`) |",
+    );
+  }
+
   if (route === "documentation/configuration/workflowdef/systemtasks/pull-workflow-messages-task") {
     output = output.replace(
       / See \[Workflow Message Queue\]\([^)]*\) for feature configuration and delivery semantics\./,

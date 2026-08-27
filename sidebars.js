@@ -678,6 +678,8 @@ const sidebars = {
                     },
                     items: [
                         'reference-docs/api/task',
+                        'reference-docs/api/task/signal-running-task-asynchronously',
+                        'reference-docs/api/task/signal-running-task-synchronously',
                         {
                             type: 'category',
                             label: 'Task Queue',
