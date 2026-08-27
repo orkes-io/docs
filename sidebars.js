@@ -145,7 +145,7 @@ const sidebars = {
                     items: [
                         {
                             type: 'doc',
-                            id: 'reference-docs/operators/human',
+                            id: 'developer-guides/orchestrating-human-tasks',
                             label: 'Human Task Orchestration',
                         },
                         {

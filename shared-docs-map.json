@@ -92,11 +92,6 @@
       "route": "reference-docs/operators/terminate"
     },
     {
-      "source": "documentation/configuration/workflowdef/systemtasks/human-task.md",
-      "docId": "reference-docs/operators/human",
-      "route": "reference-docs/operators/human"
-    },
-    {
       "source": "documentation/configuration/workflowdef/systemtasks/wait-task.md",
       "docId": "reference-docs/operators/wait",
       "route": "reference-docs/operators/wait"
