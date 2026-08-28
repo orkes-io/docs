@@ -1661,6 +1661,10 @@ function enhancePositioningPage(body, route) {
       /\| `returnStrategy` \| Query \|[^\n]*/,
       "| `returnStrategy` | Query | Which state to return when execution blocks on a [Yield](/content/reference-docs/operators/yield) task: `TARGET_WORKFLOW`, `BLOCKING_WORKFLOW`, `BLOCKING_TASK`, or `BLOCKING_TASK_INPUT` - see [Execute Workflow Synchronously](/content/reference-docs/api/workflow/synchronous-workflow-execution) | No (default: `TARGET_WORKFLOW`) |",
     );
+    output = output.replace(
+      /\| `externalInputPayloadStoragePath` \|[^\n]*/,
+      "| `externalInputPayloadStoragePath` | Path to external payload storage (OSS-only). See [External Payload Storage](https://docs.conductor-oss.org/documentation/advanced/externalpayloadstorage). | No |",
+    );
   }
 
   if (route === "documentation/configuration/workflowdef/systemtasks/pull-workflow-messages-task") {
