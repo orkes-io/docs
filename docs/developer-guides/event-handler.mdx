@@ -17,14 +17,11 @@ Event handlers in Orkes Conductor listen for messages from message brokers and t
 - Start a new workflow
 - Start an agent
 
-:::tip 5-minute path
-To get an event handler running quickly: configure the broker integration, choose the sink string, write a condition, choose one action, and test with a representative payload. Add idempotency and monitoring before moving to production.
-:::
-
 ## Creating an event handler
 
 :::info Prerequisites
 Before configuring an event handler, ensure the following:
+
 - A supported [message broker](/content/category/integrations/message-broker) is integrated with your Conductor cluster.
 - The target queue or topic already exists in the message broker.
 - Conductor has permission to consume messages from the configured queue or topic.

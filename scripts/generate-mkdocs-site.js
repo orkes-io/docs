@@ -1715,6 +1715,54 @@ function enhancePositioningPage(body, route) {
     );
   }
 
+  if (route === "developer-guides/rate-limits") {
+    output = output.replace(
+      /### Using `inputTemplate`[\s\S]*?(?=\n## )/,
+      [
+        "### Using `inputTemplate`",
+        "",
+        "`inputTemplate` defines default input parameters on a task definition. Every workflow task that uses that task definition receives these defaults unless the workflow task's own `inputParameters` override them.",
+        "",
+        "Use it for defaults shared by many workflows, such as static service paths, default headers, common retry metadata, or feature flags used by the worker. Avoid using it for per-workflow data, secrets, or customer-specific values.",
+        "",
+        "Add `inputTemplate` to the task definition:",
+        "",
+        "```json",
+        "{",
+        '  "name": "send_notification",',
+        '  "description": "Send a notification message",',
+        '  "ownerEmail": "platform@example.com",',
+        '  "retryCount": 3,',
+        '  "timeoutSeconds": 300,',
+        '  "responseTimeoutSeconds": 60,',
+        '  "inputTemplate": {',
+        '    "channel": "email",',
+        '    "priority": "normal",',
+        '    "headers": {',
+        '      "source": "conductor"',
+        "    }",
+        "  }",
+        "}",
+        "```",
+        "",
+        "The template supports strings, numbers, booleans, nulls, arrays, and objects.",
+        "",
+        "When a task definition with an `inputTemplate` is added to a workflow, its default values are automatically included as the task's input. If the workflow task also defines the same key as an input parameter, that value overrides the template's default:",
+        "",
+        "```json",
+        '"inputParameters": {',
+        '  "channel": "${workflow.input.notification_channel}"',
+        "}",
+        "```",
+        "",
+        "!!! note",
+        "",
+        '    From the Conductor UI, go to **Definitions > Task**, select or create a task definition, and add key-value pairs under **Task input template**. Use **Override All** to replace all task input parameters with the template\'s values.',
+        "",
+      ].join("\n"),
+    );
+  }
+
   if (route === "quickstarts/concepts") {
     output = output.replace("## What can Conductor do?", "## What Conductor is best at");
     output = insertAfterIntro(
