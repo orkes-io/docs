@@ -1510,6 +1510,21 @@ function insertAfterIntro(body, addition) {
   return body.replace(match[0], `${match[0]}${cleanAddition}\n\n`);
 }
 
+const CONNECTED_APPS_NOTE = [
+  '!!! note "Connected Apps must be enabled on your cluster"',
+  "",
+  "    Connected Apps are enabled per cluster. If **Integrations > Connected Apps** is not in",
+  "    the left navigation, contact Orkes support to enable it before following these steps.",
+].join("\n");
+
+// Every connected-app guide page (not the *-operations references) gets the
+// enablement note right after its "Available since" admonition.
+function injectConnectedAppsNote(body, sourceRel) {
+  if (!sourceRel.startsWith("integrations/connected-apps/")) return body;
+  if (/-operations\.mdx?$/.test(sourceRel)) return body;
+  return insertAfterIntro(body, CONNECTED_APPS_NOTE);
+}
+
 function insertBeforeHeading(body, heading, addition) {
   const cleanAddition = addition.trim();
   if (!cleanAddition) return body;
@@ -1533,6 +1548,39 @@ function enhancePositioningPage(body, route) {
     output = insertAfterIntro(
       output,
       platformVariant === "concept" ? PLATFORM_CONCEPT_CALLOUT : PLATFORM_OPS_CALLOUT,
+    );
+  }
+
+  if (route === "devguide/how-tos/Workflows/searching-workflows") {
+    output = insertBeforeHeading(
+      output,
+      "Limitations and next step",
+      [
+        "## Orkes Conductor: searching task executions",
+        "",
+        "On Orkes Conductor, **Executions > Workflow** is the search described above. Clusters",
+        "with task indexing enabled also have **Executions > Task**, which searches task",
+        "executions directly with these filters:",
+        "",
+        "| Filter | Description |",
+        "|---|---|",
+        "| Task definition name | One or more task definition names. |",
+        "| Task type | One or more task types, such as `SIMPLE` or `HTTP`. |",
+        "| Task execution id | A specific task execution ID. |",
+        "| Task reference name | The task's reference name in the workflow definition. |",
+        "| Workflow name | Only tasks that belong to these workflow definitions. |",
+        "| Status | One or more task statuses. |",
+        "| Free text search | Full-text query over indexed task data. |",
+        "",
+        "Turn on **SQL format** to write the query directly, for example",
+        "`taskType = 'HTTP' AND status = 'FAILED'`.",
+        "",
+        '!!! note "Task indexing is enabled per cluster"',
+        "",
+        "    Task indexing is off by default. If **Executions > Task** is not in the left",
+        "    navigation, it is not enabled on your cluster. Contact Orkes support to turn it",
+        "    on, then hard-refresh the UI.",
+      ].join("\n"),
     );
   }
 
@@ -1896,7 +1944,10 @@ function convertEntry(entry) {
   const title = extractTitle(body, frontMatter, route);
   const pageTitle = pageTitleForRoute(route, title);
   const sourceBody = entry.shared ? transformSharedBody(body, entry) : body;
-  const cleaned = enhancePositioningPage(cleanMdx(sourceBody, sourceRel), route);
+  const cleaned = injectConnectedAppsNote(
+    enhancePositioningPage(cleanMdx(sourceBody, sourceRel), route),
+    sourceRel,
+  );
   const related = relatedPagesBlock(route, cleaned);
   return `${buildFrontMatter(frontMatter, route, pageTitle)}${cleaned}${related}`;
 }
@@ -1943,6 +1994,19 @@ description: "Orkes Conductor documentation for building durable workflows, API 
 ${body}`;
 }
 
+// Connected Apps category pages (the hub and its per-type subcategories) carry
+// the same per-cluster enablement note as the guide pages.
+function isConnectedAppsCategory(route, flatChildren) {
+  if (route === "category/integrations/connected-apps") return true;
+  return flatChildren.some((child) => {
+    const childRoute =
+      child.route || (child.outRel ? routeFromOutRel(child.outRel) : "") || "";
+    return (sourceRelByRoute.get(childRoute) || "").startsWith(
+      "integrations/connected-apps/",
+    );
+  });
+}
+
 function generatedPageCopy(route, title, description, flatChildren) {
   if (route === "category/tutorials") {
     return cookbookPageCopy();
@@ -1970,6 +2034,12 @@ function generatedPageCopy(route, title, description, flatChildren) {
   if (description) lines.push(description, "");
   lines.push(intro, "");
   lines.push(outcome, "");
+  if (isConnectedAppsCategory(route, flatChildren)) {
+    lines.push(
+      "Connected Apps were introduced in v5.3.0 and are enabled per cluster; each app's page lists its own minimum version. If **Integrations > Connected Apps** is not in your cluster's left navigation, contact Orkes support to enable it.",
+      "",
+    );
+  }
   lines.push(...apiIndexQuickReferenceLines(route, flatChildren));
 
   if (childLabels.length) {
