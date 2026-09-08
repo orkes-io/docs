@@ -114,6 +114,9 @@ The Business rule task will return the following parameters.
 | Parameter | Description                                                                                                                                                                        |
 | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | result    | Contains the evaluated parameters based on the matching rule. The specific parameters inside the `result` object depend on the output columns specified in the task configuration. |
+| matchedRows <TableNote title="Available since"><ul><li>v5.5.2 and later</li></ul></TableNote> | A list containing one entry per rule that fired, in fire order. Each entry has the same output columns as `result`. |
+
+Regardless of `executionStrategy`, `matchedRows` lists every rule that fired, one entry per row, in fire order, and is empty if none matched. `result` keeps its last-wins behavior unchanged, so existing workflows are unaffected. With `FIRE_FIRST`, `matchedRows` has at most one entry. With `FIRE_ALL`, it can have several.
 
 ## Examples
 
@@ -306,5 +309,83 @@ For example:
 - At 10:08 AM, task C runs with `cacheTimeoutMinutes` set to 5 . It also uses the cached `fileA`.
 - At 10:10 AM, the initial cache expires.
 - At 10:15 AM, task D runs with `cacheTimeoutMinutes` set to 30. Because the previous cache has expired, it downloads `fileA` again and caches it for 30 minutes. Any task using this file within the next 30 minutes will use the cached version.
+
+</details>
+
+<details markdown="1">
+<summary>Using `matchedRows` to see every fired rule</summary>
+
+To see how `matchedRows` differs from `result`, consider the following rule file:
+
+```
+shippingMethod,containerSize,shippingCharge
+mail,Any,10
+mail,small,15
+Any,small,20
+```
+
+Save this as `shipping-rules.csv` and upload it to a publicly accessible location. Note the file URL.
+
+Use it in a workflow with the following configuration:
+
+```json
+{
+  "name": "business_rule",
+  "taskReferenceName": "business_rule_ref",
+  "inputParameters": {
+    "ruleFileLocation": "https://example-bucket.s3.amazonaws.com/shipping-rules.csv",
+    "executionStrategy": "FIRE_ALL",
+    "inputColumns": {
+      "shippingMethod": "${workflow.input.shippingMethod}",
+      "containerSize": "${workflow.input.containerSize}"
+    },
+    "outputColumns": [
+      "shippingCharge"
+    ]
+  },
+  "type": "BUSINESS_RULE"
+}
+```
+
+**Case 1: FIRE_ALL, input matches all three rows**
+
+With the input:
+
+```json
+{
+  "shippingMethod": "mail",
+  "containerSize": "small"
+}
+```
+
+All three rows match. With `FIRE_ALL`, each firing rule overwrites `result`, so only the last one survives there, but `matchedRows` keeps all three:
+
+```json
+{
+  "result": {
+    "shippingCharge": "20"
+  },
+  "matchedRows": [
+    { "shippingCharge": "10" },
+    { "shippingCharge": "15" },
+    { "shippingCharge": "20" }
+  ]
+}
+```
+
+**Case 2: FIRE_FIRST, same input**
+
+With `executionStrategy` changed to `FIRE_FIRST` and the same input, all three rows still match, but only the first one fires:
+
+```json
+{
+  "result": {
+    "shippingCharge": "10"
+  },
+  "matchedRows": [
+    { "shippingCharge": "10" }
+  ]
+}
+```
 
 </details>

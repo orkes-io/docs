@@ -6,6 +6,7 @@ description:  "Learn how the gRPC task invokes remote gRPC service endpoints fro
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import TableNote from '@site/src/components/TableNote';
 
 # gRPC
 
@@ -30,6 +31,7 @@ Configure these parameters for the gRPC task.
 | inputParameters.**headers** | A map of additional headers to be sent along with the request. Supported types:<ul><li>Accept-Language</li><li>Authorization</li><li>Cache Control</li><li>Content-MD5</li><li>From</li><li>If-Match</li><li>If-Modified-Since</li><li>If-None-Match</li><li>Max-Forwards</li><li>Pragma</li><li>If-Range</li><li>If-Unmodified-Since</li><li>Proxy-Authorization</li><li>Range</li><li>Warning</li><li>x-api-key</li><li>Accept-Charset</li><li>Accept-Encoding</li><li>Accept-Control-Request-Headers</li><li>Accept-Control-Request-Method</li><li>Content-Transfer-Encoding</li><li>Expect</li><li>Transfer-Encoding</li><li>Trailer</li></ul> | Optional. | 
 | inputParameters.**inputType** | The input schema for the request. [Learn more about using schemas in Conductor](https://orkes.io/content/developer-guides/schema-validation#inputoutput-schema-validation).<ul><li>If you’re using a [registered service](https://orkes.io/content/remote-services), this value is the schema name automatically registered when fetching the service definition.</li><li>If you’re configuring the task manually, enter the name of the input schema you want to associate with the task.</li></ul> | Optional. | 
 | inputParameters.**outputType** | The output schema for the response. [Learn more about using schemas in Conductor](https://orkes.io/content/developer-guides/schema-validation#inputoutput-schema-validation).<ul><li>If you’re using a [registered service](https://orkes.io/content/remote-services), this value is the schema name automatically registered when fetching the service definition.</li><li>If you’re configuring the task manually, enter the name of the output schema you want to associate with the task.</li></ul> | Optional. | 
+| inputParameters.**compressionCodec** <TableNote title="Available since"><ul><li>v5.5.2 and later</li></ul></TableNote> | Compresses request and response messages on the wire. Set to `gzip` to enable compression. Useful for reducing transfer size on large payloads. | Optional. | 
 
 The following are generic configuration parameters that can be applied to the task and are not specific to the gRPC task.
 
@@ -82,7 +84,8 @@ This is the task configuration for a gRPC task.
        },
        "headers": {
          "x-api-key": "${workflow.secrets.api}"
-       }
+       },
+       "compressionCodec": "gzip"
      }
    }
 ```
