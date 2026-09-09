@@ -1,0 +1,163 @@
+---
+sidebar_position: 2
+slug: "/reference-docs/api/workflow/start-workflow-execution"
+description: "Learn how to start a workflow execution asynchronously, either by name in the path or with a full request body."
+---
+
+# Execute Workflow Asynchronously
+
+Orkes Conductor provides two endpoints for starting a workflow execution asynchronously. Both return the workflow ID immediately, without waiting for the workflow to complete.
+
+## Execute a Workflow (Path Parameters)
+
+**Endpoint**: `POST /api/workflow/{name}`
+
+### Path parameters
+
+| Parameter | Description                             | Type   | Required/ Optional |
+| --------- | --------------------------------------- | ------ | ------------------ |
+| name      | The name of the workflow to execute. | string | Required.          |
+
+### Query parameters
+
+| Parameter     | Description                                                                                                                                             | Type    | Required/ Optional |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- | ------------------ |
+| version       | The workflow version. If unspecified, the latest version is used.                                                                                  | integer | Optional.          |
+| correlationId | A unique identifier to correlate this execution with other executions of the same workflow.                                        | string  | Optional.          |
+| priority      | Priority of the workflow execution. Supported values: 0-99. <br/><br/> Default is 0, which means workflows are completed in a first-in-first-out order. | integer | Optional.          |
+
+### Header parameters
+
+| Parameter         | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | Type   | Required/ Optional                            |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ | --------------------------------------------- |
+| X-Idempotency-key | A unique, user-generated key to prevent duplicate workflow executions. Idempotency data is retained for the life of the workflow execution.                                                                                                                                                                                                                                                                                                                                                             | string | Optional.                                     |
+| X-on-conflict     | The idempotency strategy for handling duplicate requests. Supported values: <ul><li>**RETURN_EXISTING**: Return the _workflowId_ of the workflow instance with the same idempotency key.</li> <li>**FAIL**: Start a new workflow instance only if there are no workflow executions with the same idempotency key.</li> <li>**FAIL_ON_RUNNING**: Start a new workflow instance only if there are no RUNNING or PAUSED workflows with the same idempotency key. Completed workflows can run again.</li></ul> | string | Required if _X-Idempotency-key_ is specified. |
+
+### Request body
+
+Workflow input as a plain key-value object.
+
+**Example**
+
+```json
+{
+  "someKey": "someValue",
+  "anotherKey": {}
+}
+```
+
+### Response
+
+Workflow execution ID as plain text. Returns 404 for an invalid workflow name.
+
+### Examples
+
+<details markdown="1">
+<summary>Execute a workflow with the name in the path</summary>
+
+**Request**
+
+```shell
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/workflow/DemoWorkflow?priority=0' \
+  -H 'accept: text/plain' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{"input1": "someValue"}'
+```
+
+**Response**
+
+```
+86e6cce1-0599-11f1-913a-226156badb04
+```
+
+</details>
+
+## Execute a Workflow (Request Body)
+
+**Endpoint**: `POST /api/workflow`
+
+Starts a workflow using a full request body, which additionally supports dynamic (inline) workflow definitions, task-to-domain mapping, external payload storage, and consistency control.
+
+### Query parameters
+
+| Parameter | Description | Type | Required/ Optional |
+| --------- | ----------- | ---- | ------------------- |
+| consistency | Specifies how the request persists and is replicated. Supported values: <ul><li>**SYNCHRONOUS**: Executes the workflow directly from memory without persisting the request. The workflow is evaluated with minimal state synchronization during execution. This mode provides the lowest latency but is non-durable.</li><li>**DURABLE**: The request is stored in persistence before the workflow execution. Workflow state is synchronized during execution.</li><li>**REGION_DURABLE**: The request is replicated across regions before the workflow execution. This method provides the highest level of durability and fault tolerance but may introduce additional latency.</li></ul> Default is `DURABLE`. | string | Optional. |
+
+### Request body
+
+| Field | Description | Required |
+| ----- | ----------- | -------- |
+| name | Workflow name (must be registered), unless using `workflowDef` for an inline/dynamic workflow. | Yes |
+| version | Workflow version. | No, defaults to latest. |
+| input | Workflow input, as key-value pairs. | No |
+| correlationId | Unique ID to correlate this execution with other executions of the same workflow. | No |
+| taskToDomain | Task-to-domain mapping. See [Routing Tasks](/content/developer-guides/task-to-domain). | No |
+| workflowDef | Inline workflow definition, for a one-time workflow that isn't pre-registered. | No |
+| priority | Priority (0-99) for tasks in this workflow. | No |
+| idempotencyKey | A unique, user-generated key to prevent duplicate workflow executions. | No |
+| idempotencyStrategy | The idempotency strategy for handling duplicate requests. Supported values: **RETURN_EXISTING**, **FAIL**, **FAIL_ON_RUNNING**. | Required if `idempotencyKey` is set. |
+
+**Example**
+
+```json
+{
+  "name": "myWorkflow",
+  "version": 1,
+  "correlationId": "order-123",
+  "priority": 1,
+  "input": {
+    "customerId": "CUST-456",
+    "amount": 99.99
+  },
+  "taskToDomain": {
+    "*": "mydomain"
+  }
+}
+```
+
+### Response
+
+Workflow execution ID as plain text.
+
+### Examples
+
+<details markdown="1">
+<summary>Execute a workflow with a full request body</summary>
+
+**Request**
+
+```shell
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/workflow' \
+  -H 'accept: text/plain' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name": "myWorkflow",
+  "version": 1,
+  "correlationId": "order-123",
+  "priority": 1,
+  "input": {
+    "customerId": "CUST-456",
+    "amount": 99.99
+  },
+  "taskToDomain": {
+    "*": "mydomain"
+  }
+}'
+```
+
+**Response**
+
+```
+3a5b8c2d-1234-5678-9abc-def012345678
+```
+
+</details>
+
+## Related pages
+
+- [Execute Workflow Synchronously](/content/reference-docs/api/workflow/synchronous-workflow-execution)

@@ -5,6 +5,7 @@ description: "Learn how to configure role based access control, including applic
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
+import TableNote from '@site/src/components/TableNote';
 
 # Role Based Access Control
 
@@ -12,6 +13,7 @@ Orkes Conductor provides role-based access control (RBAC) for individual users a
 
 - Workflows
 - Tasks
+- Agents
 - Secrets
 - Environment variables
 - Tags
@@ -22,6 +24,8 @@ Orkes Conductor provides role-based access control (RBAC) for individual users a
 - Schedules
 - Webhooks
 - Domains
+- Schemas
+- Remote services
 
 To get started with RBAC, familiarize yourself with the concepts of users, groups, applications, tags, roles, and permissions.
 
@@ -62,6 +66,9 @@ If multiple roles are granted, they will have all granted role-level permissions
 | User             | Regular user with permissions to create workflow definitions, task definitions, applications, integrations, secrets, and user forms. Has full API Gateway access, including view and management permissions. Can search workflows.                                                                                                            |
 | Metadata Manager | Can manage all workflow and task definitions in the cluster, including performing any action regardless of workflow or task ownership. Can view and manage API Gateway configurations. Can create integrations and secrets.                                                                                                            |
 | Workflow Manager | Can view, execute, and manage all workflow executions in the system, including start, pause, resume, rerun, retry, restart, terminate, and delete actions. Has execute and read access to workflow and task definitions.                                                                                                                  |
+| Human Task Manager <TableNote title="Available since"><ul><li>v5.5.2 and later</li></ul></TableNote> | Can create, view, update, and delete all Human Task templates (user forms) in the cluster.                                                                                                            |
+| Event Handler Manager <TableNote title="Available since"><ul><li>v5.5.2 and later</li></ul></TableNote> | Can create, view, update, and delete all event handlers in the cluster.                                                                                                            |
+| Schedule Manager <TableNote title="Available since"><ul><li>v5.5.2 and later</li></ul></TableNote> | Can create, view, update, and delete all workflow schedules in the cluster.                                                                                                            |
 | Read Only User   | Can view applications, metadata, workflows, API gateway, and search workflows. |
 
 </TabItem>
@@ -76,6 +83,9 @@ If multiple roles are granted, they will have all granted role-level permissions
 | Unrestricted Worker | Worker role with full access to poll and execute any task in the cluster. <br/> <br/> This role can only be granted by an Admin.                                                                                                    |
 | Metadata Manager    | Can manage all workflow and task definitions in the cluster, including performing any action regardless of workflow or task ownership. Can view and manage API Gateway configurations. Can create integrations and secrets. <br/> <br/> This role can only be granted by an Admin.                                                                         |
 | Workflow Manager    | Can view, execute, and manage all workflow executions in the system, including start, pause, resume, rerun, retry, restart, terminate, and delete actions. Has execute and read access to workflow and task definitions. <br/> <br/> This role can only be granted by an Admin.                                                                                           |
+| Human Task Manager <TableNote title="Available since"><ul><li>v5.5.2 and later</li></ul></TableNote> | Can create, view, update, and delete all Human Task templates (user forms) in the cluster. <br/> <br/> This role can only be granted by an Admin.                                                                                           |
+| Event Handler Manager <TableNote title="Available since"><ul><li>v5.5.2 and later</li></ul></TableNote> | Can create, view, update, and delete all event handlers in the cluster. <br/> <br/> This role can only be granted by an Admin.                                                                                           |
+| Schedule Manager <TableNote title="Available since"><ul><li>v5.5.2 and later</li></ul></TableNote> | Can create, view, update, and delete all workflow schedules in the cluster. <br/> <br/> This role can only be granted by an Admin.                                                                                           |
 | Application Manager | Can create, update, and delete any application in the cluster. Can also view and manage API Gateway configurations. <br/> <br/> This role can only be granted by an Admin.                                                                                                               |
 | Admin               | Full control over that particular application, including creating, viewing, modifying, deleting, and executing it. <br/> <br/> This role can only be granted by an Admin.                                                                                                   |
 
@@ -88,6 +98,7 @@ Besides the role-based permissions, you can add granular permissions to **groups
 
 - Workflows
 - Tasks
+- Agents
 - Secrets
 - Environment variables
 - Tags

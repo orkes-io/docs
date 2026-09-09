@@ -4,6 +4,8 @@ slug: "/reference-docs/api/task/signal-running-task-synchronously"
 description: "Learn how to synchronously update the status and output of a running Yield task."
 ---
 
+import TableNote from '@site/src/components/TableNote';
+
 # Signal Running Task Synchronously
 
 :::info Available since
@@ -25,7 +27,7 @@ Signals a running [Wait](/content/reference-docs/operators/wait) or [Yield](/con
 
 | Parameter | Description                                 | Type   | Required/ Optional |
 | --------- | ------------------------------------------- | ------ | ------------------ |
-| returnStrategy | The strategy that determines what response the API returns. Supported values:<ul><li>**TARGET_WORKFLOW**: Returns the full execution state of the originally triggered workflow. Use this when monitoring the overall workflow status or managing orchestration at the top level.</li><li>**BLOCKING_WORKFLOW**: Returns the state of the workflow that is currently blocking the original workflow execution. This may be a sub workflow. Use when signaling Yield tasks in nested workflows.</li><li>**BLOCKING_TASK**: Returns the execution status of the task that is currently blocking workflow execution. Best for real-time status checks.</li><li>**BLOCKING_TASK_INPUT**: Returns the input payload of the task that is currently blocking workflow execution. Ideal for debugging or runtime inspection.</li></ul> The default is TARGET_WORKFLOW. | string | Optional. |
+| returnStrategy | The strategy that determines what response the API returns. Supported values:<ul><li>**TARGET_WORKFLOW**: Returns the full execution state of the originally triggered workflow. Use this when monitoring the overall workflow status or managing orchestration at the top level.</li><li>**BLOCKING_WORKFLOW**: Returns the state of the workflow that is currently blocking the original workflow execution. This may be a sub workflow. Use when signaling Yield tasks in nested workflows.</li><li>**BLOCKING_TASK**: Returns the execution status of the task that is currently blocking workflow execution. Best for real-time status checks.</li><li>**BLOCKING_TASK_INPUT**: Returns the input payload of the task that is currently blocking workflow execution. Ideal for debugging or runtime inspection.</li><li>**BLOCKING_TASK_LIST**: Returns the same information as BLOCKING_TASK, but as a `tasks` array instead of individual task fields. Useful when you want a consistent task-list shape across return strategies. <TableNote title="Available since"><ul><li>v5.5.2 and later</li></ul></TableNote></li></ul> The default is TARGET_WORKFLOW. | string | Optional. |
 | timeoutMillis | The timeout in milliseconds after which the task times out. Default is 5000. | integer | Optional. | 
 
 ## Request body
@@ -47,10 +49,14 @@ Format the request to include any additional parameters, such as task output.
 Returns 200 OK, indicating that the task status was successfully updated and the signal was processed. The response payload structure depends on the `returnStrategy` specified:
 
 - `TARGET_WORKFLOW`: Full execution state of the originally triggered workflow
-- `BLOCKING_WORKFLOW`: State of the workflow currently blocking execution (may be a sub workflow)
+- `BLOCKING_WORKFLOW`: State of the workflow currently blocking execution (may be a sub workflow). Also includes `blockingTaskId` and `blockingTaskReferenceName`, identifying the specific task that is currently blocking execution.
 - `BLOCKING_TASK`: Execution status of the task currently blocking workflow execution
 - `BLOCKING_TASK_INPUT`: Input payload of the task currently blocking workflow execution
+- `BLOCKING_TASK_LIST`: Same information as `BLOCKING_TASK`, returned as a `tasks` array
 
+Every response includes `targetWorkflowVariables`, the variables of the workflow originally specified in the request. This is distinct from `variables`, which reflects whichever workflow the response body actually describes, and can differ from `targetWorkflowVariables` for the `BLOCKING_WORKFLOW`, `BLOCKING_TASK`, `BLOCKING_TASK_INPUT`, and `BLOCKING_TASK_LIST` strategies when the blocking workflow is a sub workflow.
+
+If the workflow or task being signaled has already reached a terminal state, such as if it completed as a result of this signal, the response still returns the target workflow's final state instead of an empty body.
 
 ## Examples
 
@@ -222,6 +228,58 @@ Returns a 200 OK response indicating that the task status was updated successful
   "createTime": 1750071114395,
   "updateTime": 1750071114408,
   "status": "IN_PROGRESS"
+}
+```
+</details>
+
+<details markdown="1">
+<summary>Signal a running task synchronously with BLOCKING_TASK_LIST as return strategy</summary>
+
+**Request**
+
+```shell
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/tasks/a3a3bd40-a7cc-11f1-9783-8ec10c075509/IN_PROGRESS/signal/sync?returnStrategy=BLOCKING_TASK_LIST' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "additionalProp1": {}
+}'
+```
+
+**Response**
+
+Returns a 200 OK response indicating that the task status was updated successfully and the signal was processed. The response includes the tasks currently blocking workflow progress, as a `tasks` array.
+
+```json
+//truncated response
+{
+  "responseType": "BLOCKING_TASK_LIST",
+  "targetWorkflowId": "a3a061dd-a7cc-11f1-9783-8ec10c075509",
+  "targetWorkflowStatus": "RUNNING",
+  "workflowId": "a3a3bd40-a7cc-11f1-9783-8ec10c075509",
+  "signalTimeout": false,
+  "targetWorkflowVariables": {
+    "mainVar": "main_value_456"
+  },
+  "workflowType": "signal_example_sub_workflow",
+  "tasks": [
+    {
+      "taskType": "YIELD",
+      "taskId": "a4e0aa13-a7cc-11f1-9783-8ec10c075509",
+      "referenceTaskName": "sub_workflow_wait_ref_2",
+      "status": "IN_PROGRESS",
+      "workflowInstanceId": "a3a3bd40-a7cc-11f1-9783-8ec10c075509",
+      "inputData": {},
+      "outputData": {},
+      "startTime": 0,
+      "endTime": 0,
+      "retryCount": 0
+    }
+  ],
+  "createTime": 0,
+  "updateTime": 0
 }
 ```
 </details>

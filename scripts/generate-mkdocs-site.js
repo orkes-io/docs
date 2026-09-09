@@ -542,6 +542,10 @@ const EXCLUDED_OSS_SOURCES = new Set([
   // Superseded by the restored reference-docs/operators/human page; leaving
   // this unmapped would surface it as an orphan with a title collision.
   "documentation/configuration/workflowdef/systemtasks/human-task.md",
+  // Superseded by the restored reference-docs/api/workflow/start-workflow-execution.mdx
+  // (Execute Workflow Asynchronously), which documents both POST /api/workflow and
+  // POST /api/workflow/{name} with enterprise-accurate consistency/idempotency details.
+  "documentation/api/startworkflow.md",
 ]);
 
 function collectSourceEntries() {
@@ -1697,21 +1701,6 @@ function enhancePositioningPage(body, route) {
     output = output.replace(
       /See \[Workflow Message Queue\]\([^)]*\) and \[Pull Workflow Messages task\]/,
       "See [Pull Workflow Messages task]",
-    );
-  }
-
-  if (route === "reference-docs/api/workflow/start-workflow-execution") {
-    output = output.replace(
-      /\| `consistency` \| Query \|[^\n]*/,
-      "| `consistency` | Query | `SYNCHRONOUS`, `DURABLE`, or `REGION_DURABLE` - see [Execute Workflow Synchronously](/content/reference-docs/api/workflow/synchronous-workflow-execution) | No (default: `DURABLE`) |",
-    );
-    output = output.replace(
-      /\| `returnStrategy` \| Query \|[^\n]*/,
-      "| `returnStrategy` | Query | Which state to return when execution blocks on a [Yield](/content/reference-docs/operators/yield) task: `TARGET_WORKFLOW`, `BLOCKING_WORKFLOW`, `BLOCKING_TASK`, or `BLOCKING_TASK_INPUT` - see [Execute Workflow Synchronously](/content/reference-docs/api/workflow/synchronous-workflow-execution) | No (default: `TARGET_WORKFLOW`) |",
-    );
-    output = output.replace(
-      /\| `externalInputPayloadStoragePath` \|[^\n]*/,
-      "| `externalInputPayloadStoragePath` | Path to external payload storage (OSS-only). See [External Payload Storage](https://docs.conductor-oss.org/documentation/advanced/externalpayloadstorage). | No |",
     );
   }
 
