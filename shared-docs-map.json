@@ -317,11 +317,6 @@
       "route": "reference-docs/api"
     },
     {
-      "source": "documentation/api/startworkflow.md",
-      "docId": "reference-docs/api/workflow/start-workflow-execution",
-      "route": "reference-docs/api/workflow/start-workflow-execution"
-    },
-    {
       "source": "documentation/clientsdks/index.md",
       "docId": "sdks/sdk-index",
       "route": "sdks/sdk-index"
