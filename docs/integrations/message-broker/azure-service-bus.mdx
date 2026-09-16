@@ -59,28 +59,18 @@ The group or application can now access the message broker according to the conf
 
 ## Referencing a queue or topic
 
-Once the integration is in place, an [Event Handler](https://orkes.io/content/developer-guides/event-handler) or [Event task](https://orkes.io/content/reference-docs/system-tasks/event) addresses a Service Bus entity with a three-segment string: **azure:integration-name:entity-name**, where **integration-name** is the name given to the integration in Step 2.
+An [Event Handler](https://orkes.io/content/developer-guides/event-handler)'s **event** and an [Event task](https://orkes.io/content/reference-docs/system-tasks/event)'s **sink** name a Service Bus entity in the same format, **azure:integration-name:entity-name**, where **integration-name** is the name given to the integration in Step 2.
 
-### Receiving from a queue
+### Receiving from a queue or a topic subscription
 
-An event handler that consumes from a queue names the queue in the last segment:
+To consume from a queue, name the queue in the last segment. To consume from a topic, name the topic and append the subscription to it as a `?subscription=` suffix:
 
-```json
-{
-  "name": "order-events",
-  "event": "azure:my-service-bus:orders-queue",
-  "evaluatorType": "javascript",
-  "condition": "true",
-  "actions": [
-    // action payload
-  ],
-  "active": true
-}
-```
+| Consuming from | event |
+| -------------- | ----- |
+| A queue | `azure:my-service-bus:orders-queue` |
+| A subscription on a topic | `azure:my-service-bus:orders-topic?subscription=billing` |
 
-### Receiving from a topic subscription
-
-To consume from a topic, name the topic in the last segment and append the subscription to it as a `?subscription=` suffix:
+**Example event handler**
 
 ```json
 {
@@ -95,13 +85,11 @@ To consume from a topic, name the topic in the last segment and append the subsc
 }
 ```
 
-The subscription must already exist in your Service Bus namespace. Conductor attaches to the subscription and never creates one, so create it in the Azure portal before saving the event handler. A handler that cannot attach retries until the subscription appears.
-
-Every Conductor worker attaches to the same named subscription and competes for its messages, so each message is handled once, exactly as it is for a queue.
+The subscription must already exist in your Service Bus namespace. Conductor attaches to a subscription and never creates one. A handler whose topic or subscription is missing retries every few minutes and begins consuming once the subscription exists, so the handler and the subscription can be created in either order.
 
 ### Publishing to a queue or topic
 
-An Event task publishes with the same three segments and no suffix. A topic is addressed exactly like a queue:
+An Event task publishes with the same format and no suffix. A topic is addressed exactly like a queue:
 
 ```json
 {
