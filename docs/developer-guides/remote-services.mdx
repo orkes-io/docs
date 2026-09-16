@@ -36,7 +36,7 @@ A service can be registered for use in [HTTP](https://orkes.io/content/reference
 
 1. Go to **Definitions** > **Remote Services** from the left navigation menu on your Conductor cluster.
 2. Select **+ New service**.
-3. In **Service registry name**, enter a unique name for the service. 
+3. In **Service registry name**, enter a unique name for the service. This name cannot be changed after the service is created.
 4. Set **Service type** to **HTTP**.
 5. Enter the Swagger specification URL (ending in .json) in the **Swagger URL**. For example: https://petstore.swagger.io/v2/swagger.json.  
 6. In **Host**, enter an additional endpoint host if needed. Conductor automatically discovers available hosts from the server during endpoint discovery, but you can add extra hosts here for testing.
@@ -51,7 +51,7 @@ A service can be registered for use in [HTTP](https://orkes.io/content/reference
 
 1. Go to **Definitions** > **Remote Services** from the left navigation menu on your Conductor cluster.
 2. Select **+ New service**.
-3. In **Service registry name**, enter a unique name for the service. 
+3. In **Service registry name**, enter a unique name for the service. This name cannot be changed after the service is created.
 4. Set **Service type** to **gRPC**.
 5. In **Host**, enter the service's host URL. 
 6. In **Port**, specify the port where the service is running.
@@ -62,7 +62,7 @@ A service can be registered for use in [HTTP](https://orkes.io/content/reference
 </TabItem>
 </Tabs>
 
-To clone an existing service definition, select the clone icon next to the service in the Remote Services list. Enter a new name for the cloned service and select Clone. The new service is created with all the configuration and methods copied from the original.
+To clone an existing service definition, select the clone icon next to the service in the Remote Services list, or select **Clone** on the service's detail page. Enter a new name for the cloned service and select **Clone**. The new service is created with all the configuration and methods copied from the original.
 
 ## Discover or add endpoints
 
@@ -136,7 +136,7 @@ Once uploaded, Conductor extracts and registers the services, making them ready 
 | Resource Name | The action or purpose of the endpoint. |
 | Description | A description of the endpoint. | 
 | Path | The method name for the endpoint. | 
-| Method Type | The method type for the service. Supported values:<ul><li>GET</li><li>POST</li><li>PUT</li><li>DELETE</li><li>PATCH</li></ul>
+| Method Type | The method type for the service. This field is required. Supported values:<ul><li>GET</li><li>POST</li><li>PUT</li><li>DELETE</li><li>PATCH</li></ul>
 | Accept | The accept header required by the server. Supported types:<ul><li>application/java-archive</li><li>application/EDI-X12</li><li>application/EDIFACT</li><li>application/javascript</li><li>application/octet-stream</li><li>application/ogg</li><li>application/pdf</li><li>application/xhtml+xml</li><li>application/x-shockwave-flash</li><li>application/json</li><li>application/ld+json</li><li>application/xml</li><li>application/zip</li><li>application/x-www-form-urlencoded</li><li>audio/mpeg</li><li>audio/x-ms-wma</li><li>audio/vnd.rn-realaudio</li><li>audio/x-wav</li><li>image/gif</li><li>image/jpeg</li><li>image/png</li><li>image/tiff</li><li>image/vnd.microsoft.icon</li><li>image/x-icon</li><li>image/vnd.djvu</li><li>image/svg+xml</li></ul> |
 | Content-Type | The content-type for the server. Supported types:<ul><li>application/java-archive</li><li>application/EDI-X12</li><li>application/EDIFACT</li><li>application/javascript</li><li>application/octet-stream</li><li>application/ogg</li><li>application/pdf</li><li>application/xhtml+xml</li><li>application/x-shockwave-flash</li><li>application/json</li><li>application/ld+json</li><li>application/xml</li><li>application/zip</li><li>application/x-www-form-urlencoded</li><li>audio/mpeg</li><li>audio/x-ms-wma</li><li>audio/vnd.rn-realaudio</li><li>audio/x-wav</li><li>image/gif</li><li>image/jpeg</li><li>image/png</li><li>image/tiff</li><li>image/vnd.microsoft.icon</li><li>image/x-icon</li><li>image/vnd.djvu</li><li>image/svg+xml</li></ul> |
 | Input Schema | Select an input schema from existing [schemas in Conductor](https://orkes.io/content/developer-guides/schema-validation). | 
@@ -170,7 +170,7 @@ Once uploaded, Conductor extracts and registers the services, making them ready 
 | Resource Name | The action or purpose of the endpoint. |
 | Description | A description of the endpoint. | 
 | Method Name | The method name for the endpoint. | 
-| Method Type | The method type for the service. Supported values:<ul><li>UNARY</li><li>SERVER_STREAMING</li><li>CLIENT_STREAMING</li><li>BIDIRECTIONAL_STREAMING</li></ul>
+| Method Type | The method type for the service. This field is required. Supported values:<ul><li>UNARY</li><li>SERVER_STREAMING</li><li>CLIENT_STREAMING</li><li>BIDIRECTIONAL_STREAMING</li></ul>
 | Input Type | Select an input schema from existing [schemas in Conductor](https://orkes.io/content/developer-guides/schema-validation). | 
 | Output Type | Select an output schema from existing [schemas in Conductor](https://orkes.io/content/developer-guides/schema-validation). | 
 | Deprecated | Enable to mark the endpoint as deprecated. | 
