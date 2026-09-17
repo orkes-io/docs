@@ -101,6 +101,6 @@
   "sdks/clojure": "sdks/sdk-index",
   "templates/agentic-research": "category/tutorials",
   "templates/claims-workflow": "category/tutorials",
-  "wmq/workflow-message-queue": "documentation/configuration/workflowdef/systemtasks/pull-workflow-messages-task",
-  "wmq/workflow-message-queue-architecture": "documentation/configuration/workflowdef/systemtasks/pull-workflow-messages-task"
+  "wmq/workflow-message-queue": "category/reference-docs/system-tasks",
+  "wmq/workflow-message-queue-architecture": "category/reference-docs/system-tasks"
 }

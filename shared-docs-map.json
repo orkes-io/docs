@@ -436,6 +436,7 @@
     "documentation/configuration/workflowdef/systemtasks/jdbc-task.md": "reference-docs/system-tasks/jdbc",
     "documentation/configuration/workflowdef/systemtasks/kafka-publish-task.md": "category/reference-docs/system-tasks",
     "documentation/configuration/workflowdef/systemtasks/noop-task.md": "category/reference-docs/system-tasks",
+    "documentation/configuration/workflowdef/systemtasks/pull-workflow-messages-task.md": "category/reference-docs/system-tasks",
     "devguide/ai/mcp-guide.md": "developer-guides/mcp-gateway",
     "documentation/api/workflow.md": "reference-docs/api/workflow",
     "documentation/api/task.md": "reference-docs/api/task",

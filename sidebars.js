@@ -574,7 +574,6 @@ const sidebars = {
                         { type: 'doc', id: 'reference-docs/operators/yield', label: 'Yield' },
                         { type: 'doc', id: 'reference-docs/operators/set-variable', label: 'Set Variable' },
                         { type: 'doc', id: 'reference-docs/operators/get-workflow', label: 'Get Workflow' },
-                        // OSS-only operator (no Orkes counterpart)
                         { type: 'doc', id: 'documentation/configuration/workflowdef/operators/exclusive-join-task', label: 'Exclusive Join' },
                     ],
                 },
@@ -596,10 +595,6 @@ const sidebars = {
                         'reference-docs/system-tasks/get-signed-jwt',
                         'reference-docs/system-tasks/update-task',
                         'reference-docs/system-tasks/grpc',
-                        // OSS-only system tasks (no Orkes counterpart)
-                        { type: 'doc', id: 'documentation/configuration/workflowdef/systemtasks/kafka-publish-task', label: 'Kafka Publish' },
-                        { type: 'doc', id: 'documentation/configuration/workflowdef/systemtasks/noop-task', label: 'No-op' },
-                        { type: 'doc', id: 'documentation/configuration/workflowdef/systemtasks/pull-workflow-messages-task', label: 'Pull Workflow Messages' },
                         {
                             type: 'category',
                             label: 'Alerting Tasks',
