@@ -546,6 +546,11 @@ const EXCLUDED_OSS_SOURCES = new Set([
   // (Execute Workflow Asynchronously), which documents both POST /api/workflow and
   // POST /api/workflow/{name} with enterprise-accurate consistency/idempotency details.
   "documentation/api/startworkflow.md",
+  // OSS-only system tasks: KAFKA_PUBLISH, NOOP, and PULL_WORKFLOW_MESSAGES have no
+  // Orkes Enterprise Conductor counterpart.
+  "documentation/configuration/workflowdef/systemtasks/kafka-publish-task.md",
+  "documentation/configuration/workflowdef/systemtasks/noop-task.md",
+  "documentation/configuration/workflowdef/systemtasks/pull-workflow-messages-task.md",
 ]);
 
 function collectSourceEntries() {
@@ -1699,8 +1704,8 @@ function enhancePositioningPage(body, route) {
 
   if (route === "reference-docs/api/workflow") {
     output = output.replace(
-      /See \[Workflow Message Queue\]\([^)]*\) and \[Pull Workflow Messages task\]/,
-      "See [Pull Workflow Messages task]",
+      / See \[Workflow Message Queue\]\([^)]*\) and \[Pull Workflow Messages task\]\([^)]*\) for configuration and consumption\./,
+      "",
     );
   }
 
