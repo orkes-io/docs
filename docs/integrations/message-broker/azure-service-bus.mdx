@@ -5,7 +5,7 @@ description: "Learn how to integrate Azure Service Bus so workflows can publish 
 
 # Azure Service Bus Integration with Orkes Conductor
 
-To use the [Event task](https://orkes.io/content/reference-docs/system-tasks/event), [Event Handler](https://orkes.io/content/developer-guides/event-handler), or [enable Change Data Capture (CDC)](https://orkes.io/content/developer-guides/enabling-cdc-on-conductor-workflows) in Orkes Conductor, you must integrate your Conductor cluster with the necessary message brokers. This guide explains how to integrate Azure Service Bus with Orkes Conductor to publish and receive messages from queues. Here’s an overview:
+To use the [Event task](https://orkes.io/content/reference-docs/system-tasks/event), [Event Handler](https://orkes.io/content/developer-guides/event-handler), or [enable Change Data Capture (CDC)](https://orkes.io/content/developer-guides/enabling-cdc-on-conductor-workflows) in Orkes Conductor, you must integrate your Conductor cluster with the necessary message brokers. This guide explains how to integrate Azure Service Bus with Orkes Conductor to publish and receive messages from queues and topics. Here’s an overview:
 
 1. Get the required credentials from Azure Service Bus.
 2. Configure a new Azure Service Bus integration in Orkes Conductor.
@@ -56,6 +56,54 @@ Once the integration is configured, set access controls to manage which [applica
 <p align="center"><img src="/content/img/rbac-azure-service-bus.png" alt="Configuring RBAC for Azure Service Bus Integration" width="50%" height="auto"/></p>
 
 The group or application can now access the message broker according to the configured permissions.
+
+## Referencing a queue or topic
+
+An [Event Handler](https://orkes.io/content/developer-guides/event-handler)'s **event** and an [Event task](https://orkes.io/content/reference-docs/system-tasks/event)'s **sink** name a Service Bus entity in the same format, **azure:integration-name:entity-name**, where **integration-name** is the name given to the integration in Step 2.
+
+### Receiving from a queue or a topic subscription
+
+To consume from a queue, name the queue in the last segment. To consume from a topic, name the topic and append the subscription to it as a `?subscription=` suffix:
+
+| Consuming from | event |
+| -------------- | ----- |
+| A queue | `azure:my-service-bus:orders-queue` |
+| A subscription on a topic | `azure:my-service-bus:orders-topic?subscription=billing` |
+
+**Example event handler**
+
+```json
+{
+  "name": "order-events",
+  "event": "azure:my-service-bus:orders-topic?subscription=billing",
+  "evaluatorType": "javascript",
+  "condition": "true",
+  "actions": [
+    // action payload
+  ],
+  "active": true
+}
+```
+
+The subscription must already exist in your Service Bus namespace. Conductor attaches to a subscription and never creates one. A handler whose topic or subscription is missing retries every few minutes and begins consuming once the subscription exists, so the handler and the subscription can be created in either order.
+
+### Publishing to a queue or topic
+
+An Event task publishes with the same format and no suffix. A topic is addressed exactly like a queue:
+
+```json
+{
+  "name": "publish_order",
+  "taskReferenceName": "publish_order_ref",
+  "type": "EVENT",
+  "sink": "azure:my-service-bus:orders-topic",
+  "inputParameters": {
+    "someKey": "someValue"
+  }
+}
+```
+
+The `?subscription=` suffix belongs on an event handler only. A sink carrying one fails, because no Service Bus entity has that name.
 
 ## Next steps
 
