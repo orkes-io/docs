@@ -87,6 +87,17 @@ To consume from a queue, name the queue in the last segment. To consume from a t
 
 The subscription must already exist in your Service Bus namespace. Conductor attaches to a subscription and never creates one. A handler whose topic or subscription is missing retries every few minutes and begins consuming once the subscription exists, so the handler and the subscription can be created in either order.
 
+### When a handler cannot attach
+
+A handler that cannot attach to its subscription records a failed execution against itself, with the reason in the description — the subscription does not exist, the topic was deleted, or the credentials cannot listen on it. Look at the handler's event executions to find it.
+
+Conductor writes a record when the state changes rather than on every retry, so a handler left misconfigured does not fill the table. Once the handler attaches, because the missing subscription was created, a completed record appears in the same place.
+
+Two event strings are worth checking first:
+
+- A suffix naming no subscription, such as `azure:my-service-bus:orders-topic?subscription=`, is rejected when the handler is saved.
+- A four-segment string, such as `azure:my-service-bus:orders-topic:billing`, is not a valid address. The handler saves, but never attaches.
+
 ### Publishing to a queue or topic
 
 An Event task publishes with the same format and no suffix. A topic is addressed exactly like a queue:
