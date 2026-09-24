@@ -551,6 +551,15 @@ const EXCLUDED_OSS_SOURCES = new Set([
   "documentation/configuration/workflowdef/systemtasks/kafka-publish-task.md",
   "documentation/configuration/workflowdef/systemtasks/noop-task.md",
   "documentation/configuration/workflowdef/systemtasks/pull-workflow-messages-task.md",
+  // Duplicate content: these OSS pages are also aliased (see
+  // shared-docs-map.json aliases) to an Orkes-facing route, but aliases only
+  // rewrite internal links — they don't stop the native full-tree path from
+  // also being generated. Excluding the native source here lets the
+  // docs-redirects.json entry for the native route actually take effect.
+  "documentation/configuration/eventhandlers.md",
+  "documentation/api/eventhandlers.md",
+  "documentation/configuration/workflowdef/operators/index.md",
+  "documentation/configuration/workflowdef/systemtasks/index.md",
 ]);
 
 function collectSourceEntries() {
