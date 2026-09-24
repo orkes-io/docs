@@ -113,7 +113,7 @@ An Event task publishes with the same format and no suffix. A topic is addressed
 }
 ```
 
-The `?subscription=` suffix belongs on an event handler only. A sink carrying one fails, because no Service Bus entity has that name.
+The `?subscription=` suffix belongs on an event handler only. A sink carrying one fails the Event task, and the failure reason says that a subscription cannot be published to and repeats what Azure reported — usually an authorization error rather than a missing entity, because the suffixed path is not an entity the credentials are scoped to.
 
 ## Next steps
 
