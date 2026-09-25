@@ -11,15 +11,19 @@ import TabItem from '@theme/TabItem';
 
 The Terminate Workflow task allows for the termination of other workflows using their workflow (execution) IDs. It allows users to terminate single or multiple workflows with optional parameters for specifying termination reasons and triggering failure workflows.
 
+The user or application that starts the workflow containing the **_Terminate Workflow_** task must have **_Execute_** permission on each workflow to be terminated. Otherwise, the task fails.
+
 ## Task parameters
 
 Configure these parameters for the Terminate Workflow task.
 
 | Parameter                              | Description                                                                                                                                                                                                                                  | Required/ Optional |
 | -------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
-| inputParameters. **workflowId**        | An array of one or more workflow (execution) IDs of the workflow executions to be terminated. It can be [passed as a dynamic variable](/developer-guides/passing-inputs-to-task-in-conductor).                                           | Required.          |
-| inputParameters. **terminationReason** | The reason for terminating the workflow(s), which will provide the context of the termination. It can be [passed as a dynamic variable](/developer-guides/passing-inputs-to-task-in-conductor).                              | Optional.          |
-| triggerFailureWorkflow                 | Whether the failure workflow for the terminated workflow will be triggered. Accepted values:<ul><li>`true`—The failure workflow will be triggered.</li><li>`false`—The default option. The failure workflow will not be triggered.</li></ul> | Required.          |
+| inputParameters. **workflowId**        | The workflow (execution) IDs of the workflow executions to be terminated. Can be a single ID or an array of one or more IDs. It can be [passed as a dynamic variable](/developer-guides/passing-inputs-to-task-in-conductor).                                           | Required.          |
+| inputParameters. **terminationReason** | The reason for terminating the workflow(s), which will provide the context of the termination. It can be [passed as a dynamic variable](/developer-guides/passing-inputs-to-task-in-conductor). If not set, it defaults to `Terminated by task <taskId>`, where `<taskId>` is the task (execution) ID of the Terminate Workflow task.                              | Optional.          |
+| inputParameters. **triggerFailureWorkflow** | Whether the failure workflow for the terminated workflow will be triggered. Accepted values:<ul><li>`true`: The failure workflow will be triggered.</li><li>`false`: The default option. The failure workflow will not be triggered.</li></ul> | Optional.          |
+
+The task terminates the workflows in the order they are listed and stops at the first workflow it cannot terminate, such as a workflow that has already completed. When this happens, the task fails and returns no output. Workflows earlier in the list remain terminated, and the rest of the list is not processed. Workflows that are already terminated do not cause the task to fail.
 
 The following are generic configuration parameters that can be applied to the task and are not specific to the Terminate Workflow task.
 
@@ -30,7 +34,7 @@ Here are other parameters for configuring the task behavior.
 
 | Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- | 
-| optional | Whether the task is optional. <br/><br/>If set to`true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. | 
+| optional | Whether the task is optional. <br/><br/>If set to `true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. | 
 
 </details>
 
@@ -43,9 +47,7 @@ This is the task configuration for a Terminate Workflow task.
      "name": "TW",
      "taskReferenceName": "TW_ref",
      "inputParameters": {
-       "workflowId": [
-         "${workflow.input.workflowIds}"
-       ],
+       "workflowId": "${workflow.input.workflowIds}",
        "terminationReason": "Terminated due to xxxxxx.",
        "triggerFailureWorkflow": false
      },
@@ -59,7 +61,7 @@ The Terminate Workflow task will return the following parameters.
 
 | Parameter           | Description                                                             |
 | ------------------- | ----------------------------------------------------------------------- |
-| terminatedWorkflows | An array of the workflow (execution) IDs corresponding to the terminated workflows. |
+| terminatedWorkflows | A JSON-encoded string containing an array of the workflow (execution) IDs that were terminated, for example, `"[\"id-1\",\"id-2\"]"`. Duplicate IDs are removed, and the order may differ from the input. |
 
 ## Examples
 
@@ -140,13 +142,7 @@ Let’s run this workflow by going to the **Run** tab and entering the previous 
 
 Once completed, the Terminate Workflow task’s output displays the workflow ID of the terminated workflow.
 
-<p align="center"><img src="/content/img/terminate-workflow.png" alt="Terminate Workflow - Successful execution" width="90%" height="auto"></img></p>
-
-To verify this, go to **Executions** > **Workflow** and search for the terminated workflow ID. Select the workflow ID to view the execution.
-
-<p align="center"><img src="/content/img/verifying-terminated-workflow.png" alt="Verifying the terminated workflow from executions" width="90%" height="auto"></img></p>
-
-At the top of the execution details, you can view the termination reason that was provided in the Terminate Workflow task.
+To verify this, go to **Executions** > **Workflow** and search for the terminated workflow ID. Select the workflow ID to view the execution. At the top of the execution details, you can view the termination reason that was provided in the Terminate Workflow task.
 
 <p align="center"><img src="/content/img/terminated-workflow.png" alt="View of the terminated workflow" width="90%" height="auto"></img></p>
 
@@ -263,14 +259,10 @@ Now, let’s run this workflow by going to the **Run** tab and entering the prev
 
 Once completed, the Terminate Workflow task’s output displays the workflow ID of the terminated workflow.
 
-<p align="center"><img src="/content/img/running-terminate-workflow-demo.png" alt="Running terminate workflow demo" width="100%" height="auto"></img></p>
-
 Upon completion, the workflow with this ID will be terminated. To view the execution of the terminated workflow, go to **Executions** > **Workflow** and search using the workflow (execution) ID.
 
 <p align="center"><img src="/content/img/terminated-workflow-execution.png" alt="Execution of the terminated workflow" width="70%" height="auto"></img></p>
 
 At the top of the execution details, you can view the termination reason that was provided and see that the failure workflow has been triggered. Select **Triggered failure workflow** to view the failure workflow’s execution.
-
-<p align="center"><img src="/content/img/failure-workflow-triggered.png" alt="Triggered failure workflow" width="90%" height="auto"></img></p>
 
 </details>

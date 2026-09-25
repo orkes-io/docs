@@ -2077,13 +2077,13 @@ function gatewayTutorialPageCopy() {
 
 function taskReferenceHubCopy() {
   return [
-    "Use this section when you need the exact behavior, configuration, and output of a specific task type in a workflow — whether it's a task your own service implements, a built-in operator that controls flow, or a system task Conductor runs natively.",
+    "Use this section when you need the exact behavior, configuration, and output of a specific task type in a workflow, whether it's a task your own service implements, a built-in operator that controls flow or workflow state, or a system task Conductor runs natively.",
     "",
     "## Sections",
     "",
-    "- **[Worker Task](/content/reference-docs/worker-task)** — the task type your own service implements; it polls for the task and runs the custom business logic.",
-    "- **[Operators](/content/category/reference-docs/operators)** — built-in control-flow tasks: branching, loops, forks/joins, waits, sub-workflows, termination.",
-    "- **[System Tasks](/content/category/reference-docs/system-tasks)** — built-in tasks Conductor executes directly on the server (HTTP, transforms, JDBC, alerting, AI tasks) with no worker required.",
+    "- **[Worker Task](/content/reference-docs/worker-task)**: The task type your own service implements; it polls for the task and runs the custom business logic.",
+    "- **[Operators](/content/category/reference-docs/operators)**: Built-in tasks for control flow and workflow state: branching, loops, forks/joins, waits, sub-workflows, termination, human steps, and workflow variables.",
+    "- **[System Tasks](/content/category/reference-docs/system-tasks)**: Built-in tasks Conductor executes directly on the server (HTTP, transforms, JDBC, alerting, AI tasks) with no worker required.",
     "",
   ];
 }

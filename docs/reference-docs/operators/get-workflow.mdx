@@ -4,15 +4,12 @@ slug: "/reference-docs/operators/get-workflow"
 description: "Learn how the Get Workflow task retrieves details of a workflow execution using its workflow ID."
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+# Get Workflow
 
-# Get Workflow 
-
-The Get Workflow task retrieves the details of a workflow execution using its workflow ID. 
+The Get Workflow task retrieves the details of a workflow execution using its workflow ID.
 
 :::note
-You can get the workflow details only if you have at least read permission for the workflow. Otherwise, the workflow will fail with an error message:
+The Get Workflow task succeeds only if the user who started the workflow has at least read permission on the target workflow's definition. Otherwise, the task fails with:
 
 ```
 User doesn't have permission to read the workflow with ID: <WORKFLOW-ID>
@@ -25,8 +22,8 @@ Configure these parameters for the Get Workflow task.
 
 | Parameter     | Description                                                                                                                                                                                                | Required/ Optional |
 | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
-| inputParameters. **id** | The workflow ID of the workflow to be retrieved. It can be [passed as a dynamic variable](/developer-guides/passing-inputs-to-task-in-conductor). | Required. |
-| inputParameters. **includeTasks** | Whether to retrieve the task details or not. The default value is `false`. | Optional. |
+| inputParameters. **id** | The ID of the workflow execution to retrieve. It can be [passed as a dynamic variable](/developer-guides/passing-inputs-to-task-in-conductor). <br/><br/>If the ID is missing or blank, the task fails with `Missing/Blank 'id' in input parameters`. If no workflow exists with the ID, the task fails with `Wrong Workflow id`. | Required. |
+| inputParameters. **includeTasks** | Whether to include the task details of the workflow execution in the output. The value must be a boolean (`true` or `false`), not a string. The default value is `true`. | Optional. |
 
 The following are generic configuration parameters that can be applied to the task and are not specific to the Get Workflow task.
 
@@ -37,7 +34,7 @@ Here are other parameters for configuring the task behavior.
 
 | Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- | 
-| optional | Whether the task is optional. <br/><br/>If set to`true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. | 
+| optional | Whether the task is optional. <br/><br/>If set to `true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. | 
 
 </details>
 
@@ -60,7 +57,7 @@ This is the task configuration for a Get Workflow task.
 
 ## Task output
 
-The Get Workflow task returns the execution details of the workflow identified by the specified workflow ID, including task execution details when **Include tasks** is enabled.
+The Get Workflow task returns the execution details of the specified workflow in the `workflow` object. This includes fields such as `status`, `input`, `output`, and `workflowDefinition`. If `includeTasks` is `true`, it also includes the `tasks` array. For example, use `${get_workflow_ref.output.workflow.status}` to reference the workflow status in a later task.
 
 ## Examples
 
@@ -109,12 +106,12 @@ The following example demonstrates how to configure a workflow that retrieves th
 **To run the workflow:**
 
 <ol>
-<li>Go to the <strong>Run</strong> tab, and enter the <strong>Input params</strong>. For example:</li>
+<li>Go to the <strong>Run</strong> tab, and enter the <strong>Input params</strong>, replacing <code>&lt;WORKFLOW-ID&gt;</code> with the ID of an existing workflow execution:</li>
 </ol>
 
 ```json
 {
- "workflowId": "8440b876-e7c5-11f0-a0ca-c60c4ebc4813"// Replace with your workflow ID
+ "workflowId": "<WORKFLOW-ID>"
 }
 ```
 
