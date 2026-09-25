@@ -56,6 +56,7 @@
   "reference-docs/api/workflow/update-variable": "reference-docs/api/workflow",
   "reference-docs/api/workflow/upgrade-workflow": "reference-docs/api/workflow",
   "developer-guides/using-vector-databases-in-your-orkes-conductor-workflows": "category/reference-docs/ai-tasks",
+  "reference-docs/ai-tasks": "category/reference-docs/ai-tasks",
   "quickstart/first-workflow": "quickstarts",
   "ai-orchestration": "developer-guides/ai-orchestration",
   "conductor-architecture": "core-concepts",
@@ -129,5 +130,10 @@
   "templates/examples/rotating-secrets-that-expire": "devguide/cookbook",
   "webhook-templates": "category/event-driven-orchestration/webhook-examples",
   "document-templates": "tutorials/ai",
-  "finance-templates": "devguide/cookbook"
+  "finance-templates": "devguide/cookbook",
+  "documentation/configuration/eventhandlers": "developer-guides/event-handler",
+  "documentation/api/eventhandlers": "developer-guides/event-handler",
+  "documentation/configuration/workflowdef/operators": "category/reference-docs/operators",
+  "documentation/configuration/workflowdef/systemtasks": "category/reference-docs/system-tasks",
+  "devguide/production-path": "devguide/workflows/production-path"
 }
