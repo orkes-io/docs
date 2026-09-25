@@ -1,17 +1,17 @@
 ---
 slug: "/category/reference-docs/operators"
-description: "Overview of built-in operators in Conductor — Switch, Do While, Fork/Join, Dynamic Fork, Sub Workflow, Wait, Human, and more for controlling workflow execution flow."
+description: "Overview of built-in operators in Conductor, such as Switch, Do While, Fork/Join, Dynamic Fork, Sub Workflow, Wait, Human, and more for controlling workflow execution flow."
 ---
 
 # Operators
 
-Operators are built-in tasks that control workflow execution flow — branching, looping, parallelism, waiting, and termination — rather than performing external work.
+Operators are built-in tasks that control workflow execution flow (branching, looping, parallelism, waiting, and termination) rather than performing external work.
 
 ## Available operators
 
 | Operator | Type | Description |
 | :--- | :--- | :--- |
-| [Switch](/content/reference-docs/operators/switch) | `SWITCH` | Branch based on a single evaluated condition — if/else or multi-case logic. |
+| [Switch](/content/reference-docs/operators/switch) | `SWITCH` | Branch based on a single evaluated condition, using if/else or multi-case logic. |
 | [Do While](/content/reference-docs/operators/do-while) | `DO_WHILE` | Repeat a sequence of tasks while a condition remains true. |
 | [Fork/Join](/content/reference-docs/operators/fork-join) | `FORK_JOIN` | Run a fixed, known number of parallel branches, then wait for all of them with Join. |
 | [Dynamic Fork](/content/reference-docs/operators/dynamic-fork) | `FORK_JOIN_DYNAMIC` | Run parallel branches where the number and tasks are determined at runtime, then wait for them with Join. |
@@ -26,3 +26,4 @@ Operators are built-in tasks that control workflow execution flow — branching,
 | [Yield](/content/reference-docs/operators/yield) | `YIELD` | Pause execution and return control to the caller without waiting on an external condition. |
 | [Set Variable](/content/reference-docs/operators/set-variable) | `SET_VARIABLE` | Create or update a workflow-level variable during execution. |
 | [Get Workflow](/content/reference-docs/operators/get-workflow) | `GET_WORKFLOW` | Look up details of another workflow execution by its ID. |
+| [Exclusive Join](/content/documentation/configuration/workflowdef/operators/exclusive-join-task) | `EXCLUSIVE_JOIN` | Wait for only the first listed branch task that was scheduled (not skipped) to complete, instead of all branches. |

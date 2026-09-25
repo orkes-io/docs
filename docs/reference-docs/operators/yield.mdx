@@ -11,6 +11,8 @@ import TabItem from '@theme/TabItem';
 
 The Yield task temporarily yields control of the workflow by pausing execution until it is explicitly resumed using [synchronous](/reference-docs/api/task/signal-running-task-synchronously) or [asynchronous](/reference-docs/api/task/signal-running-task-asynchronously) signal endpoints, typically in response to external conditions or events.
 
+The signal endpoints update the first blocking Wait or Yield task in the workflow, including tasks in nested sub-workflows. By default, the Yield task has no timeout and remains in progress until it is signaled.
+
 When a workflow runs in synchronous consistency mode, and execution reaches a Yield task, Conductor immediately returns a response based on the `returnStrategy` in the [Execute Workflow Synchronously](/content/reference-docs/api/workflow/synchronous-workflow-execution#query-parameters) endpoint.
 
 :::info Note
@@ -23,14 +25,14 @@ Configure these parameters for the Yield task.
 
 | Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- | 
-| inputParameters | The input parameters for the Yield task, which can be fixed or [passed as a dynamic variable](/developer-guides/passing-inputs-to-task-in-conductor). | Required. | 
+| inputParameters | The input parameters for the Yield task, which can be fixed or [passed as a dynamic variable](/developer-guides/passing-inputs-to-task-in-conductor). | Optional. | 
 
 The following are generic configuration parameters that can be applied to the task and are not specific to the Yield task.
 
 <details markdown="1">
 <summary>Caching parameters</summary>
 
-You can cache the task outputs using the following parameters. Refer to [Caching Task Outputs](/faqs/task-cache-output) for a full guide.
+You can cache task outputs using the following parameters. Only the outputs of completed tasks are cached. If a cached output exists for the computed cache key, the Yield task is completed immediately with the cached output, without waiting to be signaled, and the output includes `"_cachedResponse": true`. Refer to [Caching Task Outputs](/faqs/task-cache-output) for a full guide.
 
 | Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- | 
@@ -47,8 +49,8 @@ You can enforce input/output validation for the task using the following paramet
 | Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- | 
 | taskDefinition.**enforceSchema** | Whether to enforce schema validation for task inputs/outputs. Set to *true* to enable validation. | Optional. | 
-| taskDefinition.**inputSchema** | The name and type of the input schema to be associated with the task. | Required if *enforceSchema* is set to true. | 
-| taskDefinition.**outputSchema** | The name and type of the output schema to be associated with the task. | Required if *enforceSchema* is set to true.
+| taskDefinition.**inputSchema** | The name and type of the input schema to be associated with the task. If not set, task inputs are not validated. | Optional. Used only if *enforceSchema* is set to true. | 
+| taskDefinition.**outputSchema** | The name and type of the output schema to be associated with the task. If not set, task outputs are not validated. | Optional. Used only if *enforceSchema* is set to true. |
 
 </details>
 
@@ -59,7 +61,7 @@ Here are other parameters for configuring the task behavior.
 
 | Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- | 
-| optional | Whether the task is optional. <br/><br/>If set to`true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. | 
+| optional | Whether the task is optional. <br/><br/>If set to `true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. | 
 
 </details>
 
@@ -136,12 +138,12 @@ Let’s signal this task asynchronously using the endpoint [`POST /api/tasks/{wo
 
 ```shell
 curl -X 'POST' \
-  'https://developer.orkescloud.com/api/tasks/fd7s37423ca7-5002-11f0-9613-0e9a9f41f671/COMPLETED/signal' \
+  'https://<YOUR-CLUSTER-NAME>/api/tasks/<WORKFLOW-ID>/COMPLETED/signal' \
   -H 'accept: */*' \
   -H 'X-Authorization: <TOKEN>' \
   -H 'Content-Type: application/json' \
   -d '{
-  "taskOutPut": "Output passed using the API"
+  "taskOutput": "Output passed using the API"
 }'
 ```
 
