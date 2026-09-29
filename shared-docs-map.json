@@ -272,11 +272,6 @@
       "route": "developer-guides/unit-and-regression-tests"
     },
     {
-      "source": "devguide/how-tos/incoming-webhooks.md",
-      "docId": "developer-guides/webhook-integration",
-      "route": "developer-guides/webhook-integration"
-    },
-    {
       "source": "devguide/how-tos/Workflows/creating-workflows.md",
       "docId": "developer-guides/write-workflows-using-code",
       "route": "developer-guides/write-workflows-using-code"
@@ -388,6 +383,7 @@
     }
   ],
   "aliases": {
+    "devguide/how-tos/incoming-webhooks.md": "developer-guides/webhook-integration",
     "devguide/ai/why-conductor.md": "why-conductor-for-ai-agents",
     "devguide/ai/llm-orchestration.md": "ai-orchestration/llm-orchestration",
     "devguide/ai/production-agent-architecture.md": "ai-agents/production-agent-architecture",

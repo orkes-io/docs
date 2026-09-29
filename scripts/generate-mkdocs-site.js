@@ -560,6 +560,10 @@ const EXCLUDED_OSS_SOURCES = new Set([
   "documentation/api/eventhandlers.md",
   "documentation/configuration/workflowdef/operators/index.md",
   "documentation/configuration/workflowdef/systemtasks/index.md",
+  // Superseded by the restored enterprise developer-guides/webhook-integration.mdx
+  // (step-by-step Orkes webhook setup). Incoming webhooks and WAIT_FOR_WEBHOOK
+  // are Orkes Enterprise features; conductor-oss has no backend for them.
+  "devguide/how-tos/incoming-webhooks.md",
 ]);
 
 function collectSourceEntries() {
@@ -2404,7 +2408,7 @@ function createCookbookGeneratedPages() {
     { type: "doc", id: "tutorials/ticket-service-tutorial", label: "Build a Ticket Service using MCP Gateway" },
   ];
   const eventItems = [
-    { type: "doc", id: "developer-guides/webhook-integration", label: "Using Webhooks" },
+    { type: "doc", id: "developer-guides/webhook-integration", label: "Incoming Webhooks" },
     { type: "doc", id: "developer-guides/event-handler", label: "Using Event Handlers" },
     { type: "doc", id: "developer-guides/idempotency", label: "Idempotency" },
     { type: "doc", id: "tutorials/custom-conductor-webhook-using-curl", label: "Custom Webhook with cURL" },
@@ -2767,7 +2771,7 @@ function buildNav() {
         d("devguide/how-tos/event-bus", "Overview"),
         d("devguide/how-tos/publish-events", "Publish Events"),
         d("devguide/how-tos/consume-route-events", "Consume and Route Events"),
-        d("devguide/how-tos/incoming-webhooks", "Incoming Webhooks"),
+        d("developer-guides/webhook-integration", "Incoming Webhooks"),
         d("devguide/how-tos/workflow-status-events", "Workflow Status Events"),
       ]),
       d("devguide/ai/mcp-guide", "MCP Integration"),

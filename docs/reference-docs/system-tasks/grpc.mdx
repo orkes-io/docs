@@ -4,8 +4,6 @@ slug: "/reference-docs/system-tasks/grpc"
 description:  "Learn how the gRPC task invokes remote gRPC service endpoints from workflows."
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 import TableNote from '@site/src/components/TableNote';
 
 # gRPC
@@ -18,27 +16,31 @@ The gRPC task constructs a request using the specified method, host, and request
 
 Configure these parameters for the gRPC task.
 
+If you use a gRPC service registered in [Remote Services](/content/remote-services), you can populate the task from it. This fills in the service, method, method type, host, port, headers, input type, output type, and a sample request. For CLIENT_STREAMING and BIDI_STREAMING methods, replace *request* with *requests*.
+
 | Parameter                         | Description                                                                                                                          | Required/ Optional |
 | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ------------------ |
-| inputParameters.**method** | The gRPC method to invoke within the service. | Required. | 
+| inputParameters.**service** | The name of the gRPC service registered in [Remote Services](/content/remote-services). The task uses it to load the service's message types. | Required. | 
+| inputParameters.**method** | The full name of the gRPC method to invoke, in the format *package.Service/Method*. For example, `hello.HelloService/SayHello`. | Required. | 
 | inputParameters.**host** | The hostname or IP address of the gRPC server. | Required. | 
 | inputParameters.**port** | The port on which the gRPC server is running. | Required. | 
-| inputParameters.**request** | A JSON object representing the request payload. | Required. | 
-| inputParameters.**methodType** | The gRPC method type. Supported values:<ul><li>UNARY</li><li>CLIENT_STREAMING</li><li>SERVER_STREAMING</li><li>BIDI_STREAMING</li></ul> | Required. | 
+| inputParameters.**request** | The request message as a JSON object. | Required for UNARY and SERVER_STREAMING. | 
+| inputParameters.**requests** | A list of request messages, each as a JSON object. | Required for CLIENT_STREAMING and BIDI_STREAMING. | 
+| inputParameters.**methodType** | The gRPC method type. Supported values:<ul><li>UNARY</li><li>CLIENT_STREAMING</li><li>SERVER_STREAMING</li><li>BIDI_STREAMING</li></ul>If not set, defaults to UNARY. | Optional. | 
 | inputParameters.**useSSL** | Determines the connection security. Set to *true* to secure the connection using SSL. | Optional. | 
-| inputParameters.**trustCert** | Specifies whether the client should trust the server’s certificate. Set to *true* to allow connections to servers with self-signed or unverified certificates. | Optional. |  
+| inputParameters.**trustCert** | Specifies whether the client should trust the server’s certificate. Set to *true* to allow connections to servers with self-signed or unverified certificates. Used only when *useSSL* is *true*. | Optional. |  
 | inputParameters.**hedgingConfig**.**maxAttempts** | The maximum number of parallel requests to send. The system uses the response from the first successful attempt, helping reduce tail latencies in remote services.<br/><br/>**Note**: Hedging makes parallel requests, so use it only for idempotent services. | Optional. | 
-| inputParameters.**headers** | A map of additional headers to be sent along with the request. Supported types:<ul><li>Accept-Language</li><li>Authorization</li><li>Cache Control</li><li>Content-MD5</li><li>From</li><li>If-Match</li><li>If-Modified-Since</li><li>If-None-Match</li><li>Max-Forwards</li><li>Pragma</li><li>If-Range</li><li>If-Unmodified-Since</li><li>Proxy-Authorization</li><li>Range</li><li>Warning</li><li>x-api-key</li><li>Accept-Charset</li><li>Accept-Encoding</li><li>Accept-Control-Request-Headers</li><li>Accept-Control-Request-Method</li><li>Content-Transfer-Encoding</li><li>Expect</li><li>Transfer-Encoding</li><li>Trailer</li></ul> | Optional. | 
-| inputParameters.**inputType** | The input schema for the request. [Learn more about using schemas in Conductor](https://orkes.io/content/developer-guides/schema-validation#inputoutput-schema-validation).<ul><li>If you’re using a [registered service](https://orkes.io/content/remote-services), this value is the schema name automatically registered when fetching the service definition.</li><li>If you’re configuring the task manually, enter the name of the input schema you want to associate with the task.</li></ul> | Optional. | 
-| inputParameters.**outputType** | The output schema for the response. [Learn more about using schemas in Conductor](https://orkes.io/content/developer-guides/schema-validation#inputoutput-schema-validation).<ul><li>If you’re using a [registered service](https://orkes.io/content/remote-services), this value is the schema name automatically registered when fetching the service definition.</li><li>If you’re configuring the task manually, enter the name of the output schema you want to associate with the task.</li></ul> | Optional. | 
-| inputParameters.**compressionCodec** <TableNote title="Available since"><ul><li>v5.5.2 and later</li></ul></TableNote> | Compresses request and response messages on the wire. Set to `gzip` to enable compression. Useful for reducing transfer size on large payloads. | Optional. | 
+| inputParameters.**headers** | A map of metadata keys and values to send with the request. Supported types:<ul><li>Accept-Language</li><li>Authorization</li><li>Cache Control</li><li>Content-MD5</li><li>From</li><li>If-Match</li><li>If-Modified-Since</li><li>If-None-Match</li><li>Max-Forwards</li><li>Pragma</li><li>If-Range</li><li>If-Unmodified-Since</li><li>Proxy-Authorization</li><li>Range</li><li>Warning</li><li>x-api-key</li><li>Accept-Charset</li><li>Accept-Encoding</li><li>Accept-Control-Request-Headers</li><li>Accept-Control-Request-Method</li><li>Content-Transfer-Encoding</li><li>Expect</li><li>Transfer-Encoding</li><li>Trailer</li></ul> | Optional. | 
+| inputParameters.**inputType** | The full name of the protobuf message type for the request, such as `hello.HelloRequest`. When you populate the task from a registered service, this is filled in automatically. | Required. | 
+| inputParameters.**outputType** | The full name of the protobuf message type for the response, such as `hello.HelloResponse`. When you populate the task from a registered service, this is filled in automatically. | Required. | 
+| inputParameters.**compressionCodec** <TableNote title="Available since"><ul><li>v5.5.2 and later</li></ul></TableNote> | Compresses request and response messages on the wire. Set to `gzip` to enable compression. Useful for reducing transfer size on large payloads. The gRPC server must support gzip, or the task fails. | Optional. | 
 
 The following are generic configuration parameters that can be applied to the task and are not specific to the gRPC task.
 
 <details markdown="1">
 <summary>Caching parameters</summary>
 
-You can cache the task outputs using the following parameters. Refer to [Caching Task Outputs](/faqs/task-cache-output) for a full guide.
+You can cache the task outputs using the following parameters. Refer to [Caching Task Outputs](/content/faqs/task-cache-output) for a full guide.
 
 | Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- | 
@@ -68,19 +70,20 @@ This is the task configuration for a gRPC task.
      "taskReferenceName": "gRPC_ref",
      "type": "GRPC",
      "inputParameters": {
-       "method": "hello.proto",
+       "service": "<SERVICE-NAME>",
+       "method": "hello.HelloService/LotsOfReplies",
        "host": "grpcb.in",
-       "port": 9000,
+       "port": 9001,
        "methodType": "SERVER_STREAMING",
        "useSSL": true,
        "trustCert": true,
        "hedgingConfig": {
          "maxAttempts": 4
        },
-       "inputType": "<INPUT-SCHEMA>",
-       "outputType": "<OUTPUT-SCHEMA>",
+       "inputType": "hello.HelloRequest",
+       "outputType": "hello.HelloResponse",
        "request": {
-         "key": "value"
+         "greeting": "world"
        },
        "headers": {
          "x-api-key": "${workflow.secrets.api}"
@@ -92,5 +95,75 @@ This is the task configuration for a gRPC task.
 
 ## Task output
 
-The gRPC task returns the server’s response as task output, making it available for use in subsequent workflow steps. The structure of the output depends on the response of the gRPC method.
+The gRPC task returns the server’s response as task output, making it available for use in subsequent workflow steps.
 
+For UNARY and CLIENT_STREAMING methods, the output contains the fields of the response message. For example:
+
+```json
+{
+  "reply": "hello docs"
+}
+```
+
+For SERVER_STREAMING and BIDI_STREAMING methods, the output contains a `result` list with one entry per response message. For example:
+
+```json
+{
+  "result": [
+    { "reply": "hello a" },
+    { "reply": "hello b" }
+  ]
+}
+```
+
+If the call fails, the task status is FAILED and the gRPC error is shown in *reasonForIncompletion*.
+
+## Examples
+
+Here is an example of using the gRPC task.
+
+<details markdown="1">
+<summary>Sending a stream of requests to a gRPC service</summary>
+
+This example calls a client-streaming method on the public gRPC test server grpcb.in. The method receives several greetings and returns one reply.
+
+First, [register a gRPC service](/content/remote-services) in Remote Services with host `grpcb.in` and port `9001`, with SSL enabled. Then discover its endpoints. In this example, the service is named `hello_service`.
+
+Next, create a workflow with the following gRPC task:
+
+```json
+{
+  "name": "send_greetings",
+  "taskReferenceName": "send_greetings_ref",
+  "type": "GRPC",
+  "inputParameters": {
+    "service": "hello_service",
+    "method": "hello.HelloService/LotsOfGreetings",
+    "host": "grpcb.in",
+    "port": 9001,
+    "methodType": "CLIENT_STREAMING",
+    "useSSL": true,
+    "inputType": "hello.HelloRequest",
+    "outputType": "hello.HelloResponse",
+    "requests": [
+      { "greeting": "Alice" },
+      { "greeting": "Bob" }
+    ]
+  }
+}
+```
+
+In this configuration:
+
+- *methodType* is CLIENT_STREAMING, so the task sends each item in *requests* as a separate message.
+- *inputType* and *outputType* are the message types from the registered service.
+
+When you run the workflow, the task sends each greeting to the server as a separate message in one stream. After receiving all of them, the server sends back a single reply, and the task completes with this output:
+
+```json
+{
+  "reply": "hello Alice, Bob"
+}
+```
+
+</details>
