@@ -21,7 +21,7 @@ Configure these parameters for the SendGrid task.
 | Parameter                      | Description                                                                                                                                                            | Required/ Optional |
 | ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
 | inputParameters.**from** | The sender’s email address. This must be a verified email in SendGrid. [Learn more](https://www.twilio.com/docs/sendgrid/for-developers/sending-email/sender-identity). | Required. |
-| inputParameters.**to** | The recipient’s email address. | Required. | 
+| inputParameters.**to** | The recipient’s email address. Only one address is supported. | Required. | 
 | inputParameters.**subject** | The email subject. | Required. | 
 | inputParameters.**contentType** | The type of email content. Supported values:<ul><li>**text/plain**</li><li>**text/html**</li></ul> | Required. | 
 | inputParameters.**content** | The email body. | Required. | 
@@ -57,31 +57,34 @@ Here are other parameters for configuring the task behavior.
 This is the task configuration for a SendGrid task.
 
 ```json
-   {
-     "name": "sendgrid",
-     "taskReferenceName": "sendgrid_ref",
-     "inputParameters": {
-       "from": "john.doe@acme.com",
-       "to": "jane.doe@acme.com",
-       "subject": "Email Subject",
-       "contentType": "text/plain",
-       "content": "Email Body",
-       "sendgridConfiguration": "<INTEGRATION-NAME>"
-     },
-     "type": "SENDGRID"
-   }
+{
+  "name": "sendgrid",
+  "taskReferenceName": "sendgrid_ref",
+  "inputParameters": {
+    "from": "john.doe@acme.com",
+    "to": "jane.doe@acme.com",
+    "subject": "Email Subject",
+    "contentType": "text/plain",
+    "content": "Email Body",
+    "sendgridConfiguration": "<INTEGRATION-NAME>"
+  },
+  "type": "SENDGRID"
+}
 ```
 
 ## Task output
 
 The SendGrid task will return the following parameters.
 
-| Parameter    | Description                                                                                                                   |
-| ------------ | ----------------------------------------------------------------------------------------------------------------------------- |
-| response     | A JSON object representing the response, if present.                                                                          |
-| headers      | An object containing the metadata about the response.                                                                         |
-| statusCode   | The [HTTP status code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) indicating success or failure of the request. |
-| body         | The response body containing the data returned by the API.                                                                    |
+| Parameter | Description |
+| --------- | ----------- |
+| response | The response from SendGrid, which contains:<ul><li>**statusCode**: The HTTP status code returned by SendGrid.</li><li>**body**: The response body returned by SendGrid.</li><li>**headers**: The response headers returned by SendGrid.</li></ul> |
+
+The task returns output only when SendGrid accepts the request. The task fails:
+
+- With a terminal error, if any required parameter is missing or empty.
+- If the integration name does not match an existing SendGrid integration.
+- If SendGrid rejects the request. The error details appear in the task's Logs tab.
 
 ## Examples
 
