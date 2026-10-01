@@ -4,9 +4,6 @@ slug: "/reference-docs/system-tasks/opsgenie"
 description: "Learn how the Opsgenie task sends alerts from workflows to Opsgenie for incident notification and management."
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 # Opsgenie
 
 :::info Retired since
@@ -22,19 +19,21 @@ Opsgenie utilizes metadata to populate alert details and notify the appropriate 
 
 Configure these parameters for the Opsgenie task.
 
-| Parameter                       | Description                                                                                                                                                                                                                                                                                                                                   | Required/ Optional |
-| ------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
-| inputParameters.**alias**       | A custom identifier that will be generated in Opsgenie when alerts are triggered. Can support up to 512 characters.                                                                                                                                                                                                                                | Required.          |
-| inputParameters.**description** | Description of the alert, limited to 15,000 characters in Opsgenie.                                                                                                                                                                                                                                                                           | Required.          |
-| inputParameters.**visibleTo**   | Users in Opsgenie who can view the alerts. Can be a string, number, boolean, object/array, or null.                                                                                                                                                                                                                                           | Required.          |
-| inputParameters.**responders**  | Users in Opsgenie to be notified of the alert. Can be a string, number, boolean, object/array, or null.                                                                                                                                                                                                                                       | Required.          |
-| inputParameters.**details**     | Additional details for the alert. Can be a string, number, boolean, object/array, or null.                                                                                                                                                                                                                                                    | Optional.          |
-| inputParameters.**message**     | Message to be displayed in Opsgenie, providing a quick overview of the alert.                                                                                                                                                                                                                                                                 | Optional.          |
-| inputParameters.**actions**     | Opsgenie actions to be executed on the alert. Can be a string or object/array.                                                                                                                                                                                                                                                                | Optional           |
-| inputParameters.**priority**    | The priority of the alert.                                                                                                                                                                                                                                                                                                                    | Optional.          |
-| inputParameters.**entity**      | Domain the alert is related to, such as the server's name or application.                                                                                                                                                                                                                                                                     | Optional.          |
-| inputParameters.**token**       | API token for integrating with Opsgenie. Refer to the official [Opsgenie documentation](https://support.atlassian.com/opsgenie/docs/create-a-default-api-integration/) to get the API keys.<br/>**Tip**: Save the token as a [secret](/developer-guides/secrets-in-conductor) in the Conductor for enhanced security. | Required.          |
-| inputParameters.**tags**        | Tags to be added to the alert in Opsgenie. Can be a string or object/array.                                                                                                                                                                                                                                                                   | Optional.          |
+| Parameter | Description | Required/ Optional |
+| --------- | ----------- | ------------------ |
+| inputParameters.**alias** | A custom identifier for the alert in Opsgenie. Can support up to 512 characters. | Optional. |
+| inputParameters.**description** | Description of the alert, limited to 15,000 characters in Opsgenie. | Optional. |
+| inputParameters.**visibleTo** | The teams or users in Opsgenie who can view the alert, as an array of objects. Each object contains an `id` and a `type`, such as `team`. | Optional. |
+| inputParameters.**responders** | The users in Opsgenie to be notified of the alert, as an array of objects. Each object contains a `type`, such as `user`, and a `username`. | Optional. |
+| inputParameters.**details** | Additional details for the alert, as an object of key-value pairs. Values must be strings or numbers. The details appear as extra properties on the alert. | Optional. |
+| inputParameters.**message** | The message displayed in Opsgenie, providing a quick overview of the alert. | Required. |
+| inputParameters.**actions** | Custom actions to add to the alert, as an array of strings. | Optional. |
+| inputParameters.**priority** | The priority of the alert. Supported values: `P1`, `P2`, `P3`, `P4`, `P5`. If not set, `P3` is used. | Optional. |
+| inputParameters.**entity** | Domain the alert is related to, such as the server's name or application. | Optional. |
+| inputParameters.**token** | The API key of an Opsgenie API integration. Refer to the official [Opsgenie documentation](https://support.atlassian.com/opsgenie/docs/create-a-default-api-integration/) to create an API integration. Keys created under API key management in Opsgenie are not supported.<br/>**Tip**: Save the token as a [secret](/content/developer-guides/secrets-in-conductor) in Conductor for enhanced security. | Required. |
+| inputParameters.**tags** | Tags to add to the alert, as an array of strings. | Optional. |
+
+If a parameter has the wrong type, such as a string instead of an array, the task fails.
 
 The following are generic configuration parameters that can be applied to the task and are not specific to the Opsgenie task.
 
@@ -79,5 +78,10 @@ This is the task configuration for an Opsgenie task.
 
 ## Task output
 
-The task returns a response with headers containing alert details such as alert ID, status, message, created/updated time, and so on.
+The task returns the Opsgenie API response in `response`:
 
+- **statusCode**: The HTTP status code. `202` means Opsgenie accepted the request.
+- **headers**: The response headers.
+- **body**: The response body. When the request is accepted, it contains `result`, `took`, and `requestId`. It does not include the alert ID.
+
+If Opsgenie rejects the request, for example because of an invalid API key or a missing message, the task still completes. The error is returned in the response and in the task's reason for incompletion.
