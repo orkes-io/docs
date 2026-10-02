@@ -43,7 +43,7 @@ Unrestricted roles can only be added by a cluster Admin. Unrestricted roles incl
 * **Unrestricted Worker**: Worker role with full access to poll and execute any task in the cluster.
 * **Metadata Manager**: Can manage all workflow and task definitions in the cluster, including performing any action regardless of workflow or task ownership. Can view and manage API Gateway configurations. Can create integrations and secrets.
 * **Workflow Manager**: Can view, execute, and manage all workflow executions in the system, including start, pause, resume, rerun, retry, restart, terminate, and delete actions. Has execute and read access to workflow and task definitions.
-* **Human Task Manager**: Can create, view, update, and delete all Human Task templates (user forms) in the cluster.
+* **Human Task Manager**: Can view, claim, reassign, release, and complete any human task in the cluster, including tasks assigned to or claimed by other users. Does not grant access to user forms.
 * **Event Handler Manager**: Can create, view, update, and delete all event handlers in the cluster.
 * **Schedule Manager**: Can create, view, update, and delete all workflow schedules in the cluster.
 * **Application Manager**: Can create, update, and delete any application in the cluster. Can also view and manage API Gateway configurations.
