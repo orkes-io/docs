@@ -166,9 +166,6 @@ const ROUTE_METADATA_OVERRIDES = {
   "reference-docs/operators/human": {
     title: "Human",
   },
-  "reference-docs/api/workflow": {
-    title: "Terminate Workflow API",
-  },
   "quickstarts/workflows": {
     title: "Workflow Concepts",
   },

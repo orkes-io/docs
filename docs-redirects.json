@@ -70,6 +70,7 @@
   "ai-agents/first-ai-agent": "ai-cookbook/first-ai-agent",
   "ai-agents/human-in-the-loop": "ai-cookbook/human-in-the-loop",
   "ai-agents/production-agent-architecture": "ai-cookbook/production-agent-architecture",
+  "devguide/ai/production-agent-architecture": "ai-cookbook/production-agent-architecture",
   "ai-agents/token-efficiency": "ai-cookbook/token-efficiency",
   "ai-orchestration/ai-llm-recipes": "devguide/ai/cookbook",
   "ai-orchestration/llm-orchestration": "developer-guides/ai-orchestration",
