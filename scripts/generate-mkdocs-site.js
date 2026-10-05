@@ -966,11 +966,24 @@ function routeFromOutRel(outRel) {
     .replace(/\/index$/, "");
 }
 
+// Strip HTML tags, repeating until the string stabilises so malformed or nested
+// markup cannot leave a partial tag behind. For extracting plain text from our
+// own docs at build time — not a sanitizer for untrusted HTML output.
+function stripHtmlTags(value, replacement = "") {
+  let s = String(value);
+  let prev;
+  do {
+    prev = s;
+    s = s.replace(/<[^>]+>/g, replacement);
+  } while (s !== prev);
+  return s;
+}
+
 function extractTitle(body, frontMatter, fallback) {
   if (frontMatter.title) return frontMatter.title;
   if (frontMatter.sidebar_label) return frontMatter.sidebar_label;
   const h1 = body.match(/^#\s+(.+)$/m);
-  if (h1) return h1[1].replace(/<[^>]+>/g, "").trim();
+  if (h1) return stripHtmlTags(h1[1]).trim();
   return fallback
     .split("/")
     .pop()
@@ -1179,11 +1192,9 @@ function convertTableNote(body) {
   return body.replace(
     /<TableNote\s+title=["']([^"']+)["']>([\s\S]*?)<\/TableNote>/g,
     (_all, title, content) => {
-      const inline = content
-        .trim()
-        .replace(/<\/li>\s*<li>/g, ", ")
-        .replace(/<[^>]+>/g, "")
-        .trim();
+      const inline = stripHtmlTags(
+        content.trim().replace(/<\/li>\s*<li>/g, ", "),
+      ).trim();
       return `<span class="table-note"><strong>${escapeHtml(title)}:</strong> ${escapeHtml(inline)}</span>`;
     },
   );
@@ -4315,19 +4326,27 @@ function stripMarkdownFrontMatter(contents) {
 }
 
 function cleanMarkdownForLlms(contents) {
-  return stripMarkdownFrontMatter(contents)
-    .replace(/<script[\s\S]*?<\/script>/gi, "")
-    .replace(/<style[\s\S]*?<\/style>/gi, "")
+  let text = stripMarkdownFrontMatter(contents);
+  // Remove <script>/<style> blocks, repeating until stable. Whitespace-tolerant
+  // end tags (</script >) are matched too.
+  let prev;
+  do {
+    prev = text;
+    text = text
+      .replace(/<script[\s\S]*?<\/script\s*>/gi, "")
+      .replace(/<style[\s\S]*?<\/style\s*>/gi, "");
+  } while (text !== prev);
+  text = text
     .replace(/<img\b[^>]*alt=["']([^"']*)["'][^>]*>/gi, (_all, alt) => (alt ? `Image: ${alt}` : ""))
     .replace(/<br\s*\/?>/gi, "\n")
-    .replace(/<\/(p|div|details|summary|li|tr|td|th)>/gi, "\n")
-    .replace(/<[^>]+>/g, "")
+    .replace(/<\/(p|div|details|summary|li|tr|td|th)>/gi, "\n");
+  return stripHtmlTags(text)
     .replace(/&rarr;/g, "->")
-    .replace(/&amp;/g, "&")
     .replace(/&lt;/g, "<")
     .replace(/&gt;/g, ">")
     .replace(/&quot;/g, '"')
     .replace(/&#39;/g, "'")
+    .replace(/&amp;/g, "&")
     .replace(/[ \t]+$/gm, "")
     .replace(/\n{4,}/g, "\n\n\n")
     .trim();
