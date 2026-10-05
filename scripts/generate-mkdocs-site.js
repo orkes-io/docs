@@ -4327,14 +4327,14 @@ function stripMarkdownFrontMatter(contents) {
 
 function cleanMarkdownForLlms(contents) {
   let text = stripMarkdownFrontMatter(contents);
-  // Remove <script>/<style> blocks, repeating until stable. Whitespace-tolerant
-  // end tags (</script >) are matched too.
+  // Remove <script>/<style> blocks, repeating until stable. Permissive end tags
+  // (</script foo="bar">, </script >) are matched too.
   let prev;
   do {
     prev = text;
     text = text
-      .replace(/<script[\s\S]*?<\/script\s*>/gi, "")
-      .replace(/<style[\s\S]*?<\/style\s*>/gi, "");
+      .replace(/<script\b[\s\S]*?<\/script\b[^>]*>/gi, "")
+      .replace(/<style\b[\s\S]*?<\/style\b[^>]*>/gi, "");
   } while (text !== prev);
   text = text
     .replace(/<img\b[^>]*alt=["']([^"']*)["'][^>]*>/gi, (_all, alt) => (alt ? `Image: ${alt}` : ""))

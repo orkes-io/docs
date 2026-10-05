@@ -77,30 +77,29 @@ function listFiles(dir, predicate) {
 }
 
 function stripTags(value) {
-  let clean = String(value || "");
-  // Remove <script>/<style> blocks, then any remaining tags, repeating each
-  // pass until stable so malformed/nested markup can't leave a partial tag.
-  // Whitespace-tolerant end tags (</script >) are matched too.
-  let prev;
-  do {
-    prev = clean;
-    clean = clean
-      .replace(/<script[\s\S]*?<\/script\s*>/gi, "")
-      .replace(/<style[\s\S]*?<\/style\s*>/gi, "");
-  } while (clean !== prev);
-  do {
-    prev = clean;
-    clean = clean.replace(/<[^>]+>/g, " ");
-  } while (clean !== prev);
-  return clean
+  // Decode entities first so encoded tags (e.g. &lt;script&gt;) can't reappear
+  // after stripping, then remove <script>/<style> blocks and any remaining
+  // tags, repeating each pass until stable so malformed/nested markup can't
+  // re-form. Permissive end tags (</script foo="bar">) are matched too.
+  let clean = String(value || "")
     .replace(/&nbsp;/g, " ")
     .replace(/&lt;/g, "<")
     .replace(/&gt;/g, ">")
     .replace(/&quot;/g, '"')
     .replace(/&#39;/g, "'")
-    .replace(/&amp;/g, "&")
-    .replace(/\s+/g, " ")
-    .trim();
+    .replace(/&amp;/g, "&");
+  let prev;
+  do {
+    prev = clean;
+    clean = clean
+      .replace(/<script\b[\s\S]*?<\/script\b[^>]*>/gi, "")
+      .replace(/<style\b[\s\S]*?<\/style\b[^>]*>/gi, "");
+  } while (clean !== prev);
+  do {
+    prev = clean;
+    clean = clean.replace(/<[^>]+>/g, " ");
+  } while (clean !== prev);
+  return clean.replace(/\s+/g, " ").trim();
 }
 
 function routeForHtml(file) {
