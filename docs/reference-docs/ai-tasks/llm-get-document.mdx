@@ -4,9 +4,6 @@ slug: "/reference-docs/ai-tasks/llm-get-document"
 description: "Learn how the Get Document task retrieves stored documents for further AI processing or analysis."
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 # Get Document
 
 The Get Document task is used to retrieve the content of a specified document for further data processing using AI tasks. It supports a wide range of media types and allows integration with various file formats to facilitate comprehensive data handling and processing.
@@ -20,7 +17,7 @@ Configure these parameters for the Get Document task.
 | Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- |
 | inputParameters.**url** | The URL of the file to be retrieved. | Required. |
-| inputParameters.**mediaType** | The media type of the file to be retrieved. Supported media types:<ul> <li>application/pdf</li> <li>text/html</li> <li>text/plain</li> <li>application/json</li> </ul> | Optional. |
+| inputParameters.**mediaType** | The media type of the file to be retrieved. Supported media types:<ul> <li>application/pdf</li> <li>text/html</li> <li>text/plain</li> <li>application/json</li> </ul>If not set, the media type is detected from the file extension in the URL. | Optional. |
 
 The following are generic configuration parameters that can be applied to the task and are not specific to the Get Document task.
 
