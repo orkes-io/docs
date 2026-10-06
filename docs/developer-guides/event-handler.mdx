@@ -8,18 +8,20 @@ import TableNote from '@site/src/components/TableNote';
 
 # Using Event Handlers
 
-Event handlers in Orkes Conductor listen for messages from message brokers and trigger workflow actions based on configurable conditions. Once the messages from message brokers are received, you can use them to:
+Event handlers in Orkes Conductor listen for messages from message brokers and trigger workflow actions based on configurable conditions. When an event handler receives a message from a message broker, it can trigger one of the following actions:
 
 - Complete a task
 - Terminate a workflow
 - Update variables
 - Fail a task
 - Start a new workflow
+- Start an agent
 
 ## Creating an event handler
 
 :::info Prerequisites
 Before configuring an event handler, ensure the following:
+
 - A supported [message broker](/content/category/integrations/message-broker) is integrated with your Conductor cluster.
 - The target queue or topic already exists in the message broker.
 - Conductor has permission to consume messages from the configured queue or topic.
@@ -36,13 +38,10 @@ Before configuring an event handler, ensure the following:
 | name | A unique name for the event handler. | Required. | 
 | description | A description of the event handler.| Optional. | 
 | event | The event queue sink in the format:<br/> **message-broker-type:integration-name:topic/queue-name**.<br/>Where,<ul><li>**message-broker-type**: The message broker type from where the payload is being received. Supported types:<ul><li>amqp</li><li>sqs</li><li>azure</li><li>kafka</li><li>nats</li><li>gcp_pubsub</li><li>ibm_mq</li></ul></li><li>**integration-name**: The integration name added to the cluster.</li><li>**topic/queue-name**: The name of the queue or topic where the payload is being received.</li></ul><TableNote title="Warning">When configuring via the Conductor UI, the **Event** field lists only message broker integrations configured in your cluster. Select the required integration and append the topic name or queue name. Failure to do so may result in execution errors, as the payload won't have a valid destination.</TableNote> | Required. | 
-| condition | An ECMAScript (JavaScript) function to control message processing. The function should return `true` for the event handler to process the message. [Learn more about filtering events](/content/developer-guides/event-handler#configuring-conditions-to-filter-events). | Required. | 
+| condition | An ECMAScript (JavaScript) function to control message processing. The function should return `true` for the event handler to process the message. [Learn more about filtering events](#filter-events-with-conditions). | Required. | 
 | evaluatorType | The type of evaluator for the condition. Currently supports `javascript`. | Required. | 
-| actions | An array of actions to perform. Each action requires specific input parameters. Supported actions include:<ul><li>[complete_task](/content/developer-guides/event-handler#complete-task)</li><li>[terminate_workflow](/content/developer-guides/event-handler#terminate-workflow)</li><li>[update_workflow_variables](/content/developer-guides/event-handler#update-variables)</li><li>[fail_task](/content/developer-guides/event-handler#fail-task)</li><li>[start_workflow](/content/developer-guides/event-handler#start-workflow)</li></ul> | Required. |
+| actions | An array of actions to perform. Each action requires specific input parameters. Supported actions include:<ul><li>[complete_task](/content/developer-guides/event-handler#complete-task)</li><li>[terminate_workflow](/content/developer-guides/event-handler#terminate-workflow)</li><li>[update_workflow_variables](/content/developer-guides/event-handler#update-variables)</li><li>[fail_task](/content/developer-guides/event-handler#fail-task)</li><li>[start_workflow](/content/developer-guides/event-handler#start-workflow)</li><li>[start_agent](/content/developer-guides/event-handler#start-agent)</li></ul> | Required. |
 | active | Whether the event handler is enabled. Set to `true` to enable the event handler or `false` to disable it. | Required. |
-
-
-<p align="center"><img src="/content/img/creating-event-handler-ui-method.png" alt="Creating event handler via UI in Orkes Conductor" width="100%" height="auto"/></p>
 
 4. Select **Save** > **Confirm Save**.
 
@@ -117,13 +116,30 @@ The following references resolve as shown:
 
 The same fields are accessible in the `condition` expression using `$.fieldName` syntax (for example, `$.updateTask == true`).
 
+## Permissions and execution identity
+
+When an event handler's `condition` evaluates to `true` and it runs an action, that action is authorized using the identity of whichever user or [application](/access-control-and-security/applications) created (or most recently saved) the event handler — not the identity embedded in the incoming message, and not a shared system identity. This means:
+
+- The creating identity must have whatever permissions the configured actions require (for example, EXECUTE access on the target workflow for `start_workflow`, or UPDATE access on the target task for `complete_task`/`fail_task`). If that identity's permissions change or are revoked, the event handler's actions start failing with authorization errors, even though the event handler's own definition hasn't changed.
+- If the creating user account is later deactivated or deleted, the event handler stops working — its actions cannot execute without a valid identity to authorize them.
+
+Because of this, avoid creating event handlers under a personal user account whose access could change or be removed later. Instead, create the event handler using a dedicated [application (service account)](/access-control-and-security/applications) with only the permissions its actions need. Applications aren't tied to an individual's employment or role, so they don't carry the same removal risk.
+
+**If an event handler is already owned by a user account**, saving the event handler's definition again (for example, via **Save** in the UI, or a `PUT` request to the same event handler) updates its owning identity to whichever user or application performs the save. To move ownership to a service account, have that application (or a user acting on its behalf, with UPDATE access to the event handler) re-save the event handler's existing configuration.
+
 ## Configuring actions 
 
-Actions are executed only after the `condition` evaluates to `true`. Multiple actions can be triggered based on the events received. Below are the actions and their configuration details. 
+Actions are executed only after the event handler's `condition` evaluates to `true`. An event handler's `actions` array can trigger multiple actions based on the events received. Orkes Conductor supports the following action types:
+
+- [Complete Task](#complete-task)
+- [Terminate Workflow](#terminate-workflow)
+- [Update Variables](#update-variables)
+- [Fail Task](#fail-task)
+- [Start Workflow](#start-workflow)
 
 ### Complete Task
 
-Mark a task as complete using one of the following methods:
+The `complete_task` action marks a task as complete. You can identify the task to complete using one of the following methods:
 
 * Using `workflowId` and `taskRefName`.
 * Using `taskId`.
@@ -194,7 +210,7 @@ Mark a task as complete using one of the following methods:
 
 ### Terminate Workflow
 
-Terminates a running workflow.
+The `terminate_workflow` action terminates a running workflow.
 
 **Example Payload**
 
@@ -228,7 +244,7 @@ Terminates a running workflow.
 
 ### Update Variables
 
-Updates variables in a running workflow. Useful for controlling inputs in a long-running workflow.
+The `update_workflow_variables` action updates variables in a running workflow. This is useful for controlling inputs in a long-running workflow.
 
 **Example Payload**
 
@@ -254,6 +270,7 @@ Updates variables in a running workflow. Useful for controlling inputs in a long
  ]
 }
 ```
+
 **Parameters**
 
 | Parameter | Description | Required/ Optional | 
@@ -265,10 +282,10 @@ Updates variables in a running workflow. Useful for controlling inputs in a long
 
 ### Fail Task
 
-Marks a task as failed using one of the following methods:
+The `fail_task` action marks a task as failed. You can identify the task to fail using one of the following methods:
 
 * Using `workflowId` and `taskRefName`.
-* Using `taskId`. 
+* Using `taskId`.
 
 **Example Payload**
 
@@ -336,7 +353,7 @@ Marks a task as failed using one of the following methods:
 
 ### Start Workflow
 
-Starts a new workflow instance.
+The `start_workflow` action starts a new workflow instance.
 
 **Example Payload**
 
@@ -368,6 +385,7 @@ Starts a new workflow instance.
  ]
 }
 ```
+
 **Parameters**
 
 | Parameter | Description | Required/ Optional | 
@@ -381,12 +399,57 @@ Starts a new workflow instance.
 | actions. start_workflow. **input** | The input data to be passed to the new workflow. Can be string, number, boolean, null, or object/array. | Optional. | 
 | actions. start_workflow. **taskToDomain** | A mapping of task reference names to domain-specific values to [route the task to defined workers](https://orkes.io/content/developer-guides/task-to-domain). | Optional. | 
 
-**Ordering behavior with Kafka**
+#### Ordering behavior with Kafka
 
-Kafka guarantees message ordering within a partition. However, when an event handler triggers a `start_workflow` action, workflow creation is processed concurrently; meaning two messages from the same partition may result in workflows starting in a different order than the messages arrived.
+Kafka guarantees message ordering within a partition. However, when an event handler triggers a `start_workflow` action, workflow creation is processed concurrently, meaning two messages from the same partition may result in workflows starting in a different order than the messages arrived.
 
 If ordering matters for your use case:
 
 - Use a consistent partition key for messages that must be processed in order, so they land on the same partition.
 - Use `idempotencyKey` on the `start_workflow` action to prevent duplicate workflows from being created if a message is redelivered.
 - Handle ordering inside the workflow; pass a sequence number or timestamp in the event payload and use it within the workflow to detect and respond to out-of-order execution.
+
+### Start Agent
+
+:::info Available since
+- v5.5.0 and later
+:::
+
+Starts a new execution of an agent — a workflow definition that has been registered/built as an agent. The target name must resolve to an agent-type workflow definition; pointing this at a regular (non-agent) workflow returns an "Agent not found" error.
+
+**Example Payload**
+
+```json
+{
+  "name": "sample-event-handler",
+  "description": "Sample event handler",
+  "event": "kafka:sampleConfig:sampleName",
+  "evaluatorType": "javascript",
+  "condition": "true",
+  "actions": [
+    {
+      "action": "start_agent",
+      "start_agent": {
+        "name": "agentName",
+        "version": 2,
+        "prompt": "${userPrompt}",
+        "sessionId": "${sessionId}",
+        "idempotencyKey": "${eventId}"
+      }
+    }
+  ]
+}
+```
+
+**Parameters**
+
+| Parameter | Description | Required/ Optional |
+| --------- | ----------- | ----------------- |
+| actions. **action** | The action to be triggered on receiving events. Set this to `start_agent`. | Required. |
+| actions. start_agent. **name** | The name of the agent to execute. This must be a definition already registered as an agent. Supports `${fieldName}` substitution from the event payload. | Required. |
+| actions. start_agent. **version** | The version of the agent to be executed. If unspecified, the latest version will be used. | Optional. |
+| actions. start_agent. **prompt** | The prompt passed to the agent as input. Supports `${fieldName}` substitution from the event payload. | Optional. |
+| actions. start_agent. **sessionId** | Associate this run with an existing agent session. Supports `${fieldName}` substitution from the event payload. | Optional. |
+| actions. start_agent. **idempotencyKey** | A unique, user-generated key to prevent duplicate agent executions. Supports `${fieldName}` substitution from the event payload. If an execution with the same key already exists, its execution ID is returned instead of starting a new run. | Optional. |
+| actions. start_agent. **media** | A list of media references (e.g., file or image URLs) passed to the agent as input. Supports `${fieldName}` substitution from the event payload. | Optional. |
+| actions. **context** | Additional context data passed to the agent as input. Supports `${fieldName}` substitution from the event payload. | Optional. |

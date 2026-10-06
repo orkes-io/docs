@@ -23,7 +23,7 @@ To follow along, ensure you have access to the free [Orkes Developer Edition](ht
 
 ## Step 1: Create a workflow in Conductor
 
-Orkes Conductor lets you define workflows as JSON, through [SDKs](https://orkes.io/content/category/sdks), [APIs](https://orkes.io/content/category/ref-docs/api), or the [UI](http://orkes.io/content/developer-guides/build-workflows-using-ui). In this tutorial, we will create the workflow using Conductor UI.
+Orkes Conductor lets you define workflows as JSON, through [SDKs](https://orkes.io/content/category/sdks), [APIs](https://orkes.io/content/category/ref-docs/api), or the [UI](https://orkes.io/content/developer-guides/build-workflows-using-ui). In this tutorial, we will create the workflow using Conductor UI.
 
 The workflow contains a single [Wait for Webhook task](https://orkes.io/content/reference-docs/system-tasks/wait-for-webhook). The task pauses execution until a matching webhook request is received.
 

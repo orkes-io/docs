@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://orkes.io/content/sitemap.xml
+LLMs: https://orkes.io/content/llms.txt
+LLMs-Full: https://orkes.io/content/llms-full.txt

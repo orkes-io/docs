@@ -1,0 +1,107 @@
+---
+title: "List Accessible Secrets"
+description: "Use the Orkes Conductor secrets API to list Accessible Secrets. Includes endpoint details, authentication, parameters, request bodies, response behavior."
+canonical_route: "reference-docs/api/secrets/list-accessible-secrets"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, workflow orchestration, List Accessible Secrets, List Accessible Secrets API, API orchestration, API gateway"
+---
+
+# List Accessible Secrets
+
+## Quick reference
+
+Use this secrets endpoint to list Accessible Secrets. It is intended for automation scripts, CI/CD jobs, backend services, and internal tools that need to manage Orkes Conductor programmatically.
+
+- **Method and path**: `GET` `/api/secrets`
+- **Authentication**: Requires Orkes Conductor API credentials with permission for the target resource.
+- **Inputs**: Use the path parameters, query parameters, and request body fields documented below.
+- **Output**: Returns the Conductor API response for the requested operation. Check the response examples and status codes before wiring the endpoint into production automation.
+- **Operational note**: Treat API calls as part of your deployment or runtime control plane. Log request IDs, handle 4xx/5xx responses, and avoid embedding secrets in workflow definitions or source code.
+
+
+**Endpoint**: `GET /api/secrets`
+
+Retrieves all secret names that the user has access to. Use the `access` query parameter to filter by the specific action you can perform on the secrets.
+
+## Query parameters
+
+| Parameter | Description                                    | Type   | Required/ Optional |
+| --------- | ---------------------------------------------- | ------ | ------------------ |
+| access<br/><br/><span class="table-note"><strong>Available since:</strong> v5.4.2 and later</span> | Filter secrets by access type. Supported values:<ul><li>`READ`</li><li>`CREATE`</li><li>`UPDATE`</li><li>`DELETE`</li><li>`EXECUTE`</li></ul> Defaults to `READ` if not specified. Multiple values use AND semantics. Only secrets where the user has all specified access types are returned. | array of strings | Optional. |
+
+## Response
+
+Returns an array of secret names (strings) that are accessible to the invoked user.
+
+## Examples
+
+<details>
+<summary>List accessible secrets</summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/secrets' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+[
+[
+  "sendgrid_api_key",
+  "open-ai-service-account-key",
+  "ghp_your_github_token",
+  "atlassian-token",
+  "my_secret",
+  "SendGrid",
+  "slack_secret",
+  "slack-secret",
+  "GITHUB_TOKEN",
+  "gcp_private_key",
+  "payment_api_token",
+  "openai_api_key",
+  "neutrino_api_key",
+  "neutrino_user_id",
+  "weather-api",
+  "slack_standup_token"
+]
+]
+```
+
+</details>
+
+<details>
+<summary>List secrets the user can update</summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/secrets?access=UPDATE' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+[
+  "sendgrid_api_key",
+  "open-ai-service-account-key"
+]
+```
+
+</details>
+
+## Related pages
+
+- [Secrets](/content/reference-docs/api/secrets)
+- [Create/Update Secret](/content/reference-docs/api/secrets/create-secret)
+- [Delete Secret](/content/reference-docs/api/secrets/delete-secret)
+- [Get Secret Value by Key](/content/reference-docs/api/secrets/get-secret-value)
+- [Check if Secret Exists](/content/reference-docs/api/secrets/check-secret-exists)
+- [List All Secrets](/content/reference-docs/api/secrets/list-all-secrets)

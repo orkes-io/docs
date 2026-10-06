@@ -7,7 +7,7 @@ import TabItem from '@theme/TabItem';
 
 # Cohere Integration with Orkes Conductor
 
-To use system AI tasks in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI/LLM providers. This guide explains how to integrate Cohere with Orkes Conductor. Here’s an overview:
+To use [system AI tasks](/content/glossary#ai-tasks) in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI/LLM providers. This guide explains how to integrate Cohere with Orkes Conductor. Here’s an overview:
 
 1. Get the required credentials from Cohere.
 2. Configure a new Cohere integration in Orkes Conductor.
@@ -28,13 +28,7 @@ A production key requires a paid subscription.
 1. Sign in to the [Cohere console](https://dashboard.cohere.com/api-keys).
 2. Go to **Platform** > **API Keys** from the left menu.
 3. In **Trial keys**, select **+ New Trial key**.
-
-<p align="center"><img src="/content/img/cohere-trial-key.png" alt="Creating Cohere trial API key" width="90%" height="auto"></img></p>
-
 4. Enter a **Key Name**, and select **Generate Trial key**. 
-
-<p align="center"><img src="/content/img/generate-cohere-trial-key.png" alt="Generating Cohere trial API key" width="60%" height="auto"></img></p>
-
 5. Copy and store the generated key.
 
 </TabItem>
@@ -43,9 +37,6 @@ A production key requires a paid subscription.
 1. Sign in to the [Cohere console](https://dashboard.cohere.com/api-keys).
 2. Go to **Platform** > **API Keys** from the left menu.
 3. Select **Get your Production key** and follow the on-screen instructions.
-
-<p align="center"><img src="/content/img/cohere-production-key.png" alt="Creating Cohere production API key" width="90%" height="auto"></img></p>
-
 4. Generate a production key, then copy and store it securely.
 
 </TabItem>
@@ -59,10 +50,12 @@ After obtaining the credentials, add a Cohere integration to your Conductor clus
 
 **To create a Cohere integration:**
 
-1. Go to **Integrations** > **Connections and Resources** from the left navigation menu on your Conductor cluster.
-2. Select **+ New integration**.
-3. In the **AI/LLM** section, choose **Cohere**.
-4. Select **+ Add** and enter the following parameters:
+<ol>
+<li>Go to <strong>Integrations</strong> &gt; <strong>Connections and Resources</strong> from the left navigation menu on your Conductor cluster.</li>
+<li>Select <strong>+ New integration</strong>.</li>
+<li>In the <strong>AI/LLM</strong> section, choose <strong>Cohere</strong>.</li>
+<li>Select <strong>+ Add</strong> and enter the following parameters:</li>
+</ol>
 
 | Parameters | Description |
 | ---------- | ----------- |
@@ -71,10 +64,10 @@ After obtaining the credentials, add a Cohere integration to your Conductor clus
 | API Endpoint | Use the default API endpoint for Cohere, which is https://api.cohere.ai/v1. |
 | Description | A description of the integration. | 
 
-<p align="center"><img src="/content/img/create-new-cohere-integration.png" alt="Cohere Integration with Orkes Conductor" width="60%" height="auto"></img></p>
-
-5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
-6. Select **Save**.
+<ol start="5">
+<li>(Optional) Toggle the <strong>Active</strong> button off if you don't want to activate the integration instantly.</li>
+<li>Select <strong>Save</strong>.</li>
+</ol>
 
 ## Step 3: Add Cohere models
 
@@ -83,15 +76,9 @@ Once you’ve integrated Cohere, the next step is to configure specific models. 
 **To add a model to the Cohere integration:**
 
 1. Go to **Integrations** and select the **+** button next to the integration created.
-
-<p align="center"><img src="/content/img/create-new-cohere-integration-model-from-integrations-page.png" alt="Create Cohere Integration Model from Listed Integrations" width="100%" height="auto"></img></p>
-
 2. Select **+ New model**.
 3. Enter the **Model name**. The name must exactly match the Cohere model name. For a complete list, see the [Cohere documentation](https://docs.cohere.com/docs/models).
 4. Provide a **Description**. 
-
-<p align="center"><img src="/content/img/create-new-cohere-integration-model.png" alt="Create Cohere Integration Model" width="60%" height="auto"></img></p>
-
 5. (Optional) Toggle the **Active** button off if you don’t want to activate the model instantly.
 6. Select **Save**.
 
@@ -108,16 +95,6 @@ Once the integration is configured, set access controls to manage which [applica
 3. In the **Permissions** section, select **+ Add Permission**.
 4. In the **Integration** tab, select the required AI models and toggle the necessary permissions.
 5. Select **Add Permissions**. 
-
-<p align="center"><img src="/content/img/rbac-cohere-integration.png" alt="Add Permissions for Integrations" width="70%" height="auto"></img></p>
-
 The group or application can now access the AI model according to the configured permissions.
 
 With the integration in place, you can now create workflows using [AI/LLM tasks](https://orkes.io/content/category/reference-docs/ai-tasks).
-
-## More resources
-
-- [Using AI Models or LLMs](https://orkes.io/content/developer-guides/using-llms-in-your-orkes-conductor-workflows)
-- [Using Vector Databases](https://orkes.io/content/developer-guides/using-vector-databases-in-your-orkes-conductor-workflows)
-- [Using AI Prompts](https://orkes.io/content/developer-guides/creating-and-managing-gen-ai-prompt-templates)
-- [AI Orchestration Tutorials](https://orkes.io/content/tutorials/ai)

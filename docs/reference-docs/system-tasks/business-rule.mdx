@@ -4,15 +4,13 @@ slug: "/reference-docs/system-tasks/business-rule"
 description: "Learn how the Business Rule task evaluates business rules defined in spreadsheet-based decision tables."
 ---
 
-import Tabs from "@theme/Tabs";
-import TabItem from "@theme/TabItem";
 import TableNote from '@site/src/components/TableNote';
 
 # Business Rule
 
 The Business Rule task allows the evaluation of business rules defined in spreadsheet files. Supported formats include CSV, XLS, and XLSX. If a rule file lacks these extensions, it can also be processed if the `Content-Type` indicates a supported format.
 
-The Business Rule task evaluates business rules using a specified rule file. The file can be stored locally on the web, AWS S3, Azure Blob, or elsewhere. The task supports various execution strategies, including cache timeout, as well as input and output columns. The rules can be configured to apply multiple logical operations, such as comparison, string, list, and date operations.
+The Business Rule task evaluates business rules using a specified rule file. The file can be stored on the web, AWS S3, Azure Blob, or elsewhere. The task supports various execution strategies, including cache timeout, as well as input and output columns. The rules can be configured to apply multiple logical operations, such as comparison, string, list, and date operations.
 
 ## Task parameters
 
@@ -20,11 +18,11 @@ Configure these parameters for the Business Rule task.
 
 | Parameter                              | Description                                                                                                                                                                                                                                                                                                                                                                                                                              | Required/ Optional |
 | -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
-| inputParameter.**ruleFileLocation**  | URL of the spreadsheet to be evaluated, in CSV, XLS, or XLSX format. The file can be stored on the web, AWS S3, Azure Blob, etc.<br/><br/>**Note:** A spreadsheet without an explicitly-defined .csv, .xls, or .xlsx extension can also be processed as long as its `Content-Type` indicates a supported format, such as a Google spreadsheet published to the web.                                                                       | Required.          |
-| inputParameter.**executionStrategy** | Strategy for rule execution. Supported types:<ul><li>**FIRE_FIRST**—Uses the first rule that matches to generate the output.</li><li>**FIRE_ALL**—Uses all matching rules to generate the output, with subsequent rules overwriting previous values.</li></ul>**Note:** When you update the rule for any files, there will be a default caching period of 60 mins, causing the updated rules to reflect with a delay of up to 60 mins. Override this delay by configuring `cacheTimeoutMinutes` parameter. | Required.          |
-| inputParameter.**cacheTimeoutMinutes** <TableNote title="Available since"><ul><li>v5.2.1 and later</li><li>v4.1.69 and later</li></ul></TableNote> | The cache timeout, in minutes, which is the duration for which rule files are cached. If not configured, the task uses the default timeout of 60 minutes. <br/><br/>**Note**: When multiple tasks access the same rule file, the timeout is determined by the first task that loads the file. Subsequent tasks use the same cached file until it expires. [See an example of cacheTimeoutMinutes in use](/content/reference-docs/system-tasks/business-rule#examples). | Optional. | 
-| inputParameter.**inputColumns**      | The inputs to the rule file, which can be fixed or [passed as a dynamic variable](/developer-guides/passing-inputs-to-task-in-conductor). Supports string, number, boolean, null, and object/array.                                                                                                                                                                                                                       | Required.          |
-| inputParameter.**outputColumns**     | List of columns that will be present in the task output, which can be fixed or [passed as a dynamic variable](/developer-guides/passing-inputs-to-task-in-conductor).                                                                                                                                                                                                                                                                                                                                                                                 | Required.          |
+| inputParameters.**ruleFileLocation**  | URL of the spreadsheet to be evaluated, in CSV, XLS, or XLSX format. The file can be stored on the web, AWS S3, Azure Blob, etc.<br/><br/>**Note:** A spreadsheet without an explicitly-defined .csv, .xls, or .xlsx extension can also be processed as long as its `Content-Type` indicates a supported format, such as a Google spreadsheet published to the web.                                                                       | Required.          |
+| inputParameters.**executionStrategy** | Strategy for rule execution. Supported types:<ul><li>**FIRE_FIRST**: Uses the first rule that matches to generate the output.</li><li>**FIRE_ALL**: Uses all matching rules to generate the output, with subsequent rules overwriting previous values.</li></ul>**Note:** When you update the rule for any files, there will be a default caching period of 60 mins, causing the updated rules to reflect with a delay of up to 60 mins. Override this delay by configuring `cacheTimeoutMinutes` parameter. | Required.          |
+| inputParameters.**cacheTimeoutMinutes** <TableNote title="Available since"><ul><li>v5.2.1 and later</li><li>v4.1.69 and later</li></ul></TableNote> | The cache timeout, in minutes, which is the duration for which rule files are cached. If not configured, the task uses the default timeout of 60 minutes. Changes to a rule file take effect only after the cached copy expires. <br/><br/>**Note**: When multiple tasks access the same rule file, the timeout is determined by the first task that loads the file. Subsequent tasks use the same cached file until it expires. [See an example of cacheTimeoutMinutes in use](/content/reference-docs/system-tasks/business-rule#examples). | Optional. | 
+| inputParameters.**inputColumns**      | The inputs to the rule file, which can be fixed or [passed as a dynamic variable](/developer-guides/passing-inputs-to-task-in-conductor). Supports string, number, boolean, null, and object/array.                                                                                                                                                                                                                       | Required.          |
+| inputParameters.**outputColumns**     | List of columns that will be present in the task output, which can be fixed or [passed as a dynamic variable](/developer-guides/passing-inputs-to-task-in-conductor).                                                                                                                                                                                                                                                                                                                                                                                 | Required.          |
 
 ### Execution strategy
 
@@ -42,7 +40,7 @@ If the input name is "Phone":
 
 The following are generic configuration parameters that can be applied to the task and are not specific to the Business Rule task.
 
-<details>
+<details markdown="1">
 <summary>Caching parameters</summary>
 
 You can cache the task outputs using the following parameters. Refer to [Caching Task Outputs](/faqs/task-cache-output) for a full guide.
@@ -53,18 +51,18 @@ You can cache the task outputs using the following parameters. Refer to [Caching
 | cacheConfig.**key** | The cache key is a unique identifier for the cached output and must be constructed exclusively from the task’s input parameters.<br/>It can be a string concatenation that contains the task’s input keys, such as `${uri}-${method}` or `re_${uri}_${method}`. | Required if using *cacheConfig*. |
 </details>
 
-<details>
+<details markdown="1">
 <summary>Other generic parameters</summary>
 
 Here are other parameters for configuring the task behavior.
 
 | Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- | 
-| optional | Whether the task is optional. <br/><br/>If set to`true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. | 
+| optional | Whether the task is optional. <br/><br/>If set to `true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. | 
 
 </details>
 
-### Supported operators​
+### Supported operators
 
 The Business Rule task supports the following operators:
 
@@ -114,37 +112,17 @@ The Business rule task will return the following parameters.
 | Parameter | Description                                                                                                                                                                        |
 | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | result    | Contains the evaluated parameters based on the matching rule. The specific parameters inside the `result` object depend on the output columns specified in the task configuration. |
+| matchedRows <TableNote title="Available since"><ul><li>v5.5.2 and later</li></ul></TableNote> | A list containing one entry per rule that fired, in fire order. Each entry has the same output columns as `result`.<br/><br/>With `FIRE_FIRST`, `matchedRows` has at most one entry. With `FIRE_ALL`, it can have several. `result` keeps its last-wins behavior, so existing workflows are unaffected. |
+| message | Returned only when no rule matches the input. States that no rules fired and lists any rule file columns that are missing from both `inputColumns` and `outputColumns`. |
+| missingColumns | Returned only when no rule matches the input. A list of the rule file columns that are in neither `inputColumns` nor `outputColumns`. These columns are treated as inputs with empty values. |
 
-## Adding a Business Rule task in UI
-
-**To add a Business Rule task:**
-
-1. In your workflow, select the (**+**) icon and add a **Business Rule** task.
-2. Enter the URL of the file in **Rule file location**.
-3. Select the **Execution strategy** for evaluating the file.
-
-- `FIRE_FIRST`—Uses the first rule that matches to generate the output.
-- `FIRE_ALL`—Uses all matching rules to generate the output, with subsequent rules overwriting previous values.
-
-4. Enter the **Refresh Interval (Minutes)**.
-5. Configure the **Input columns** and **Output columns**.
-
-<center>
-  <p>
-    <img
-      src="/content/img/ui-guide-business-rule-task.png"
-      alt="Adding Business Rule"
-      width="80%"
-      height="auto"
-    />
-  </p>
-</center>
+If no rule matches the input, the task still completes, with an empty `result` and `matchedRows`.
 
 ## Examples
 
 Here are some examples for using the Business Rule task.
 
-<details>
+<details markdown="1">
 <summary>Using Business Rule task in a workflow</summary>
 
 To illustrate the use of the Business Rule task in a workflow, consider the following rule file:
@@ -166,9 +144,11 @@ Next, let’s create the workflow definition.
 
 **To create a workflow:**
 
-1. Go to **Definitions** > **Workflow**, from the left navigation menu on your Conductor cluster.
-2. Select **+ Define workflow**.
-3. In the **Code** tab, paste the following workflow definition:
+<ol>
+<li>Go to <strong>Definitions</strong> &gt; <strong>Workflow</strong>, from the left navigation menu on your Conductor cluster.</li>
+<li>Select <strong>+ Define workflow</strong>.</li>
+<li>In the <strong>Code</strong> tab, paste the following workflow definition:</li>
+</ol>
 
 ```json
 {
@@ -187,7 +167,7 @@ Next, let’s create the workflow definition.
          "productCategory": "${workflow.input.productCategory}",
          "price": "${workflow.input.price}",
          "itemCount": "${workflow.input.itemCount}",
-         "itemCode": "${workflow.input.itemCode}"
+         "purchaseDate": "${workflow.input.purchaseDate}"
        },
        "outputColumns": [
          "Discount",
@@ -201,13 +181,16 @@ Next, let’s create the workflow definition.
 }
 ```
 
-4. Select **Save** > **Confirm**.
+<ol start="4">
+<li>Select <strong>Save</strong> &gt; <strong>Confirm</strong>.</li>
+</ol>
 
 Ensure to update the `ruleFileLocation` to your location where the Excel file is stored.
 
 Let’s test the different cases by running the workflow with varying input parameters.
 
 **To run the workflow for any case:**
+
 1. Go to the **Run** tab, and enter the **Input params** for the case you want to test.
 2. Select **Execute**.
 
@@ -271,7 +254,7 @@ Consequently, the output generated is:
 ```json
 {
   "Discount": "13%",
-  "ShippingCharges": "5$"
+  "ShippingCharges": "15$"
 }
 ```
 
@@ -310,7 +293,7 @@ Based on these conditions, the input meets the criteria defined by the third rul
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>Using `cacheTimeoutMinutes`</summary>
 
 To illustrate the use of the `cacheTimeoutMinutes` parameter, consider a rule file that is used by multiple Business Rule tasks.
@@ -320,10 +303,97 @@ In this example, the Business Rule tasks A, B, C, and D use the same rule file `
 When multiple Business Rule tasks use the same rule file, the cache timeout is determined by the first task that loads the file. All other tasks share that cached version until it expires, regardless of their own `cacheTimeoutMinutes` value.
 
 For example:
+
 - At 10:00 AM, task A runs with `cacheTimeoutMinutes` set to 10. It downloads `fileA` and caches it for 10 minutes, until 10:10 AM.
 - At 10:05 AM, task B runs with `cacheTimeoutMinutes` set to 60. It uses the cached `fileA`.
 - At 10:08 AM, task C runs with `cacheTimeoutMinutes` set to 5 . It also uses the cached `fileA`.
 - At 10:10 AM, the initial cache expires.
 - At 10:15 AM, task D runs with `cacheTimeoutMinutes` set to 30. Because the previous cache has expired, it downloads `fileA` again and caches it for 30 minutes. Any task using this file within the next 30 minutes will use the cached version.
+
+</details>
+
+<details markdown="1">
+<summary>Using `matchedRows` to see every fired rule</summary>
+
+To see how `matchedRows` differs from `result`, consider the following rule file:
+
+```
+shippingMethod,containerSize,shippingCharge
+mail,Any,10
+mail,small,15
+Any,small,20
+```
+
+Save this as `shipping-rules.csv` and upload it to a publicly accessible location. Note the file URL.
+
+Use it in a workflow with the following configuration:
+
+```json
+{
+  "name": "business_rule_matchedrows",
+  "description": "Business Rule matchedRows example",
+  "version": 1,
+  "schemaVersion": 2,
+  "tasks": [
+    {
+      "name": "business_rule",
+      "taskReferenceName": "business_rule_ref",
+      "inputParameters": {
+        "ruleFileLocation": "https://example-bucket.s3.amazonaws.com/shipping-rules.csv",
+        "executionStrategy": "FIRE_ALL",
+        "inputColumns": {
+          "shippingMethod": "${workflow.input.shippingMethod}",
+          "containerSize": "${workflow.input.containerSize}"
+        },
+        "outputColumns": [
+          "shippingCharge"
+        ]
+      },
+      "type": "BUSINESS_RULE"
+    }
+  ]
+}
+```
+
+**Case 1: FIRE_ALL, input matches all three rows**
+
+With the input:
+
+```json
+{
+  "shippingMethod": "mail",
+  "containerSize": "small"
+}
+```
+
+All three rows match. With `FIRE_ALL`, each firing rule overwrites `result`, so only the last one survives there, but `matchedRows` keeps all three:
+
+```json
+{
+  "result": {
+    "shippingCharge": "20"
+  },
+  "matchedRows": [
+    { "shippingCharge": "10" },
+    { "shippingCharge": "15" },
+    { "shippingCharge": "20" }
+  ]
+}
+```
+
+**Case 2: FIRE_FIRST, same input**
+
+With `executionStrategy` changed to `FIRE_FIRST` and the same input, all three rows still match, but only the first one fires:
+
+```json
+{
+  "result": {
+    "shippingCharge": "10"
+  },
+  "matchedRows": [
+    { "shippingCharge": "10" }
+  ]
+}
+```
 
 </details>

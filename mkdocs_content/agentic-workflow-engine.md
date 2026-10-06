@@ -1,0 +1,66 @@
+---
+title: "Agentic Workflow Engine"
+description: "Use Orkes Conductor as an agentic workflow engine for durable AI agents, reliable tool execution, human approvals, retries, and audit history."
+canonical_route: "agentic-workflow-engine"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, workflow orchestration, Agentic Workflow Engine"
+---
+
+# Agentic Workflow Engine
+
+Orkes Conductor is the managed enterprise platform for Conductor OSS, the durable workflow engine underneath production AI agents and distributed systems. Use it when an agent has to execute real business work, not only generate a response.
+
+Agent frameworks can still own reasoning, prompts, planning, and model-specific loops. Conductor owns the execution path: persisted state, task queues, retries, timeouts, durable waits, tool routing, human approval, compensation, replay, governance, and audit history.
+
+Agentspan is the developer-facing agent runtime. Conductor OSS is the durable workflow engine underneath. Orkes Conductor is the managed enterprise platform for operating Conductor-based systems at scale.
+
+## What changes in production
+
+| Production need | What Conductor provides |
+| --- | --- |
+| The agent process crashes | Completed steps remain persisted and execution resumes from the next incomplete task. |
+| A tool call times out | Only the failed task retries. Prior model calls and completed tool outputs are preserved. |
+| A human review takes days | The workflow waits without holding a process, thread, or in-memory session. |
+| A tool has side effects | Idempotency keys, retry policies, and compensation workflows keep side effects controlled. |
+| Operators need proof | Every task records inputs, outputs, timing, retry count, logs, and status history. |
+| Teams need governance | Access control, secrets, applications, tags, schedules, webhooks, and gateways are part of the platform. |
+
+## The production boundary
+
+| Keep in the agent framework | Move into Conductor |
+| --- | --- |
+| Reasoning and planning | Durable workflow state |
+| Prompt and memory strategy | Task queues and worker routing |
+| Model-specific loops | Retries, timeouts, and rate limits |
+| Tool choice | Auditable tool execution |
+| Local graph composition | Human approvals, timers, callbacks, and compensation |
+
+This boundary keeps the agent flexible while making the work recoverable. The model can decide what should happen next; Conductor makes sure selected work is executed, recovered, and observable.
+
+## Build paths
+
+- [Production Agent Architecture](/content/ai-agents/production-agent-architecture) shows how to separate reasoning from durable execution.
+- [Failure Semantics](/content/ai-agents/failure-semantics) shows how to test crashes, retries, timeouts, and recovery behavior.
+- [Durable Agents](/content/ai-agents/durable-agents) explains persisted state, long waits, compensation, and replay.
+- [Build Your First AI Agent](/content/ai-agents/first-ai-agent) walks through the first runnable agent workflow.
+
+## Why workflows are code-native, not JSON-only
+
+Conductor workflow definitions describe orchestration. Workers and services hold your business logic. You can write workers in Python, Java, Go, .NET/C#, Ruby, Rust, TypeScript, or any service that can poll the task API.
+
+Use JSON where the runtime needs a stable, inspectable, versioned execution graph. Use code where application logic belongs. This is how Conductor handles complex workflows without forcing every decision into static JSON.
+
+## Prove it before rollout
+
+Before moving an agent workflow into production, run these checks:
+
+1. Kill a worker after an LLM task completes and confirm the LLM task is not repeated.
+2. Force a tool timeout and confirm only the failed tool task retries.
+3. Leave a human task open across a deploy and confirm the workflow resumes when approved.
+4. Retry a side-effecting task with the same idempotency key and confirm duplicate work is prevented or compensated.
+5. Inspect the execution history and confirm operators can see inputs, outputs, timing, retry counts, and failure reasons.
+
+## Related pages
+
+- [Why Conductor for agents](/content/why-conductor-for-ai-agents)
+- [Build with AI Agents](/content/conductor-skills)

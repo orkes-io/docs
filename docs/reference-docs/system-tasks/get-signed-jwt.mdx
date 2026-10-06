@@ -4,9 +4,6 @@ slug: "/reference-docs/system-tasks/get-signed-jwt"
 description: "Learn how the Get Signed JWT task generates a signed JSON Web Token (JWT)."
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 # Get Signed JWT
 
 The Get Signed JWT task is used to sign a JSON Web Token (JWT).
@@ -20,17 +17,17 @@ Configure these parameters for the Get Signed JWT task.
 | Parameter                         | Description                                                                                                                          | Required/ Optional |
 | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ------------------ |
 | inputParameters. **subject**      | The subject of the JWT, typically representing the entity (e.g., user or service) for which the token is issued.                     | Required.          |
-| inputParameters **issuer**        | The entity issuing the JWT, identifying who created and signed the token.                                                            | Required.          |
-| inputParameters. **privateKey**   | The private key used to sign the JWT. This key must be in PKCS#8 format.                                                         | Required.          |
-| inputParameters. **privateKeyId** | The identifier of the private key used to sign the JWT.                                                                             | Required.          |
+| inputParameters. **issuer**        | The entity issuing the JWT, identifying who created and signed the token.                                                            | Required.          |
+| inputParameters. **privateKey**   | The RSA private key used to sign the JWT, in PKCS#8 format. The BEGIN PRIVATE KEY and END PRIVATE KEY lines are optional. | Required.          |
+| inputParameters. **privateKeyId** | The identifier of the private key used to sign the JWT. It is added to the JWT header as `kid`. | Required.          |
 | inputParameters. **audience**     | The intended recipient of the JWT.                                                                                                | Required.          |
-| inputParameters. **ttlInSeconds** | The time-to-live (TTL) or expiration time of the JWT, specified in seconds.                                                          | Required.          |
-| inputParameters. **scopes**       | The scopes associated with the JWT, defining the access permissions granted by the token. It can be a string or an array of strings. | Required.          |
-| inputParameters. **algorithm**    | The signing algorithm to use for the JWT. Currently set to RS256, which refers to the RSA signature with the SHA-256 hash algorithm. | Required.          |
+| inputParameters. **ttlInSecond** | The time-to-live (TTL) of the JWT, in seconds. The JWT expires this many seconds after it is created. | Required.          |
+| inputParameters. **scopes**       | The scopes granted by the JWT, as an array of strings. They are added to the JWT as a single space-separated `scope` claim. | Required.          |
+| inputParameters. **algorithm**    | The signing algorithm. Only RS256 (RSA signature with SHA-256) is supported. If not set, RS256 is used. | Optional.          |
 
 The following are generic configuration parameters that can be applied to the task and are not specific to the Get Signed JWT task.
 
-<details>
+<details markdown="1">
 <summary>Caching parameters</summary>
 
 You can cache the task outputs using the following parameters. Refer to [Caching Task Outputs](/faqs/task-cache-output) for a full guide.
@@ -42,14 +39,14 @@ You can cache the task outputs using the following parameters. Refer to [Caching
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>Other generic parameters</summary>
 
 Here are other parameters for configuring the task behavior.
 
 | Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- | 
-| optional | Whether the task is optional. <br/><br/>If set to`true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. | 
+| optional | Whether the task is optional. <br/><br/>If set to `true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. | 
 
 </details>
 
@@ -77,24 +74,13 @@ This is the task configuration for a Get Signed JWT task.
 
 ## Task output
 
-The Get Signed JWT task returns the signed JWT in the `_secrets` variable. The signed JWT will be masked (`***`). 
-
-## Adding a Get Signed JWT task in UI
-
-**To add a Get Signed JWT task:**
-
-1. In your workflow, select the (**+**) icon and add a **Get Signed JWT** task.
-2. Enter the **Subject** and **Issuer** of the JWT.
-3. Provide the **PrivateKey** and **PrivateKeyId** used for signing JWT.
-4. Set the **Audience**, **TTL (in seconds)**, **Scopes**, and **Algorithm** as required.
-
-<center><p><img src="/content/img/get-signed-jwt-ui.png" alt="Adding Get Signed JWT task" width="80%" height="auto"/></p></center>
+The Get Signed JWT task returns the signed JWT in the `_secrets` variable. The signed JWT will be masked (`***`). To use the JWT in a later task, reference `${<taskReferenceName>.output._secrets.jwt}`.
 
 ## Examples
 
 Here are some examples for using the Get Signed JWT task.
 
-<details>
+<details markdown="1">
 <summary>Authorization</summary>
 
 In this example, the Get Signed JWT is used for server-to-server interaction between Conductor and Google. The signed JWT can be subsequently used to request an access token for calling the Google API.

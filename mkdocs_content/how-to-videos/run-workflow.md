@@ -1,0 +1,88 @@
+---
+title: "Running Workflows in UI"
+description: "Learn how to run workflows from the Conductor UI by selecting a workflow version, providing input parameters, and viewing execution details."
+canonical_route: "how-to-videos/run-workflow"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, workflow orchestration, Running Workflows in UI"
+---
+
+# Running Workflows in UI
+
+You can run workflows from the Conductor UI in the following places:
+
+* _(before v5.1.2)_ **Run Workflow** in the left navigation menu
+* _(before v5.1.2)_ The **Run** tab in a workflow definition's visual diagram editor
+
+<p align="center"><img src="/content/img/dev-guides/run_in_ui-v3_v4_ui.png" alt="UI screen for before v5.1.2, with Run Workflow in the left navigation menu and Run tab in a workflow definition's visual diagram editor." width="80%" height="auto"></img></p>
+
+* _(from v5.1.2)_ The **Execute** button in a workflow definition's visual diagram editor
+
+<p align="center"><img src="/content/img/dev-guides/run_in_ui-v5_definitions_ui.png" alt="UI screen for after v5.1.2, with Execute button in a workflow definition's visual diagram editor." width="80%" height="auto"></img></p>
+
+* **Run Workflow** in the top navigation menu in **Executions** > **Workflow**
+* **Run Workflow** in the top navigation menu in **Definitions** > **Workflow**
+
+<p align="center"><img src="/content/img/run_in_ui-executions_ui.png" alt="UI screen for Run Workflow in the top navigation menu in Executions to Workflow." width="80%" height="auto"></img></p>
+
+## Run workflow
+
+**To run a workflow:**
+1. Select the **Workflow name** and **Version**.
+    If the version is unspecified, the latest version will run.
+2. Enter the **Input params**.
+
+    ```json
+    {
+      "key": "value",
+      "someKey": 2
+    }
+    ```
+3. (Optional) Enter the **Idempotency key,** **Correlation id**, and **[Task to domain mapping](/content/developer-guides/task-to-domain)**.
+
+    **Example task to domain mapping**
+
+    ```json
+    {
+      "task_x": "someDomain"
+    }
+    ```
+4. Select **Run Workflow** in the top right corner.
+
+<p align="center"><img src="/content/img/dev-guides/run_in_ui-running_a_workflow.gif" alt="Run a workflow in the Conductor UI." width="100%" height="auto"></img></p>
+
+The workflow (execution) ID for the current execution will appear at the top of the page. Select the workflow (execution) ID to view the execution details.
+
+## Workflow run history
+
+The **Run Workflow** page has a panel for the workflow run history.
+
+<p align="center"><img src="/content/img/dev-guides/run_in_ui-workflow_run_history.png" alt="Screenshot of the Workflow run history section in the Conductor UI." width="100%" height="auto"></img></p>
+
+The workflow run history contains all workflow executions initiated from the UI. You can select the **Execution name** or **Execution link** to jump to the execution details screen.
+
+You can also select the **Restore Form Values** button to load the configuration values from a past execution into the UI form and rerun the workflow.
+
+<p align="center"><img src="/content/img/dev-guides/run_in_ui-restore_form_values.gif" alt="Restore a previous workflow execution configuration to run it again." width="100%" height="auto"></img></p>
+
+To clear the workflow run history, select **Reset** > **Confirm**.
+
+## Run tasks
+
+If you want to test the behavior of single tasks inside a workflow, you can use the Test Task feature on the Conductor UI.
+
+**To test a task:**
+
+1. Go to **Definitions** > **Workflow**.
+2. Select a workflow that you want to test.
+3. In the workflow diagram, select a task that you want to test.
+4. Select **Test Task** in the right-side panel.
+   <center><p><img src="/content/img/dev-guides/test_task-ui.png" alt="Test Task UI" width="90%" height="auto"/></p></center>
+5. Enter the task's input parameters using either the **Form** or **JSON** display.
+6. (Optional) Enter the **Domain** for the task if [task-to-domain](/content/developer-guides/task-to-domain) is used.
+7. Select **Run Test**.
+
+<center><p><img src="/content/img/dev-guides/test_task.gif" alt="Test Task Procedure." width="90%" height="auto"/></p></center>
+
+Once the task is completed, the output will appear. These tests are essentially single-task workflows, and you can select the workflow (execution) ID to view the full execution details.
+
+<center><p><img src="/content/img/dev-guides/test_task-view_execution.gif" alt="View execution after testing task." width="90%" height="auto"/></p></center>

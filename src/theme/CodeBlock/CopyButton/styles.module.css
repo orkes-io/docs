@@ -25,7 +25,7 @@
   left: 50%;
   transform: translate(-50%, -50%) scale(0.33);
   opacity: 0;
-  color: #00d600;
+  color: var(--c-green);
 }
 
 .copyButtonCopied .copyButtonIcon {

@@ -9,9 +9,13 @@ import TableNote from '@site/src/components/TableNote';
 
 To effectively use AI tasks in workflows, you must provide clear and structured instructions called prompts that define the model’s behavior and output. Orkes Conductor allows you to create, manage, and securely share AI prompts within your organization. 
 
-In Orkes Conductor, AI prompts are reusable and can include variables, allowing you to customize the input to AI models based on runtime data.  This approach acts like parameterized API calls, where variables in the prompt are replaced with actual values during workflow execution. It ensures flexibility, reusability, and consistency when integrating AI models into complex workflows.
+In Orkes Conductor, AI prompts are reusable and can include variables, allowing you to customize the input to AI models based on runtime data. This approach acts like parameterized API calls, where variables in the prompt are replaced with actual values during workflow execution. It ensures flexibility, reusability, and consistency when integrating AI models into complex workflows.
 
 In this guide, you will learn how to create, test, and use AI prompts in your workflows.
+
+:::tip 5-minute path
+Create an AI prompt with variables, test it against a model, grant access via RBAC, then reference it from an LLM Text Complete or LLM Chat Complete task and map its variables to workflow data.
+:::
 
 ## Create AI prompts
 
@@ -33,15 +37,6 @@ In this guide, you will learn how to create, test, and use AI prompts in your wo
 | Prompt Template | The prompt, which can be formulated as context, instructions, or questions. The prompt can also contain variables, `${someVariable}`, which are replaced with actual values at runtime before it is sent to the AI model.<br/>**Example**<br/>**_“What is the current population of `${country}`? What was the population in `${year}`?”_**<br/>In the above prompt, `${country}` and `${year}` are variables that can be dynamically set based on the runtime data.
 
 4. Select **Save** > **Confirm Save**.
-
-<p align="center">
-  <img
-    src="/content/img/create-ai-prompts.png"
-    alt="Creating AI Prompts"
-    width="100%"
-    height="auto"
-  ></img>
-</p>
 
 Here’s the JSON definition for an AI prompt:
 
@@ -67,28 +62,9 @@ You can create and manage multiple versions of an AI prompt. By default, version
 
 After making changes to the AI prompt definition in the Conductor UI, select the ⏷ (down arrow) icon beside **Save** > **Save as new version** to create a new version. 
 
-<p align="center">
-  <img
-    src="/content/img/saving-an-ai-prompt-as-new-version.png"
-    alt="Saving an AI prompt as a new version in Orkes Conductor"
-    width="100%"
-    height="auto"
-  ></img>
-</p>
-
 **To view available versions:**
 
 - In the AI prompt editor, select the **Version** dropdown and choose the required version.
-
-<p align="center">
-  <img
-    src="/content/img/viewing-all-prompt-versions.png"
-    alt="Viewing all prompt versions in Orkes Conductor"
-    width="100%"
-    height="auto"
-  ></img>
-</p>
-
 
 ## Test AI prompts
 
@@ -98,21 +74,12 @@ After creating an AI prompt, test it to ensure it produces the expected results.
 
 In the AI prompt’s testing interface, define the following parameters:
 
-<p align="center">
-  <img
-    src="/content/img/prompt-test.png"
-    alt="Testing AI Prompts"
-    width="100%"
-    height="auto"
-  ></img>
-</p>
-
 | Parameter            | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | Select model to test | Select an AI model for testing. Only the models added to the prompt configuration get listed here. |
 | Temperature          | Set the temperature based on your requirements. Temperature is a parameter that controls the randomness of the model’s output.<ul><li>Higher temperatures, such as 1.0, produce random and more creative responses. Useful in generating creative content.</li><li>Lower temperature produces a more stable and focused response. Useful in situations like text classification, where consistency is important.</li></ul> | 
 | TopP                 | Set the topP parameter based on your requirements. TopP is a parameter to control the randomness of the model’s output. This parameter defines a probability threshold and then chooses tokens whose cumulative probability exceeds this threshold. | 
-| Stop words           | Enter the stop words to be filtered out or given less importance during the text generation process. This ensures the generated text is coherent and contextually relevant.<br/>Stop words tend to be common words like “and”, “a”, “the”, etc., that are necessary for sentence structure but do not contribute significant meaning. | 
+| Stop words           | Enter one or more stop sequences. The model stops generating text when it produces any configured sequence. For example, `END` stops generation when the model produces that sequence. |
 | Token limit.         | The maximum number of tokens to be generated by the LLM and returned as part of the result. A token is approximately four characters. | 
 
 **Example of using the TopP parameter**
@@ -155,15 +122,6 @@ Users or applications must also have access to the associated AI models used in 
 3. In the **Permissions** section, select **+ Add permission**.
 4. In the **Prompt** tab, select the required prompt and toggle the necessary permissions.
 
-<p align="center">
-  <img
-    src="/content/img/rbac-for-prompts.png"
-    alt="RBAC for prompts"
-    width="80%"
-    height="auto"
-  ></img>
-</p>
-
 5. Select **Add Permissions**. 
 
 The group or application can now access the prompt according to the configured permissions.
@@ -183,15 +141,6 @@ AI prompts can be used in workflows with the following LLM tasks:
 4. Select the required AI provider and model. Ensure it matches the models associated with the prompt.
 5. Select the created AI prompt, in the **Prompt Name** field.
 
-<p align="center">
-  <img
-    src="/content/img/LLM-Chat-vs-Text-complete.jpg"
-    alt="Using AI prompts in a workflow"
-    width="100%"
-    height="auto"
-  ></img>
-</p>
-
 6. If the prompt contains variables, [map them to corresponding variables](https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor) in the workflow. For example:
 
 ```json
@@ -206,24 +155,10 @@ AI prompts can be used in workflows with the following LLM tasks:
 7. Set the **Temperature**, **Stop words**, **Stop words Type**, **TopP**, and **Token Limit**. 
 8. Select **Save** > **Confirm**.
 
-## Examples
+## Production notes
 
-<details>
-<summary>Agentic research assistant</summary>
-
-Check out the quickstart template on Developer Edition for building an [agentic research assistant](/templates/agentic-research) that uses multiple prompts.
-
-</details>
-
-<details>
-<summary>AI tutorials</summary>
-
-Explore the [AI tutorials](/content/tutorials/ai) section for step-by-step, end-to-end examples that use different AI tasks and integrations.
-
-</details>
-
-## More resources
-
-- [Using AI Models or LLMs](https://orkes.io/content/developer-guides/using-llms-in-your-orkes-conductor-workflows)
-- [Using Vector Databases](https://orkes.io/content/developer-guides/using-vector-databases-in-your-orkes-conductor-workflows)
-- [AI Task Reference](https://orkes.io/content/category/reference-docs/ai-tasks)
+- Version prompt changes with **Save as new version** rather than editing in place, since editing a shared prompt changes behavior for every workflow that references it.
+- Test prompt changes with representative variable values before rolling out a new version to production workflows.
+- Grant prompt access only to the applications or groups that need it, and confirm they also have access to the associated AI models.
+- Keep variable names in the prompt template consistent with the `promptVariables` mapped in the workflow definition, since a mismatch leaves a variable unresolved at runtime.
+- Set conservative Temperature and TopP values for tasks where consistency matters more than creativity, such as classification or extraction.

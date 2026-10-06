@@ -1,0 +1,92 @@
+---
+title: "Grok Integration with Orkes Conductor"
+description: "Learn how to integrate Grok so workflows can use xAI models through Conductor AI tasks."
+canonical_route: "integrations/ai-llm/grok"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, workflow orchestration, Grok Integration with Orkes Conductor, Grok Integration with Orkes Conductor integration, Grok Integration with Orkes Conductor workflow automation, AI orchestration, LLM orchestration, agent workflows"
+---
+
+# Grok Integration with Orkes Conductor
+
+To use [system AI tasks](/content/glossary#ai-tasks) in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI/LLM providers. This guide explains how to integrate Grok with Orkes Conductor. Here’s an overview:
+
+1. Get the required credentials from Grok.
+2. Configure a new Grok integration in Orkes Conductor.
+3. Add models to the integration.
+4. Set access limits to the AI model to govern which applications or groups can use it.
+
+## Step 1: Get the Grok credentials
+
+To integrate Grok with Orkes Conductor, retrieve the API key from the Grok console.
+
+**To get the API key:**
+
+1. Sign in to the [Grok console](https://console.x.ai/).
+2. Go to **API Keys** and select **Create API Key**.
+3. Enter a **Name** and select **Create**.
+4. Copy and store the generated key securely, as it is shown only once.
+
+## Step 2: Add an integration for Grok
+
+After obtaining the credentials, add a Grok integration to your Conductor cluster.
+
+**To create a Grok integration:**
+
+1. Go to **Integrations** > **Connections and Resources** from the left navigation menu on your Conductor cluster.
+2. Select **+ New integration**.
+3. In the **AI/LLM** section, choose **Grok**.
+4. Select **+ Add** and enter the following parameters:
+
+| Parameters | Description |
+| ---------- | ----------- |
+| Integration name | A name for the integration. |
+| API Key | The API key copied previously from the Grok platform.
+| Description | A description of the integration. | 
+5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
+6. Select **Save**.
+
+## Step 3: Add Grok models
+
+Once you’ve integrated Grok, the next step is to configure specific models. Grok has different models, each designed for various use cases. Choose the model that best fits your use case.
+
+**To add a model to the Grok integration:**
+
+1. Go to the **Integrations** and select the **+** button next to the integration created.
+2. Select **+ New model**.
+3. Enter the **Model name**. The name must exactly match the Grok model name. For a complete list, see the [Grok documentation](https://docs.x.ai/docs/models).
+4. Provide a **Description**. 
+5. (Optional) Toggle the **Active** button off if you don’t want to activate the model instantly.
+6. Select **Save**.
+
+This saves the model for future use in AI tasks within Orkes Conductor.
+
+## Step 4: Set access limits to integration
+
+Once the integration is configured, set access controls to manage which [applications](https://orkes.io/content/access-control-and-security/applications) or [groups](https://orkes.io/content/access-control-and-security/users-and-groups#groups) can use the models.
+
+**To provide access to an application or group:**
+
+1. Go to **Access Control** > **Applications** or **Groups** from the left navigation menu on your Conductor cluster.
+2. Create a new group/application or select an existing one.
+3. In the **Permissions** section, select **+ Add Permission**.
+4. In the **Integration** tab, select the required AI models and toggle the necessary permissions.
+5. Select **Add Permissions**. 
+The group or application can now access the AI model according to the configured permissions.
+
+With the integration in place, you can now create workflows using [AI/LLM tasks](https://orkes.io/content/category/reference-docs/ai-tasks).
+
+## More resources
+
+- [Using AI Models or LLMs](https://orkes.io/content/developer-guides/using-llms-in-your-orkes-conductor-workflows)
+- [Using Vector Databases](https://orkes.io/content/developer-guides/using-vector-databases-in-your-orkes-conductor-workflows)
+- [Using AI Prompts](https://orkes.io/content/developer-guides/creating-and-managing-gen-ai-prompt-templates)
+- [AI Orchestration Tutorials](https://orkes.io/content/tutorials/ai)
+
+## Related pages
+
+- [AI / LLM Integrations](/content/category/integrations/ai-llm)
+- [Ollama Integration with Orkes Conductor](/content/integrations/ai-llm/ollama)
+- [Azure OpenAI Integration with Orkes Conductor](/content/integrations/ai-llm/azure-open-ai)
+- [OpenAI Integration with Orkes Conductor](/content/integrations/ai-llm/open-ai)
+- [Perplexity Integration with Orkes Conductor](/content/integrations/ai-llm/perplexity)
+- [Cohere Integration with Orkes Conductor](/content/integrations/ai-llm/cohere)

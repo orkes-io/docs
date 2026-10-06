@@ -1,0 +1,138 @@
+---
+title: "Managing Tags"
+description: "Learn how to use tags to organize resources and grant access to multiple workflows, tasks, and other resources through tag-based permissions in Orkes Conductor."
+canonical_route: "access-control-and-security/tags"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, workflow orchestration, Managing Tags, role based access control, workflow security"
+---
+
+# Managing Tags
+
+Tags organize resources and make access control easier to manage at scale. A tag uses the `key:value` format and can be applied to workflows, tasks, user forms, event handlers, schedules, secrets, webhooks, prompts, environment variables, integrations, applications, and API/MCP Gateway services.
+
+Common tag patterns:
+
+| Tag | Use |
+| --- | --- |
+| `team:payments` | Ownership and team-level access. |
+| `env:prod` | Environment separation. |
+| `app:checkout` | Application or domain grouping. |
+| `data:pii` | Sensitive-data handling and review. |
+| `tier:critical` | Operational priority. |
+
+## Assigning tags to resources
+
+Add tags to resources that share ownership, environment, compliance requirements, or permission boundaries. Keep tag names stable and predictable so they can be used in automation and audits.
+
+Guidelines:
+
+- Use lowercase keys and values where possible.
+- Prefer a controlled set of keys such as `team`, `env`, `app`, `data`, and `tier`.
+- Avoid personal tags for production access control.
+- Review tag membership before granting broad permissions to a tag.
+
+You can add or remove multiple tags to various resources.
+
+**To add or remove a tag:**
+
+1. In the left navigation menu, go to one of the following locations based on the resource you want to tag:
+    - **Definitions** > **Workflow** / **Task** / **User Forms** / **Event Handler** / **Scheduler** / **Secrets** / **Webhook** / **AI Prompts**  /  **Environment Variables**
+    - **Integrations**
+    - **APIs** > **Services**
+    - **Access Control** > **Applications**
+2. Locate the specific resource.
+3. In the **Actions** column, select the **Tag** icon. <br/>A pop-up window for Edit Tags appears.
+4. To create a tag, enter a tag in the `key:value` format and select **Enter.**
+5. To remove a tag, select **x** next to the tag.
+6. Once tagged, select **Save**.
+
+## Tags dashboard
+
+The tags dashboard provides a complete overview of all tags in the cluster and the resources associated with each tag. Use it to audit whether tag-based permissions are still scoped correctly.
+
+**To view the tags dashboard:**
+
+1. Go to **Definitions** > **Tags Dashboard** from the left navigation menu on your Conductor cluster.
+
+The page displays the total number of tags in the cluster, along with the count of resources associated with each tag.
+
+## Bulk-access to resources using tags
+
+Tag-based permissions let you grant access to a set of resources without adding each resource individually to a group or application. This is useful when many workflows, tasks, secrets, schedules, or gateway routes belong to the same team or product area.
+
+Use tag-based permissions when:
+
+- A team owns many related resources.
+- A deployment process creates resources that should inherit access automatically.
+- You want permission reviews to focus on a tag membership list instead of hundreds of individual grants.
+
+Do not use one broad tag as a shortcut for cluster-wide access. If a group or application needs cluster-wide power, use the appropriate role and review it as privileged access.
+
+### Granting tag permissions
+
+You can grant tag permissions to both groups and applications.
+
+| Target | Typical use |
+| ------ | ----------- |
+| Group | Human teams that need read, update, execute, or delete access to tagged resources. |
+| Application | Workers, services, CI/CD jobs, or gateways that need programmatic access to tagged resources. |
+
+Permission levels are:
+
+| Permission | Allows |
+| ---------- | ------ |
+| Read | View all resources with the tag. |
+| Update | Modify all resources with the tag. |
+| Execute | Run workflows, poll/complete tasks, or use executable resources with the tag. |
+| Delete | Delete resources with the tag. |
+
+Before granting tag permissions, confirm that the resources already using the tag are intended to be included. Future resources that receive the same tag can inherit access through the existing permission grant, so tag assignment should be part of your release review process.
+
+
+=== "For Groups"
+
+    !!! info
+        This feature is only available to Admins.
+
+    **To add permissions to a group:**
+
+    1. Go to **Access Control** > **Groups** from the left navigation menu on your Conductor cluster.
+    2. Select the group name or the **Edit** icon located next to the group name.
+    3. In the **Permissions** section, select **+ Add Permission**.
+    4. Toggle to the **Tag** tab and select the tag to provide access to.
+    5. Toggle the access levels for your selected resource:
+        - **Read**: Users will be able to view the resource.
+        - **Update**: Users will be able to update the resource.
+        - **Execute**: Users will be able to execute the resource.
+        - **Delete**: Users will be able to delete the resource.
+    6. Select **Add permissions**.
+
+    All users in the group now have access to all resources associated with the tag. You can select the drop-down icon to view all of the tagged resources.
+
+=== "For Applications"
+
+    **To add permissions to an application:**
+
+    1. Go to **Access Control** > **Applications** from the left navigation menu on your Conductor cluster.
+    2. Select the application name or the **Edit** icon located next to the application name.
+    3. In the **Permissions** section, select **+ Add permission**.
+    4. Toggle to the **Tag** tab and select the tag to provide access to.
+    5. Toggle the access levels for your selected resource:
+        - **Read**: The application will be able to view the resource.
+        - **Update**: The application will be able to update the resource.
+        - **Execute**: The application will be able to execute the resource.
+        - **Delete**: The application will be able to delete the resource.
+    6. Select **Add permissions**.
+
+    The application now has access to all resources associated with the tag. You can select the drop-down icon to view all of the tagged resources.
+
+
+## APIs
+
+Manage tags programmatically with the [Tags API](/content/reference-docs/api/tags), including adding, listing, and removing tags on resources.
+
+## Related pages
+
+- [Role Based Access Control](/content/category/access-control-and-security)
+- [Managing Users and Groups](/content/access-control-and-security/users-and-groups)
+- [Managing Applications](/content/access-control-and-security/applications)

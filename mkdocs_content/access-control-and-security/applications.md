@@ -1,0 +1,120 @@
+---
+title: "Managing Applications"
+description: "Learn how applications provide secure authentication for services and clients connecting to your Conductor cluster."
+canonical_route: "access-control-and-security/applications"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, workflow orchestration, Managing Applications, role based access control, workflow security"
+---
+
+# Managing Applications
+
+Applications are non-human identities for programs that call Orkes Conductor: workers, services, CI/CD jobs, scripts, gateway services, and test harnesses. Each application can have access keys and resource permissions, so production automation does not depend on human user credentials.
+
+Each application can have one or more key/secret pairs for SDK and API authentication. See [Authentication and Access Keys](/content/sdks/authentication) for client setup.
+
+## Applications as service accounts
+
+Use applications the same way you would use service accounts in other systems. Separate them by responsibility:
+
+| Application | Recommended access |
+| ----------- | ------------------ |
+| Worker service | `Worker` role and `Execute` permission on the task definitions or domains it polls. |
+| Workflow client | `Execute` permission on workflows it starts and any tasks required by that workflow. |
+| CI/CD publisher | `Metadata API` role plus read/update permissions on workflow and task definitions it deploys. |
+| API Gateway service account | Execute permission on workflows exposed through gateway routes. |
+| MCP Gateway service account | Execute permission on workflows exposed as MCP tools. |
+
+Avoid sharing one broad application across workers, clients, and deployment jobs. Separate applications make incident response, key rotation, permission reviews, and audit trails much cleaner.
+
+## Application roles
+
+By default, all applications can manage workflow and task executions if they have access to the required resources. For example, an application can execute `someWorkflow` as long as **Execute** permission is granted for those resources. Likewise, an application can view workflow executions if **Read** permission is granted.
+
+Application roles grant additional access on top of this default behavior and should be selected only if your application is used for another purpose besides managing workflow execution. There are two categories of application roles available:
+
+- **Unrestricted Roles**: Roles that can be granted only by a cluster Admin.
+- **Application Roles**: The roles available to any user with access to applications.
+
+=== "Unrestricted Roles"
+
+    Unrestricted roles can only be added by a cluster Admin. Unrestricted roles include:
+
+    * **Unrestricted Worker**: Worker role with full access to poll and execute any task in the cluster.
+    * **Metadata Manager**: Can manage all workflow and task definitions in the cluster, including performing any action regardless of workflow or task ownership. Can view and manage API Gateway configurations. Can create integrations and secrets.
+    * **Workflow Manager**: Can view, execute, and manage all workflow executions in the system, including start, pause, resume, rerun, retry, restart, terminate, and delete actions. Has execute and read access to workflow and task definitions.
+    * **Application Manager**: Can create, update, and delete any application in the cluster. Can also view and manage API Gateway configurations.
+    * **Admin**: Full control over that particular application, including creating, viewing, modifying, deleting, and executing it.
+
+=== "Application Roles"
+
+    Application roles can be added by any user with access to applications. General application roles include:
+
+    * **Worker**: Can poll and execute tasks for which it has Execute permissions for. This role should be granted to a task worker application that is responsible for polling and executing a task.
+    * **Metadata API**: Can create and view workflow definitions, task definitions, and user forms. This role should be granted to an application that is responsible for retrieving and managing workflow and task definitions, such as for testing or CI/CD integration purposes.
+    * **Application API**: Can create and view applications. This role should be granted to an application that is responsible for managing other applications in the cluster.
+
+
+Resource permissions still matter. For example, a worker application normally needs both the `Worker` role and `Execute` permission on the task definition or domain it polls.
+
+## Configuring applications
+
+Configure the application’s roles and permissions to control what your application can do and what resources it can access, including workflows, tasks, secrets, environment variables, tags, domains, integrations, and prompts.
+
+**To configure an application:**
+
+1. Create an application.
+    1. Go to **Access Control** > **Applications** from the left navigation menu on your Conductor cluster.
+    2. Select **+ Create application**.
+    3. Enter the application name.
+    4. Select **Save**.
+    The application has been created. You can proceed to add roles or permissions to the application.
+2. Add roles to the application.
+    1. In the **Application roles** or **Unrestricted roles** section, toggle the different application roles for your application.
+3. Generate access keys.
+    1. In the **Access Keys** section, select **+ Create access key** to generate the Server URL, a unique Key Id and a Key Secret. The Key Secret is shown only once, so make sure to copy and store it securely.
+4. Add permissions to grant application-level access to resources, including workflows, tasks, secrets, environment variables, tags, domains, integrations, and prompts.
+    1. In the **Permissions** section, select **+ Add permission**.
+    2. Toggle between each resource type and select the resources to provide access to.
+    3. Toggle the access levels for your selected resource:
+        * **Read**: The application will be able to view the resource.
+        * **Update**: The application will be able to update the resource. The application must also have the *Metadata API* role to update metadata resources.
+        * **Execute**: The application will be able to execute the resource. For applications that poll task queues (task workers), the *Worker* role is also required.
+        * **Delete**: The application will be able to delete the resource. The application must also have the *Metadata API* role to delete metadata resources.
+
+!!! tip
+    You can grant permissions to **tags**, rather than to individual resources. Tags can be added to multiple resources, so that when you grant a permission to a tag, it instantly provides access to all tagged resources. Learn more about tags in [Managing Tags](/content/access-control-and-security/tags).
+
+## Editing applications
+
+Edit an application when its runtime responsibility changes. Review the roles, resource permissions, active keys, and key age together. Remove stale keys instead of leaving them attached to inactive services.
+
+## Deleting applications
+
+Delete an application only after confirming no workers, clients, gateway routes, schedules, or CI/CD jobs still use its keys. Deleting the application invalidates its access keys.
+
+## APIs
+
+Manage applications programmatically with the [Applications API](/content/reference-docs/api/applications), including creating applications, generating access keys, and managing application roles and permissions.
+
+## Example application setup
+
+<details markdown="1">
+<summary>Example</summary>
+
+In this example, two programs have access to Orkes Conductor workflows. Both of these workflows rely on the same task, Task X, which is performed by a worker application, Worker X.
+
+One way to handle this is to create a single application with **Execute** access to Workflow 1, Workflow 2, and Task X and provide the application keys/secrets to Program 1, Program 2, and Worker X. However, this setup violates the principle of least privilege, where applications should only have access to the endpoints they require. In this case, Worker X should not have **Execute** access for the workflows.
+
+To satisfy the principle of least privilege, we will create three applications instead:
+1. **Application Worker X**: Has the Worker role and Execute permission for Task X. This allows the worker to poll the task queue for work.
+2. **Application Program 1**: Has Execute permission for Workflow 1 and for Task X so that it can successfully invoke Workflow 1. No additional application role is required.
+3. **Application Program 2**: Has Execute permission for Workflow 2 and for Task X so that it can successfully invoke Workflow 2. No additional application role is required.
+
+With this set-up, the worker application has no access to the workflows, since it only needs to poll the task. Likewise, the other two applications only have the required access to execute the workflow and its necessary tasks, and no other workflows.
+</details>
+
+## Related pages
+
+- [Role Based Access Control](/content/category/access-control-and-security)
+- [Managing Users and Groups](/content/access-control-and-security/users-and-groups)
+- [Managing Tags](/content/access-control-and-security/tags)

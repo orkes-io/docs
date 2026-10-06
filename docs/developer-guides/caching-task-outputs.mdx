@@ -7,6 +7,29 @@ description: "Learn how task output caching stores task results based on input p
 
 You can cache task outputs to reuse them in subsequent workflow executions. When you enable caching, the system stores the task output for a specified duration and reuses it when the same task runs again with matching input parameters. This feature can be configured in the **task configuration**.
 
+:::tip 5-minute path
+Add `cacheConfig.key` and `cacheConfig.ttlInSecond` to the task configuration. Build the key only from task input values that determine the output.
+:::
+
+## When to use caching
+
+Good fits:
+
+- Read-only HTTP calls
+- Document fetches
+- Embedding lookups
+- Database reads
+- Expensive deterministic transforms
+- Provider calls where repeated identical requests should reuse the same result
+
+Avoid caching:
+
+- Non-deterministic outputs
+- Mutating operations
+- User-specific data without a user-specific cache key
+- Sensitive values that should not be reused across contexts
+- Calls where freshness matters more than cost
+
 ## Supported tasks
 
 Caching is available for the following task types:
@@ -23,13 +46,13 @@ Caching is available for the following task types:
 - [Yield](/content/reference-docs/operators/yield)
 - [LLM Text Complete](../reference-docs/ai-tasks/llm-text-complete)
 - [LLM Generate Embeddings](../reference-docs/ai-tasks/llm-generate-embeddings)
-- [LLM Store Embeddings](../reference-docs/ai-tasks/llm-store-embeddings.mdx)
+- [LLM Store Embeddings](../reference-docs/ai-tasks)
 - [LLM Get Embeddings](../reference-docs/ai-tasks/llm-get-embeddings)
 - [LLM Index Document](../reference-docs/ai-tasks/llm-index-document)
 - [Get Document](../reference-docs/ai-tasks/llm-get-document)
 - [LLM Index Text](../reference-docs/ai-tasks/llm-index-text)
 - [LLM Search Index](../reference-docs/ai-tasks/llm-search-index)
-- [LLM Chat Complete](../reference-docs/ai-tasks/llm-chat-complete.mdx)
+- [LLM Chat Complete](../reference-docs/ai-tasks)
 - [Chunk Text](../reference-docs/ai-tasks/chunk-text)
 
 ## Parameters
@@ -53,35 +76,47 @@ To configure caching, add the `cacheConfig` object to your task configuration:
      }
 ```
 
+## Cache key design
+
+When designing `cacheConfig.key`, include every task input value that can affect the task's output. Omitting a relevant input value can cause the task to return an incorrect cached result when that value changes between executions.
+
+| Key design | Example | Outcome |
+| ---------- | ------- | ------- |
+| Good — includes all inputs that affect the output | `"key": "${url}-${mediaType}-${workflow.input.tenantId}"` | Distinguishes cached results correctly across `url`, `mediaType`, and `tenantId` |
+| Risky — omits inputs that affect the output | `"key": "${url}"` | Ignores `mediaType` and `tenantId`, so it can return the wrong cached result if those values differ between executions |
+
+## Using workflow input in a cache key
+
+To reference a workflow input in `cacheConfig.key`, first map it to a task input parameter, then reference that task input parameter in the key. The key itself can only reference the task's input parameters, not `workflow.input` directly.
+
+For example, the following task maps `workflow.input.url` and `workflow.input.userId` to task input parameters, then uses those task input parameters (`url`, `mediaType`, `userId`) to build the cache key:
+
+```json
+{
+  "name": "get_document",
+  "taskReferenceName": "get_document_ref",
+  "type": "GET_DOCUMENT",
+  "inputParameters": {
+    "url": "${workflow.input.url}",
+    "mediaType": "application/pdf",
+    "userId": "${workflow.input.userId}"
+  },
+  "cacheConfig": {
+    "key": "${url}-${mediaType}-${userId}",
+    "ttlInSecond": 300
+  }
+}
+```
+
 ## Task behavior with caching
 
 Before a task is scheduled, the server checks if there is cached output for the given task definition name by matching the cache key. If a match is found, the task is not scheduled, and the cached output is used to complete it.
 
 If no cached output is found, the task is scheduled as usual. When the task completes successfully, the output is cached under the specified cache key for the specified duration.
 
-## Enable caching in the UI
-
-**To cache task output:**
-
-1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
-2. Select a workflow.
-3. In the visual workflow editor, select the task you want to cache.
-4. Turn on the **Cache output** toggle.
-5. Enter the **Cache key** and  **TTL (in seconds).** 
-
-<p align="center">
-  <img
-    src="/content/img/dev-guides/caching_task_outputs-UI_screen.png"
-    alt="Configuring cache output in UI."
-    width="100%"
-    height="auto"
-  ></img>
-</p>
-
-
 ## Example
 
-<details>
+<details markdown="1">
 <summary>Cache hit</summary>
 
 Run the following workflow twice with the same input. The second run returns the cached result.
@@ -136,7 +171,7 @@ Run the following workflow twice with the same input. The second run returns the
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>Cache miss</summary>
 
 Run the workflow with a different input. A different cache key is computed, so no cached result is found and the task executes fresh.
@@ -157,7 +192,7 @@ Each unique cache key has its own independent cache entry. Running with `env: "p
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>Cache expiry (TTL)</summary>
 
 When the TTL expires, the cached result is discarded and the next run executes the task fresh.
@@ -213,7 +248,7 @@ When the TTL expires, the cached result is discarded and the next run executes t
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>Cache output using task input parameters</summary>
 
 Cache the task output based on a value passed directly in the task's `inputParameters`. Here, the `method` field is used as part of the cache key, so GET and POST requests are cached separately.
@@ -272,7 +307,7 @@ Running with `"method": "POST"` computes the key `api_POST` — a cache miss. GE
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>Cache output using workflow inputs</summary>
 
 Cache the task output based on a workflow-level input. Each unique input value gets its own cache entry.
@@ -330,7 +365,7 @@ Running with another workflow input is a cache miss. Each user ID has its own in
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>Cache output using variables from previous tasks</summary>
 
 Cache the task output based on a value set by an earlier task in the workflow. The [Set Variable](/content/reference-docs/operators/set-variable) task captures the input and stores it as a workflow variable, which is then referenced in the cache key.
@@ -395,3 +430,11 @@ Cache the task output based on a value set by an earlier task in the workflow. T
 Running with another workflow input is a cache miss. Each region has its own independent cache entry.
 
 </details>
+
+## Production notes
+
+- Keep TTL short until you know the data freshness requirements.
+- Include tenant, user, region, language, model, and version fields when they affect output.
+- Do not cache mutating requests.
+- Monitor cache hit rate and stale-data incidents.
+- Treat cache key changes as behavior changes and test them with representative input.

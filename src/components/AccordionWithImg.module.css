@@ -1,5 +1,5 @@
 .imageCol {
-  border: 1px solid #c8c8c8;
+  border: 1px solid var(--c-border-dim);
   border-radius: 16px;
   height: 100%;
 }
@@ -9,21 +9,21 @@
   object-fit: contain;
 }
 .singleAccordion {
-  border-top: 1.5px solid #d9d9d9;
+  border-top: 1.5px solid var(--c-border-dim);
   padding: 12px 5px;
   cursor: pointer;
 }
 .singleAccordion:last-child {
-  border-bottom: 1.5px solid #d9d9d9;
+  border-bottom: 1.5px solid var(--c-border-dim);
 }
 .header {
   display: flex;
   align-items: center;
 }
 .titleActive {
-  color: #6c37bd;
-  font-size: 20px;
-  font-weight: 800;
+  color: var(--c-accent);
+  font-size: 18px;
+  font-weight: 700;
 }
 .arrowIcon {
   padding-right: 15px;

@@ -1,0 +1,127 @@
+---
+title: "Enabling CDC (Change Data Capture)"
+description: "Learn how to enable Change Data Capture (CDC) to stream workflow state changes to external message brokers in Orkes Conductor."
+canonical_route: "developer-guides/enabling-cdc-on-conductor-workflows"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, workflow orchestration, Enabling CDC (Change Data Capture)"
+---
+
+# Enabling CDC (Change Data Capture)
+
+In Orkes Conductor, Change Data Capture (CDC) allows you to send [workflow state changes](https://orkes.io/content/developer-guides/task-and-workflow-status-in-conductor#workflow-status) to external message brokers such as Kafka. This enables downstream systems to react to workflow state changes in real time, making it easier to build responsive and decoupled architectures.
+
+!!! tip "5-minute path"
+    Create a broker integration, enable `workflowStatusListenerEnabled`, set `workflowStatusListenerSink`, run a workflow, and verify messages in the target topic or queue.
+
+## Configuring CDC parameters 
+
+!!! info "Prerequisites"
+    Before configuring CDC, make sure the required [message broker](https://orkes.io/content/category/integrations/message-broker) is integrated with the Conductor cluster.
+
+You can configure CDC using the workflow JSON definition or Conductor UI.
+
+**To enable CDC:**
+
+1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
+2. Create a new workflow or select an existing one. 
+3. Add the following parameters to the workflow definition code:
+
+| Parameter | Description | 
+| --------- | ----------- | 
+| workflowStatusListenerEnabled | Set to `true` to enable CDC. | 
+| workflowStatusListenerSink | The event sink in the format:<br/> **message-broker-type:integration-name:topic/queue-name**<br/>where,<ul><li>**message-broker-type**: The message broker type where the payloads are sent. Supported types:<ul><li>amqp</li><li>sqs</li><li>azure</li><li>kafka</li><li>nats</li><li>gcp_pubsub</li><li>Ibm_mq</li></ul></li><li>**integration-name**: The message broker integration name added to the cluster.</li><li>**topic/queue-name**: The queue name or topic name where the payloads are sent.</li></ul>
+
+**Example**
+
+```JSON
+// workflow definition
+
+"workflowStatusListenerEnabled": true,
+"workflowStatusListenerSink": "message-broker-type:integration-name:topic/queue-name" // event sink
+```
+
+4. Save the workflow.
+
+### Using CDC with Kafka and AVRO
+
+!!! info "Supported since"
+    - v4.1.74 and later
+    - v5.2.8 and later
+
+When CDC is configured with a [Kafka](/content/integrations/message-broker/apache-kafka) integration that uses the AVRO protocol, the schema name must be specified in the workflow's input. 
+
+Before referencing the schema name, save the following schema in your schema registry. 
+
+**Conductor Event Schema**
+
+```json
+{
+  "fields": [
+    {
+      "name": "_schema",
+      "type": "string"
+    },
+    {
+      "name": "workflowType",
+      "type": "string"
+    },
+    {
+      "name": "eventType",
+      "type": "string"
+    },
+    {
+      "name": "workflowInstanceId",
+      "type": "string"
+    },
+    {
+      "name": "sink",
+      "type": "string"
+    },
+    {
+      "default": "",
+      "name": "taskId",
+      "type": "string"
+    },
+    {
+      "default": "",
+      "name": "workflow",
+      "type": "string"
+    },
+    {
+      "default": "",
+      "name": "task",
+      "type": "string"
+    }
+  ],
+  "name": "ConductorEvent",
+  "type": "record"
+}
+```
+
+Then, specify the saved schema name in `_schema` as workflow input.
+
+**Example**
+
+```json
+// workflow input
+
+{
+  "_schema": "your-schema-name"
+}
+```
+
+## Verifying CDC events
+
+When the workflow starts, Conductor emits an event each time its state changes, for example, when it transitions from the RUNNING state to any other state. These events are delivered to the configured message brokers in real time. Verify the message delivery under the configured topic or queue name.
+
+## Production notes
+
+- CDC is best for event-driven integration, audit streams, and downstream projections.
+- Consumers should be idempotent because events can be redelivered.
+- Use a schema registry and version schemas deliberately.
+- Keep sensitive data out of workflow input if downstream CDC consumers do not need it.
+
+## Related pages
+
+- [Publish Events](/content/category/event-driven-orchestration/publish-events)
+- [Event Publishing Recipes](/content/eventing)

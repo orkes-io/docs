@@ -1,0 +1,55 @@
+---
+title: "Delete User Form"
+description: "Use the Orkes Conductor human tasks API to delete User Form. Includes endpoint details, authentication, parameters, request bodies, response behavior."
+canonical_route: "reference-docs/api/human-tasks/delete-task-ui-template"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, workflow orchestration, Delete User Form, Delete User Form API, workflow cookbook, workflow recipes, API orchestration, API gateway, workflow tasks, task queues"
+---
+
+# Delete User Form
+
+**Endpoint:** `DELETE /api/human/template/{name}`
+
+Deletes a user form using its name from the Conductor server.
+
+!!! warning
+    After deletion, all Human tasks that make use of the deleted user form will fail to render.
+
+## Path parameters
+
+| Parameter | Description                              | Type   | Required/ Optional |
+| --------- | ---------------------------------------- | ------ | ------------------ |
+| name      | The name of the user form to be deleted. | string | Required.          |
+
+## Response
+
+Returns 200 OK, indicating that the user form has been deleted successfully. Returns 500 if a user form does not exist.
+
+## Examples
+
+<details>
+<summary>Delete a user form</summary>
+
+**Request**
+
+```shell
+curl -X 'DELETE' \
+  'https://<YOUR-SERVER-URL>/api/human/template/ExpenseApproval' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the user form has been deleted successfully.
+
+</details>
+
+## Related pages
+
+- [Human Task](/content/reference-docs/api/human-tasks)
+- [Get Human Task](/content/reference-docs/api/human-tasks/get-task)
+- [Get Conductor Task by Human Task ID](/content/reference-docs/api/human-tasks/get-conductor-task-by-human-task-id)
+- [Claim Task (Conductor User)](/content/reference-docs/api/human-tasks/claim-task-conductor-user)
+- [Claim Task (External/All Users)](/content/reference-docs/api/human-tasks/claim-task-external-user)
+- [Reassign Human Task](/content/reference-docs/api/human-tasks/reassign-human-task)

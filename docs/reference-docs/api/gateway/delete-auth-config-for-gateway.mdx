@@ -1,0 +1,41 @@
+---
+sidebar_position: 4
+slug: "/reference-docs/api/gateway/delete-auth-config-for-gateway"
+description: "Learn how to delete an auth config of gateway."
+---
+
+# Delete Auth Config for Gateway
+
+**Endpoint**: `DELETE /api/gateway/config/auth/{id}`
+
+Deletes an auth config of a gateway service.
+
+## Path parameters
+
+| Parameter | Description | Type | Required/ Optional |
+| --------- | ------------ | ---- | ------------------- |
+| id | The id of the auth config to delete. | string | Required. |
+
+## Response
+
+Returns 200 OK, indicating that the auth config is deleted.
+
+## Examples
+
+<details markdown="1">
+<summary>Delete auth config for Gateway</summary>
+
+**Request**
+
+```shell
+curl -X 'DELETE' \
+  'https://<YOUR-SERVER-URL>/api/gateway/config/auth/rf' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the auth config is deleted.
+
+</details>

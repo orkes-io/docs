@@ -1,0 +1,93 @@
+---
+title: "Postgres Vector Database Integration with Orkes Conductor"
+description: "Learn how to integrate PostgreSQL vector databases so workflows can store and retrieve embeddings for AI tasks in Orkes Conductor."
+canonical_route: "integrations/vector-databases/postgres-vector-database"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, workflow orchestration, Postgres Vector Database Integration with Orkes Conductor, Postgres Vector Database Integration with Orkes Conductor integration, Postgres Vector Database Integration with Orkes Conductor workflow automation"
+---
+
+# Postgres Vector Database Integration with Orkes Conductor
+
+To use LLM embedding tasks in Orkes Conductor, you must integrate your Conductor cluster with the necessary vector database providers. This guide explains how to integrate Postgres Vector Database (pgvector) with Orkes Conductor. Here’s an overview:
+
+1. Get the required credentials from pgvector.
+2. Configure a new Postgres Vector Database integration in Orkes Conductor.
+3. Add indexes to the integration.
+4. Set access limits to the vector database to govern which applications or groups can use it.
+
+## Step 1: Get the pgvector credentials
+
+**Set up [pgvector](https://github.com/pgvector/pgvector?tab=readme-ov-file) along with an index**, and retrieve the following database credentials:
+
+- Database username
+- Password
+- Database URL
+
+## Step 2: Add an integration for Postgres Vector Database
+
+After obtaining the credentials, add a Postgres Vector Database integration to your Conductor cluster.
+
+**To create a Postgres Vector Database integration:**
+
+1. Go to **Integrations** > **Connections and Resources** from the left navigation menu on your Conductor cluster.
+2. Select **+ New integration**.
+3. In the **Vector Databases** section, choose **Postgres Vector Database**.
+4. Select **+ Add** and enter the following parameters:
+
+| Parameters | Description |
+| ---------- | ----------- | 
+| Integration name | A name for the integration. |
+| Postgres Database User | The database username. |
+| Postgres Database Password | The password associated with the database username. |
+| Postgres Database URL |The database URL, which is the JDBC connection string for the postgres database. For example: `jdbc:database://url/databaseName`. | 
+| Embedding dimensions | The number of dimensions in the embeddings. The embedding dimensions often depend on the AI model used to generate the embeddings.<br/><br/>Common default values are: OpenAI `text-embedding-3-small`: 1536, `text-embedding-3-large`: 3072, and Cohere `embed-english-v3.0`: 1024.  | 
+| Distance metric | The distance metric, which is a metric to measure the similarity or distance between vectors. Supported values:<ul><li>Cosine Similarity</li><li>Euclidean Distance</li><li>Inner Product</li></ul> |
+| Indexing method | The indexing method. Supported methods:<ul><li>hnsw (Hierarchical Navigable Small World graphs)</li><li>ivfflat (Inverted File Flat)</li></ul> |
+| Number of inverted lists to create for ivfflat index | If *ivfflat* is selected as the indexing method, enter the number of inverted lists to create when using this indexing method. |
+| Description | A description of the integration. | 
+5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
+6. Select **Save**.
+
+## Step 3: Add Postgres Vector Database indexes
+
+Once you’ve integrated Postgres Vector Database, the next step is to configure specific indexes.
+
+**To add an index to the integration:**
+
+1. Go to **Integrations** and select the **+** button next to the integration created.
+2. Select **+ New Index**.
+3. Enter the **Index name** and a **Description**. The index must already exist in the connected Postgres database.
+4. (Optional) Toggle the **Active** button off if you don’t want to activate the index instantly.
+5. Select **Save**.
+
+This saves the index for future use in AI tasks within Orkes Conductor.
+
+## Step 4: Set access limits to integration
+
+Once the integration is configured, set access controls to manage which [applications](https://orkes.io/content/access-control-and-security/applications) or [groups](https://orkes.io/content/access-control-and-security/users-and-groups#groups) can use the databases.
+
+**To provide access to an application or group:**
+
+1. Go to **Access Control** > **Applications** or **Groups** from the left navigation menu on your Conductor cluster.
+2. Create a new group/application or select an existing one.
+3. In the **Permissions** section, select **+ Add Permission**.
+4. In the **Integration** tab, select the required vector database providers and toggle the necessary permissions.
+5. Select **Add Permissions**. 
+The group or application can now access the vector database according to the configured permissions.
+With the integration in place, you can now create workflows using [AI/LLM tasks](https://orkes.io/content/category/reference-docs/ai-tasks).
+
+!!! info
+    To store data in a vector database, an embedding is to be generated by an AI model. You must also integrate an [AI model provider](https://orkes.io/content/category/integrations/ai-llm) of your choice to use this integration in workflows.
+
+## More resources
+
+- [AI Orchestration](https://orkes.io/content/ai-orchestration)
+- [Using AI Models or LLMs](https://orkes.io/content/developer-guides/using-llms-in-your-orkes-conductor-workflows)
+- [Using Vector Databases](https://orkes.io/content/developer-guides/using-vector-databases-in-your-orkes-conductor-workflows)
+
+## Related pages
+
+- [Vector Databases Integrations](/content/category/integrations/vector-databases)
+- [Pinecone Integration with Orkes Conductor](/content/integrations/vector-databases/pinecone)
+- [Weaviate Integration with Orkes Conductor](/content/integrations/vector-databases/weaviate)
+- [Mongo Vector Database Integration with Orkes Conductor](/content/integrations/vector-databases/mongo-vector-database)

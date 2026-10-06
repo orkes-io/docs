@@ -24,7 +24,7 @@ Format the request as an array of JSON objects, where each object contains a use
 | --------- | -------------------------------------------------------------------- | ------ | ------------------ |
 | name | The name of the user form template. | string | Required. | 
 | jsonSchema | The JSON schema defining the form's data structure and validation rules. | object | Required. | 
-| templateUI | The UI configuration that defines how the form should be rendered. [Supported form layout and components](/content/developer-guides/orchestrating-human-tasks#step-1-create-a-user-form-schema). | object | Required. | 
+| templateUI | The UI configuration that defines how the form should be rendered. [Supported form layout and components](/content/developer-guides/orchestrating-human-tasks). | object | Required. | 
 | createdBy | The user who created the form. | string | Optional. | 
 | updatedBy | The user who last updated the form. | string | Optional. | 
 | version | The version number to assign. If specified, it takes precedence over the `newVersion` query parameter. | integer | Optional. | 
@@ -35,7 +35,7 @@ Returns an array of created or updated user forms with their assigned version nu
 
 ## Examples
 
-<details>
+<details markdown="1">
 <summary>Create multiple user forms</summary>
 
 **Request**
@@ -178,7 +178,7 @@ curl -X 'POST' \
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>Update multiple forms as new versions</summary>
 
 **Request**

@@ -1,0 +1,119 @@
+---
+sidebar_position: 14
+slug: "/reference-docs/ai-tasks/generate-image"
+description: "Learn how the Generate Image task generates images from a text prompt using a configured AI model integration."
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Generate Image
+
+The Generate Image task is used to generate images from a text prompt using a configured AI model integration. It supports OpenAI, Azure OpenAI, Google Gemini, and Google Vertex as image-generation providers. For Google Gemini and Google Vertex, image generation uses the Imagen model family.
+
+During execution, the task sends the prompt (either literal text or a saved AI Prompt) to the configured provider and model, and returns the generated image(s) as output, either as a URL or base64-encoded data. Use it to produce illustrations, product mockups, or other visual content as part of a workflow, or to feed generated images into downstream tasks.
+
+:::info Prerequisites
+
+Before using this task, you must have created an appropriate AI model integration in Orkes Conductor for your chosen provider (OpenAI, Azure OpenAI, Google Gemini, or Google Vertex). Integrate the required provider with Orkes Conductor before configuring this task.
+
+- [OpenAI](/integrations/ai-llm/open-ai)
+- [Azure OpenAI](/integrations/ai-llm/azure-open-ai)
+- [Google Gemini](/integrations/ai-llm/google-gemini-ai)
+- [Google Vertex](/integrations/ai-llm/vertex-ai)
+:::
+
+## Task parameters 
+
+Configure these parameters for the Generate Image task.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- |
+| inputParameters.**llmProvider** | The integration name of the AI model provider configured with your Conductor cluster. | Required. |
+| inputParameters.**model** | The model or deployment name registered under the integration (e.g. `dall-e-3`, `gpt-image-1`, `imagen-3.0-generate-002`). | Required. |
+| inputParameters.**prompt** | The image description. By default, this value is looked up as the name of a saved AI Prompt rather than used as literal text. To use literal text, set `allowRawPrompts` to `true`. | Required. |
+| inputParameters.**allowRawPrompts** | Whether to treat `prompt` as literal text instead of a saved AI prompt.<br/><br/>**Note:** If omitted or set to `false`, and `prompt` doesn't match an existing prompt name, the task fails. | Optional. |
+| inputParameters.**n** | Number of images to generate. Default is 1. | Optional. |
+| inputParameters.**size** | Image dimensions, e.g. `1024x1024`. | Optional. |
+| inputParameters.**width** | Image width in pixels, used as an alternative to `size`. Default is 1024. | Optional. |
+| inputParameters.**height** | Image height in pixels, used as an alternative to `size`. Default is 1024. | Optional. |
+| inputParameters.**style** | Provider-specific style hints, such as `vivid` or `natural`. | Optional. |
+| inputParameters.**outputFormat** | Output image format. Supported values: `jpg`, `png`, `webp`. Default is `png`. | Optional. |
+
+The following are generic configuration parameters that can be applied to the task and are not specific to the Generate Image task.
+
+<details markdown="1">
+<summary>Caching parameters</summary>
+
+You can cache the task outputs using the following parameters. Refer to [Caching Task Outputs](/faqs/task-cache-output) for a full guide.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| cacheConfig.**ttlInSecond** | The time to live in seconds, which is the duration for the output to be cached. | Required if using *cacheConfig*. |
+| cacheConfig.**key** | The cache key is a unique identifier for the cached output and must be constructed exclusively from the task’s input parameters.<br/>It can be a string concatenation that contains the task’s input keys, such as `${uri}-${method}` or `re_${uri}_${method}`. | Required if using *cacheConfig*. |
+
+</details>
+
+<details markdown="1">
+<summary>Other generic parameters</summary>
+
+Here are other parameters for configuring the task behavior.
+
+| Parameter | Description | Required/ Optional | 
+| --------- | ----------- | ----------------- | 
+| optional | Whether the task is optional. <br/><br/>If set to `true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. | 
+
+</details>
+
+## Task configuration
+
+This is the task configuration for a Generate Image task.
+
+```json
+{
+  "name": "generate_image",
+  "taskReferenceName": "generate_image_ref",
+  "inputParameters": {
+    "llmProvider": "<YOUR-INTEGRATION-HERE>",
+    "model": "<YOUR-MODEL-HERE>",
+    "prompt": "<YOUR-PROMPT-HERE>",
+    "allowRawPrompts": true,
+    "n": 1,
+    "size": "1024x1024"
+  },
+  "type": "GENERATE_IMAGE"
+}
+```
+
+## Task output
+
+The Generate Image task will return the following parameters.
+
+| Parameter | Description | 
+| --------- | ----------- | 
+| media | Array of generated images. Each element contains either a location (URL to the generated image) or base64-encoded data, tagged with a `mimeType` such as `image/png`. |
+
+## Examples
+
+Here are some examples for using the Generate Image task.
+
+<details markdown="1">
+<summary>Using a Generate Image task in a workflow</summary>
+
+```json
+{
+  "name": "generate_image",
+  "taskReferenceName": "image",
+  "inputParameters": {
+    "llmProvider": "azure",
+    "model": "gpt-image-2",
+    "prompt": "A watercolor painting of a lighthouse at sunset",
+    "allowRawPrompts": true,
+    "n": 1,
+    "size": "1024x1024"
+  },
+  "type": "GENERATE_IMAGE"
+}
+```
+
+</details>

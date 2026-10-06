@@ -1,0 +1,78 @@
+---
+sidebar_position: 1
+slug: "/reference-docs/api/gateway/create-auth-config-for-gateway"
+description: "Learn how to create an auth config for gateway."
+---
+
+# Create Auth Config for Gateway
+
+**Endpoint**: `POST /api/config/auth`
+
+Creates an authentication configuration that can be used in a gateway service.
+
+## Request body
+
+| Parameter | Description | Type | Required/ Optional |
+| --------- | ------------ | ---- | ------------------- |
+| id | A unique identifier for the authentication configuration. | string | Required. |
+| authenticationType | The type of authentication. Supported values:<ul><li>`NONE`: No authentication is enforced, and the API will be accessible to anyone.</li><li>`API_KEY`: Enforces basic authentication using an API key.</li></ul> | string | Required. |
+| apiKeys | A unique API key for authentication. | string | Optional. |
+| applicationId | The unique identifier of the application, which generates an access key and JWT token. The Gateway will use this token to authenticate with the Conductor. The service using this authentication will inherit the application’s permissions.<br/><br/>The application must already exist in Conductor, and you can retrieve its ID using [Get All Applications](/reference-docs/api/applications/get-all-applications), and get the `id` field for your application. | string | Required. |
+
+## Response
+
+Returns 200 OK, indicating that the auth config was created successfully.
+
+## Examples
+
+<details markdown="1">
+<summary>Create a NONE type auth config for Gateway</summary>
+
+**Request**
+
+```shell
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/gateway/config/auth' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+ 
+  "applicationId": "35871d8a-81e1-4546-99ff-cc158f76cb7b",
+  "authenticationType": "NONE",
+  "id": "prod-auth"
+}'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the auth config was created successfully.
+
+</details>
+
+<details markdown="1">
+<summary>Create an API_KEY type auth config for Gateway</summary>
+
+**Request**
+
+```shell
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/gateway/config/auth' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "apiKeys": [
+    "XXXXXXX"
+  ],
+  "applicationId": "default-orkes-application",
+  "authenticationType": "API_KEY",
+  "id": "test-env"
+}'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the auth config was created successfully.
+
+</details>

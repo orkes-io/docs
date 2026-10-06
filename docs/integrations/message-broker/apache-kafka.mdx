@@ -48,8 +48,8 @@ To integrate Confluent Kafka with Orkes Conductor, retrieve the following creden
 1. Sign in to the [Confluent Cloud portal](https://confluent.cloud/).
 2. Go to **Environments**, and select the Confluent cluster to integrate with Orkes Conductor.
 3. Go to **API Keys**, select **Create Key** > **+ Add key**.
-5. Choose either **Global access** or **Granular access**.
-6. Copy and store the **Key** and **Secret**.
+4. Choose either **Global access** or **Granular access**.
+5. Copy and store the **Key** and **Secret**.
 
 **To retrieve the Bootstrap server:**
 
@@ -64,8 +64,6 @@ The schema registry server, API key, and secret are only required if you are int
 2. Go to **Clients** > **Add new client**.
 3. In **Copy the configuration snippet for your clients** > **schema.registry.url**, copy the URL.
 4. Select **Create Schema Registry API key** to download the file. The downloaded file will have the Schema Registry API key and secret.
-
-<p align="center"><img src="/content/img/schema-registry-url.png" alt="Getting Schema Registry URL" width="100%" height="auto"/></p>
 
 **For GCP Managed Kafka configuration**
 
@@ -102,10 +100,12 @@ After obtaining the credentials, add an Apache Kafka integration to your Conduct
 
 **To create an Apache Kafka integration:**
 
-1. Go to **Integrations** > **Connections and Resources** from the left navigation menu on your Conductor cluster.
-2. Select **+ New integration**.
-3. In the **Message Broker** section, choose **Apache Kafka**.
-4. Select **+ Add** and enter the following parameters:
+<ol>
+<li>Go to <strong>Integrations</strong> &gt; <strong>Connections and Resources</strong> from the left navigation menu on your Conductor cluster.</li>
+<li>Select <strong>+ New integration</strong>.</li>
+<li>In the <strong>Message Broker</strong> section, choose <strong>Apache Kafka</strong>.</li>
+<li>Select <strong>+ Add</strong> and enter the following parameters:</li>
+</ol>
 
 | Parameters | Description | Required / Optional | Notes | 
 | ---------- | ----------- | ------------------- | ----- | 
@@ -125,11 +125,10 @@ After obtaining the credentials, add an Apache Kafka integration to your Conduct
 | Value Subject Name Strategy | The strategy for constructing the subject name under which the AVRO schema will be registered in the schema registry. Supported values:<ul><li>**io.confluent.kafka.serializers.subject.TopicNameStrategy**</li><li>**io.confluent.kafka.serializers.subject.RecordNameStrategy**</li><li>**io.confluent.kafka.serializers.subject.TopicRecordNameStrategy**</li></ul> | Required if **_Sending Protocol_** is **AVRO**. | Not supported for Amazon MSK clusters. | 
 | Consumer Group ID | The Consumer Group ID from Kafka. This unique identifier helps manage message processing, load balancing, and fault tolerance within consumer groups. | Required. | – | 
 | Description | A description of the integration. | Required. | – | 
-
-<p align="center"><img src="/content/img/integration-apache-kafka.png" alt="Apache Kafka Integration with Orkes Conductor" width="60%" height="auto"/></p>
-
-5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
-6. Select **Save**.
+<ol start="5">
+<li>(Optional) Toggle the <strong>Active</strong> button off if you don’t want to activate the integration instantly.</li>
+<li>Select <strong>Save</strong>.</li>
+</ol>
 
 ## Step 3: Set access limits to integration
 
@@ -141,9 +140,6 @@ Once the integration is configured, set access controls to manage which [applica
 2. Create a new group/application or select an existing one.
 3. In the **Permissions** section, select **+ Add Permission**.
 4. In the **Integration** tab, select the required message broker and toggle the necessary permissions.
-
-<p align="center"><img src="/content/img/rbac-apache-kafka.png" alt="Configuring RBAC for Apache Kafka Integration" width="70%" height="auto"/></p>
-
 The group or application can now access the message broker according to the configured permissions.
 
 ## Next steps

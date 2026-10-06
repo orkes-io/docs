@@ -1,7 +1,7 @@
 ---
 sidebar_position: 7
 slug: "/reference-docs/system-tasks/sendgrid"
-description: "Learn how the SendGrid task sends transactional emails through the SendGrid API from within an Orkes Conductor workflow."
+description: "Learn how the SendGrid task sends emails through the SendGrid email service."
 ---
 
 # SendGrid
@@ -9,6 +9,10 @@ description: "Learn how the SendGrid task sends transactional emails through the
 The SendGrid task is used to send emails through the SendGrid platform. Use this task in workflows when you need to programmatically deliver emails such as alerts, confirmations, or updates.
 
 The task uses a pre-configured SendGrid integration for authentication and delivery. When the task runs, it connects to the SendGrid API and sends the email based on the task configuration, including the sender and recipient addresses, subject, and message body.
+
+:::note
+The SendGrid task is not enabled by default. Contact Orkes support to enable it for your cluster.
+:::
 
 :::info Prerequisites
 - [Integrate SendGrid](/content/integrations/email/sendgrid) with Orkes Conductor.
@@ -21,7 +25,7 @@ Configure these parameters for the SendGrid task.
 | Parameter                      | Description                                                                                                                                                            | Required/ Optional |
 | ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
 | inputParameters.**from** | The sender’s email address. This must be a verified email in SendGrid. [Learn more](https://www.twilio.com/docs/sendgrid/for-developers/sending-email/sender-identity). | Required. |
-| inputParameters.**to** | The recipient’s email address. | Required. | 
+| inputParameters.**to** | The recipient’s email address. Only one address is supported. | Required. | 
 | inputParameters.**subject** | The email subject. | Required. | 
 | inputParameters.**contentType** | The type of email content. Supported values:<ul><li>**text/plain**</li><li>**text/html**</li></ul> | Required. | 
 | inputParameters.**content** | The email body. | Required. | 
@@ -29,7 +33,7 @@ Configure these parameters for the SendGrid task.
 
 The following are generic configuration parameters that can be applied to the task and are not specific to the SendGrid task.
 
-<details>
+<details markdown="1">
 <summary>Caching parameters</summary>
 
 You can cache the task outputs using the following parameters. Refer to [Caching Task Outputs](/faqs/task-cache-output) for a full guide.
@@ -41,14 +45,14 @@ You can cache the task outputs using the following parameters. Refer to [Caching
 
 </details>
 
-<details>
+<details markdown="1">
 <summary>Other generic parameters</summary>
 
 Here are other parameters for configuring the task behavior.
 
 | Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- | 
-| optional | Whether the task is optional. <br/><br/>If set to`true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. | 
+| optional | Whether the task is optional. <br/><br/>If set to `true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. | 
 
 </details>
 
@@ -57,57 +61,45 @@ Here are other parameters for configuring the task behavior.
 This is the task configuration for a SendGrid task.
 
 ```json
-   {
-     "name": "sendgrid",
-     "taskReferenceName": "sendgrid_ref",
-     "inputParameters": {
-       "from": "john.doe@acme.com",
-       "to": "jane.doe@acme.com",
-       "subject": "Email Subject",
-       "contentType": "text/plain",
-       "content": "Email Body",
-       "sendgridConfiguration": "<INTEGRATION-NAME>"
-     },
-     "type": "SENDGRID"
-   }
+{
+  "name": "sendgrid",
+  "taskReferenceName": "sendgrid_ref",
+  "inputParameters": {
+    "from": "john.doe@acme.com",
+    "to": "jane.doe@acme.com",
+    "subject": "Email Subject",
+    "contentType": "text/plain",
+    "content": "Email Body",
+    "sendgridConfiguration": "<INTEGRATION-NAME>"
+  },
+  "type": "SENDGRID"
+}
 ```
 
 ## Task output
 
 The SendGrid task will return the following parameters.
 
-| Parameter    | Description                                                                                                                   |
-| ------------ | ----------------------------------------------------------------------------------------------------------------------------- |
-| response     | A JSON object representing the response, if present.                                                                          |
-| headers      | An object containing the metadata about the response.                                                                         |
-| statusCode   | The [HTTP status code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) indicating success or failure of the request. |
-| body         | The response body containing the data returned by the API.                                                                    |
+| Parameter | Description |
+| --------- | ----------- |
+| response | The response from SendGrid, which contains:<ul><li>**statusCode**: The HTTP status code returned by SendGrid.</li><li>**body**: The response body returned by SendGrid.</li><li>**headers**: The response headers returned by SendGrid.</li></ul> |
 
-## Adding a SendGrid task in UI
+The task returns output only when SendGrid accepts the request. The task fails:
 
-**To add a SendGrid task:**
-
-1. In your workflow, select the (**+**) icon and add a **SendGrid** task.
-2. In **From**, enter the [verified SendGrid sender email](https://www.twilio.com/docs/sendgrid/for-developers/sending-email/sender-identity).
-3. In **To**, enter the recipient’s email address.
-4. In **Subject**, enter the email subject.
-5. In **Content Type**, select the type of email content as *text/plain* or *text/html*.
-6. In **Content**, enter the email body.
-7. In **SendGrid Configuration**, select the SendGrid integration added to the cluster.
-
-<center><p><img src="/content/img/sendgrid-ui.png " alt="Adding SendGrid task" width="80%" height="auto"/></p></center>
+- With a terminal error, if any required parameter is missing or empty.
+- If the integration name does not match an existing SendGrid integration.
+- If SendGrid rejects the request. The error details appear in the task's Logs tab.
 
 ## Examples
 
 Here are some examples for using the SendGrid task.
 
-<details>
+<details markdown="1">
 <summary>Using the SendGrid task in a workflow</summary>
-<p>
 
 Notification workflows are common when end users must be alerted, such as for payments, alerts, or failures.
 
-Consider a scenario where an organization uses SendGrid as its email notification platform. To create a simple email notification flow using Orkes Conductor, first [create a SendGrid integration](https://orkes.io/content/integrations/email/sendgrid) in your Conductor cluster.
+Consider a scenario where an organization uses SendGrid as its email notification platform. To create a simple email notification flow using Orkes Conductor, first [create a SendGrid integration](/content/integrations/email/sendgrid) in your Conductor cluster.
 
 Once the integration is created, note its name. For example, let’s use an integration named “SendGrid”.
 
@@ -154,5 +146,4 @@ After the workflow completes successfully, verify that the email is delivered to
 
 <center><p><img src="/content/img/email-notification-received-via-sendgrid-task.png" alt="Email notification received via SendGrid task" width="100%" height="auto"/></p></center>
 
-</p>
 </details>

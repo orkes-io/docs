@@ -1,0 +1,86 @@
+---
+title: "Relational Database Integration with Orkes Conductor"
+description: "Learn how to connect relational databases so workflows can query and update data through JDBC tasks in Orkes Conductor."
+canonical_route: "integrations/rdbms/relational-database"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, workflow orchestration, Relational Database Integration with Orkes Conductor, Relational Database Integration with Orkes Conductor integration, Relational Database Integration with Orkes Conductor workflow automation"
+---
+
+# Relational Database Integration with Orkes Conductor
+
+To use a [JDBC](https://orkes.io/content/reference-docs/system-tasks/jdbc) task in Orkes Conductor, you must integrate your Conductor cluster with the necessary relational database providers. 
+
+The choice of database depends on your use case, whether for transaction processing, analytical queries, or data warehousing. It also varies based on required functionalities, such as indexing, partitioning, and replication, as well as data management needs, including integrity enforcement, concurrency control, and recovery.
+
+!!! note
+    Orkes Conductor currently supports integration with PostgreSQL.
+
+This guide explains how to integrate a Relational Database with Orkes Conductor. Here’s an overview:
+
+1. Get the required credentials from the database provider.
+2. Configure a new Relational Database integration in Orkes Conductor.
+3. Add tables to the integration.
+4. Set access limits to the database tables to govern which applications or groups can use it.
+
+## Step 1: Get the credentials from the PostgreSQL database
+
+Set up [PostgreSQL](https://www.postgresql.org/) and retrieve the following database credentials:
+
+- Database username
+- Password
+- Database URL
+
+## Step 2: Add an integration for Relational Database
+
+After obtaining the credentials, add a Relational Database integration to your Conductor cluster.
+
+**To create a Relational Database integration:**
+
+1. Go to **Integrations** > **Connections and Resources** from the left navigation menu on your Conductor cluster.
+2. Select **+ New integration**.
+3. In the **RDBMS** section, choose **Relational Database**.
+4. Select **+ Add** and enter the following parameters:
+
+| Parameter | Description |
+| --------- | ----------- |
+| Integration name | A name for the integration. |
+| Database Type | Select the type of database to integrate. Currently supports **Postgres**. | 
+| Database User | The database username. |
+| Database Password | The password associated with the database username. | 
+| Database URL | The database URL, which is the JDBC connection string in the format: **jdbc:database://url/databaseName**.<br/><br/>For example: **jdbc:postgresql://localhost:5432/mydb** | 
+| Description | A description of the integration. |
+5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
+6. Select **Save**.
+
+## Step 3: Add Relational Database table
+
+Once you’ve integrated a Relational Database, the next step is to configure specific tables.
+
+**To add a table to the integration:**
+
+1. Go to **Integrations** and select the **+** button next to the integration created.
+2. Select **+ New Table**.
+3. Enter the **Table name** and a **Description**. The table must already exist in the connected PostgreSQL database.
+4. (Optional) Toggle the **Active** button off if you don’t want to activate the table instantly.
+5. Select **Save**.
+
+This saves the table for future use in JDBC tasks within Orkes Conductor.
+
+## Step 4: Set access limits to integration
+
+Once the integration is configured, set access controls to manage which [applications](https://orkes.io/content/access-control-and-security/applications) or [groups](https://orkes.io/content/access-control-and-security/users-and-groups#groups) can use the database tables.
+
+**To provide access to an application or group:**
+
+1. Go to **Access Control** > **Applications** or **Groups** from the left navigation menu on your Conductor cluster.
+2. Create a new group/application or select an existing one.
+3. In the **Permissions** section, select **+ Add Permission**.
+4. In the **Integration** tab, select the required relational database providers and toggle the necessary permissions.
+5. Select **Add Permissions**. 
+The group or application can now access the database tables according to the configured permissions.
+
+With the integration in place, you can now create workflows using the [JDBC](https://orkes.io/content/reference-docs/system-tasks/jdbc) task.
+
+## Related pages
+
+- [RDBMS Integrations](/content/category/integrations/rdbms)

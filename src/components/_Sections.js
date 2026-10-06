@@ -113,7 +113,7 @@ const accordionData = [
   {
     title: "Use Built In Tasks",
     description:
-      "Use built-in tasks for HTTP calls, event publishing, inline scripting, and more, with no custom worker needed.",
+      "Use built-in tasks for common actions such as calling HTTP endpoints, writing to event queues etc.",
     image: "/content/img/what-conductor-can-do/6_Use-Built-In-Tasks.png",
   },
   {
@@ -124,14 +124,14 @@ const accordionData = [
   },
   {
     title: "Human in the Loop Automation",
-    description: "Pause workflows for human review, approval, or data entry, then resume automatically once complete.",
+    description: "Plug in manual steps in your workflows using Human tasks.",
     image:
       "/content/img/what-conductor-can-do/human-in-the-loop-automation.png",
   },
   {
     title: "Handle Failures",
     description:
-      "Handle failures with configurable retries, timeouts, and compensation workflows to keep executions resilient.",
+      "Set timeouts and rate limits to manage failures for tasks and workflows.",
     image: "/content/img/what-conductor-can-do/7_Handle-Errors-Failures.png",
   },
   {
@@ -481,21 +481,6 @@ const conceptsData = [
     title: "Event-driven workflows",
     description: "Connect workflows to external systems using event handlers, webhooks, and CDC for event-driven automation.",
     url: "/eventing",
-  },
-  {
-    title: "Scheduling",
-    description: "Trigger workflows on a cron schedule or at a specific time, with no external scheduler needed.",
-    url: "/developer-guides/scheduling-workflows",
-  },
-  {
-    title: "Access control",
-    description: "Control who can view, execute, or modify workflows and tasks using role-based permissions.",
-    url: "/content/category/access-control-and-security",
-  },
-  {
-    title: "Error handling",
-    description: "Configure retries, timeouts, and failure workflows to keep executions resilient.",
-    url: "/content/error-handling",
   },
 ];
 

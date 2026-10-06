@@ -34,10 +34,12 @@ After obtaining the credentials, add a Relational Database integration to your C
 
 **To create a Relational Database integration:**
 
-1. Go to **Integrations** > **Connections and Resources** from the left navigation menu on your Conductor cluster.
-2. Select **+ New integration**.
-3. In the **RDBMS** section, choose **Relational Database**.
-4. Select **+ Add** and enter the following parameters:
+<ol>
+<li>Go to <strong>Integrations</strong> &gt; <strong>Connections and Resources</strong> from the left navigation menu on your Conductor cluster.</li>
+<li>Select <strong>+ New integration</strong>.</li>
+<li>In the <strong>RDBMS</strong> section, choose <strong>Relational Database</strong>.</li>
+<li>Select <strong>+ Add</strong> and enter the following parameters:</li>
+</ol>
 
 | Parameter | Description |
 | --------- | ----------- |
@@ -48,10 +50,10 @@ After obtaining the credentials, add a Relational Database integration to your C
 | Database URL | The database URL, which is the JDBC connection string in the format: **jdbc:database://url/databaseName**.<br/><br/>For example: **jdbc:postgresql://localhost:5432/mydb** | 
 | Description | A description of the integration. |
 
-<p align="center"><img src="/content/img/create-new-relational-database-integration.png" alt="Create Relational Database Integration" width="60%" height="auto"></img></p>
-
-5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
-6. Select **Save**.
+<ol start="5">
+<li>(Optional) Toggle the <strong>Active</strong> button off if you don't want to activate the integration instantly.</li>
+<li>Select <strong>Save</strong>.</li>
+</ol>
 
 ## Step 3: Add Relational Database table
 
@@ -60,14 +62,8 @@ Once you’ve integrated a Relational Database, the next step is to configure sp
 **To add a table to the integration:**
 
 1. Go to **Integrations** and select the **+** button next to the integration created.
-
-<p align="center"><img src="/content/img/create-new-relational-database-integration-table-from-integrations-page.png" alt="Create Relational Database Integration Table from Listed Integrations" width="100%" height="auto"></img></p>
-
 2. Select **+ New Table**.
 3. Enter the **Table name** and a **Description**. The table must already exist in the connected PostgreSQL database.
-
-<p align="center"><img src="/content/img/create-new-relational-database-integration-table.png" alt="Create Relational Database Integration Table" width="60%" height="auto"></img></p>
-
 4. (Optional) Toggle the **Active** button off if you don’t want to activate the table instantly.
 5. Select **Save**.
 
@@ -84,9 +80,6 @@ Once the integration is configured, set access controls to manage which [applica
 3. In the **Permissions** section, select **+ Add Permission**.
 4. In the **Integration** tab, select the required relational database providers and toggle the necessary permissions.
 5. Select **Add Permissions**. 
-
-<p align="center"><img src="/content/img/rbac-relational-database-integration.png" alt="Add Permissions for Integrations" width="70%" height="auto"></img></p>
-
 The group or application can now access the database tables according to the configured permissions.
 
 With the integration in place, you can now create workflows using the [JDBC](https://orkes.io/content/reference-docs/system-tasks/jdbc) task.

@@ -1,0 +1,73 @@
+---
+sidebar_position: 6
+slug: "/reference-docs/api/gateway/create-gateway-service"
+description: "Learn how to create a gateway service."
+---
+
+# Create Gateway Service
+
+**Endpoint**: `POST /api/gateway/config/service`
+
+Creates a gateway service.
+
+## Request body
+
+Format the request body as a JSON object with the following parameters:
+
+| Parameter | Description | Type | Required/ Optional |
+| --------- | ------------ | ---- | ------------------- |
+| id | A unique identifier for the service. Use lowercase letters and hyphens. This value cannot be changed after the service is created. | string | Required. |
+| name | A user-friendly name for the service. | string | Required. |
+| path | The base path for all routes in the service. The path must start with a forward slash (for example, `/api/v1/users`). Including `api` in the path is optional. This cannot be renamed once saved. | string | Required. |
+| authConfigId | The ID of the authentication configuration to use for the service. You can retrieve this value using the [Get Auth Config of Gateway Service](/reference-docs/api/gateway/get-auth-config-for-gateway) endpoint. | string | Required. |
+| corsConfig | The CORS configuration for the service. It can include the following parameters:<ul><li>`corsConfig.accessControlAllowHeaders`: The origins (URLs) that can access this service. Use `*` to allow all origins.</li><li>`corsConfig.accessControlAllowMethods`: The HTTP methods that can be used in cross-origin requests. Supported values are GET, POST, PUT, DELETE, PATCH, and OPTIONS.</li><li>`corsConfig.accessControlAllowHeaders`: The HTTP headers that can be sent in requests from allowed origins. Use `*` to allow all headers.</li></ul> | object | Required. |
+| description | A description of the service. | string | Optional. |
+| enabled | Determines whether the service is active. Set this value to `true` to enable the service or `false` to disable it. | boolean | Required. |
+| mcpEnabled | Determines whether MCP is enabled for the service. Set this value to `true` when exposing workflows as MCP tools. Set it to `false` when exposing workflows as API endpoints. | boolean | Required. |
+| routes | The routes configured within the service. | array of objects | Optional. |
+| tags | Tags associated with the service. Specify each tag in the `key:value` format. | array of strings | Optional. |
+
+## Response
+
+Returns 200 OK, indicating that the gateway service was created successfully.
+
+## Examples
+
+<details markdown="1">
+<summary>Create a gateway service</summary>
+
+**Request**
+
+```shell
+curl -X 'POST' \
+  'https://<YOUR-SERVICE-URL>/api/gateway/config/services' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "authConfigId": "gateway",
+  "path": "/api/test-service",
+  "corsConfig": {
+    "accessControlAllowHeaders": [
+      "*"
+    ],
+    "accessControlAllowMethods": [
+      "*"
+    ],
+    "accessControlAllowOrigin": [
+      "*"
+    ]
+  },
+  "description": "Sample service created using API",
+  "enabled": true,
+  "id": "test-service",
+  "mcpEnabled": true,
+  "name": "Sample service"
+}'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the gateway service was created successfully.
+
+</details>

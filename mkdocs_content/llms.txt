@@ -1,0 +1,549 @@
+# Agentic Workflow Engine
+
+This file is a machine-readable version of the public Orkes Conductor documentation for AI systems, developer tools, and search systems.
+
+Source documentation: https://orkes.io/content/
+Full documentation dump: https://orkes.io/content/llms-full.txt
+Product: Orkes Conductor
+Positioning: Managed enterprise platform for Conductor OSS, a durable workflow engine for production AI agents and distributed systems.
+
+## What is Orkes Conductor?
+
+Orkes Conductor is the managed enterprise version of Conductor OSS. It orchestrates production workflows, distributed applications, microservices, APIs, human approvals, and AI agents with durable execution and operational visibility.
+
+Conductor OSS is the actively maintained open-source durable workflow engine under the Conductor OSS community. Orkes contributes maintenance, engineering, documentation, and enterprise support; the original Netflix project history is part of the origin story, not the current maintenance model.
+
+Agentspan is the developer-facing agent runtime. Conductor OSS is the durable workflow engine underneath. Orkes Conductor is the managed enterprise platform for operating Conductor-based systems at scale.
+
+Conductor Skills are authoring and operations instructions for AI coding agents. They are not the runtime. Agentspan is runtime integration for agent applications that need durable execution through Conductor.
+
+Conductor is not a replacement for agent frameworks. Use frameworks for reasoning, prompts, graph composition, and model-specific loops; use Conductor for durable execution, persisted state, task queues, retries, timeouts, long waits, human approval, replay, governance, and audit history.
+
+Use Orkes Conductor when work must survive crashes, retries, timeouts, long waits, external callbacks, human approvals, model calls, and worker failures. Define orchestration in Conductor and keep business logic in workers written in Python, Java, Go, .NET/C#, Ruby, Rust, TypeScript, or any service that can poll an API.
+
+## Core Capabilities
+
+- Agentic workflows with LLM tasks, vector databases, prompts, MCP tools, and human-in-the-loop steps.
+- Durable workflow execution with persisted state, retries, timeouts, rate limits, compensation workflows, pause, resume, restart, and rerun.
+- Polyglot workers that execute business logic outside the orchestrator and scale independently.
+- Visual workflow graph, execution debugging, task inputs and outputs, logs, metrics, and observability.
+- Enterprise access control, tags, applications, secrets, schedules, webhooks, integrations, and API gateway/MCP gateway.
+
+## Canonical Agentic Workflow Pages
+
+- Agentic Workflow Engine: https://orkes.io/content/agentic-workflow-engine
+- Production agent architecture: https://orkes.io/content/ai-agents/production-agent-architecture
+- Failure semantics for AI agents: https://orkes.io/content/ai-agents/failure-semantics
+- Durable agents: https://orkes.io/content/ai-agents/durable-agents
+- Build with AI Agents: https://orkes.io/content/conductor-skills
+- Write Workflows Using Code: https://orkes.io/content/developer-guides/write-workflows-using-code
+- Writing Workers for Conductor Workflows: https://orkes.io/content/developer-guides/using-workers
+- Durable Execution Semantics: https://orkes.io/content/quickstarts/durable-execution
+- JSON + Code Native Workflow Orchestration: https://orkes.io/content/quickstarts/json-code-native
+
+## Documentation Index
+
+- Agentic Workflow Engine: https://orkes.io/content/
+- Managing Applications: https://orkes.io/content/access-control-and-security/applications
+- Managing Tags: https://orkes.io/content/access-control-and-security/tags
+- Managing Users and Groups: https://orkes.io/content/access-control-and-security/users-and-groups
+- Agentic Workflow Engine: https://orkes.io/content/agentic-workflow-engine
+- Durable agents: https://orkes.io/content/ai-agents/durable-agents
+- Dynamic workflows for agents: https://orkes.io/content/ai-agents/dynamic-workflows
+- Failure semantics for AI agents: https://orkes.io/content/ai-agents/failure-semantics
+- Build Your First AI Agent: https://orkes.io/content/ai-agents/first-ai-agent
+- Human-in-the-loop: https://orkes.io/content/ai-agents/human-in-the-loop
+- Production agent architecture: https://orkes.io/content/ai-agents/production-agent-architecture
+- Token efficiency with durable execution: https://orkes.io/content/ai-agents/token-efficiency
+- AI Cookbook: https://orkes.io/content/ai-orchestration
+- AI & LLM orchestration recipes: https://orkes.io/content/ai-orchestration/ai-llm-recipes
+- LLM orchestration: https://orkes.io/content/ai-orchestration/llm-orchestration
+- Role Based Access Control: https://orkes.io/content/category/access-control-and-security
+- Conceptual Guides: https://orkes.io/content/category/conceptual-guides
+- Developer Guides: https://orkes.io/content/category/developer-guides
+- Event-Driven Orchestration: https://orkes.io/content/category/event-driven-orchestration
+- Eventing API Reference: https://orkes.io/content/category/event-driven-orchestration/api-reference
+- Publish Events: https://orkes.io/content/category/event-driven-orchestration/publish-events
+- Receive Events: https://orkes.io/content/category/event-driven-orchestration/receive-events
+- Webhook Examples: https://orkes.io/content/category/event-driven-orchestration/webhook-examples
+- General FAQs: https://orkes.io/content/category/faqs
+- Get Started with Orkes Conductor: https://orkes.io/content/category/getting-started
+- Integration Catalog: https://orkes.io/content/category/integrations
+- AI / LLM Integrations: https://orkes.io/content/category/integrations/ai-llm
+- Cloud: https://orkes.io/content/category/integrations/cloud
+- Cloud Providers: https://orkes.io/content/category/integrations/cloud-provider
+- CMS: https://orkes.io/content/category/integrations/cms
+- Community: https://orkes.io/content/category/integrations/community
+- Connected Apps: https://orkes.io/content/category/integrations/connected-apps
+- CRM: https://orkes.io/content/category/integrations/crm
+- Database: https://orkes.io/content/category/integrations/database
+- Email/Git: https://orkes.io/content/category/integrations/email
+- Message Broker Integrations: https://orkes.io/content/category/integrations/message-broker
+- Payment: https://orkes.io/content/category/integrations/payment
+- Productivity: https://orkes.io/content/category/integrations/productivity
+- Project Management: https://orkes.io/content/category/integrations/project-management
+- RDBMS Integrations: https://orkes.io/content/category/integrations/rdbms
+- Source Control: https://orkes.io/content/category/integrations/source-control
+- Vector Databases Integrations: https://orkes.io/content/category/integrations/vector-databases
+- API Reference: https://orkes.io/content/category/ref-docs/api
+- Task Reference: https://orkes.io/content/category/reference-docs
+- AI Tasks: https://orkes.io/content/category/reference-docs/ai-tasks
+- Alerting Tasks: https://orkes.io/content/category/reference-docs/alerting-tasks
+- Operators: https://orkes.io/content/category/reference-docs/operators
+- System Tasks: https://orkes.io/content/category/reference-docs/system-tasks
+- SDKs: https://orkes.io/content/category/sdks
+- Alerts and Notifications: https://orkes.io/content/category/templates/alerting
+- Cookbook: https://orkes.io/content/category/tutorials
+- Conductor Architecture and Worker Polling: https://orkes.io/content/conductor-architecture
+- Build with AI Agents: https://orkes.io/content/conductor-skills
+- Dynamic parallelism: https://orkes.io/content/cookbook/dynamic-parallelism
+- Dynamic Workflows as Code: https://orkes.io/content/cookbook/dynamic-workflows
+- Microservice orchestration: https://orkes.io/content/cookbook/microservice-orchestration
+- Task timeouts and retries: https://orkes.io/content/cookbook/task-timeouts-and-retries
+- Wait and timer patterns: https://orkes.io/content/cookbook/wait-and-timers
+- Scheduled Workflows: https://orkes.io/content/cookbook/workflow-scheduling
+- Core Concepts: https://orkes.io/content/core-concepts
+- API Gateway: Expose Workflows as APIs: https://orkes.io/content/developer-guides/api-gateway
+- Build Workflows Using Conductor UI: https://orkes.io/content/developer-guides/build-workflows-using-ui
+- Building Workflows: https://orkes.io/content/developer-guides/building-workflows
+- Import BPMN Files as Workflows: https://orkes.io/content/developer-guides/convert-bpmn-to-workflows
+- Using AI Prompts: https://orkes.io/content/developer-guides/creating-and-managing-gen-ai-prompt-templates
+- Search / Query Executions: https://orkes.io/content/developer-guides/debugging-workflows
+- Testing, Monitoring, and Querying Workflows: https://orkes.io/content/developer-guides/deploying-workflows
+- Enabling CDC (Change Data Capture): https://orkes.io/content/developer-guides/enabling-cdc-on-conductor-workflows
+- Using Event Handlers: https://orkes.io/content/developer-guides/event-handler
+- Monitor Gateway Metrics: https://orkes.io/content/developer-guides/gateway-metrics
+- CI/CD Best Practices: https://orkes.io/content/developer-guides/integration-with-cicd
+- Masking Parameters: https://orkes.io/content/developer-guides/masking-parameters
+- API and MCP Gateway: https://orkes.io/content/developer-guides/mcp-api-gateway
+- MCP Gateway:  Expose Workflows as MCP tools: https://orkes.io/content/developer-guides/mcp-gateway
+- Metrics and Observability: https://orkes.io/content/developer-guides/metrics-and-observability
+- Human Task Orchestration: https://orkes.io/content/developer-guides/orchestrating-human-tasks
+- Wiring Parameters: https://orkes.io/content/developer-guides/passing-inputs-to-task-in-conductor
+- Build an AI-Powered Translator with Orkes Conductor: https://orkes.io/content/developer-guides/quickstart-ai-orchestration
+- Executing Workflows: https://orkes.io/content/developer-guides/running-workflows
+- Guide to Scaling Workers: https://orkes.io/content/developer-guides/scaling-workers
+- Scheduling Workflows: https://orkes.io/content/developer-guides/scheduling-workflows
+- Input/Output Schema Validation: https://orkes.io/content/developer-guides/schema-validation
+- Using Secrets: https://orkes.io/content/developer-guides/secrets-in-conductor
+- Sending Signals to Workflows: https://orkes.io/content/developer-guides/sending-signals-to-workflows
+- Workflow and Task Status: https://orkes.io/content/developer-guides/task-and-workflow-status-in-conductor
+- Using Task Input Templates: https://orkes.io/content/developer-guides/task-input-templates
+- Routing Tasks (Task-to-domain): https://orkes.io/content/developer-guides/task-to-domain
+- Tasks in Workflows: https://orkes.io/content/developer-guides/tasks
+- Unit and Regression Tests: https://orkes.io/content/developer-guides/unit-and-regression-tests
+- Using Environment Variables: https://orkes.io/content/developer-guides/using-environment-variables
+- Using AI Models or LLMs: https://orkes.io/content/developer-guides/using-llms-in-your-orkes-conductor-workflows
+- Using Vector Databases: https://orkes.io/content/developer-guides/using-vector-databases-in-your-orkes-conductor-workflows
+- Writing Workers for Conductor Workflows: https://orkes.io/content/developer-guides/using-workers
+- Versioning Workflows: https://orkes.io/content/developer-guides/versioning-workflows
+- Using Webhooks: https://orkes.io/content/developer-guides/webhook-integration
+- Workflow Versioning and Upgrades at Runtime: https://orkes.io/content/developer-guides/workflow-version-behavior-on-execution
+- Workflows: https://orkes.io/content/developer-guides/workflows
+- Write Workflows Using Code: https://orkes.io/content/developer-guides/write-workflows-using-code
+- Documents: https://orkes.io/content/document-templates
+- Handling Failures: https://orkes.io/content/error-handling
+- Event Publishing Recipes: https://orkes.io/content/eventing
+- Directed Acyclic Graph (DAG): https://orkes.io/content/faqs/directed-acyclic-graph
+- Caching Task Outputs: https://orkes.io/content/faqs/task-cache-output
+- Managing Workflow Versions: https://orkes.io/content/faqs/workflow-versioning
+- Finance: https://orkes.io/content/finance-templates
+- Workflow Patterns: https://orkes.io/content/general-templates
+- Install and Set Up Orkes Conductor: https://orkes.io/content/get-orkes-conductor
+- Orkes Conductor Glossary: https://orkes.io/content/glossary
+- Running Workflows in UI: https://orkes.io/content/how-to-videos/run-workflow
+- Idempotency in Conductor Workflows: https://orkes.io/content/idempotency
+- Anthropic Claude Integration with Orkes Conductor: https://orkes.io/content/integrations/ai-llm/anthropic-claude
+- AWS Bedrock Anthropic Integration with Orkes Conductor: https://orkes.io/content/integrations/ai-llm/aws-bedrock-anthropic
+- AWS Bedrock Cohere Integration with Orkes Conductor: https://orkes.io/content/integrations/ai-llm/aws-bedrock-cohere
+- AWS Bedrock Llama3 Integration with Orkes Conductor: https://orkes.io/content/integrations/ai-llm/aws-bedrock-llama2
+- AWS Bedrock Titan Integration with Orkes Conductor: https://orkes.io/content/integrations/ai-llm/aws-bedrock-titan
+- Azure OpenAI Integration with Orkes Conductor: https://orkes.io/content/integrations/ai-llm/azure-open-ai
+- Cohere Integration with Orkes Conductor: https://orkes.io/content/integrations/ai-llm/cohere
+- Google Gemini AI Integration with Orkes Conductor: https://orkes.io/content/integrations/ai-llm/google-gemini-ai
+- Grok Integration with Orkes Conductor: https://orkes.io/content/integrations/ai-llm/grok
+- Hugging Face Integration with Orkes Conductor: https://orkes.io/content/integrations/ai-llm/hugging-face
+- Mistral Integration with Orkes Conductor: https://orkes.io/content/integrations/ai-llm/mistral
+- Ollama Integration with Orkes Conductor: https://orkes.io/content/integrations/ai-llm/ollama
+- OpenAI Integration with Orkes Conductor: https://orkes.io/content/integrations/ai-llm/open-ai
+- Perplexity Integration with Orkes Conductor: https://orkes.io/content/integrations/ai-llm/perplexity
+- Google Vertex AI Integration with Orkes Conductor: https://orkes.io/content/integrations/ai-llm/vertex-ai
+- AWS Lambda Integration with Orkes Conductor: https://orkes.io/content/integrations/aws-lambda
+- AWS Lambda Operations Reference: https://orkes.io/content/integrations/aws-lambda-operations
+- AWS S3 Integration with Orkes Conductor: https://orkes.io/content/integrations/aws-s3
+- AWS S3 Operations Reference: https://orkes.io/content/integrations/aws-s3-operations
+- Azure Functions Integration with Orkes Conductor: https://orkes.io/content/integrations/azure-functions
+- Azure Functions Operations Reference: https://orkes.io/content/integrations/azure-functions-operations
+- Azure Storage Integration with Orkes Conductor: https://orkes.io/content/integrations/azure-storage
+- Azure Storage Operations Reference: https://orkes.io/content/integrations/azure-storage-operations
+- AWS Integration with Orkes Conductor: https://orkes.io/content/integrations/cloud-provider/aws
+- GCP Integration with Orkes Conductor: https://orkes.io/content/integrations/cloud-provider/gcp
+- Common Room Integration with Orkes Conductor: https://orkes.io/content/integrations/common-room
+- Common Room Operations Reference: https://orkes.io/content/integrations/common-room-operations
+- Discourse Integration with Orkes Conductor: https://orkes.io/content/integrations/discourse
+- Discourse Operations Reference: https://orkes.io/content/integrations/discourse-operations
+- SendGrid Email Integration with Orkes Conductor: https://orkes.io/content/integrations/email/sendgrid
+- Git Repository Integration with Orkes Conductor: https://orkes.io/content/integrations/git-repository
+- GitHub Integration with Orkes Conductor: https://orkes.io/content/integrations/github
+- GitHub Operations Reference: https://orkes.io/content/integrations/github-operations
+- Google Calendar Integration with Orkes Conductor: https://orkes.io/content/integrations/google-calendar
+- Google Calendar Operations Reference: https://orkes.io/content/integrations/google-calendar-operations
+- Google Cloud Functions Integration with Orkes Conductor: https://orkes.io/content/integrations/google-cloud-functions
+- Google Cloud Functions Operations Reference: https://orkes.io/content/integrations/google-cloud-functions-operations
+- Google Cloud Storage Integration with Orkes Conductor: https://orkes.io/content/integrations/google-cloud-storage
+- Google Cloud Storage Operations Reference: https://orkes.io/content/integrations/google-cloud-storage-operations
+- Google Docs Integration with Orkes Conductor: https://orkes.io/content/integrations/google-docs
+- Google Docs Operations Reference: https://orkes.io/content/integrations/google-docs-operations
+- Google Drive Integration with Orkes Conductor: https://orkes.io/content/integrations/google-drive
+- Google Drive Operations Reference: https://orkes.io/content/integrations/google-drive-operations
+- Google Sheets Integration with Orkes Conductor: https://orkes.io/content/integrations/google-sheets
+- Google Sheets Operations Reference: https://orkes.io/content/integrations/google-sheets-operations
+- Google Slides Integration with Orkes Conductor: https://orkes.io/content/integrations/google-slides
+- Google Slides Operations Reference: https://orkes.io/content/integrations/google-slides-operations
+- HubSpot Integration with Orkes Conductor: https://orkes.io/content/integrations/hubspot
+- HubSpot Operations Reference: https://orkes.io/content/integrations/hubspot-operations
+- Jira Integration with Orkes Conductor: https://orkes.io/content/integrations/jira
+- Jira Operations Reference: https://orkes.io/content/integrations/jira-operations
+- Amazon MSK Integration with Orkes Conductor: https://orkes.io/content/integrations/message-broker/amazon-msk
+- AMQP Integration with Orkes Conductor: https://orkes.io/content/integrations/message-broker/amqp
+- Apache Kafka Integration with Orkes Conductor: https://orkes.io/content/integrations/message-broker/apache-kafka
+- AWS SQS Integration with Orkes Conductor: https://orkes.io/content/integrations/message-broker/aws-sqs
+- Azure Service Bus Integration with Orkes Conductor: https://orkes.io/content/integrations/message-broker/azure-service-bus
+- Confluent Kafka Integration with Orkes Conductor: https://orkes.io/content/integrations/message-broker/confluent-kafka
+- GCP Pub Sub Integration with Orkes Conductor: https://orkes.io/content/integrations/message-broker/gcp-pub-sub
+- IBM MQ Integration with Orkes Conductor: https://orkes.io/content/integrations/message-broker/ibm-mq
+- NATS Messaging Integration with Orkes Conductor: https://orkes.io/content/integrations/message-broker/nats-messaging
+- MySQL Integration with Orkes Conductor: https://orkes.io/content/integrations/mysql
+- MySQL Operations Reference: https://orkes.io/content/integrations/mysql-operations
+- Notion Integration with Orkes Conductor: https://orkes.io/content/integrations/notion
+- Notion Operations Reference: https://orkes.io/content/integrations/notion-operations
+- PostgreSQL Integration with Orkes Conductor: https://orkes.io/content/integrations/postgresql
+- PostgreSQL Operations Reference: https://orkes.io/content/integrations/postgresql-operations
+- Relational Database Integration with Orkes Conductor: https://orkes.io/content/integrations/rdbms/relational-database
+- Redis Integration with Orkes Conductor: https://orkes.io/content/integrations/redis
+- Redis Operations Reference: https://orkes.io/content/integrations/redis-operations
+- Slack Integration with Orkes Conductor: https://orkes.io/content/integrations/slack
+- Slack Operations Reference: https://orkes.io/content/integrations/slack-operations
+- Stripe Integration with Orkes Conductor: https://orkes.io/content/integrations/stripe
+- Stripe Operations Reference: https://orkes.io/content/integrations/stripe-operations
+- Mongo Vector Database Integration with Orkes Conductor: https://orkes.io/content/integrations/vector-databases/mongo-vector-database
+- Pinecone Integration with Orkes Conductor: https://orkes.io/content/integrations/vector-databases/pinecone
+- Postgres Vector Database Integration with Orkes Conductor: https://orkes.io/content/integrations/vector-databases/postgres-vector-database
+- Weaviate Integration with Orkes Conductor: https://orkes.io/content/integrations/vector-databases/weaviate
+- WordPress Integration with Orkes Conductor: https://orkes.io/content/integrations/wordpress
+- WordPress Operations Reference: https://orkes.io/content/integrations/wordpress-operations
+- Run Your First Workflow: https://orkes.io/content/quickstarts
+- Basic Concepts: https://orkes.io/content/quickstarts/concepts
+- Quickstart 2: Create Your First Workflow: https://orkes.io/content/quickstarts/create-first-workflow
+- Quickstart 3: Monitor and Debug Workflows: https://orkes.io/content/quickstarts/debug-and-monitor-workflows
+- Durable Execution Semantics: https://orkes.io/content/quickstarts/durable-execution
+- JSON + Code Native Workflow Orchestration: https://orkes.io/content/quickstarts/json-code-native
+- Task Lifecycle: https://orkes.io/content/quickstarts/task-lifecycle
+- Tasks: https://orkes.io/content/quickstarts/tasks
+- Workers: https://orkes.io/content/quickstarts/workers
+- Workflow Concepts: https://orkes.io/content/quickstarts/workflows
+- Quickstart 1: Write a Worker: https://orkes.io/content/quickstarts/write-workers
+- Rate Limits: https://orkes.io/content/rate-limits
+- Chunk Text: https://orkes.io/content/reference-docs/ai-tasks/chunk-text
+- List Files: https://orkes.io/content/reference-docs/ai-tasks/list-files
+- LLM Chat Complete: https://orkes.io/content/reference-docs/ai-tasks/llm-chat-complete
+- LLM Generate Embeddings: https://orkes.io/content/reference-docs/ai-tasks/llm-generate-embeddings
+- Get Document: https://orkes.io/content/reference-docs/ai-tasks/llm-get-document
+- LLM Get Embeddings: https://orkes.io/content/reference-docs/ai-tasks/llm-get-embeddings
+- LLM Index Document: https://orkes.io/content/reference-docs/ai-tasks/llm-index-document
+- LLM Index Text: https://orkes.io/content/reference-docs/ai-tasks/llm-index-text
+- LLM Search Index: https://orkes.io/content/reference-docs/ai-tasks/llm-search-index
+- LLM Store Embeddings: https://orkes.io/content/reference-docs/ai-tasks/llm-store-embeddings
+- LLM Text Complete: https://orkes.io/content/reference-docs/ai-tasks/llm-text-complete
+- Parse Document: https://orkes.io/content/reference-docs/ai-tasks/parse-document
+- Applications: https://orkes.io/content/reference-docs/api/applications
+- Add Tag to Application: https://orkes.io/content/reference-docs/api/applications/add-tag-to-application
+- Assign Role to Application: https://orkes.io/content/reference-docs/api/applications/assign-role-to-application
+- Create Application: https://orkes.io/content/reference-docs/api/applications/create-application
+- Create an Access Key for Application: https://orkes.io/content/reference-docs/api/applications/create-application-access-key
+- Delete Access Key: https://orkes.io/content/reference-docs/api/applications/delete-access-key
+- Delete Application: https://orkes.io/content/reference-docs/api/applications/delete-application
+- Delete Tag from Application: https://orkes.io/content/reference-docs/api/applications/delete-tag-application
+- Get All Applications: https://orkes.io/content/reference-docs/api/applications/get-all-applications
+- Get Application Access Keys: https://orkes.io/content/reference-docs/api/applications/get-application-access-keys
+- Get Application by ID: https://orkes.io/content/reference-docs/api/applications/get-application-by-id
+- Get Application ID using Access Key: https://orkes.io/content/reference-docs/api/applications/get-application-id-using-access-key
+- Get Tags from Application: https://orkes.io/content/reference-docs/api/applications/get-application-tags
+- Remove Role from Application: https://orkes.io/content/reference-docs/api/applications/remove-application-role
+- Toggle Access Key Status: https://orkes.io/content/reference-docs/api/applications/toggle-access-key-status
+- Update Application: https://orkes.io/content/reference-docs/api/applications/update-application
+- Authorization: https://orkes.io/content/reference-docs/api/authorization
+- Get Access Grants for a Resource: https://orkes.io/content/reference-docs/api/authorization/get-access-grants-for-resource
+- Grant Access: https://orkes.io/content/reference-docs/api/authorization/grant-access
+- List Grants for a Subject: https://orkes.io/content/reference-docs/api/authorization/list-grants-for-subject
+- Revoke Access: https://orkes.io/content/reference-docs/api/authorization/revoke-access
+- Revoke Grants for a Subject: https://orkes.io/content/reference-docs/api/authorization/revoke-grants-for-subject
+- Environment Variables: https://orkes.io/content/reference-docs/api/environment-variables
+- Add Tags to an Environment Variable: https://orkes.io/content/reference-docs/api/environment-variables/add-tags-to-environment-variable
+- Create/Update Environment Variable: https://orkes.io/content/reference-docs/api/environment-variables/create-environment-variable
+- Delete Environment Variable: https://orkes.io/content/reference-docs/api/environment-variables/delete-environment-variable
+- Delete Tags from an Environment Variable: https://orkes.io/content/reference-docs/api/environment-variables/delete-tags-from-environment-variable
+- Get All Environment Variables: https://orkes.io/content/reference-docs/api/environment-variables/get-all-environment-variables
+- Get Environment Value by Key: https://orkes.io/content/reference-docs/api/environment-variables/get-environment-value-by-key
+- Get Tags from an Environment Variable: https://orkes.io/content/reference-docs/api/environment-variables/get-tags-from-environment-variable
+- Groups: https://orkes.io/content/reference-docs/api/groups
+- Add Single User to Group: https://orkes.io/content/reference-docs/api/groups/add-user-to-group
+- Add Users to Group in Bulk: https://orkes.io/content/reference-docs/api/groups/add-users-to-group-bulk
+- Create/Update Groups: https://orkes.io/content/reference-docs/api/groups/create-group
+- Delete Group: https://orkes.io/content/reference-docs/api/groups/delete-group
+- Get All Groups: https://orkes.io/content/reference-docs/api/groups/get-all-groups
+- Get All Users in Group: https://orkes.io/content/reference-docs/api/groups/get-all-users-in-group
+- Get Group by ID: https://orkes.io/content/reference-docs/api/groups/get-group
+- Get Group Permission over Resources: https://orkes.io/content/reference-docs/api/groups/get-group-permissions
+- Remove Single User from Group: https://orkes.io/content/reference-docs/api/groups/remove-users-from-group
+- Remove Users from Group in Bulk: https://orkes.io/content/reference-docs/api/groups/remove-users-from-group-bulk
+- Human Task: https://orkes.io/content/reference-docs/api/human-tasks
+- Add Tags to User Form: https://orkes.io/content/reference-docs/api/human-tasks/add-tags-to-user-form
+- Claim Task (Conductor User): https://orkes.io/content/reference-docs/api/human-tasks/claim-task-conductor-user
+- Claim Task (External/All Users): https://orkes.io/content/reference-docs/api/human-tasks/claim-task-external-user
+- Create User Forms in Bulk: https://orkes.io/content/reference-docs/api/human-tasks/create-user-forms-bulk
+- Delete Tags from User Form: https://orkes.io/content/reference-docs/api/human-tasks/delete-tags-from-user-form
+- Delete Human Task: https://orkes.io/content/reference-docs/api/human-tasks/delete-task
+- Delete User Form: https://orkes.io/content/reference-docs/api/human-tasks/delete-task-ui-template
+- Delete User Form Version: https://orkes.io/content/reference-docs/api/human-tasks/delete-user-form-version
+- Get Available Human Tasks Display Names: https://orkes.io/content/reference-docs/api/human-tasks/get-available-human-tasks-display-names
+- Get Conductor Task by Human Task ID: https://orkes.io/content/reference-docs/api/human-tasks/get-conductor-task-by-human-task-id
+- Get Tags from a User Form: https://orkes.io/content/reference-docs/api/human-tasks/get-tags-from-user-form
+- Get Human Task: https://orkes.io/content/reference-docs/api/human-tasks/get-task
+- Get User Form by Task ID: https://orkes.io/content/reference-docs/api/human-tasks/get-task-ui-template
+- Get User Form by Name and Version: https://orkes.io/content/reference-docs/api/human-tasks/get-user-form-by-name-version
+- Get All User Forms: https://orkes.io/content/reference-docs/api/human-tasks/list-task-ui-templates
+- Reassign Human Task: https://orkes.io/content/reference-docs/api/human-tasks/reassign-human-task
+- Release Human Task: https://orkes.io/content/reference-docs/api/human-tasks/release-human-task
+- Create User Form: https://orkes.io/content/reference-docs/api/human-tasks/save-task-ui-template
+- Search Human Tasks: https://orkes.io/content/reference-docs/api/human-tasks/search-task-list
+- Skip Human Task: https://orkes.io/content/reference-docs/api/human-tasks/skip-human-task
+- Update Human Task by Task ID: https://orkes.io/content/reference-docs/api/human-tasks/update-human-task
+- Update Human Task by Workflow ID and Task Reference: https://orkes.io/content/reference-docs/api/human-tasks/update-human-task-by-workflow-and-task-ref
+- Integrations API Reference: https://orkes.io/content/reference-docs/api/integrations
+- Add Tags to Integration Provider: https://orkes.io/content/reference-docs/api/integrations/add-tags-to-integration-provider
+- Add Tags to Integration Resource: https://orkes.io/content/reference-docs/api/integrations/add-tags-to-integration-resource
+- Associate Prompt with Integration Model: https://orkes.io/content/reference-docs/api/integrations/associate-prompt-with-integration-model
+- Create or Update Integration Provider: https://orkes.io/content/reference-docs/api/integrations/create-integration-provider
+- Create or Update Integration Resource: https://orkes.io/content/reference-docs/api/integrations/create-integration-resource
+- Delete Integration Provider: https://orkes.io/content/reference-docs/api/integrations/delete-integration-provider
+- Delete Integration Resource: https://orkes.io/content/reference-docs/api/integrations/delete-integration-resource
+- Delete Tags from Integration Provider: https://orkes.io/content/reference-docs/api/integrations/delete-tags-from-integration-provider
+- Delete Tags from Integration Resource: https://orkes.io/content/reference-docs/api/integrations/delete-tags-from-integration-resource
+- Get All Integration Providers: https://orkes.io/content/reference-docs/api/integrations/get-all-integration-providers
+- Get All Integrations: https://orkes.io/content/reference-docs/api/integrations/get-all-integrations
+- Get Integration List: https://orkes.io/content/reference-docs/api/integrations/get-integration-list
+- Get Integration Provider: https://orkes.io/content/reference-docs/api/integrations/get-integration-provider
+- Get Integration Resource: https://orkes.io/content/reference-docs/api/integrations/get-integration-resource
+- Get Tags from Integration Provider: https://orkes.io/content/reference-docs/api/integrations/get-tags-from-integration-provider
+- Get Tags from Integration Resource: https://orkes.io/content/reference-docs/api/integrations/get-tags-from-integration-resource
+- List Integration Model Prompts: https://orkes.io/content/reference-docs/api/integrations/list-integration-model-prompts
+- Save All Integrations: https://orkes.io/content/reference-docs/api/integrations/save-all-integrations
+- Metadata: https://orkes.io/content/reference-docs/api/metadata
+- Create Task Definition: https://orkes.io/content/reference-docs/api/metadata/creating-task-definitions
+- Create Workflow Definition: https://orkes.io/content/reference-docs/api/metadata/creating-workflow-definition
+- Delete Task Definition: https://orkes.io/content/reference-docs/api/metadata/delete-task-definition
+- Delete Workflow Definition: https://orkes.io/content/reference-docs/api/metadata/delete-workflow-definition
+- Get All Task Definitions: https://orkes.io/content/reference-docs/api/metadata/get-all-task-definitions
+- Get All Workflow Definitions: https://orkes.io/content/reference-docs/api/metadata/get-all-workflow-definitions
+- Get Task Definition: https://orkes.io/content/reference-docs/api/metadata/get-task-definition
+- Get Workflow Definition: https://orkes.io/content/reference-docs/api/metadata/get-workflow-definition
+- Import BPMN to Workflows: https://orkes.io/content/reference-docs/api/metadata/import-bpmn
+- Update Task Definition: https://orkes.io/content/reference-docs/api/metadata/update-task-definitions
+- Update Workflow Definition: https://orkes.io/content/reference-docs/api/metadata/update-workflow-definitions
+- Prompts: https://orkes.io/content/reference-docs/api/prompts
+- Add Tags to Prompt: https://orkes.io/content/reference-docs/api/prompts/add-tags-to-prompt
+- Create or Update Prompt: https://orkes.io/content/reference-docs/api/prompts/create-prompt
+- Create or Update Prompt Version: https://orkes.io/content/reference-docs/api/prompts/create-prompt-version
+- Create Prompts in Bulk: https://orkes.io/content/reference-docs/api/prompts/create-prompts-bulk
+- Delete Prompt: https://orkes.io/content/reference-docs/api/prompts/delete-prompt
+- Delete Prompt Version: https://orkes.io/content/reference-docs/api/prompts/delete-prompt-version
+- Delete Tags from Prompt: https://orkes.io/content/reference-docs/api/prompts/delete-tags-from-prompt
+- Get All Versions of Prompts: https://orkes.io/content/reference-docs/api/prompts/get-all-prompt-versions
+- Get All Prompts: https://orkes.io/content/reference-docs/api/prompts/get-all-prompts
+- Get Prompt: https://orkes.io/content/reference-docs/api/prompts/get-prompt
+- Get Tags from Prompt: https://orkes.io/content/reference-docs/api/prompts/get-tags-from-prompt
+- Test Prompts: https://orkes.io/content/reference-docs/api/prompts/test-prompts
+- Remote Services API Reference: https://orkes.io/content/reference-docs/api/remote-services
+- Add Method to Service: https://orkes.io/content/reference-docs/api/remote-services/add-method-to-service
+- Clone Service: https://orkes.io/content/reference-docs/api/remote-services/clone-service
+- Close Circuit Breaker: https://orkes.io/content/reference-docs/api/remote-services/close-circuit-breaker
+- Create Service: https://orkes.io/content/reference-docs/api/remote-services/create-service
+- Delete Proto File from gRPC Service: https://orkes.io/content/reference-docs/api/remote-services/delete-proto-file
+- Delete Service: https://orkes.io/content/reference-docs/api/remote-services/delete-service
+- Discover and Register Service Endpoints: https://orkes.io/content/reference-docs/api/remote-services/discover-service-endpoints
+- Get All Proto Files from gRPC Service: https://orkes.io/content/reference-docs/api/remote-services/get-all-proto-files
+- Get All Services: https://orkes.io/content/reference-docs/api/remote-services/get-all-services
+- Get Circuit Breaker Status: https://orkes.io/content/reference-docs/api/remote-services/get-circuit-breaker-status
+- Get Proto File from gRPC Service: https://orkes.io/content/reference-docs/api/remote-services/get-proto-file
+- Get Service: https://orkes.io/content/reference-docs/api/remote-services/get-service
+- Open Circuit Breaker: https://orkes.io/content/reference-docs/api/remote-services/open-circuit-breaker
+- Remove Method from Service: https://orkes.io/content/reference-docs/api/remote-services/remove-method-from-service
+- Upload Proto File to gRPC Service: https://orkes.io/content/reference-docs/api/remote-services/upload-proto-file
+- Schedule: https://orkes.io/content/reference-docs/api/schedule
+- Add Tags to a Schedule: https://orkes.io/content/reference-docs/api/schedule/add-tags-to-schedule
+- Pause Schedules in Bulk: https://orkes.io/content/reference-docs/api/schedule/bulk-pause-schedule
+- Resume Schedules in Bulk: https://orkes.io/content/reference-docs/api/schedule/bulk-resume-schedule
+- Create Schedule: https://orkes.io/content/reference-docs/api/schedule/create-schedule
+- Delete Schedule: https://orkes.io/content/reference-docs/api/schedule/delete-schedule
+- Delete Tags from a Schedule: https://orkes.io/content/reference-docs/api/schedule/delete-tags-from-schedule
+- Get All Schedules: https://orkes.io/content/reference-docs/api/schedule/get-all-schedules
+- Get Next Few Schedules: https://orkes.io/content/reference-docs/api/schedule/get-next-few-schedules
+- Get Schedule: https://orkes.io/content/reference-docs/api/schedule/get-schedule
+- Get Schedules by Tag: https://orkes.io/content/reference-docs/api/schedule/get-schedules-using-tags
+- Get Tags from a Schedule: https://orkes.io/content/reference-docs/api/schedule/get-tags-from-schedule
+- Pause Schedule: https://orkes.io/content/reference-docs/api/schedule/pause-schedule
+- Resume Schedule: https://orkes.io/content/reference-docs/api/schedule/resume-schedule
+- Search Schedule Definitions with Pagination: https://orkes.io/content/reference-docs/api/schedule/search-schedule-definitions
+- Search Schedule Executions: https://orkes.io/content/reference-docs/api/schedule/search-schedule-executions
+- Schemas API Reference: https://orkes.io/content/reference-docs/api/schema
+- Create Schema: https://orkes.io/content/reference-docs/api/schema/create-schema
+- Delete Schema: https://orkes.io/content/reference-docs/api/schema/delete-schema
+- Delete Schema Version: https://orkes.io/content/reference-docs/api/schema/delete-schema-version
+- Get All Schemas: https://orkes.io/content/reference-docs/api/schema/get-all-schemas
+- Get Schema by Name: https://orkes.io/content/reference-docs/api/schema/get-schema-by-name
+- Get Schema by Name and Version: https://orkes.io/content/reference-docs/api/schema/get-schema-by-name-and-version
+- Secrets: https://orkes.io/content/reference-docs/api/secrets
+- Add Tags to Secret: https://orkes.io/content/reference-docs/api/secrets/add-tags-to-secret
+- Check if Secret Exists: https://orkes.io/content/reference-docs/api/secrets/check-secret-exists
+- Create/Update Secret: https://orkes.io/content/reference-docs/api/secrets/create-secret
+- Delete Secret: https://orkes.io/content/reference-docs/api/secrets/delete-secret
+- Delete Tags from Secret: https://orkes.io/content/reference-docs/api/secrets/delete-tags-from-secret
+- Get Secret Value by Key: https://orkes.io/content/reference-docs/api/secrets/get-secret-value
+- Get Tags from Secret: https://orkes.io/content/reference-docs/api/secrets/get-tags-from-secret
+- List Accessible Secrets: https://orkes.io/content/reference-docs/api/secrets/list-accessible-secrets
+- List All Secrets: https://orkes.io/content/reference-docs/api/secrets/list-all-secrets
+- List Secrets with Tags: https://orkes.io/content/reference-docs/api/secrets/list-secrets-with-tags
+- Tags: https://orkes.io/content/reference-docs/api/tags
+- Add Tag to a Workflow Definition: https://orkes.io/content/reference-docs/api/tags/add-tag-to-a-workflow-definition
+- Add Tags to a Task Definition: https://orkes.io/content/reference-docs/api/tags/add-tags-to-a-task-definition
+- Delete Tag from Task Definition: https://orkes.io/content/reference-docs/api/tags/delete-tag-from-task-definition
+- Delete Tag from Workflow Definition: https://orkes.io/content/reference-docs/api/tags/delete-tag-from-workflow-definition
+- List Tags Grouped by Resource Type: https://orkes.io/content/reference-docs/api/tags/get-all-tags-grouped
+- Get Resources by Tag: https://orkes.io/content/reference-docs/api/tags/get-resources-by-tag
+- Get Tags from a Task Definition: https://orkes.io/content/reference-docs/api/tags/get-tags-from-task-definition
+- Get Tags from a Workflow Definition: https://orkes.io/content/reference-docs/api/tags/get-tags-from-workflow-definition
+- List All Tags: https://orkes.io/content/reference-docs/api/tags/list-all-tags
+- Replace Tags in a Task Definition: https://orkes.io/content/reference-docs/api/tags/replace-tags-in-a-task-definition
+- Replace Tags in a Workflow Definition: https://orkes.io/content/reference-docs/api/tags/replace-tags-in-a-workflow-definition
+- Tasks API Reference: https://orkes.io/content/reference-docs/api/task
+- Log Task Execution: https://orkes.io/content/reference-docs/api/task/add-task-log
+- Get Task by ID: https://orkes.io/content/reference-docs/api/task/get-task
+- Signal Running Task Asynchronously: https://orkes.io/content/reference-docs/api/task/signal-running-task-asynchronously
+- Signal Running Task Synchronously: https://orkes.io/content/reference-docs/api/task/signal-running-task-synchronously
+- Task Queues: https://orkes.io/content/reference-docs/api/task/task-queue
+- Get Poll Data for All Tasks: https://orkes.io/content/reference-docs/api/task/task-queue/get-poll-data-for-all-task
+- Get Task Queue Size for All Tasks: https://orkes.io/content/reference-docs/api/task/task-queue/get-task-queue-size-for-all-tasks
+- Get Task Queue Size for a Task Type: https://orkes.io/content/reference-docs/api/task/task-queue/get-task-queue-size-for-individual-tasks
+- Update Task Status in Workflow: https://orkes.io/content/reference-docs/api/task/update-task-status-in-workflow
+- Tokens: https://orkes.io/content/reference-docs/api/tokens
+- Generate JWT Token: https://orkes.io/content/reference-docs/api/tokens/generate-token
+- Get User Info: https://orkes.io/content/reference-docs/api/tokens/get-user-info
+- Users: https://orkes.io/content/reference-docs/api/users
+- Check User Permission over Resources: https://orkes.io/content/reference-docs/api/users/check-user-permissions
+- Create/Update User: https://orkes.io/content/reference-docs/api/users/create-user
+- Delete User: https://orkes.io/content/reference-docs/api/users/delete-user
+- Get All Users: https://orkes.io/content/reference-docs/api/users/get-all-users
+- Get User by ID: https://orkes.io/content/reference-docs/api/users/get-user-by-id
+- Get User Permission over Resources: https://orkes.io/content/reference-docs/api/users/get-user-permissions
+- Webhook API: https://orkes.io/content/reference-docs/api/webhooks
+- Add Tags to Webhook: https://orkes.io/content/reference-docs/api/webhooks/add-tags-to-webhook
+- Create Webhook: https://orkes.io/content/reference-docs/api/webhooks/create-webhook
+- Delete Webhook: https://orkes.io/content/reference-docs/api/webhooks/delete-webhook
+- Get All Webhooks: https://orkes.io/content/reference-docs/api/webhooks/get-all-webhooks
+- Get Tags from Webhook: https://orkes.io/content/reference-docs/api/webhooks/get-tags-from-webhook
+- Get Webhook by ID: https://orkes.io/content/reference-docs/api/webhooks/get-webhook
+- Update Webhook: https://orkes.io/content/reference-docs/api/webhooks/update-webhook
+- Workflows API Reference: https://orkes.io/content/reference-docs/api/workflow
+- Delete Workflow Execution: https://orkes.io/content/reference-docs/api/workflow/delete-workflow
+- Get Workflow by ID: https://orkes.io/content/reference-docs/api/workflow/get-workflow-by-id
+- Get Workflow Size: https://orkes.io/content/reference-docs/api/workflow/get-workflow-size
+- Get Workflows by Correlation ID: https://orkes.io/content/reference-docs/api/workflow/get-workflows-by-correlation-id
+- Pause Workflow: https://orkes.io/content/reference-docs/api/workflow/pause-workflow
+- Rerun Workflow: https://orkes.io/content/reference-docs/api/workflow/rerun-workflow
+- Restart Workflow: https://orkes.io/content/reference-docs/api/workflow/restart-workflow
+- Resume Workflow: https://orkes.io/content/reference-docs/api/workflow/resume-workflow
+- Retry Failed Workflow: https://orkes.io/content/reference-docs/api/workflow/retry-failed-workflow
+- Search Workflow Executions: https://orkes.io/content/reference-docs/api/workflow/search-workflow-executions
+- Skip Task in Workflow Execution: https://orkes.io/content/reference-docs/api/workflow/skip-task-from-workflow
+- Execute Workflow Asynchronously: https://orkes.io/content/reference-docs/api/workflow/start-workflow-execution
+- Execute Workflow Synchronously: https://orkes.io/content/reference-docs/api/workflow/synchronous-workflow-execution
+- Terminate Workflow API: https://orkes.io/content/reference-docs/api/workflow/terminate-workflow
+- Test Workflow: https://orkes.io/content/reference-docs/api/workflow/test-workflow
+- Test Workflow Synchronously: https://orkes.io/content/reference-docs/api/workflow/test-workflow-synchronously
+- Update Variable: https://orkes.io/content/reference-docs/api/workflow/update-variable
+- Upgrade Workflow: https://orkes.io/content/reference-docs/api/workflow/upgrade-workflow
+- Do While: https://orkes.io/content/reference-docs/operators/do-while
+- Dynamic: https://orkes.io/content/reference-docs/operators/dynamic
+- Dynamic Fork: https://orkes.io/content/reference-docs/operators/dynamic-fork
+- Fork/Join: https://orkes.io/content/reference-docs/operators/fork-join
+- Get Workflow: https://orkes.io/content/reference-docs/operators/get-workflow
+- Human: https://orkes.io/content/reference-docs/operators/human
+- Join: https://orkes.io/content/reference-docs/operators/join
+- Set Variable: https://orkes.io/content/reference-docs/operators/set-variable
+- Start Workflow: https://orkes.io/content/reference-docs/operators/start-workflow
+- Sub Workflow: https://orkes.io/content/reference-docs/operators/sub-workflow
+- Switch: https://orkes.io/content/reference-docs/operators/switch
+- Terminate: https://orkes.io/content/reference-docs/operators/terminate
+- Terminate Workflow: https://orkes.io/content/reference-docs/operators/terminate-workflow
+- Wait: https://orkes.io/content/reference-docs/operators/wait
+- Yield: https://orkes.io/content/reference-docs/operators/yield
+- Business Rule: https://orkes.io/content/reference-docs/system-tasks/business-rule
+- Event: https://orkes.io/content/reference-docs/system-tasks/event
+- Get Signed JWT: https://orkes.io/content/reference-docs/system-tasks/get-signed-jwt
+- gRPC: https://orkes.io/content/reference-docs/system-tasks/grpc
+- HTTP: https://orkes.io/content/reference-docs/system-tasks/http
+- HTTP Poll: https://orkes.io/content/reference-docs/system-tasks/http-poll
+- Inline: https://orkes.io/content/reference-docs/system-tasks/inline
+- JDBC Task: https://orkes.io/content/reference-docs/system-tasks/jdbc
+- JSON JQ Transform: https://orkes.io/content/reference-docs/system-tasks/jq-transform
+- Opsgenie: https://orkes.io/content/reference-docs/system-tasks/opsgenie
+- Query Processor: https://orkes.io/content/reference-docs/system-tasks/query-processor
+- SendGrid: https://orkes.io/content/reference-docs/system-tasks/sendgrid
+- Update Secret: https://orkes.io/content/reference-docs/system-tasks/update-secret
+- Update Task: https://orkes.io/content/reference-docs/system-tasks/update-task
+- Wait For Webhook: https://orkes.io/content/reference-docs/system-tasks/wait-for-webhook
+- Worker Task: https://orkes.io/content/reference-docs/worker-task
+- Remote Services: https://orkes.io/content/remote-services
+- Authentication and Access Keys: https://orkes.io/content/sdks/authentication
+- C# SDK: https://orkes.io/content/sdks/csharp
+- Go SDK: https://orkes.io/content/sdks/golang
+- Java SDK: https://orkes.io/content/sdks/java
+- JavaScript SDK: https://orkes.io/content/sdks/javascript
+- Python SDK: https://orkes.io/content/sdks/python
+- Ruby SDK: https://orkes.io/content/sdks/ruby
+- Rust SDK: https://orkes.io/content/sdks/rust
+- Build an Alerting Workflow with PagerDuty and Orkes Conductor: https://orkes.io/content/templates/alerting/scanning-an-endpoint-and-triggering-pagerduty-alert
+- Monitor HTTP Endpoints: https://orkes.io/content/templates/availability-monitoring-for-http-endpoints
+- Build a Standup Bot using Slack Webhooks in Orkes Conductor: https://orkes.io/content/templates/daily-scrum-automation-using-standup-bot
+- Build a Document Classification Workflow with Orkes Conductor: https://orkes.io/content/templates/document-classifier
+- Build an API Orchestration Workflow with Orkes Conductor: https://orkes.io/content/templates/examples/api-processing-usps-example
+- Incoming Custom Conductor Webhook using cURL: https://orkes.io/content/templates/examples/custom-conductor-webhook-using-curl
+- Build a Document Approval Workflow with Orkes Conductor: https://orkes.io/content/templates/examples/document-approvals
+- Build a Loan Approval Workflow with Orkes Conductor: https://orkes.io/content/templates/examples/finance
+- Build a Fraud Dispute Resolution Workflow with Orkes Conductor: https://orkes.io/content/templates/examples/fraud-dispute
+- Incoming Custom Webhook using Postman: https://orkes.io/content/templates/examples/incoming-webhook-using-postman
+- Running a Worker Until a Condition is met: https://orkes.io/content/templates/examples/keep-worker-running-until-condition-true
+- Build a Secret Rotation Workflow with Orkes Conductor: https://orkes.io/content/templates/examples/rotating-secrets-that-expire
+- Build a Sequential HTTP Workflow with Orkes Conductor: https://orkes.io/content/templates/examples/sequential-http-tasks
+- Build an Agentic Interview App with Orkes Conductor: https://orkes.io/content/tutorials/agentic-interview-app
+- AI Tutorials: https://orkes.io/content/tutorials/ai
+- Create Workflows using AI Agents (Conductor MCP Server + Claude): https://orkes.io/content/tutorials/create-workflows-using-ai-agent-claude
+- Build a Document Retrieval Workflow: https://orkes.io/content/tutorials/document-retrieval-workflow
+- Build a Feedback API Using Orkes Conductor API Gateway: https://orkes.io/content/tutorials/expose-feedback-workflow-as-api
+- Build a Ticket Service Using Orkes MCP Gateway: https://orkes.io/content/tutorials/expose-ticket-service-using-mcp-gateway
+- Build a GitHub Pull Request Reviewer Assignment Workflow: https://orkes.io/content/tutorials/github-webhook
+- Orchestrating Long-Running APIs: https://orkes.io/content/tutorials/long-running-apis
+- Gateway Tutorials: https://orkes.io/content/tutorials/mcp
+- Build a Microsoft Teams Webhook Processing Workflow: https://orkes.io/content/tutorials/microsoft-teams-webhook
+- Build a Pull Request Summary Workflow: https://orkes.io/content/tutorials/pull-request-summary-workflow
+- Build a Question Answering Workflow Using Stored Embeddings: https://orkes.io/content/tutorials/question-answering-with-embeddings
+- Build a Stripe Payment Confirmation Workflow: https://orkes.io/content/tutorials/stripe-webhook
+- Build a Text Indexing and Search Workflow: https://orkes.io/content/tutorials/text-indexing-search-workflow
+- Using Variable Idempotency Keys in Webhook-Triggered Workflows: https://orkes.io/content/tutorials/using-idempotency-keys-in-webhook-triggered-workflows
+- Using SendGrid Event Webhooks in Orkes Conductor: https://orkes.io/content/tutorials/using-sendgrid-webhooks
+- Events and Webhooks: https://orkes.io/content/webhook-templates
+- Why Conductor for agents: https://orkes.io/content/why-conductor-for-ai-agents
+- Task Workers and Queues: https://orkes.io/content/workers
+
+For full page text, use llms-full.txt. This file is intentionally concise so agents can discover canonical docs without ingesting the entire site.

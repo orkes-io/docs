@@ -1,0 +1,53 @@
+---
+sidebar_position: 3
+slug: "/reference-docs/api/gateway/get-auth-config-for-gateway"
+description: "Learn how to retrieve the auth config of a gateway."
+---
+
+# Get Auth Config for Gateway
+
+**Endpoint**: `GET /api/gateway/config/auth/{id}`
+
+Retrieves the details of a specific auth config.
+
+## Path parameters
+
+| Parameter | Description | Type | Required/ Optional |
+| --------- | ------------ | ---- | ------------------- |
+| id | The id of the auth config to retrieve. | string | Required. |
+
+## Response
+
+Returns a `200 OK` response with auth config details, including its application ID associated with, and the authentication metadata.
+
+## Examples
+
+<details markdown="1">
+<summary>Get auth config for Gateway</summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/gateway/config/auth/gateway' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+{
+  "id": "gateway",
+  "authenticationType": "NONE",
+  "passthrough": false,
+  "fallbackToDefaultAuth": false,
+  "tokenInWorkflowInput": false,
+  "applicationId": "643cc628-5a73-47bd-8a0c-7d6d58da4fdd",
+  "createdBy": "john.doe@acme.com",
+  "updatedBy": "john.doe@acme.com",
+  "orgId": "fd7s"
+}
+```
+
+</details>

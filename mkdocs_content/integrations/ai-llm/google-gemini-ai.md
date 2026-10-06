@@ -1,0 +1,130 @@
+---
+title: "Google Gemini AI Integration with Orkes Conductor"
+description: "Learn how to integrate Google Gemini so workflows can use Gemini models through Conductor AI tasks."
+canonical_route: "integrations/ai-llm/google-gemini-ai"
+updated: "2026-05-14"
+keywords: "Orkes Conductor, workflow orchestration, Google Gemini AI Integration with Orkes Conductor, Google Gemini AI Integration with Orkes Conductor integration, Google Gemini AI Integration with Orkes Conductor workflow automation, AI orchestration, LLM orchestration, agent workflows"
+---
+
+# Google Gemini AI Integration with Orkes Conductor
+
+To use [system AI tasks](/content/glossary#ai-tasks) in Orkes Conductor, you must integrate your Conductor cluster with the necessary AI/LLM providers. This guide explains how to integrate Google Gemini AI with Orkes Conductor. Here’s an overview:
+
+1. Get the required credentials from Google Gemini AI.
+2. Configure a new Google Gemini AI integration in Orkes Conductor.
+3. Add models to the integration.
+4. Set access limits to the AI model to govern which applications or groups can use it.
+
+## Step 1: Get the Google Gemini AI credentials
+
+To integrate Google Gemini AI with Orkes Conductor, retrieve the project ID and service account JSON from the Google Cloud console. You must also enable the Agent Platform API for the selected GCP project, and grant the service account the Agent Platform User role.
+
+### Get the project ID
+
+**To get the project ID:**
+
+1. Sign in to the [Google Cloud Console](https://console.cloud.google.com/).
+2. Create a new project or select an existing one.
+3. Get the **Project ID** from the dashboard.
+For more information, refer to the official documentation on [creating and managing projects in GCP](https://cloud.google.com/resource-manager/docs/creating-managing-projects).
+
+### Get the service account JSON
+
+**To get the service account JSON:**
+
+1. Go to **IAM & Admin** > **Service Accounts** from the left menu on your GCP console. 
+2. Create a new service or select an existing one.
+3. In the **Keys** tab, select **Add key** > **Create new key**.
+4. Select the key type as **JSON**.
+5. Select **Create** to download the JSON file.
+To use Google Gemini AI with Orkes Conductor, you must enable the Gemini API from the GCP console.
+
+### Grant the service account IAM access
+
+A valid credentials JSON alone is not sufficient, the service account also needs an IAM role bound at the project level.
+
+**To grant the service account IAM access:**
+
+1. Go to **IAM & Admin** > **IAM** from the left menu on your GCP console.
+2. Find the service account, and select the **Edit** icon.
+3. Select **+ Add another role**, and choose **Agent Platform User**.
+4. Select **Save**.
+
+### Enable the Agent Platform API 
+
+**To enable the API:**
+
+1. Go to **APIs & Services** > **Enabled APIs & services** from the left menu on your GCP console.
+2. Select **+ Enable APIs and services**.
+3. In the **API Library**, search for **Agent Platform API**.
+4. Select **Enable**.
+
+Once enabled, the Agent Platform  API is ready for use with your GCP project.
+
+## Step 2: Add an integration for Google Gemini AI
+
+After obtaining the credentials, add a Google Gemini AI integration to your Conductor cluster.
+
+**To create a Google Gemini AI integration:**
+
+1. Go to **Integrations** > **Connections and Resources** from the left navigation menu on your Conductor cluster.
+2. Select **+ New integration**.
+3. In the **AI/LLM** section, choose **Google Gemini AI**.
+4. Select **+ Add** and enter the following parameters:
+
+| Parameter | Description |
+| --------- | ----------- |
+| Integration name | A name for the integration. |
+| Project ID | The Project ID retrieved from the GCP console. | 
+| Location | The Google Cloud region where you want to run the Gemini model (for example, `us-central1`). Make sure the selected model is available in this region, otherwise the integration will fail to connect. Refer to the [documentation](https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations#global-endpoint) for the list of supported regions per model. |
+| Choose Service account credentials JSON | Upload the service account JSON file (generated previously), which is a key file containing the credentials for authenticating the Orkes Conductor cluster with the GCP services. | 
+| Description | A description of your integration. |
+5. (Optional) Toggle the **Active** button off if you don’t want to activate the integration instantly.
+6. Select **Save**.
+
+## Step 3: Add Google Gemini AI models
+
+Once you’ve integrated Google Gemini AI, the next step is to configure specific models. Google Gemini AI has different models, each designed for various use cases. Choose the model that best fits your use case.
+
+**To add a model to the Google Gemini AI integration:**
+
+1. Go to **Integrations** and select the **+** button next to the integration created.
+2. Select **+ New model**.
+3. Enter the **Model name**. The name must exactly match the Gemini AI model name. For a complete list, see the [Gemini AI documentation](https://ai.google.dev/gemini-api/docs/models/gemini#model-variations).
+4. Provide a **Description**. 
+5. (Optional) Toggle the **Active** button off if you don’t want to activate the model instantly.
+6. Select **Save**.
+
+This saves the model for future use in AI tasks within Orkes Conductor.
+
+## Step 4: Set access limits to integration
+
+Once the integration is configured, set access controls to manage which [applications](https://orkes.io/content/access-control-and-security/applications) or [groups](https://orkes.io/content/access-control-and-security/users-and-groups#groups) can use the models.
+
+**To provide access to an application or group:**
+
+1. Go to **Access Control** > **Applications** or **Groups** from the left navigation menu on your Conductor cluster.
+2. Create a new group/application or select an existing one.
+3. In the **Permissions** section, select **+ Add Permission**.
+4. In the **Integration** tab, select the required AI models and toggle the necessary permissions.
+5. Select **Add Permissions**. 
+
+The group or application can now access the AI model according to the configured permissions.
+
+With the integration in place, you can now create workflows using [AI/LLM tasks](https://orkes.io/content/category/reference-docs/ai-tasks).
+
+## More resources
+
+- [Using AI Models or LLMs](https://orkes.io/content/developer-guides/using-llms-in-your-orkes-conductor-workflows)
+- [Using Vector Databases](https://orkes.io/content/developer-guides/using-vector-databases-in-your-orkes-conductor-workflows)
+- [Using AI Prompts](https://orkes.io/content/developer-guides/creating-and-managing-gen-ai-prompt-templates)
+- [AI Orchestration Tutorials](https://orkes.io/content/tutorials/ai)
+
+## Related pages
+
+- [AI / LLM Integrations](/content/category/integrations/ai-llm)
+- [Ollama Integration with Orkes Conductor](/content/integrations/ai-llm/ollama)
+- [Azure OpenAI Integration with Orkes Conductor](/content/integrations/ai-llm/azure-open-ai)
+- [OpenAI Integration with Orkes Conductor](/content/integrations/ai-llm/open-ai)
+- [Perplexity Integration with Orkes Conductor](/content/integrations/ai-llm/perplexity)
+- [Grok Integration with Orkes Conductor](/content/integrations/ai-llm/grok)

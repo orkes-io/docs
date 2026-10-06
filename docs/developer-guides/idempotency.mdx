@@ -10,6 +10,10 @@ import TabItem from "@theme/TabItem";
 
 Idempotency is the property of an operation where executing it multiple times produces the same result as executing it once. In distributed systems, network failures, retries, and duplicate events are inevitable. Without idempotency controls, these conditions can cause workflows to run multiple times for the same logical event, leading to duplicate side effects such as double-charging a customer, creating redundant records, or triggering conflicting downstream processes.
 
+:::tip 5-minute path
+Choose a stable business key, pass it as the workflow idempotency key, choose a conflict strategy, then test two identical starts and verify the second request behaves as expected.
+:::
+
 Orkes Conductor provides built-in idempotency support at multiple layers:
 
 - **Workflow-level idempotency** via idempotency keys and strategies
@@ -21,7 +25,7 @@ Orkes Conductor provides built-in idempotency support at multiple layers:
 When a workflow execution is triggered with an idempotency key, Conductor checks whether a workflow with the same key already exists before creating a new instance. 
 
 - If no matching record exists, Conductor creates a new workflow execution.
-- If a matching record exists, Conductor applies the configured **Idempotency strategy** to determine the response.
+- If a matching record exists, Conductor applies the configured idempotency strategy to determine the response.
 
 ### Idempotency key
 
@@ -118,7 +122,7 @@ const workflowId = await workflow.startWorkflow(
 
 [C# SDK](https://github.com/conductor-oss/csharp-sdk)
 
-```cshatp
+```csharp
 var request = new StartWorkflowRequest(
     name: "order-processing-workflow",
     version: 1,
@@ -246,6 +250,19 @@ With this configuration, if the same event is delivered multiple times (for exam
 The idempotency key can be variable here, but it can be passed only from workflow inputs.
 :::
 
+#### Choosing an idempotency key for webhook payloads
+
+The `idempotencyKey` variable set in step 4 above typically resolves to a field in the incoming event payload. For example, referencing the event's own ID:
+
+```json
+{
+  "idempotencyKey": "${workflow.input.event.id}",
+  "idempotencyStrategy": "RETURN_EXISTING"
+}
+```
+
+Use the source system's event ID when available. If the source does not provide a stable event ID, derive a key from immutable business fields such as order ID plus event type.
+
 ## Worker idempotency
 
 In addition to workflow-level idempotency, task workers themselves must be designed to be idempotent. Conductor guarantees at-least-once delivery, meaning a task may be delivered to a worker more than once in the event of failures such as worker restarts, network issues, or timeout retries.
@@ -262,6 +279,30 @@ A worker is idempotent when executing the same task multiple times produces no a
 - **Statelessness**: Workers do not maintain workflow-specific state between executions.
 - **Idempotency**: Workers handle cases where partially executed tasks are rescheduled and re-delivered.
 - **Decoupled failure handling**: Retry logic, timeouts, and failure handling are configured in Conductor, not in the worker itself.
+
+## Idempotency for agent tool calls
+
+The same design principles apply to AI agent workers, with one added wrinkle: agents often call tools that create external side effects, such as sending an email, creating a support ticket, updating a CRM record, triggering a deployment, or charging a payment provider. These calls must be idempotent because task delivery is at least once and an in-flight tool call can be retried after a timeout, worker restart, or network partition.
+
+Use a stable key that identifies the business operation, not the retry attempt:
+
+| Tool action | Recommended key |
+| ----------- | --------------- |
+| Create a ticket | `ticket:${customerId}:${requestId}` |
+| Send a notification | `notification:${recipient}:${template}:${eventId}` |
+| Run an external operation | `operation:${workflowId}:${taskReferenceName}:${businessKey}` |
+| Update a customer record | `customer-update:${customerId}:${changeRequestId}` |
+| Charge or refund payment | Provider payment intent, refund ID, or authorization ID |
+
+Good sources for agent tool idempotency include:
+
+- Source event ID or webhook delivery ID.
+- Business key such as order ID, case ID, customer ID, or payment intent ID.
+- Conductor workflow ID plus a tool-specific operation name.
+- Task reference name when the tool can only run once per workflow execution.
+- External operation ID returned by the first successful call and stored in task output.
+
+Avoid using the task attempt ID alone for irreversible side effects. A retry creates a new attempt, so the external system may see a different key and repeat the side effect. Prefer a business key that stays the same across retries.
 
 ## Searching executions by idempotency key
 

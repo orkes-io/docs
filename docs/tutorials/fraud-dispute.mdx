@@ -53,6 +53,7 @@ In this tutorial, we’ll use SendGrid to send emails. To do that, you must set 
 :::
 
 **To create a SendGrid integration:**
+
 1. Go to [**Integrations**](https://developer.orkescloud.com/integrations) from the left navigation menu on your Conductor cluster.
 2. Select **+ New integration**.
 3. In the **Integrations** section, choose [**SendGrid Email**](https://orkes.io/content/integrations/email/sendgrid#step-2-add-an-integration-for-sendgrid-email).
@@ -66,11 +67,12 @@ The workflow uses a Human task in Orkes Conductor for manual review. Reviewers c
 In this tutorial, you’ll use the Conductor UI to complete approvals. For this, a user form is to be created in Conductor. To support this, you’ll create **three separate user forms**, one each for **low**, **medium**, and **high** risk disputes.
 
 **To create a user form:**
+
 1. Go to [**Definitions** > **User Forms**](https://developer.orkescloud.com/human/templates) from the left navigation menu on your Conductor cluster.
 2. Select **+ New form.**
 3. In the **Code** tab, paste the following code:
 
-<details>
+<details markdown="1">
 <summary>View code</summary>
 
 ```json
@@ -216,7 +218,7 @@ Your user form looks like this:
 
 Next, repeat the same steps to create two additional user forms for **medium** and **low** risk disputes using the following code:
 
-<details>
+<details markdown="1">
 <summary>View code for FraudDisputeReviewMedium</summary>
 
 ```json
@@ -352,7 +354,7 @@ Next, repeat the same steps to create two additional user forms for **medium** a
 ```
 </details>
 
-<details>
+<details markdown="1">
 <summary>View code for FraudDisputeReviewLow</summary>
 
 ```json
@@ -526,14 +528,15 @@ Update the **Model(s)** drop-down with the OpenAI integration created in [Step 1
 
 ## Step 5: Create a workflow in Orkes Conductor
 
-Orkes Conductor lets you define workflows as JSON, through [SDKs](https://orkes.io/content/category/sdks), [APIs](https://orkes.io/content/category/ref-docs/api), or the [UI](http://orkes.io/content/developer-guides/build-workflows-using-ui). 
+Orkes Conductor lets you define workflows as JSON, through [SDKs](https://orkes.io/content/category/sdks), [APIs](https://orkes.io/content/category/ref-docs/api), or the [UI](https://orkes.io/content/developer-guides/build-workflows-using-ui).
 
 **To create a workflow using Conductor UI:**
+
 1. Go to [**Definitions** > **Workflow**](https://developer.orkescloud.com/workflowDef) from the left navigation menu on your Conductor cluster.
 2. Select **+ Define workflow**.
 3. In the **Code** tab, paste the following code:
 
-<details>
+<details markdown="1">
 <summary>View code</summary>
 
 ```json
@@ -815,9 +818,10 @@ Next, replace all placeholder values with your actual data and integrations.
 7. Update the *notify_sendgrid* task with the same email and integration values.
 8. Select **Save** > **Confirm**.
 
-## Step 6: Execute workflow 
+## Step 6: Execute workflow
 
 **To test the workflow:**
+
 1. From your workflow definition, go to the **Run** tab.
 2. Set the input parameter. For example:
 
@@ -833,7 +837,7 @@ Next, replace all placeholder values with your actual data and integrations.
 }
 ```
 
-:::tip 
+:::tip
 The input parameters are represented here with dummy values for demonstration. In a real implementation, these can be dynamically received through an API call using [Webhook](https://orkes.io/content/reference-docs/system-tasks/wait-for-webhook) or [HTTP](https://orkes.io/content/reference-docs/system-tasks/http) tasks in Orkes Conductor.
 :::
 
@@ -886,7 +890,7 @@ The workflow is running, and the Human task is available to claim.
 <p align="center"><img src="/content/img/approving-human-task-fraud-dispute.gif" alt="Reviewer approving a human task" width="100%" height="auto"></img></p>
 
 :::tip
-In this example, no assignment policy has been configured, so any user in the cluster can claim the task. In a production environment, each Human task (low, medium, and high) should be assigned to designated users or user groups. [Learn more about configuring assignment policies for Human tasks in Orkes Conductor](https://orkes.io/content/developer-guides/orchestrating-human-tasks#step-3-configure-the-human-task).
+In this example, no assignment policy has been configured, so any user in the cluster can claim the task. In a production environment, each Human task (low, medium, and high) should be assigned to designated users or user groups. [Learn more about configuring assignment policies for Human tasks in Orkes Conductor](https://orkes.io/content/developer-guides/orchestrating-human-tasks).
 :::
 
 Once the reviewer approves the dispute, the workflow is completed, and the user receives an update email via SendGrid.
