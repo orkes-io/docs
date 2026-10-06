@@ -80,6 +80,11 @@ const sidebars = {
                         'developer-guides/convert-bpmn-to-workflows',
                         {
                             type: 'doc',
+                            id: 'developer-guides/ai-assistant',
+                            label: 'Using the AI Assistant',
+                        },
+                        {
+                            type: 'doc',
                             id: 'developer-guides/versioning-workflows',
                             label: 'Versioning Workflows',
                         },
