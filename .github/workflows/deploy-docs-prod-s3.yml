@@ -4,13 +4,9 @@ name: Deploy Docs to S3 — prod
 # the marketing-prod account, then invalidates the /content/* path on the prod
 # marketing CloudFront distribution. Mirrors deploy-docs-s3.yml (non-prod).
 #
-# This bucket is NOT public yet — orkes.io/content is still served by the
-# portal-baked Docusaurus build. Until the distribution is repointed, deploying
-# here is safe and replaces deploying by hand from a laptop.
-#
-# !! AT CUTOVER: change the push trigger to `branches: [main]` BEFORE repointing
-# CloudFront. Left as-is, every merge into the integration branch would publish
-# straight to the live site. Config lives in the `marketing-prod` GitHub
+# Live: orkes.io/content is served from this S3 bucket via CloudFront. Every push
+# to `main` publishes straight to production, so `main` is protected (PR +
+# approving review required). Config lives in the `marketing-prod` GitHub
 # Environment (see deploy/SETUP-s3-cloudfront.md).
 
 on:
