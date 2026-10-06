@@ -1,0 +1,128 @@
+---
+slug: "/developer-guides/ai-assistant"
+description: "Build, run and debug Conductor workflows by describing what you want. Learn what the AI Assistant can do, and its limits."
+---
+
+# Using the Conductor AI Assistant
+
+The **AI Assistant** lets you build, edit, run and debug Conductor workflows by describing what you want in your own words. It adds tasks to your workflow, explains failed executions, writes starter worker code, and answers questions about Conductor.
+
+For example, you can ask:
+
+- _Create a workflow that takes a city as input, calls a free weather API, and returns the temperature._
+- _Add a Switch task that routes orders over $500 to a review step._
+- _Add an LLM task that summarizes the API response using my OpenAI integration._
+- _Why did my last execution of `order_processing` fail?_
+- _Generate a Python worker for the `validate_address` task._
+
+Try the AI Assistant for free in the [Developer Edition](https://developer.orkescloud.com/). If you have Orkes Conductor Enterprise, you will choose the LLM provider for the Assistant by providing your own key.
+
+## Getting started
+
+### Accessing the assistant
+
+You can open the assistant from the left menu on any page. In Developer Edition, you can also start from the Launch Pad.
+
+**From the Launch Pad (Developer Edition)**
+
+In Developer Edition, go to the **Launch Pad**, describe your workflow in the box, and submit it. The Workflow Builder opens and the assistant builds the workflow there.
+
+You can also start from:
+
+- **Starter questions**
+- **Try building something**, sample workflows labeled easy, medium and complex. Select one and the assistant starts building it right away.
+
+**From the left menu**
+
+Select **Assistant** in the left menu on any page. The assistant panel opens.
+
+### Assistant modes
+
+What the assistant can do depends on where you are in Conductor. A label above the message box shows the current mode.
+
+| Mode | Where you'll see it | What the assistant can do |
+| ---- | ------------------- | ------------------------- |
+| **WORKFLOW BUILDER** | <ul><li>**Definitions** > **Workflow** page</li><li>Workflow builder UI page</li></ul> | Create, clone, edit and validate workflows. Add or update tasks. Save, run, or save and test. Generate worker code. |
+| **EXECUTION SEARCH** | <ul><li>**Executions** > **Workflow** page</li></ul> | Find executions, check their status, analyze failures, and run a workflow. |
+
+On all other pages, the assistant works in general mode. It can answer questions about Conductor, list workflows and integrations, look up executions, analyze failures, run a workflow, and generate worker code.
+
+If you ask for a new workflow while you're outside the Workflow Builder, the assistant opens the builder and builds the workflow there.
+
+## Working with the assistant
+
+You can use the assistant to build and debug workflows, use integrations, and generate worker code.
+
+### Build and edit workflows
+
+Describe what the workflow should do, and the assistant adds the tasks to the canvas in the Workflow Builder.
+
+You can also ask the assistant to:
+
+- Add or change tasks in the open workflow.
+- Fix validation errors.
+- Clone an existing workflow.
+- Set inputs, outputs and task parameters.
+
+The assistant can use most Conductor task types, including HTTP, Simple, Switch, Fork/Join, Do While, Sub Workflow, JDBC, Event, LLM Chat Complete and LLM Generate Embeddings.
+
+After each reply, the assistant suggests next steps.
+
+### Review, save and run
+
+When the assistant changes a saved workflow, you review the change before it's applied. Creating a new workflow and running a workflow happen without a review step.
+
+- **New workflows**: When the assistant creates a new workflow, it saves it right away as version 1.
+- **Changes to a saved workflow**: When the assistant makes changes to a saved workflow, the UI shows the workflow definition before and after the change, side by side, and gives you options to accept or reject the changes.
+- **Running a workflow**: When you ask the assistant to run a workflow, it starts the workflow right away and opens the execution.
+- **Save and test**: When you ask the assistant to save and test, it shows the change for review first. After you accept, it saves the workflow, runs it once, and opens the execution.
+
+:::tip
+Check the workflow before you ask the assistant to run it, especially if it calls external systems or changes data.
+:::
+
+### Use integrations
+
+The assistant uses the integrations already set up in your cluster before it suggests an HTTP task or a custom worker.
+
+- **Existing integrations**: The assistant finds integrations that fit your request, such as AI models, databases and message queues, and uses them in the workflow.
+- **New integrations**: Set up new integrations yourself on the **Integrations** page. The assistant can then use them in your workflows. Don't paste API keys or other credentials into the chat.
+- **LLM tasks**: For tasks like LLM Chat Complete, the assistant picks a provider and model from your configured AI integrations.
+
+### Generate worker code
+
+The assistant writes starter code for the Worker tasks in your workflow, in Java, Python, Go or TypeScript. The code includes input and output handling and logging.
+
+The assistant doesn't deploy workers. Copy the code into your project, finish the task logic, and run the worker yourself.
+
+### Debug executions
+
+Ask the assistant to find executions or explain why one failed.
+
+- **Find executions** by workflow name, status, time range or correlation ID. For example: *Show failed executions of order_processing from the last 24 hours*.
+- **Analyze a failure.** The assistant looks at the failed tasks, error messages and timeline, then explains the likely cause and suggests a fix. For example: *Why did execution 8a3f… fail*?
+
+### Manage conversation history
+
+The assistant saves your conversations so you can return to them later. To view the past conversations, select **Conversations** at the top of the assistant panel. Each conversation shows its title and number of messages. You can also delete the conversations from here.
+
+:::tip
+- **Be specific**: Say what the workflow takes as input, what it should return, and how it should handle errors.
+- **Name what you have**: Mention the integrations, task definitions or workflows you want the assistant to use.
+- **Build in steps**: Start with the main flow, then ask for branches, retries and error handling.
+:::
+
+## Permissions and limits
+
+When the assistant saves or runs a workflow, it uses your Conductor permissions, and the change is recorded under your name.
+
+The assistant can't:
+
+- Delete workflows, tasks, executions or other resources.
+- Create or change schedules.
+- Manage secrets, environment variables, users, groups or roles.
+- Deploy or run workers.
+
+The Assistant has access only to the artifacts in the Conductor server; it does not have access to the underlying infrastructure on which Conductor runs or its details
+
+Like any AI tool, the assistant can make mistakes. Review generated workflows and code before you use them in production.
