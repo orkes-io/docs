@@ -4,13 +4,13 @@ name: Deploy Docs to S3 — non-prod
 # the marketing-non-prod account, then invalidates the /content/* path on the
 # non-prod marketing CloudFront distribution.
 #
-# This is ADDITIVE and does NOT affect production: it does not touch orkes.io,
-# the orkes-portal, or the Docusaurus build on `main`. Config lives in the
-# `marketing-non-prod` GitHub Environment (see deploy/SETUP-s3-cloudfront.md).
+# Targets the marketing-non-prod account only and does NOT affect production
+# (orkes.io/content). Config lives in the `marketing-non-prod` GitHub Environment
+# (see deploy/SETUP-s3-cloudfront.md).
 
 on:
   push:
-    branches: [refactor/docs-oss-enterprise-merge]
+    branches: [main]
   workflow_dispatch:
 
 permissions:
