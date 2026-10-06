@@ -4,9 +4,6 @@ slug: "/reference-docs/ai-tasks/llm-index-document"
 description: "Learn how the LLM Index Document task indexes documents into a vector database for semantic search and retrieval."
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 # LLM Index Document
 
 The LLM Index Document task is used to index a document into a vector database for efficient search, retrieval, and processing at a later stage.
@@ -33,8 +30,10 @@ Configure these parameters for the LLM Index Document task.
 | inputParameters.**dimensions** | The size of the vector, which is the number of elements in the vector. | Optional. | 
 | inputParameters.**url** | The URL of the file to be indexed. | Required. |
 | inputParameters.**mediaType** | The media type of the file to be indexed. Supported media types: <ul> <li>application/pdf</li> <li>text/html</li> <li>text/plain</li> <li>application/json</li> </ul> | Optional. | 
-| inputParameters.**chunkSize** | The length of each input text segment when divided for processing by the LLM. For example, if the document contains 2,000 words and the chunk size is set to 500, the document is divided into four chunks for processing. | Optional. | 
+| inputParameters.**docId** | A unique ID for the indexed document. Each chunk is stored with this ID as its parent ID. If not set, the url is used. | Optional. |
+| inputParameters.**chunkSize** | The length of each input text segment when divided for processing by the LLM. For example, if the document contains 2,000 characters and the chunk size is set to 500, the document is divided into four chunks for processing. | Optional. | 
 | inputParameters.**chunkOverlap** | The overlap between adjacent chunks. For example, if the chunk overlap is specified as 100, then the first 100 words of each chunk would overlap with the last 100 words of the previous chunk. | Optional. | 
+| inputParameters.**metadata** | Key-value pairs stored with each chunk of the document. They are returned with the search results. | Optional. |
 
 The following are generic configuration parameters that can be applied to the task and are not specific to the LLM Index Document task.
 
@@ -76,9 +75,13 @@ This is the task configuration for an LLM Index Document task.
        "namespace": "docs",
        "embeddingModelProvider": "openAI",
        "embeddingModel": "text-embedding-3-large",
-       "dimensions": 3024,
+       "dimensions": 1024,
        "url": "https://orkes.io/content/remote-services",
        "mediaType": "text/html",
+       "docId": "remote-services",
+       "metadata": {
+         "source": "orkes-docs"
+       },
        "chunkOverlap": 50
      },
      "type": "LLM_INDEX_DOCUMENT"
