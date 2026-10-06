@@ -15,7 +15,7 @@ name: Deploy Docs to S3 — prod
 
 on:
   push:
-    branches: [refactor/docs-oss-enterprise-merge] # → [main] at cutover
+    branches: [main]
   workflow_dispatch:
 
 permissions:
