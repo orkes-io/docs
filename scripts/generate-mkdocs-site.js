@@ -561,6 +561,9 @@ const EXCLUDED_OSS_SOURCES = new Set([
   // (step-by-step Orkes webhook setup). Incoming webhooks and WAIT_FOR_WEBHOOK
   // are Orkes Enterprise features; conductor-oss has no backend for them.
   "devguide/how-tos/incoming-webhooks.md",
+  // "Use Orkes cloud" page, circular on the Orkes site; redirected to
+  // get-orkes-conductor in docs-redirects.json.
+  "devguide/running/hosted.md",
 ]);
 
 function collectSourceEntries() {
@@ -2795,10 +2798,6 @@ function buildNav() {
   // the old quickstartSidebar stole the Platform concepts pages into Getting
   // Started. Tabs are still pushed to nav in display order below.
   const platformChildren = navFromItems(platformTabItems(), navSeen);
-  // Intentionally unlisted on the enterprise site (the page's message is "use
-  // Orkes cloud", which is circular here). Claim the id so enterprise sidebar
-  // extras don't resurrect it under an Enterprise group; the URL stays live.
-  navFromItems([d("devguide/running/hosted", "Hosted")], navSeen);
   const learnChildren = navFromItems(
     [
       d("learn", "Overview"),
