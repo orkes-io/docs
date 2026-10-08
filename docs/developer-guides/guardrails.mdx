@@ -1,135 +1,195 @@
 ---
 slug: "/developer-guides/guardrails"
-description: "Learn how to scrub or validate text going into or out of an LLM task using input and output guardrails, so PII and other sensitive content never reaches the model or the caller."
+description: "Check the text flowing into and out of an LLM task with guardrails: redact PII, block prompt injection, re-ask the model, or route an answer to a human reviewer."
 ---
 
-# LLM Task Guardrails
+# LLM Guardrails
 
-:::info Available since
-- v5.5.0 and later
+:::info Orkes Enterprise
+Guardrails are part of Orkes Conductor and are not available in open-source Conductor. They run on
+the Orkes server and worker fleet; there is nothing to install.
 :::
 
-LLM task guardrails let you scrub or validate text going into or out of an LLM task, without adding an extra step to your workflow. A guardrail runs as a pre-call (input) or post-call (output) hook inside the task itself — the workflow's task list still shows just the one LLM task.
+A guardrail checks the text that flows through an LLM task and decides what to do about it: redact
+it, block the task, ask the model again, or hand it to a person. You add one with a single line on
+the task.
+
+## Add a guardrail in one line
+
+```json
+{
+  "name": "summarise",
+  "taskReferenceName": "summarise",
+  "type": "LLM_CHAT_COMPLETE",
+  "inputParameters": {
+    "llmProvider": "openai",
+    "model": "gpt-4o",
+    "instructions": "Summarise ${workflow.input.ticket}",
+    "guardrails": ["pii"]
+  }
+}
+```
+
+That is the whole feature for most teams. `pii` runs at every point the task supports, with the
+action the guardrail was built for — for `pii`, personal data is redacted on the way into the model
+and on the way out.
+
+Name several, and their redactions merge into one prompt:
+
+```json
+"guardrails": ["pii", "secrets", "pci-dss"]
+```
+
+Tune an entry when the default is not what you want. Every key is optional except the name:
+
+```json
+"guardrails": [
+  {"guardrail": "pii",     "at": "PROMPT",       "action": "REDACT"},
+  {"guardrail": "pii",     "at": "MODEL_OUTPUT", "action": "REDACT"},
+  {"guardrail": "secrets", "at": "PROMPT",       "action": "BLOCK"},
+  {"guardrail": "support.deny-list", "version": 3, "action": "BLOCK"}
+]
+```
+
+| Key | Meaning | Default |
+|---|---|---|
+| `guardrail` (or `name`) | A built-in name, or one of your own guardrails | Required |
+| `at` | Where it runs: `PROMPT`, `USER_MESSAGE`, `MODEL_OUTPUT`, `EMBEDDING_INPUT`, `DOCUMENT_TEXT` | Every point the task type supports |
+| `action` | `REDACT`, `BLOCK`, `REASK`, `HUMAN` | What the guardrail can do: `REDACT` if it can repair text, otherwise `BLOCK` |
+| `onError` | What happens if the detector itself fails | `RETRY_THEN_BLOCK` |
+| `version` | Pin a version of your own guardrail | Follow the latest version |
+
+The list is validated when you save the workflow definition. An unknown name, a point the task type
+does not have, or `REASK` anywhere but `MODEL_OUTPUT` is rejected with a message naming the entry
+that is wrong — it does not fail silently at runtime.
 
 ## Supported tasks
 
-| Task | `inputGuardrail` | `outputGuardrail` |
-|---|---|---|
-| [LLM Chat Complete](/content/reference-docs/ai-tasks/llm-chat-complete) | ✅ | ✅ |
-| [LLM Text Complete](/content/reference-docs/ai-tasks/llm-text-complete) | ✅ | ✅ |
-| [LLM Generate Embeddings](/content/reference-docs/ai-tasks/llm-generate-embeddings) | ✅ | ❌ (output is a numeric vector, not text) |
-| [Parse Document](/content/reference-docs/ai-tasks/parse-document) | ❌ (input is a file, not scrubbable text) | ✅ |
-
-Configuring an unsupported combination (for example, `inputGuardrail` on Parse Document, or either guardrail on a task type not listed here) is rejected when you save the workflow definition — it does not fail silently at runtime.
-
-## Configuration
-
-Add `inputGuardrail` and/or `outputGuardrail` to the task's input parameters:
-
-```json
-"inputGuardrail": {
-  "type": "JAVASCRIPT",
-  "target": "$.prompt.replace(/\\d{13,19}/g, '[REDACTED]')",
-  "failureMode": "FAIL"
-}
-```
-
-| Field | Description | Required |
-|---|---|---|
-| `type` | Supportes types are `JAVASCRIPT`, `HTTP`, or `WORKFLOW`. | Yes |
-| `target` | A JS expression, a URL, or a workflow name, depending on `type`. | Yes |
-| `version` | `WORKFLOW` type only — pins a specific workflow version. Defaults to the latest version. | No |
-| `headers` | `HTTP` type only — extra request headers (for example, an API key) sent with the scrub request. | No |
-| `failureMode` | `FAIL` (default) or `WARN`. See [Failure modes](#failure-modes). | No |
-
-## Guardrail types
-
-- **`JAVASCRIPT`** — evaluates the expression inline (GraalJS) against the text, available as `$.prompt`. Best for simple, self-contained rules like a regex redaction.
-- **`HTTP`** — sends `POST {"prompt": "<text>"}` to `target` and expects a JSON response containing `{"prompt": "<scrubbed text>"}`. Use this to call an external PII/DLP scanning service.
-- **`WORKFLOW`** — runs the named workflow with input `{"prompt": "<text>"}` and expects `prompt` in its output. The workflow must already be registered — this is checked when the LLM task's workflow definition is saved.
-
-## What gets scrubbed
-
-For a chat-complete task, the input guardrail runs separately against every piece of text sent to the model:
-
-- The resolved system instructions.
-- `userInput`, if set.
-- Each `user`-role message in `messages`.
-
-The output guardrail runs once, against the model's final response text.
-
-Each guardrail invocation executes as an independent, trigger-and-wait sub-workflow, tagged `correlationId: guardrail:<taskId>` — so every scrub is visible and auditable in workflow execution history, linked back to the LLM task that triggered it.
-
-## Failure modes
-
-| Mode | Behavior when the guardrail fails or returns no result |
+| Task | Points checked |
 |---|---|
-| `FAIL` (default) | The LLM task fails. The model is never called. |
-| `WARN` | The failure is logged, and the task proceeds using the original, unscrubbed text. |
+| [LLM Chat Complete](/content/reference-docs/ai-tasks/llm-chat-complete) | `PROMPT` (resolved instructions), `USER_MESSAGE` (each user message), `MODEL_OUTPUT` |
+| [LLM Generate Embeddings](/content/reference-docs/ai-tasks/llm-generate-embeddings) | `EMBEDDING_INPUT` |
+| [Parse Document](/content/reference-docs/ai-tasks/parse-document) | `DOCUMENT_TEXT` (every chunk, before it leaves the task) |
+| Agent | None of its own — see [Guardrails on an agent call](#guardrails-on-an-agent-call) |
 
-Use `FAIL` for guardrails protecting sensitive data (for example, PII or financial data) — a broken guardrail should never silently let unredacted content through. `WARN` suits non-critical guardrails where availability matters more than strict enforcement.
+A guardrail list on any other task type is rejected when you save the workflow.
 
-## Examples
+## Built-in guardrails
 
-<details markdown="1">
-<summary>Redact card numbers with an inline JAVASCRIPT guardrail</summary>
+Built-ins need no setup. Use them by name.
+
+| Name | Finds | Default action |
+|---|---|---|
+| `pii` | Personal data across all regions below | `REDACT` |
+| `pii:global` | Email addresses, payment cards, IP addresses | `REDACT` |
+| `pii:na`, `pii:eu`, `pii:uk`, `pii:apac`, `pii:latam` | Regional identifiers (SSN, NHS number, and so on) | `REDACT` |
+| `pci-dss` | Cardholder data | `REDACT` |
+| `hipaa-safe-harbor` | The HIPAA Safe Harbor identifier set | `REDACT` |
+| `secrets` | API tokens and private-key formats | `REDACT` |
+| `encoding-evasion` | Zero-width and homoglyph tricks. Flag-only: the deterministic detectors already read through such obfuscation | `BLOCK` |
+| `language-detect` | Language and script, for coverage checks | `BLOCK` |
+| `prompt-injection` | Attempts to override instructions or leak context (model-backed) | `BLOCK` |
+| `jailbreak` | Attempts to bypass model safety (model-backed) | `BLOCK` |
+| `toxicity` | Toxic or abusive text (model-backed) | `BLOCK` |
+| `regex`, `deny-list` | Templates for your own patterns — see [Write your own guardrail](/content/developer-guides/guardrail-definitions) | `REDACT` |
+
+The three model-backed built-ins send the text to a judge model; everything else runs in-process
+with no network call. `GET /api/guardrails/catalogue` returns this list with the exact entity types
+each one detects.
+
+## What each action does
+
+| Action | Effect |
+|---|---|
+| `REDACT` | Replace the flagged spans and carry on. The model, or the workflow, sees the redacted text. |
+| `BLOCK` | Fail the task. The model is not called for input points; its answer is discarded for output points. |
+| `REASK` | `MODEL_OUTPUT` only. Send the answer back to the model once, with the reason, and check the new answer. If that one is flagged too, the task is blocked. |
+| `HUMAN` | `MODEL_OUTPUT` only. Park the task until someone approves, edits, or rejects the answer through `/api/guardrail-reviews/{taskId}`. |
+
+Several guardrails at one point combine predictably: any `BLOCK` wins, then `HUMAN`, then `REASK`;
+every `REDACT` applies, with the spans merged. Only one `REASK` or `HUMAN` may be bound at a point.
+
+### When a detector fails
+
+A detector can time out or return something unusable. `onError` says what that means for the task:
+
+| `onError` | Effect |
+|---|---|
+| `RETRY_THEN_BLOCK` (default) | Retry once, then fail the task. |
+| `BLOCK` | Fail the task immediately, without retrying. |
+
+Both fail closed: a detector that cannot answer never lets the text through. They differ only in
+whether the transport retries first. There is no mode in which a broken guardrail silently passes
+text to the model.
+
+## Guardrails on an agent call
+
+An `AGENT` task that calls a Conductor agent may declare `guardrails` too:
 
 ```json
-"inputGuardrail": {
-  "type": "JAVASCRIPT",
-  "target": "$.prompt.replace(/\\d{13,19}/g, '[REDACTED]')",
-  "failureMode": "FAIL"
+{
+  "name": "ask",
+  "taskReferenceName": "ask",
+  "type": "AGENT",
+  "inputParameters": {
+    "agentType": "conductor",
+    "name": "support_agent",
+    "prompt": "${workflow.input.question}",
+    "guardrails": ["pii", "prompt-injection"]
+  }
 }
 ```
 
-Any 13–19 digit run in the resolved system instructions, `userInput`, or user messages is replaced with `[REDACTED]` before the model sees it. Because `failureMode` is `FAIL`, a broken expression fails the task instead of forwarding unredacted text.
+The agent call itself is not checked — it has no guardrail points of its own. The list follows the
+call into the agent's own LLM Chat Complete tasks and is enforced there, which is where the agent's
+prompt and its answer actually pass a model. A chat task inside the agent that declares its own
+`guardrails` keeps them. Because the list is validated for chat tasks, `REASK` and `HUMAN` are
+allowed on an agent call.
 
-</details>
+Only a Conductor agent can inherit a list. A remote A2A, Bedrock, or Azure Foundry agent runs
+outside Conductor, so there are no tasks of ours to enforce it — a guardrail list on such a task
+fails the task rather than quietly enforcing nothing. The agent call also records what it handed
+over, and its own completion is refused if it declared guardrails the agent never received.
 
-<details markdown="1">
-<summary>Call an external DLP service with an HTTP guardrail</summary>
+## What you see afterwards
 
-```json
-"outputGuardrail": {
-  "type": "HTTP",
-  "target": "https://dlp.internal.example.com/scrub",
-  "headers": {
-    "Authorization": "Bearer ${workflow.secrets.dlp_api_key}"
-  },
-  "failureMode": "FAIL"
-}
-```
+The server resolves the task's list into concrete guardrail versions and stamps it onto the task
+before the worker runs. The stamp and the evidence share one home on the task, under
+`executionMetadata.additionalContext.guardrails`. The task's `outputData` holds only the model's
+result.
 
-Conductor sends `POST {"prompt": "<model response>"}` to the DLP service and expects `{"prompt": "<scrubbed response>"}` back. Store the service credential as a [secret](/content/developer-guides/secrets-in-conductor) rather than inlining it in `headers`.
+| Key | Content |
+|---|---|
+| `stamp` | What the server resolved: the exact guardrail versions, points, and actions that must run. Server-owned; a worker cannot change it. |
+| `evaluations` | One entry per guardrail, point, and item: the verdict, `configuredAction`, `actionTaken`, the outcome, and latency. |
+| `violation` | Present when the task was blocked: which guardrail, where, and why. |
+| `continuation` | Present while a `HUMAN` review is pending, and kept with the decision afterwards; its `version` goes into the approve, edit, or reject call. |
+| `dispatches`, `candidate` | Park state while a worker or workflow detector, or a reviewer, is being waited for; gone once the task completes. |
 
-</details>
+In the UI, select the task in an execution and open its **Guardrails** tab to see what each
+guardrail was configured to do and what it did. For an agent call, the tab shows what was declared
+and whether it reached the agent.
 
-<details markdown="1">
-<summary>Route through a registered workflow with a WORKFLOW guardrail</summary>
+A stamped task cannot report success without evidence: a completion that cannot show its
+evaluations is failed rather than accepted, whatever the worker reports.
 
-```json
-"inputGuardrail": {
-  "type": "WORKFLOW",
-  "target": "pii_scrub_workflow",
-  "version": 3,
-  "failureMode": "WARN"
-}
-```
+## Who can do what
 
-Conductor runs `pii_scrub_workflow` (version 3) with input `{"prompt": "<text>"}` as a trigger-and-wait sub-workflow and expects `prompt` in its output. Because `failureMode` is `WARN`, if the sub-workflow fails or is deregistered, the LLM task proceeds with the original, unscrubbed text instead of failing outright — appropriate here only because this guardrail isn't the last line of defense for sensitive data.
+Guardrails are protected the way workflow definitions are. Whoever creates one owns it and can
+share it with the ordinary access grants; the **Guardrail manager** role manages all of them.
 
-</details>
+| Who | Can |
+|---|---|
+| Admin, Guardrail manager | Create, read, change, and delete every guardrail |
+| User | Create guardrails, and do anything to the ones they created |
+| Someone granted access to a guardrail | Exactly what was granted: read, update, or delete that one guardrail |
+| Everyone who is signed in | See the catalogue, and name any built-in — or any guardrail they can read — on a task |
 
-## Production notes
-
-- Use `failureMode: FAIL` for any guardrail protecting sensitive data — `WARN` lets unscrubbed text through silently when the guardrail itself breaks.
-- Prefer `JAVASCRIPT` for simple, self-contained rules (regex redaction); reach for `HTTP` or `WORKFLOW` only when the scrubbing logic needs an external service, model, or shared workflow.
-- Store any credential a guardrail needs (API keys, tokens) as a [secret](/content/developer-guides/secrets-in-conductor) and reference it in `headers`, never inline.
-- Pin a `version` on `WORKFLOW` guardrails used in production so an unrelated update to the latest version can't silently change scrubbing behavior.
-- Each guardrail call is its own sub-workflow execution tagged `correlationId: guardrail:<taskId>` — use that to audit what was scrubbed for a given LLM task run.
-- Guardrail/task-type combinations are validated at save time, not at execution time — a misconfigured guardrail is caught before the workflow ever runs.
+A grant on a guardrail uses the same access API and UI as a grant on a workflow; the target type is
+`GUARDRAIL`. Naming a guardrail you cannot read is rejected when you save the workflow.
 
 ## Related pages
 
-- [Agent Guardrails](/content/devguide/ai/agent-guardrails) — native `AgentConfig`/`ToolConfig` guardrails for Conductor Agents built with the Agent SDK, not the LLM task params documented on this page.
-- [LLM with Guardrails](/content/devguide/ai/cookbook/llm-guardrails) — a workflow-pattern recipe that fences an `LLM_CHAT_COMPLETE` call using ordinary tasks (a deterministic screen, policy checks, and a bounded repair), for cases where you want each check visible as its own task in the graph.
+- [Write your own guardrail](/content/developer-guides/guardrail-definitions) — word lists, patterns, an HTTP service, inline JavaScript, an LLM as the judge, your own worker, or a whole workflow.
+- [Agent Guardrails](/content/devguide/ai/agent-guardrails) — native `AgentConfig`/`ToolConfig` guardrails for agents built with the Agent SDK, which are a different mechanism from the task guardrails on this page.
+- [LLM with Guardrails](/content/devguide/ai/cookbook/llm-guardrails) — a workflow-pattern recipe that fences an LLM call using ordinary tasks, for when you want each check visible as its own task in the graph.

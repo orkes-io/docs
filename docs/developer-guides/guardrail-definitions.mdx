@@ -1,0 +1,202 @@
+---
+slug: "/developer-guides/guardrail-definitions"
+description: "Create your own guardrail: a word list or pattern, an HTTP service, inline JavaScript, an LLM as the judge, your own worker, or a whole workflow."
+---
+
+# Write Your Own Guardrail
+
+:::info Orkes Enterprise
+Guardrails are part of Orkes Conductor and are not available in open-source Conductor.
+:::
+
+A guardrail is a name plus a detector. Create it once with `POST /api/guardrails`, then use the
+name on a task exactly like a [built-in](/content/developer-guides/guardrails#built-in-guardrails).
+The server fills in everything you leave out: version, default action, timeout.
+
+Built-in names are reserved. A guardrail cannot be called `pii` or `deny-list`, because that would
+redefine the built-in for everyone — give yours its own name and point its detector at the built-in.
+
+## A word list or a pattern
+
+```json
+{
+  "name": "support.deny-list",
+  "detector": {
+    "kind": "BUILTIN",
+    "builtin": "deny-list",
+    "config": { "terms": ["refund", "chargeback"] }
+  }
+}
+```
+
+```json
+{
+  "name": "support.order-numbers",
+  "detector": {
+    "kind": "BUILTIN",
+    "builtin": "regex",
+    "config": { "pattern": "ORD-[0-9]{6}", "type": "ORDER_NUMBER" }
+  }
+}
+```
+
+Matching is case-insensitive, and it reads through zero-width characters and homoglyphs — a term
+split by an invisible character still matches, and the redaction still lands on the original text.
+A redaction reads `[REDACTED:ORDER_NUMBER]`, using the `type` you gave. Several rules go in
+`config.rules` as a list of `{pattern, type}`.
+
+## An HTTP service
+
+If the service already speaks Conductor's detector contract, the target is all it needs:
+
+```json
+{
+  "name": "safety.native",
+  "detector": { "kind": "HTTP", "target": "https://detector.internal/evaluate" }
+}
+```
+
+One `POST` carries every text at the point as `{point, context, items: [{id, text}]}`, and the
+answer is `{verdicts: [{itemId, passed, reason, detections, fixedValue}], detectorVersion}`.
+
+For a service with its own request and response shape, declare a mapping; for a well-known provider,
+name a preset. Credentials are referenced as secrets, never inlined:
+
+```json
+{
+  "name": "safety.vendor",
+  "detector": {
+    "kind": "HTTP",
+    "target": "https://vendor.example.com/scan",
+    "auth": { "strategy": "BEARER", "secret": "vendor-api-token" }
+  }
+}
+```
+
+Store the credential with the [Secrets](/content/developer-guides/secrets-in-conductor) API and
+reference it by name. `STATIC_HEADER`, `BEARER`, `AWS_SIGV4`, `AZURE_AD`, and `MTLS` are supported.
+
+## A few lines of JavaScript
+
+```json
+{
+  "name": "support.no-unsafe",
+  "detector": {
+    "kind": "INLINE",
+    "config": { "script": "items.map(i => ({itemId: i.id, passed: !/unsafe/i.test(i.text)}))" }
+  }
+}
+```
+
+Runs in-process with no network call. Best for a self-contained rule that a pattern cannot express.
+
+## An LLM as the judge
+
+```json
+{
+  "name": "support.no-refund-promises",
+  "detector": {
+    "kind": "LLM_JUDGE",
+    "config": { "criteria": "Flag any reply that promises a refund, discount or credit." }
+  }
+}
+```
+
+Write what to flag in your own words and a model decides. By default it judges with **the same
+integration and model the guarded task itself uses**, so there is nothing to configure. Set
+`integration` or `model` in the config only to pin the judge to a different one.
+
+This is how to express a check with no pattern to match — off-topic replies, tone, bias, promises
+you cannot keep. The call happens while the task is running, so the guardrail's `timeoutMillis`
+bounds the delay, and a judge that cannot answer fails closed like any other detector.
+
+## Your own worker
+
+Point the guardrail at the task name your worker polls:
+
+```json
+{
+  "name": "support.worker-check",
+  "detector": { "kind": "WORKER", "taskName": "support_guardrail_worker" }
+}
+```
+
+The worker receives `inputData.request.items` and completes with `{verdicts, detectorVersion}`.
+Conductor schedules that task into the workflow being guarded, so you can see it in the execution
+alongside the LLM task it is checking, and it retries and times out on its task definition like any
+other task.
+
+It is not a step of the workflow, though: the workflow never waits on it, and a detector that runs
+out of retries is a detector failure, which the guardrail's `onError` decides what to do about.
+
+`GET /api/guardrails/contract` returns JSON Schemas for the input and output plus ready-made types
+for Python, Java, Go, C#, JavaScript, and TypeScript. The console shows the same contract with a
+complete worker on the guardrail's **Worker code** tab. Any language works — no SDK is required.
+
+## A whole workflow
+
+The same contract, as a workflow. It receives `workflow.input.request`, and its output parameters
+must be `verdicts` and `detectorVersion`:
+
+```json
+{
+  "name": "support.workflow-check",
+  "detector": {
+    "kind": "WORKFLOW",
+    "target": "support_detector_workflow",
+    "workflowVersion": 1
+  }
+}
+```
+
+## What a detector reports
+
+A verdict is per item. `passed: false` is a finding; `detections` carries the spans, and
+`fixedValue` carries the repaired text when the guardrail is allowed to `REDACT`.
+
+An item your detector was not built to judge — a language it was never validated against, an
+encoding it cannot decode — should be reported as `UNCOVERED` rather than as a pass. That is not a
+violation and the task proceeds, but the evaluation is recorded as `UNCOVERED` and is visible in the
+task's evidence. A control that reported success while doing nothing is exactly what this avoids.
+
+## Versions and tags
+
+Guardrails are versioned like workflow definitions, and **a published version never changes**:
+`POST /api/guardrails` with an existing name publishes the next version. Tasks follow the latest
+version unless they pin one, so a new version takes effect on the next run and an old one can be
+pinned while you compare. Deleting a version sends `latest` back to the one before it, and a task
+pinned to a deleted version fails when it is scheduled.
+
+Because a version is immutable, a run already in flight keeps enforcing exactly the version it was
+stamped with.
+
+Tags are the same key/value tags as on workflows and prompts, and they belong to the guardrail's
+name rather than to a version. Access granted to a tag applies to every guardrail carrying it.
+
+## Try it before you bind it
+
+`POST /api/guardrails/{name}/versions/{version}/test` with
+`{"point": "PROMPT", "items": [{"id": "1", "text": "..."}]}` returns the verdicts, the raw provider
+response for HTTP detectors, and any warnings — without touching a workflow. Bind the guardrail to
+a task once the verdicts look right.
+
+A bound guardrail always enforces. There is no observe-only mode.
+
+## API reference
+
+| Call | Purpose |
+|---|---|
+| `GET /api/guardrails/catalogue` | Built-ins and what they detect |
+| `GET /api/guardrails` | List the latest version of each guardrail |
+| `POST /api/guardrails` | Create a guardrail, or publish the next version of an existing name |
+| `GET /api/guardrails/{name}` | All versions |
+| `GET /api/guardrails/{name}/versions/{v}` | One version |
+| `DELETE /api/guardrails/{name}/versions/{v}` | Remove a version |
+| `POST /api/guardrails/{name}/versions/{v}/test` | Try it on sample text |
+| `GET /api/guardrails/contract` | Detector input/output schemas and language types |
+| `GET`, `PUT`, `DELETE /api/guardrails/{name}/tags` | Read tags, set the full list, remove some |
+| `POST /api/guardrail-reviews/{taskId}/approve`, `/edit`, `/reject` | Human review decisions |
+
+## Related pages
+
+- [LLM Guardrails](/content/developer-guides/guardrails) — adding a guardrail to a task, the built-ins, actions, and what you see afterwards.
