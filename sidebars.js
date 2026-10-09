@@ -502,7 +502,6 @@ const sidebars = {
     deploySidebar: [
         { type: 'doc', id: 'devguide/running/deploy', label: 'Docker', className: 'leftMenuHeader' },
         { type: 'doc', id: 'devguide/running/source', label: 'From Source' },
-        { type: 'doc', id: 'devguide/running/hosted', label: 'Hosted' },
         { type: 'doc', id: 'devguide/bestpractices', label: 'Best Practices' },
         { type: 'doc', id: 'developer-guides/integration-with-cicd', label: 'CI/CD Integration' },
         { type: 'doc', id: 'documentation/configuration/appconf', label: 'Configuration' },
