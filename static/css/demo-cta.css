@@ -1,0 +1,47 @@
+.orkes-demo-bar {
+  background: var(--c-bg-secondary, #f7f7f9);
+  border-bottom: 1px solid var(--c-border, #dcdfe8);
+  color: var(--c-text, #1e2941);
+  font-size: 0.72rem;
+}
+.orkes-demo-bar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
+}
+.orkes-demo-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.4rem 0.9rem;
+  border-radius: 6px;
+  background: #6c37bd;
+  color: #fff !important;
+  font-weight: 600;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.orkes-demo-link:hover { background: #492687; }
+.orkes-demo-link:focus-visible {
+  outline: 3px solid #835edd;
+  outline-offset: 3px;
+}
+.orkes-demo-card {
+  margin-top: 2rem;
+  padding: 1.2rem;
+  border: 1px solid var(--c-border, #dcdfe8);
+  border-radius: 8px;
+  background: var(--c-bg-secondary, #f7f7f9);
+  color: var(--c-text, #1e2941);
+}
+.orkes-demo-card h2 { margin-top: 0; font-size: 1rem; }
+.orkes-demo-card p { font-size: 0.8rem; }
+@media (max-width: 480px) {
+  .orkes-demo-bar__inner { gap: 0.5rem; padding: 0.4rem 0.7rem; }
+  .orkes-demo-bar__inner > span { font-size: 0.65rem; line-height: 1.4; }
+}
