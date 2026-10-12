@@ -4,14 +4,11 @@ slug: "/reference-docs/ai-tasks/generate-video"
 description: "Learn how the Generate Video task generates video from a text prompt or an input image using a configured AI model integration."
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 # Generate Video
 
 The Generate Video task generates video from a text prompt or an input image using a configured AI model integration. It supports OpenAI and Google Gemini/Vertex as video-generation providers, using the Sora and Veo model families respectively.
 
-Unlike [Generate Image](/reference-docs/ai-tasks/generate-image) and [Generate Audio](/reference-docs/ai-tasks/generate-audio), this task runs asynchronously: after starting a video generation job with the provider, the task polls periodically until the job reaches a terminal state, then returns the generated video as output, either as a URL or base64-encoded data. Use it to produce short video clips, product demos, or animated content as part of a workflow, or to extend a generated image into a video sequence.
+Unlike [Generate Image](/reference-docs/ai-tasks/generate-image) and [Generate Audio](/reference-docs/ai-tasks/generate-audio), this task runs asynchronously: after starting a video generation job with the provider, the task polls periodically until the job reaches a terminal state, then returns the generated video as output, either as the path where it is stored or as base64-encoded data. Use it to produce short video clips, product demos, or animated content as part of a workflow, or to extend a generated image into a video sequence.
 
 Because it runs asynchronously, the task remains in an `IN_PROGRESS` state while the provider's job is running, and its execution time depends on the provider and the requested video length.
 
@@ -106,7 +103,7 @@ The Generate Video task will return the following parameters.
 | Parameter | Description | 
 | --------- | ----------- | 
 | jobId | Identifier of the provider's video generation job, used while the task polls for completion. |
-| media | Array of generated videos. Each element contains either a location (URL to the generated video) or base64-encoded data, tagged with a `mimeType` such as `video/mp4`. |
+| media | Array of generated videos. Each element contains either a location (the path where the generated video is stored) or base64-encoded data, tagged with a `mimeType` such as `video/mp4`. |
 
 ## Examples
 
