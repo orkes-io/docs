@@ -1,0 +1,243 @@
+---
+sidebar_position: 22
+slug: "/reference-docs/ai-tasks/cancel-agent"
+description: "Learn how the Cancel Agent task cancels an agent run in progress, either a remote A2A agent task or an agent run hosted on Conductor."
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Cancel Agent
+
+The **Cancel Agent** task cancels an agent run that is in progress. It supports two types of agents:
+
+- **A2A**: Cancels a task running on a remote agent that supports the Agent2Agent (A2A) protocol.
+- **Conductor**: Terminates a run of an agent deployed on your Conductor cluster.
+
+Use it to stop an agent run that is no longer needed, for example when another branch of the workflow has already produced the result. To start an agent run, use the [Agent task](/reference-docs/ai-tasks/agent).
+
+## Task parameters
+
+Configure these parameters for the Cancel Agent task.
+
+| Parameter | Description | Required/ Optional |
+| --------- | ----------- | ----------------- |
+| inputParameters.**agentType** | The type of agent to cancel. Supported values:<ul><li>**a2a**: A remote A2A agent.</li><li>**conductor**: An agent deployed on Conductor.</li></ul>Defaults to `a2a`. | Optional. |
+
+### A2A agent parameters
+
+Use these parameters when **agentType** is `a2a`.
+
+| Parameter | Description | Required/ Optional |
+| --------- | ----------- | ----------------- |
+| inputParameters.**agentUrl** | The URL of the remote agent. Use the agent's JSON-RPC endpoint. | Required. |
+| inputParameters.**taskId** | The ID of the remote task to cancel. Use the **taskId** from the output of the Agent task that started it. | Required. |
+| inputParameters.**headers** | A map of HTTP headers to send with the request, such as an `Authorization` header. | Optional. |
+
+### Conductor agent parameters
+
+Use these parameters when **agentType** is `conductor`.
+
+| Parameter | Description | Required/ Optional |
+| --------- | ----------- | ----------------- |
+| inputParameters.**executionId** | The ID of the agent run to cancel. Use the **executionId** from the output of the Agent task that started it. | Required. |
+| inputParameters.**reason** | The reason for canceling the run. It is shown as the termination reason on the agent execution. Defaults to `Cancelled by CANCEL_AGENT task`. | Optional. |
+
+The following are generic configuration parameters that can be applied to the task and are not specific to the Cancel Agent task.
+
+<details markdown="1">
+<summary>Caching parameters</summary>
+
+You can cache the task outputs using the following parameters. Refer to [Caching Task Outputs](/faqs/task-cache-output) for a full guide.
+
+| Parameter | Description | Required/ Optional |
+| --------- | ----------- | ----------------- |
+| cacheConfig.**ttlInSecond** | The time to live in seconds, which is the duration for the output to be cached. | Required if using *cacheConfig*. |
+| cacheConfig.**key** | The cache key is a unique identifier for the cached output and must be constructed exclusively from the task’s input parameters.<br/>It can be a string concatenation that contains the task’s input keys, such as `${agentUrl}-${taskId}` or `re_${agentUrl}_${taskId}`. | Required if using *cacheConfig*. |
+
+</details>
+
+<details markdown="1">
+<summary>Other generic parameters</summary>
+
+Here are other parameters for configuring the task behavior.
+
+| Parameter | Description | Required/ Optional |
+| --------- | ----------- | ----------------- |
+| optional | Whether the task is optional. <br/><br/>If set to `true`, any task failure is ignored, and the workflow continues with the task status updated to `COMPLETED_WITH_ERRORS`. However, the task must reach a terminal state. If the task remains incomplete, the workflow waits until it reaches a terminal state before proceeding. | Optional. |
+
+</details>
+
+## Task configuration
+
+This is the task configuration for a Cancel Agent task.
+
+<Tabs>
+<TabItem value="a2a" label="A2A agent">
+
+```json
+{
+  "name": "cancel_agent",
+  "taskReferenceName": "cancel_agent_ref",
+  "type": "CANCEL_AGENT",
+  "inputParameters": {
+    "agentType": "a2a",
+    "agentUrl": "<YOUR-AGENT-URL>",
+    "taskId": "<REMOTE-TASK-ID>"
+  }
+}
+```
+
+</TabItem>
+<TabItem value="conductor" label="Conductor agent">
+
+```json
+{
+  "name": "cancel_agent",
+  "taskReferenceName": "cancel_agent_ref",
+  "type": "CANCEL_AGENT",
+  "inputParameters": {
+    "agentType": "conductor",
+    "executionId": "<AGENT-EXECUTION-ID>"
+  }
+}
+```
+
+</TabItem>
+</Tabs>
+
+## Task output
+
+The Cancel Agent task will return the following parameters.
+
+| Parameter | Description |
+| --------- | ----------- |
+| task | The remote task after the cancellation, as returned by the agent. Its `status.state` shows the state, such as `canceled`. Includes the task `id`, `contextId`, `history`, `artifacts`, and `metadata`. Returned for A2A agents. |
+| executionId | The ID of the agent run that was canceled. Returned for Conductor agents. |
+| canceled | `true` when the cancellation was accepted. Returned for Conductor agents. |
+
+## Examples
+
+Here are some examples for using the Cancel Agent task. The Agent task keeps running until the agent finishes, so the examples cancel from a parallel branch.
+
+<details markdown="1">
+<summary>Canceling an A2A task</summary>
+
+This workflow starts a long-running task on a remote A2A agent. In a parallel branch, it waits 10 seconds, then cancels the task using the **taskId** from the Agent task. The Agent task then ends with the state `canceled`.
+
+```json
+{
+  "name": "cancel_a2a_example",
+  "version": 1,
+  "tasks": [
+    {
+      "name": "fork",
+      "taskReferenceName": "fork_ref",
+      "type": "FORK_JOIN",
+      "inputParameters": {},
+      "forkTasks": [
+        [
+          {
+            "name": "agent",
+            "taskReferenceName": "agent_ref",
+            "type": "AGENT",
+            "optional": true,
+            "inputParameters": {
+              "agentUrl": "<YOUR-AGENT-URL>",
+              "text": "<YOUR-LONG-RUNNING-REQUEST>"
+            }
+          }
+        ],
+        [
+          {
+            "name": "wait",
+            "taskReferenceName": "wait_ref",
+            "type": "WAIT",
+            "inputParameters": { "duration": "10 seconds" }
+          },
+          {
+            "name": "cancel_agent",
+            "taskReferenceName": "cancel_agent_ref",
+            "type": "CANCEL_AGENT",
+            "inputParameters": {
+              "agentUrl": "<YOUR-AGENT-URL>",
+              "taskId": "${agent_ref.output.taskId}"
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "name": "join",
+      "taskReferenceName": "join_ref",
+      "type": "JOIN",
+      "inputParameters": {},
+      "joinOn": ["agent_ref", "cancel_agent_ref"]
+    }
+  ]
+}
+```
+
+</details>
+
+<details markdown="1">
+<summary>Canceling a Conductor agent run</summary>
+
+This workflow runs a Conductor agent. In a parallel branch, it waits 15 seconds, then cancels the run using the **executionId** from the Agent task, with a reason.
+
+```json
+{
+  "name": "cancel_conductor_example",
+  "version": 1,
+  "tasks": [
+    {
+      "name": "fork",
+      "taskReferenceName": "fork_ref",
+      "type": "FORK_JOIN",
+      "inputParameters": {},
+      "forkTasks": [
+        [
+          {
+            "name": "agent",
+            "taskReferenceName": "agent_ref",
+            "type": "AGENT",
+            "optional": true,
+            "inputParameters": {
+              "agentType": "conductor",
+              "name": "<YOUR-AGENT-NAME>",
+              "prompt": "<YOUR-PROMPT>"
+            }
+          }
+        ],
+        [
+          {
+            "name": "wait",
+            "taskReferenceName": "wait_ref",
+            "type": "WAIT",
+            "inputParameters": { "duration": "15 seconds" }
+          },
+          {
+            "name": "cancel_agent",
+            "taskReferenceName": "cancel_agent_ref",
+            "type": "CANCEL_AGENT",
+            "inputParameters": {
+              "agentType": "conductor",
+              "executionId": "${agent_ref.output.executionId}",
+              "reason": "No longer needed"
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "name": "join",
+      "taskReferenceName": "join_ref",
+      "type": "JOIN",
+      "inputParameters": {},
+      "joinOn": ["agent_ref", "cancel_agent_ref"]
+    }
+  ]
+}
+```
+
+</details>
