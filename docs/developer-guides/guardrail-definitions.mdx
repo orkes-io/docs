@@ -11,10 +11,20 @@ Guardrails are part of Orkes Conductor and are not available in open-source Cond
 
 A guardrail is a name plus a detector. Create it once with `POST /api/guardrails`, then use the
 name on a task exactly like a [built-in](/content/developer-guides/guardrails#built-in-guardrails).
-The server fills in everything you leave out: version, default action, timeout.
+The server fills in most of what you leave out: version, default action, `onError`, and a timeout of
+5 seconds per detector call.
 
 Built-in names are reserved. A guardrail cannot be called `pii` or `deny-list`, because that would
 redefine the built-in for everyone — give yours its own name and point its detector at the built-in.
+
+Every detector except a built-in also declares its `capabilities` — what it can do:
+
+| Field | Meaning |
+|---|---|
+| `returnsFixedValue` | `true` if the detector can return repaired text. Only then is `REDACT` possible, and it becomes the default action; otherwise the default is `BLOCK`, and asking for `REDACT` is rejected when you save. |
+| `scoreType` | `NONE`, `PROBABILITY`, `CONFIDENCE`, or `SEVERITY`: the scale of any score the detector reports. |
+
+A built-in takes its capabilities from the catalogue, whatever you send.
 
 ## A word list or a pattern
 
@@ -52,15 +62,40 @@ If the service already speaks Conductor's detector contract, the target is all i
 ```json
 {
   "name": "safety.native",
-  "detector": { "kind": "HTTP", "target": "https://detector.internal/evaluate" }
+  "detector": {
+    "kind": "HTTP",
+    "target": "https://detector.internal/evaluate",
+    "capabilities": { "returnsFixedValue": true, "scoreType": "NONE" }
+  }
 }
 ```
 
 One `POST` carries every text at the point as `{point, context, items: [{id, text}]}`, and the
 answer is `{verdicts: [{itemId, passed, reason, detections, fixedValue}], detectorVersion}`.
 
-For a service with its own request and response shape, declare a mapping; for a well-known provider,
-name a preset. Credentials are referenced as secrets, never inlined:
+For a well-known provider, name a preset and Conductor does the translation. The presets are
+`presidio`, `openai-moderation`, `aws-bedrock-guardrails`, `llama-guard`, and
+`guardrails-ai-server`:
+
+```json
+{
+  "name": "safety.presidio",
+  "detector": {
+    "kind": "HTTP",
+    "preset": "presidio",
+    "target": "https://presidio.internal/analyze",
+    "auth": { "strategy": "BEARER", "secret": "${workflow.secrets.presidio-token}" },
+    "capabilities": { "returnsFixedValue": false, "scoreType": "CONFIDENCE" }
+  }
+}
+```
+
+A preset fixes the auth strategy (`AWS_SIGV4` for `aws-bedrock-guardrails`, `BEARER` for the rest).
+Preset mappings follow each provider's documentation, so try yours with the
+[test call](#try-it-before-you-bind-it) before you rely on it.
+
+For a service with its own request and response shape, declare a mapping instead, with JSON
+pointers into the response:
 
 ```json
 {
@@ -68,27 +103,118 @@ name a preset. Credentials are referenced as secrets, never inlined:
   "detector": {
     "kind": "HTTP",
     "target": "https://vendor.example.com/scan",
-    "auth": { "strategy": "BEARER", "secret": "vendor-api-token" }
+    "mapping": {
+      "textField": "content",
+      "requestConstants": { "mode": "strict" },
+      "passedPath": "/ok",
+      "reasonPath": "/why",
+      "fixedValuePath": "/clean",
+      "detectionsPath": "/hits",
+      "detection": { "typePath": "/kind", "startPath": "/from", "endPath": "/to" }
+    },
+    "capabilities": { "returnsFixedValue": true, "scoreType": "NONE" }
   }
 }
 ```
 
-Store the credential with the [Secrets](/content/developer-guides/secrets-in-conductor) API and
-reference it by name. `STATIC_HEADER`, `BEARER`, `AWS_SIGV4`, `AZURE_AD`, and `MTLS` are supported.
+A mapped service receives one text per request, in `textField`. Use `passedPath` for a boolean
+verdict, or `failWhen` for a condition on the response instead: `exists(/path)`,
+`nonEmpty(/path)`, `eq(/path, value)`, or `gte(/path, number)`.
+
+### Credentials
+
+Credentials never go in the definition. `auth.secret` names a Conductor secret, written the way you
+reference a secret in task input:
+
+```json
+{ "strategy": "BEARER", "secret": "${workflow.secrets.vendor-api-token}" }
+{ "strategy": "STATIC_HEADER", "secret": "${workflow.secrets.vendor-creds.apiKey}", "header": "X-Api-Key" }
+```
+
+The second form takes one field out of a secret that holds several credentials. A bare word with
+no `${...}` is a literal value, not a secret name. Store the credential with the
+[Secrets](/content/developer-guides/secrets-in-conductor) API.
+
+The server resolves the secret for the worker fleet when a worker reads the definition, the same
+way an integration's API key reaches the workers. The resolved value is never stored and never
+shown: reading the guardrail through the API or the UI returns only the reference. A secret that
+cannot be resolved makes the detector call fail, which blocks.
+
+| Strategy | Also needs |
+|---|---|
+| `BEARER` | — |
+| `STATIC_HEADER` | `header` |
+| `AZURE_AD` | `audience` |
+| `AWS_SIGV4` | `region` and `service` |
+| `MTLS` | — |
+
+### Timeouts, retries, and the circuit breaker
+
+Transport settings go in the detector's `config`. Every one is optional:
+
+```json
+"config": {
+  "connectTimeoutMillis": 2000,
+  "readTimeoutMillis": 5000,
+  "maxRetries": 2,
+  "maxConcurrency": 64,
+  "maxRequestBytes": 1048576,
+  "maxResponseBytes": 2097152,
+  "circuitBreaker": {
+    "failureRatePercent": 50,
+    "minimumCalls": 20,
+    "windowMillis": 60000,
+    "openMillis": 30000,
+    "halfOpenMaxCalls": 2
+  }
+}
+```
+
+The values shown are the defaults; `readTimeoutMillis` defaults to the guardrail's `timeoutMillis`.
+Retries happen only under `onError: RETRY_THEN_BLOCK`. The circuit breaker opens when at least
+`failureRatePercent` of the calls in the last `windowMillis` failed (once there have been at least
+`minimumCalls`), stays open for `openMillis`, then lets `halfOpenMaxCalls` trial calls through. While
+it is open, every call is an immediate detector error. A request or response over its byte limit is
+an error; text is never truncated to fit.
+
+### What saving checks
+
+An HTTP guardrail is validated when you save it, so a mistake is reported then rather than as a
+blocked task later:
+
+- `target` is an absolute `http` or `https` URL.
+- Every `config` setting is a number, and in range — a value that is not a number is rejected
+  rather than replaced by the default.
+- The `circuitBreaker` settings are valid.
+- `auth` has a `secret`, plus whatever its strategy needs (see the table above), and matches the
+  preset's strategy.
+- A preset is one of the five above, and is not combined with a `mapping`.
+- A mapping has a `textField`, a `passedPath` or a `failWhen`, valid JSON pointers, a valid
+  `failWhen` condition, and `typePath`, `startPath`, and `endPath` under `detection` when
+  `detectionsPath` is set.
 
 ## A few lines of JavaScript
 
 ```json
 {
-  "name": "support.no-unsafe",
+  "name": "support.no-passwords",
   "detector": {
     "kind": "INLINE",
-    "config": { "script": "items.map(i => ({itemId: i.id, passed: !/unsafe/i.test(i.text)}))" }
+    "target": "(function () { var t = String($.text); if (!/password\\s*[:=]\\s*\\S+/i.test(t)) { return true; } return t.replace(/password(\\s*[:=]\\s*)\\S+/gi, 'password$1[REDACTED]'); })()",
+    "capabilities": { "returnsFixedValue": true, "scoreType": "NONE" }
   }
 }
 ```
 
-Runs in-process with no network call. Best for a self-contained rule that a pattern cannot express.
+`target` is a sandboxed JavaScript expression, run once per piece of text. It sees `$.text`,
+`$.point`, `$.itemId`, `$.config` (the detector's own `config`), and `$.context` (the guarded
+task's `workflowId`, `taskId`, `taskType`, `llmProvider`, `model`, and so on). Because it is an
+expression, wrap your logic in `(function () { ... })()` so its value is the result.
+
+Return `true` to pass, `false` to flag, a string to offer a repaired version (identical to the
+input means passed), or `{passed, reason, detections, fixedValue}` for full control. Anything else
+is a detector failure. It runs in the worker with no network or file access, and it is stopped after
+a few seconds. Best for a self-contained rule that a pattern cannot express.
 
 ## An LLM as the judge
 
@@ -97,18 +223,22 @@ Runs in-process with no network call. Best for a self-contained rule that a patt
   "name": "support.no-refund-promises",
   "detector": {
     "kind": "LLM_JUDGE",
-    "config": { "criteria": "Flag any reply that promises a refund, discount or credit." }
+    "config": { "criteria": "Flag any reply that promises a refund, discount or credit." },
+    "capabilities": { "returnsFixedValue": false, "scoreType": "CONFIDENCE" }
   }
 }
 ```
 
 Write what to flag in your own words and a model decides. By default it judges with **the same
 integration and model the guarded task itself uses**, so there is nothing to configure. Set
-`integration` or `model` in the config only to pin the judge to a different one.
+`integration` or `model` (and optionally `temperature`) in the config only to pin the judge to a
+different one.
 
 This is how to express a check with no pattern to match — off-topic replies, tone, bias, promises
-you cannot keep. The call happens while the task is running, so the guardrail's `timeoutMillis`
-bounds the delay, and a judge that cannot answer fails closed like any other detector.
+you cannot keep. A judge decides whether text is a violation but never rewrites it, so
+`returnsFixedValue` must be `false` and the guardrail blocks rather than redacts. The call happens
+while the task is running, so the guardrail's `timeoutMillis` bounds the delay, and a judge that
+cannot answer fails closed like any other detector.
 
 ## Your own worker
 
@@ -117,17 +247,22 @@ Point the guardrail at the task name your worker polls:
 ```json
 {
   "name": "support.worker-check",
-  "detector": { "kind": "WORKER", "taskName": "support_guardrail_worker" }
+  "detector": {
+    "kind": "WORKER",
+    "taskName": "support_guardrail_worker",
+    "capabilities": { "returnsFixedValue": true, "scoreType": "NONE" }
+  }
 }
 ```
 
-The worker receives `inputData.request.items` and completes with `{verdicts, detectorVersion}`.
-Conductor schedules that task into the workflow being guarded, so you can see it in the execution
-alongside the LLM task it is checking, and it retries and times out on its task definition like any
-other task.
+The worker receives `inputData.request` (`{point, context, items}`) and completes with
+`{verdicts, detectorVersion}`. A task definition is optional, as everywhere else in Conductor.
 
-It is not a step of the workflow, though: the workflow never waits on it, and a detector that runs
-out of retries is a detector failure, which the guardrail's `onError` decides what to do about.
+Conductor runs the task as an execution of its own — a one-task workflow named
+`guardrail_detector_<taskName>`, in the guarded task's organization — and the guarded task waits for
+it, for at most the guardrail's `timeoutMillis`. If the task has a task definition, it retries and
+times out by it like any other task. Nothing is added to the workflow being guarded. A detector that
+runs out of retries, or does not complete, is a detector failure, and the task is blocked.
 
 `GET /api/guardrails/contract` returns JSON Schemas for the input and output plus ready-made types
 for Python, Java, Go, C#, JavaScript, and TypeScript. The console shows the same contract with a
@@ -144,10 +279,13 @@ must be `verdicts` and `detectorVersion`:
   "detector": {
     "kind": "WORKFLOW",
     "target": "support_detector_workflow",
-    "workflowVersion": 1
+    "workflowVersion": 1,
+    "capabilities": { "returnsFixedValue": true, "scoreType": "NONE" }
   }
 }
 ```
+
+The workflow version must exist when you save the guardrail.
 
 ## What a detector reports
 
@@ -155,20 +293,24 @@ A verdict is per item. `passed: false` is a finding; `detections` carries the sp
 `fixedValue` carries the repaired text when the guardrail is allowed to `REDACT`.
 
 An item your detector was not built to judge — a language it was never validated against, an
-encoding it cannot decode — should be reported as `UNCOVERED` rather than as a pass. That is not a
-violation and the task proceeds, but the evaluation is recorded as `UNCOVERED` and is visible in the
-task's evidence. A control that reported success while doing nothing is exactly what this avoids.
+encoding it cannot decode — should be reported as `UNCOVERED` rather than as a pass: set the
+verdict's `error` to `UNCOVERED`. That is not a violation and the task proceeds, but the evaluation
+is recorded as `UNCOVERED` and is visible in the task's evidence. A control that reported success
+while doing nothing is exactly what this avoids. Any other `error` is a detector failure.
 
 ## Versions and tags
 
-Guardrails are versioned like workflow definitions, and **a published version never changes**:
-`POST /api/guardrails` with an existing name publishes the next version. Tasks follow the latest
-version unless they pin one, so a new version takes effect on the next run and an old one can be
-pinned while you compare. Deleting a version sends `latest` back to the one before it, and a task
-pinned to a deleted version fails when it is scheduled.
+Guardrails are versioned like workflow definitions. `POST /api/guardrails` with an existing name
+publishes the next version; `PUT /api/guardrails/{name}/versions/{v}` saves over an existing
+version, as saving a workflow definition does, and is validated the same way.
 
-Because a version is immutable, a run already in flight keeps enforcing exactly the version it was
-stamped with.
+Tasks follow the latest version unless they pin one, so a new version takes effect on the next run
+and an old one can be pinned while you compare. A task's version is fixed when a worker first picks
+it up, and stays fixed for that attempt. Workers see a saved-over version within their definition
+cache window (30 seconds by default).
+
+Deleting a version sends `latest` back to the one before it, and a task pinned to a deleted version
+fails when a worker picks it up.
 
 Tags are the same key/value tags as on workflows and prompts, and they belong to the guardrail's
 name rather than to a version. Access granted to a tag applies to every guardrail carrying it.
@@ -176,9 +318,16 @@ name rather than to a version. Access granted to a tag applies to every guardrai
 ## Try it before you bind it
 
 `POST /api/guardrails/{name}/versions/{version}/test` with
-`{"point": "PROMPT", "items": [{"id": "1", "text": "..."}]}` returns the verdicts, the raw provider
-response for HTTP detectors, and any warnings — without touching a workflow. Bind the guardrail to
-a task once the verdicts look right.
+`{"point": "PROMPT", "items": [{"id": "1", "text": "..."}], "context": {}}` returns the verdicts,
+the raw provider response for HTTP detectors (with credentials redacted), and any warnings —
+without touching a workflow. Bind the guardrail to a task once the verdicts look right.
+
+The test runs on the server, so it covers rule-based built-ins and HTTP detectors. An HTTP test
+makes one request, with no retries. A probe the endpoint refuses — a 401, a body that cannot be
+read, a missing credential, a bad setting — comes back as HTTP 400 with the reason. Model-backed
+built-ins, inline JavaScript, LLM judges, and worker and workflow detectors run only on the workers:
+for them the response carries a warning and no verdicts, so run a workflow that uses the guardrail
+and check the task's **Guardrails** tab.
 
 A bound guardrail always enforces. There is no observe-only mode.
 
@@ -191,11 +340,14 @@ A bound guardrail always enforces. There is no observe-only mode.
 | `POST /api/guardrails` | Create a guardrail, or publish the next version of an existing name |
 | `GET /api/guardrails/{name}` | All versions |
 | `GET /api/guardrails/{name}/versions/{v}` | One version |
+| `PUT /api/guardrails/{name}/versions/{v}` | Save over a version |
 | `DELETE /api/guardrails/{name}/versions/{v}` | Remove a version |
-| `POST /api/guardrails/{name}/versions/{v}/test` | Try it on sample text |
+| `POST /api/guardrails/{name}/versions/{v}/test` | Try it on sample text; a probe the endpoint refuses is a 400 with the reason |
 | `GET /api/guardrails/contract` | Detector input/output schemas and language types |
 | `GET`, `PUT`, `DELETE /api/guardrails/{name}/tags` | Read tags, set the full list, remove some |
-| `POST /api/guardrail-reviews/{taskId}/approve`, `/edit`, `/reject` | Human review decisions |
+
+There is no review API: an answer a `HUMAN` guardrail withheld is reviewed by a Human task in your
+own workflow — see [Routing a withheld answer](/content/developer-guides/guardrails#routing-a-withheld-answer).
 
 ## Related pages
 

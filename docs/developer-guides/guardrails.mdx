@@ -1,6 +1,6 @@
 ---
 slug: "/developer-guides/guardrails"
-description: "Check the text flowing into and out of an LLM task with guardrails: redact PII, block prompt injection, re-ask the model, or route an answer to a human reviewer."
+description: "Check the text flowing into and out of an LLM task with guardrails: redact PII, block prompt injection, re-ask the model, or hold an answer back for human review."
 ---
 
 # LLM Guardrails
@@ -11,8 +11,8 @@ the Orkes server and worker fleet; there is nothing to install.
 :::
 
 A guardrail checks the text that flows through an LLM task and decides what to do about it: redact
-it, block the task, ask the model again, or hand it to a person. You add one with a single line on
-the task.
+it, block the task, ask the model again, or hold the answer back for a person. You add one with a
+single line on the task.
 
 ## Add a guardrail in one line
 
@@ -56,12 +56,12 @@ Tune an entry when the default is not what you want. Every key is optional excep
 | `guardrail` (or `name`) | A built-in name, or one of your own guardrails | Required |
 | `at` | Where it runs: `PROMPT`, `USER_MESSAGE`, `MODEL_OUTPUT`, `EMBEDDING_INPUT`, `DOCUMENT_TEXT` | Every point the task type supports |
 | `action` | `REDACT`, `BLOCK`, `REASK`, `HUMAN` | What the guardrail can do: `REDACT` if it can repair text, otherwise `BLOCK` |
-| `onError` | What happens if the detector itself fails | `RETRY_THEN_BLOCK` |
+| `onError` | What happens if the detector itself fails — see [When a detector fails](#when-a-detector-fails) | `RETRY_THEN_BLOCK` |
 | `version` | Pin a version of your own guardrail | Follow the latest version |
 
 The list is validated when you save the workflow definition. An unknown name, a point the task type
-does not have, or `REASK` anywhere but `MODEL_OUTPUT` is rejected with a message naming the entry
-that is wrong — it does not fail silently at runtime.
+does not have, or `REASK` or `HUMAN` anywhere but `MODEL_OUTPUT` is rejected with a message naming
+the entry that is wrong — it does not fail silently at runtime.
 
 ## Supported tasks
 
@@ -93,9 +93,15 @@ Built-ins need no setup. Use them by name.
 | `toxicity` | Toxic or abusive text (model-backed) | `BLOCK` |
 | `regex`, `deny-list` | Templates for your own patterns — see [Write your own guardrail](/content/developer-guides/guardrail-definitions) | `REDACT` |
 
-The three model-backed built-ins send the text to a judge model; everything else runs in-process
-with no network call. `GET /api/guardrails/catalogue` returns this list with the exact entity types
-each one detects.
+Everything except the three model-backed built-ins runs in-process with no network call. The
+model-backed ones send the text to a judge model: by default the same integration and model the
+guarded task itself uses. Where the task has no model of its own, the worker fleet's judge
+integration is used (`conductor.guardrail.llm-integration`, default `openai`, with an optional
+`conductor.guardrail.llm-temperature`). They are built for English text; text in other languages is
+recorded as `UNCOVERED` rather than passed. `prompt-injection` and `jailbreak` check input points
+only.
+
+`GET /api/guardrails/catalogue` returns this list with the exact entity types each one detects.
 
 ## What each action does
 
@@ -104,10 +110,65 @@ each one detects.
 | `REDACT` | Replace the flagged spans and carry on. The model, or the workflow, sees the redacted text. |
 | `BLOCK` | Fail the task. The model is not called for input points; its answer is discarded for output points. |
 | `REASK` | `MODEL_OUTPUT` only. Send the answer back to the model once, with the reason, and check the new answer. If that one is flagged too, the task is blocked. |
-| `HUMAN` | `MODEL_OUTPUT` only. Park the task until someone approves, edits, or rejects the answer through `/api/guardrail-reviews/{taskId}`. |
+| `HUMAN` | `MODEL_OUTPUT` only. Withhold the answer: the task completes with no `result`, and its output carries `guardrailReview` with the withheld answer and the violation. What happens next is up to your workflow — see [Routing a withheld answer](#routing-a-withheld-answer). |
 
 Several guardrails at one point combine predictably: any `BLOCK` wins, then `HUMAN`, then `REASK`;
-every `REDACT` applies, with the spans merged. Only one `REASK` or `HUMAN` may be bound at a point.
+every `REDACT` applies, with the spans merged. At most one `REASK` and one `HUMAN` guardrail may
+apply at a point; a list with two of either is rejected when you save the workflow.
+
+### Routing a withheld answer
+
+There is no review API and no review queue on the server. When a `HUMAN` guardrail flags the
+answer, the task completes with `result` empty and the answer, with the violation that withheld
+it, under `guardrailReview`:
+
+```json
+{
+  "guardrailReview": {
+    "answer": "the model's answer (a string, or JSON for a structured answer)",
+    "violation": {
+      "guardrail": "support.deny-list",
+      "version": 2,
+      "point": "MODEL_OUTPUT",
+      "action": "HUMAN",
+      "reason": "...",
+      "detections": []
+    }
+  }
+}
+```
+
+Review is the workflow's job. Route on `${<llmTaskRef>.output.guardrailReview}` — with a
+[Switch](/content/reference-docs/operators/switch) task, say — to a
+[Human](/content/reference-docs/operators/human) task of your own. Here `chat` is the guarded LLM
+Chat Complete task:
+
+```json
+{
+  "name": "needs_review",
+  "taskReferenceName": "needs_review",
+  "type": "SWITCH",
+  "evaluatorType": "javascript",
+  "expression": "$.review ? 'review' : 'ok'",
+  "inputParameters": { "review": "${chat.output.guardrailReview}" },
+  "decisionCases": {
+    "review": [
+      {
+        "name": "review_answer",
+        "taskReferenceName": "review_answer",
+        "type": "HUMAN",
+        "inputParameters": {
+          "answer": "${chat.output.guardrailReview.answer}",
+          "violation": "${chat.output.guardrailReview.violation}"
+        }
+      }
+    ]
+  }
+}
+```
+
+The evaluation is recorded with the outcome `HUMAN_PENDING`, and the violation is in the task's
+evidence. If the answer cannot be withheld this way, the task fails rather than release it.
 
 ### When a detector fails
 
@@ -115,12 +176,18 @@ A detector can time out or return something unusable. `onError` says what that m
 
 | `onError` | Effect |
 |---|---|
-| `RETRY_THEN_BLOCK` (default) | Retry once, then fail the task. |
-| `BLOCK` | Fail the task immediately, without retrying. |
+| `RETRY_THEN_BLOCK` (default) | An HTTP detector retries connection failures, timeouts, and 408, 429, and 5xx responses (up to its `maxRetries`, 2 by default), then the task fails. |
+| `BLOCK` | Fail the task on the first error, without retrying. |
 
 Both fail closed: a detector that cannot answer never lets the text through. They differ only in
-whether the transport retries first. There is no mode in which a broken guardrail silently passes
-text to the model.
+whether an HTTP detector retries first; for every other kind of detector, a failure blocks either
+way. There is no mode in which a broken guardrail silently passes text to the model.
+
+A blocked task, whether by a violation or by a detector failure, ends `FAILED_WITH_TERMINAL_ERROR`
+and is not retried. The one exception is Conductor itself being unreachable while a guardrail runs —
+a guardrail definition, a secret, or a detector execution that cannot be read or started. That is
+not a detector's answer, so it is not treated as a guardrail block: the task fails retryably and its
+own retry policy applies.
 
 ## Guardrails on an agent call
 
@@ -142,36 +209,51 @@ An `AGENT` task that calls a Conductor agent may declare `guardrails` too:
 
 The agent call itself is not checked — it has no guardrail points of its own. The list follows the
 call into the agent's own LLM Chat Complete tasks and is enforced there, which is where the agent's
-prompt and its answer actually pass a model. A chat task inside the agent that declares its own
-`guardrails` keeps them. Because the list is validated for chat tasks, `REASK` and `HUMAN` are
-allowed on an agent call.
+prompt and its answer actually pass a model. A sub-agent inherits the list from the agent above it.
+A chat task inside the agent that declares its own `guardrails` keeps them. Guardrails the agent's
+own definition names are applied to its chat tasks as well. Because the list is validated for chat
+tasks, `REASK` and `HUMAN` are allowed on an agent call.
 
 Only a Conductor agent can inherit a list. A remote A2A, Bedrock, or Azure Foundry agent runs
-outside Conductor, so there are no tasks of ours to enforce it — a guardrail list on such a task
-fails the task rather than quietly enforcing nothing. The agent call also records what it handed
-over, and its own completion is refused if it declared guardrails the agent never received.
+outside Conductor, so there are no tasks of ours to enforce it: saving a workflow that puts a
+guardrail list on such an `AGENT` task is rejected.
 
 ## What you see afterwards
 
-The server resolves the task's list into concrete guardrail versions and stamps it onto the task
-before the worker runs. The stamp and the evidence share one home on the task, under
+Guardrails run in the worker. When a worker first picks the task up, it resolves the task's list
+into concrete guardrail versions and stamps them onto the task; it then runs the guardrails, takes
+the action, and records everything on the task itself, under
 `executionMetadata.additionalContext.guardrails`. The task's `outputData` holds only the model's
-result.
+result — or, when a `HUMAN` guardrail withheld it, `guardrailReview` instead.
 
 | Key | Content |
 |---|---|
-| `stamp` | What the server resolved: the exact guardrail versions, points, and actions that must run. Server-owned; a worker cannot change it. |
+| `stamp` | What was resolved on first pickup: the exact guardrail versions, points, and actions that must run. A retried attempt is stamped afresh. |
 | `evaluations` | One entry per guardrail, point, and item: the verdict, `configuredAction`, `actionTaken`, the outcome, and latency. |
-| `violation` | Present when the task was blocked: which guardrail, where, and why. |
-| `continuation` | Present while a `HUMAN` review is pending, and kept with the decision afterwards; its `version` goes into the approve, edit, or reject call. |
-| `dispatches`, `candidate` | Park state while a worker or workflow detector, or a reviewer, is being waited for; gone once the task completes. |
+| `violation` | Present when the task was blocked or its answer withheld: which guardrail, where, and why. |
+| `dispatches`, `candidate` | Present only while a worker or workflow detector is being waited for; gone once the task completes. |
 
 In the UI, select the task in an execution and open its **Guardrails** tab to see what each
-guardrail was configured to do and what it did. For an agent call, the tab shows what was declared
-and whether it reached the agent.
+guardrail was configured to do and what it did. For an agent call, look at the agent's own chat
+tasks, which is where the guardrails ran.
 
-A stamped task cannot report success without evidence: a completion that cannot show its
-evaluations is failed rather than accepted, whatever the worker reports.
+A stamped task cannot complete successfully without evidence: before it does, the worker checks the
+evaluations against the stamp, and fails the task if they do not show the stamped guardrails ran.
+
+The server keeps no other copy of the evaluations. For dashboards and alerts, the worker fleet
+publishes Micrometer metrics (Prometheus names shown):
+
+| Metric | What it counts |
+|---|---|
+| `guardrail_evaluations_total`, `guardrail_violations_total` | Evaluations and violations, by `outcome` (`PASSED`, `REDACTED`, `BLOCKED`, `REASKED`, `HUMAN_PENDING`, `ERROR_BLOCKED`, `UNCOVERED`, `SUPERSEDED`) |
+| `guardrail_latency_seconds` | Time spent evaluating |
+| `guardrail_errors_total` | Detector failures |
+| `guardrail_http_requests_total`, `guardrail_http_latency_seconds` | Calls to HTTP detectors, by status |
+| `guardrail_circuit_state` | An HTTP detector's circuit breaker: 0 closed, 1 open, 2 half-open |
+
+They are tagged by guardrail, point, action, outcome, and organization, as applicable. Versions,
+endpoint URLs, and workflow and task IDs are never tags; which version produced an evaluation is in
+the task's evidence.
 
 ## Who can do what
 
@@ -187,6 +269,19 @@ share it with the ordinary access grants; the **Guardrail manager** role manages
 
 A grant on a guardrail uses the same access API and UI as a grant on a workflow; the target type is
 `GUARDRAIL`. Naming a guardrail you cannot read is rejected when you save the workflow.
+
+## Upgrading from inputGuardrail / outputGuardrail
+
+Conductor 5.5 configured guardrails with an `inputGuardrail` or `outputGuardrail` object on an LLM
+task's input. Those keys are no longer read, and saving a workflow that still has them is rejected
+with a message naming the task. Replace each with an entry in the task's `guardrails` list: a
+`JAVASCRIPT` hook becomes an `INLINE` guardrail, an `HTTP` hook an `HTTP` guardrail, and a
+`WORKFLOW` hook a `WORKFLOW` guardrail (see [Write your own guardrail](/content/developer-guides/guardrail-definitions)).
+`failureMode: FAIL` corresponds to `onError: BLOCK`. There is no counterpart to
+`failureMode: WARN`: a detector that fails always blocks.
+
+A workflow saved before the upgrade that still carries the old keys runs without those guardrails
+until it is re-saved, so update such workflows before the upgrade.
 
 ## Related pages
 
