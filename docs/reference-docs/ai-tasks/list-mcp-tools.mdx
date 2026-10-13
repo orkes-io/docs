@@ -4,9 +4,6 @@ slug: "/reference-docs/ai-tasks/list-mcp-tools"
 description: "Learn how the List MCP Tools task connects to an MCP server and returns the list of tools it exposes."
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 # List MCP Tools
 
 The List MCP Tools task connects to an MCP (Model Context Protocol) server and returns the list of tools it exposes, along with details about each tool. Use it to discover what tools an MCP server offers before invoking them from a workflow or an agent.
@@ -17,7 +14,7 @@ Configure these parameters for the List MCP Tools task.
 
 | Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- |
-| inputParameters.**mcpServer** | The URL of the MCP server to query. | Required. |
+| inputParameters.**mcpServer** | The URL of the MCP server to query. Must be an HTTP or HTTPS URL. | Required. |
 | inputParameters.**headers** | A map of HTTP headers to send with the request, such as authentication headers required by the MCP server. | Optional. |
 
 The following are generic configuration parameters that can be applied to the task and are not specific to the List MCP Tools task.
@@ -67,7 +64,10 @@ The List MCP Tools task will return the following parameters.
 
 | Parameter | Description | 
 | --------- | ----------- | 
-| tools | Array of tools exposed by the MCP server, including its parameters. |
+| tools | The tools exposed by the MCP server. |
+| tools.name | The name of the tool. |
+| tools.description | A description of what the tool does. |
+| tools.inputSchema | The JSON schema that describes the input parameters of the tool. |
 
 ## Examples
 
@@ -81,7 +81,7 @@ Here are some examples for using the List MCP Tools task.
   "name": "list_mcp_tools",
   "taskReferenceName": "list_mcp_tools_ref",
   "inputParameters": {
-    "mcpServer": "https://xxxx.developer.orkescloud.com/feedback-service/mcp",
+    "mcpServer": "https://mcp.deepwiki.com/mcp",
     "headers": {}
   },
   "type": "LIST_MCP_TOOLS"

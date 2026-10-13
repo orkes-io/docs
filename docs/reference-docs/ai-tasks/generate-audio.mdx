@@ -4,14 +4,11 @@ slug: "/reference-docs/ai-tasks/generate-audio"
 description: "Learn how the Generate Audio task converts text into synthesized speech or audio using a configured AI model integration."
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 # Generate Audio
 
 The Generate Audio task converts text into synthesized speech or audio using a configured AI model integration. It supports OpenAI and Google Gemini/Vertex as audio-generation providers.
 
-During execution, the task sends literal text to the configured provider and model, and returns the generated audio as output, either as a URL or base64-encoded data. Use it to produce narration, voiceovers, or spoken responses as part of a workflow, or to feed generated audio into downstream tasks.
+During execution, the task sends literal text to the configured provider and model, and returns the generated audio as output, either as the path where it is stored or as base64-encoded data. Use it to produce narration, voiceovers, or spoken responses as part of a workflow, or to feed generated audio into downstream tasks.
 
 :::info Prerequisites
 
@@ -31,9 +28,9 @@ Configure these parameters for the Generate Audio task.
 | inputParameters.**llmProvider** | The integration name of the AI model provider configured with your Conductor cluster. | Required. |
 | inputParameters.**model** | The model or deployment name registered under the integration (e.g. `tts-1`, `tts-1-hd`). | Required. |
 | inputParameters.**text** | The literal text to convert to audio. | Required. |
-| inputParameters.**voice** | The voice to use for synthesis. Supported values are provider- and model-specific (e.g. `alloy`, `nova` for OpenAI). | Optional. |
+| inputParameters.**voice** | The voice to use for synthesis. Supported values are provider- and model-specific (e.g. `alloy`, `nova` for OpenAI). | Required. |
 | inputParameters.**speed** | Playback speed of the generated audio. Default is 1.0. Applies to OpenAI only. | Optional. |
-| inputParameters.**responseFormat** | Output audio format, e.g. `mp3`, `opus`, `aac`, `flac`. Default is `mp3`. | Optional. |
+| inputParameters.**responseFormat** | Output audio format, e.g. `mp3`, `opus`, `aac`, `flac`. Default is `mp3`. Applies to OpenAI only. For Google Gemini and Vertex, it sets only the `mimeType` of the returned audio. | Optional. |
 | inputParameters.**n** | Number of audio outputs to generate. Default is 1. | Optional. |
 
 The following are generic configuration parameters that can be applied to the task and are not specific to the Generate Audio task.
@@ -86,7 +83,7 @@ The Generate Audio task will return the following parameters.
 
 | Parameter | Description | 
 | --------- | ----------- | 
-| media | Array of generated audio clips. Each element contains either a location (URL to the generated audio) or base64-encoded data, tagged with a `mimeType` such as `audio/mpeg`. |
+| media | Array of generated audio clips. Each element contains either a location (the path where the generated audio is stored) or base64-encoded data, tagged with a `mimeType`. The `mimeType` is `audio/*` for OpenAI, and `audio/` followed by the `responseFormat` value for Google Gemini and Vertex. |
 
 ## Examples
 
