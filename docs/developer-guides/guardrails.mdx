@@ -67,7 +67,7 @@ the entry that is wrong — it does not fail silently at runtime.
 
 | Task | Points checked |
 |---|---|
-| [LLM Chat Complete](/content/reference-docs/ai-tasks/llm-chat-complete) | `PROMPT` (resolved instructions), `USER_MESSAGE` (each user message), `MODEL_OUTPUT` |
+| [LLM Chat Complete](/content/reference-docs/ai-tasks/llm-chat-complete) | `PROMPT` (resolved instructions), `USER_MESSAGE` (`userInput` and the user messages after the model's last turn; earlier ones were checked on their own turn), `MODEL_OUTPUT` (the answer, and the arguments of every tool call the model asks for) |
 | [LLM Generate Embeddings](/content/reference-docs/ai-tasks/llm-generate-embeddings) | `EMBEDDING_INPUT` |
 | [Parse Document](/content/reference-docs/ai-tasks/parse-document) | `DOCUMENT_TEXT` (every chunk, before it leaves the task) |
 | Agent | None of its own — see [Guardrails on an agent call](#guardrails-on-an-agent-call) |
@@ -120,7 +120,8 @@ apply at a point; a list with two of either is rejected when you save the workfl
 
 There is no review API and no review queue on the server. When a `HUMAN` guardrail flags the
 answer, the task completes with `result` empty and the answer, with the violation that withheld
-it, under `guardrailReview`:
+it, under `guardrailReview`. If the model asked for tools, its tool calls are withheld there too
+(`toolCalls`), so none of them runs:
 
 ```json
 {
