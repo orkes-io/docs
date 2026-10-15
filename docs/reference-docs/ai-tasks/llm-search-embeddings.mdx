@@ -32,7 +32,7 @@ Configure these parameters for the LLM Search Embeddings task.
 | inputParameters.**embeddingModel** | The embedding model used to embed *query*. Required only when searching by *query* instead of *embeddings*. | Optional. |
 | inputParameters.**embeddings** | The embedding vector to search with. This should be from the same embedding model used to create the embeddings stored in the specified index. | Required. |
 | inputParameters.**query** | A natural-language query to embed and search with. Used only when *embeddings* is not set. | Optional. |
-| inputParameters.**maxResults** | The maximum number of results to return. A non-zero integer between 1 and 10000. | Required. |
+| inputParameters.**maxResults** | The maximum number of results to return. | Optional. |
 | inputParameters.**dimensions** | The size of the embedding vector. | Optional. |
 | inputParameters.**metadata** | A map of key-value pairs to filter results by document metadata. | Optional. |
 
@@ -86,12 +86,12 @@ The LLM Search Embeddings task will return the following parameters.
 
 | Parameter | Description | 
 | --------- | ----------- | 
-| result | A JSON array containing the results of the query. |
-| score | Represents a value quantifying the degree of likeness between a specific item and a query vector, facilitating ranking and ordering of results. Higher scores denote stronger relevance to the query vector. |
-| metadata | An object containing additional metadata related to the retrieved document. |
-| docId | The unique identifier of the queried document. |
-| parentDocId | An identifier that denotes a parent document in hierarchical or relational data structures. | 
-| text | The actual content retrieved. | 
+| result | An array of matching results, ordered by score. Each item contains the fields below. |
+| result.docId | The ID of the matching vector. |
+| result.parentDocId | The ID of the parent document, if any. |
+| result.text | The text content retrieved for the matching vector, if any. |
+| result.score | How closely the item matches the search vector. A higher score means a closer match. |
+| result.metadata | The metadata retrieved for the matching vector, if any. |
 
 ## Examples
 

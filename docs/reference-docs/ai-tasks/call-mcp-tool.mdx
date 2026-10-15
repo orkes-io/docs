@@ -17,7 +17,7 @@ Configure these parameters for the Call MCP Tool task.
 
 | Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- |
-| inputParameters.**mcpServer** | The URL of the MCP server hosting the tool. | Required. |
+| inputParameters.**mcpServer** | The URL of the MCP server hosting the tool. Must be an HTTP or HTTPS URL. | Required. |
 | inputParameters.**method** | The name of the tool to call. | Required. |
 | inputParameters.**arguments** | A map of arguments to pass to the tool, matching its input schema. | Optional. |
 | inputParameters.**headers** | A map of HTTP headers to send with the request, such as authentication headers required by the MCP server. | Optional. |
@@ -32,7 +32,7 @@ You can cache the task outputs using the following parameters. Refer to [Caching
 | Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- | 
 | cacheConfig.**ttlInSecond** | The time to live in seconds, which is the duration for the output to be cached. | Required if using *cacheConfig*. |
-| cacheConfig.**key** | The cache key is a unique identifier for the cached output and must be constructed exclusively from the task’s input parameters.<br/>It can be a string concatenation that contains the task’s input keys, such as `${uri}-${method}` or `re_${uri}_${method}`. | Required if using *cacheConfig*. |
+| cacheConfig.**key** | The cache key is a unique identifier for the cached output and must be constructed exclusively from the task’s input parameters.<br/>It can be a string concatenation that contains the task’s input keys, such as `${mcpServer}-${method}` or `re_${mcpServer}_${method}`. | Required if using *cacheConfig*. |
 
 </details>
 
@@ -70,8 +70,13 @@ The Call MCP Tool task will return the following parameters.
 
 | Parameter | Description | 
 | --------- | ----------- | 
-| content | Array of content blocks returned by the tool. Each element has a `type` (e.g. `text`), the raw text, and a `parsed` field containing the text automatically parsed as JSON, if applicable. |
-| isError | Whether the tool call resulted in an error. |
+| content | The content items returned by the tool. |
+| content.type | The type of the content item, such as text. |
+| content.text | The raw text returned by the tool. |
+| content.data | The data returned by the tool, for content that is not text. |
+| content.mimeType | The MIME type of the content item, if provided. |
+| content.parsed | The text parsed as JSON. If the text is not valid JSON, this is the same as the text. |
+| isError | Whether the tool reported an error. The task still completes when this is true, so check this value in your workflow. |
 
 ## Examples
 
@@ -85,12 +90,10 @@ Here are some examples for using the Call MCP Tool task.
   "name": "call_mcp_tool",
   "taskReferenceName": "call_mcp_tool_ref",
   "inputParameters": {
-    "mcpServer": "https://xxxx.developer.orkescloud.com/feedback-service/mcp",
-    "method": "POST_user_feedback_user_id",
+    "mcpServer": "https://mcp.deepwiki.com/mcp",
+    "method": "read_wiki_structure",
     "arguments": {
-      "user-id": "test-user",
-      "rating": 5,
-      "comment": "Great service!"
+      "repoName": "conductor-oss/conductor"
     },
     "headers": {}
   },

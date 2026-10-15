@@ -70,6 +70,7 @@
   "ai-agents/first-ai-agent": "ai-cookbook/first-ai-agent",
   "ai-agents/human-in-the-loop": "ai-cookbook/human-in-the-loop",
   "ai-agents/production-agent-architecture": "ai-cookbook/production-agent-architecture",
+  "devguide/ai/production-agent-architecture": "ai-cookbook/production-agent-architecture",
   "ai-agents/token-efficiency": "ai-cookbook/token-efficiency",
   "ai-orchestration/ai-llm-recipes": "devguide/ai/cookbook",
   "ai-orchestration/llm-orchestration": "developer-guides/ai-orchestration",
@@ -135,5 +136,6 @@
   "documentation/api/eventhandlers": "developer-guides/event-handler",
   "documentation/configuration/workflowdef/operators": "category/reference-docs/operators",
   "documentation/configuration/workflowdef/systemtasks": "category/reference-docs/system-tasks",
-  "devguide/production-path": "devguide/workflows/production-path"
+  "devguide/production-path": "devguide/workflows/production-path",
+  "devguide/running/hosted": "get-orkes-conductor"
 }

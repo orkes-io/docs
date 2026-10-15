@@ -6,12 +6,13 @@ description: "Learn how the LLM Generate Embeddings task creates vector embeddin
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
+import TableNote from '@site/src/components/TableNote';
 
 # LLM Generate Embeddings
 
-The LLM Generate Embeddings task is used to convert input text into a sequence of vectors, also known as embeddings. These embeddings are processed versions of the input text and can be stored in a vector database for later retrieval. This task utilizes a [previously integrated language model (LLM)](/category/integrations/ai-llm) to generate the embeddings.
+The LLM Generate Embeddings task converts input text into an embedding, which is a vector of numbers that represents the text. The embedding can be stored in a vector database for later retrieval. This task utilizes a [previously integrated language model (LLM)](/category/integrations/ai-llm) to generate the embeddings.
 
-The LLM Generate Embeddings task takes the input text and processes it through the selected language model (LLM) to produce embeddings. The task evaluates the specified parameters, such as the LLM provider and model, and generates a corresponding sequence of vectors for the provided text. The output is a JSON array containing these vectors, which can be used in subsequent tasks or stored for future use.
+The LLM Generate Embeddings task takes the input text and processes it through the selected language model (LLM) to produce embeddings. The task evaluates the specified parameters, such as the LLM provider and model, and generates an embedding for the provided text. The output is a JSON array of numbers, which can be used in subsequent tasks or stored for future use.
 
 :::info Prerequisites
 
@@ -24,11 +25,11 @@ Configure these parameters for the LLM Generate Embeddings task.
 
 | Parameter | Description | Required/ Optional | 
 | --------- | ----------- | ----------------- |
-| inputParameters.**llmProvider** | The integration name of the LLM provider integrated with your Conductor cluster.<br/><br/>**Note**: If you haven’t configured your AI/LLM provider on your Orkes Conductor cluster, go to the **Integrations** tab and [configure your required provider](/category/integrations/ai-llm).| Required. | 
-| inputParameters.**model** | The available language models within the selected LLM provider. <br/><br/>For example, If your LLM provider is Azure Open AI and you’ve configured text-davinci-003 as the language model, you can select it here. | Required. | 
+| inputParameters.**llmProvider** | The integration name of the LLM provider to use with the task.<br/><br/>**Note**: If you haven’t configured your AI/LLM provider on your Orkes Conductor cluster, go to the **Integrations** tab and [configure your required provider](/category/integrations/ai-llm).| Required. | 
+| inputParameters.**model** | The embedding model to use from the selected LLM provider. For example, `text-embedding-3-large` for OpenAI. | Required. | 
 | inputParameters.**text** | The text to be converted and stored as a vector. It can also be [passed as variables](/developer-guides/passing-inputs-to-task-in-conductor). | Required. | 
-| inputParameters.**dimensions** | The number of dimensions in the generated embedding vector. Must match the dimensions supported by the chosen model and your vector database index configuration. For example, for OpenAI `text-embedding-3-large`, the supported values are 256, 1024, or 3072. | Optional. | 
-| inputParameters.**inputGuardrail** | Scrubs or validates the text before it's sent to the model. `outputGuardrail` isn't supported for this task, since the output is a numeric vector, not scrubbable text.<table><thead><tr><th>Field</th><th>Description</th></tr></thead><tbody><tr><td>`inputGuardrail.type`</td><td>The guardrail type: `JAVASCRIPT`, `HTTP`, or `WORKFLOW`.</td></tr><tr><td>`inputGuardrail.target`</td><td>The JS expression, URL, or workflow name to run, depending on `type`.</td></tr><tr><td>`inputGuardrail.version`</td><td>The workflow version to use. Applies only when `type` is `WORKFLOW`. Defaults to the latest version.</td></tr><tr><td>`inputGuardrail.headers`</td><td>Extra request headers to send, such as an API key. Applies only when `type` is `HTTP`.</td></tr><tr><td>`inputGuardrail.failureMode`</td><td>`FAIL` (default) fails the task if the guardrail fails. `WARN` logs the failure and continues with the original text.</td></tr></tbody></table>Refer to [LLM Task Guardrails](/content/developer-guides/guardrails) for a full guide. | Optional. | 
+| inputParameters.**dimensions** | The number of dimensions in the generated embedding. The value must be supported by the chosen model and match your vector database index. If not set, the model's default size is used. | Optional. | 
+| inputParameters.**inputGuardrail** <TableNote title="Available since">v5.5.0 and later</TableNote> | Scrubs or validates text before it's sent to the model.<table><thead><tr><th>Parameter</th><th>Description</th></tr></thead><tbody><tr><td>`inputGuardrail.type`</td><td>The guardrail type: `JAVASCRIPT`, `HTTP`, or `WORKFLOW`.</td></tr><tr><td>`inputGuardrail.target`</td><td>The JS expression, URL, or workflow name to run, depending on `type`.</td></tr><tr><td>`inputGuardrail.version`</td><td>The workflow version to use. Applies only when `type` is `WORKFLOW`. Defaults to the latest version.</td></tr><tr><td>`inputGuardrail.headers`</td><td>Extra request headers to send, such as an API key. Applies only when `type` is `HTTP`.</td></tr><tr><td>`inputGuardrail.failureMode`</td><td>`FAIL` (default) fails the task if the guardrail fails. `WARN` logs the failure and continues with the original text.</td></tr></tbody></table>Refer to [LLM Task Guardrails](/content/developer-guides/guardrails) for a full guide. | Optional. | 
 
 The following are generic configuration parameters that can be applied to the task and are not specific to the LLM Generate Embeddings task.
 
@@ -79,7 +80,7 @@ The LLM Generate Embeddings task will return the following parameters.
 
 | Parameter | Description |
 | --------- | ----------- | 
-| result | A JSON array containing the vectors of the indexed data. | 
+| result | The embedding for the input text, as a JSON array of numbers. | 
 
 ## Examples
 

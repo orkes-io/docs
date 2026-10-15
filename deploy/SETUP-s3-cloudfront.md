@@ -12,9 +12,8 @@ Both build with `DOCS_BASE_URL=/content`, upload to `s3://<bucket>/content/`, an
 invalidate `/content/*`. Concrete account IDs, distribution IDs, and role ARNs
 live in the GitHub Environments, not in this file.
 
-**Neither touches the live site yet:** `orkes.io/content` is still served by the
-portal-baked Docusaurus build off `main`. Sections 1–5 below describe the
-non-prod setup; [prod](#prod) mirrors it and is already built.
+`orkes.io/content` is served live from the prod S3 bucket via CloudFront.
+Sections 1–5 below describe the non-prod setup; [prod](#prod) mirrors it.
 
 ---
 
@@ -95,19 +94,16 @@ To smoke-test tags against a throwaway container, set `DOCS_GTM_ID` to that
 container instead of pointing non-prod at the real one.
 
 ## 5. Run it
-- Push to `refactor/docs-oss-enterprise-merge` — that is the branch
-  `deploy-docs-s3.yml` triggers on.
+- Push to `main` — that is the branch `deploy-docs-s3.yml` triggers on.
 - Test: `https://<non-prod-cf-domain>/content/quickstarts`.
 
-> `workflow_dispatch` is declared but does not work yet: GitHub only offers the
-> **Run workflow** button for workflows present on the default branch, and
-> neither S3 workflow is on `main` until the MkDocs migration merges. Until then
-> the push trigger is the only way to run either one.
+> Both S3 workflows live on `main`, so `workflow_dispatch` (the **Run workflow**
+> button) is also available for a manual run.
 
 ---
 
 <a id="prod"></a>
-## Prod (built, deploying, not yet public)
+## Prod (live)
 
 The **marketing-prod** account mirrors sections 1–4 exactly: private bucket
 `orkes-docs-prod`, the `/content/*` behavior + clean-URL function on the prod
@@ -117,17 +113,15 @@ policy scopes `sub` to `repo:orkes-io/docs:environment:marketing-prod` and its
 permissions policy pins CloudFront to the prod distribution.
 
 `.github/workflows/deploy-docs-prod-s3.yml` runs the same build and audit steps
-and currently pushes on `refactor/docs-oss-enterprise-merge`. The bucket is not
-public — `orkes.io/content` is still the portal-baked Docusaurus — so this simply
-replaces deploying to it by hand.
+and pushes on `main`. `orkes.io/content` is served live from this bucket via
+CloudFront, so every merge to `main` publishes to production.
 
-### Cutover checklist
-1. **Change the prod trigger to `branches: [main]`** *before* repointing
-   CloudFront. Left as-is, every merge into the integration branch publishes
-   straight to the live site.
-2. Repoint the prod distribution's `/content/*` off the portal-baked Docusaurus,
-   then invalidate `/content/*` once.
-3. Clear the duplicate GA4 tag in GTM (see below).
+### Cutover (completed)
+`orkes.io/content` is cut over to this S3/CloudFront setup and both workflows
+deploy from `main`. For the record, cutover involved: pointing the prod trigger
+at `main`, repointing the prod distribution's `/content/*` to the S3 bucket and
+invalidating `/content/*` once, and clearing the duplicate GA4 tag in GTM (see
+below).
 
 ### Analytics
 The prod workflow is the **only** build that sets `DOCS_ENABLE_ANALYTICS: "1"`,

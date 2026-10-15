@@ -4,9 +4,6 @@ slug: "/reference-docs/ai-tasks/llm-search-index"
 description: "Learn how the LLM Search Index task queries a vector database to find documents relevant to a given query."
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 # LLM Search Index
 
 The LLM Search Index task is used to search a vector database or repository of vector embeddings of already processed and indexed documents to get the closest match. This task is typically used in scenarios where you need to retrieve the data stored in a database using a natural language query.
@@ -32,7 +29,7 @@ Configure these parameters for the LLM Search Index task.
 | inputParameters.**embeddingModelProvider** | The LLM provider for the embeddings.<br/><br/>**Note**: If you haven’t configured your AI/LLM provider on your Orkes Conductor cluster, navigate to the **Integrations** tab and [configure your required provider](/category/integrations/ai-llm). | Required. |
 | inputParameters.**embeddingModel** | The embedding model provided by the selected LLM provider. | Required. |
 | inputParameters.**query** | The search query. A query typically refers to a question, statement, or request made in natural language that is used to search, retrieve, or manipulate data stored in a database. | Required. |
-| inputParameters.**maxResults** | The maximum number of results to return. Provide a non-zero integer between 1 and 10000. | Required. |
+| inputParameters.**maxResults** | The maximum number of results to return. Provide a non-zero integer between 1 and 10000. | Optional. |
 | inputParameters.**dimensions** | The size of the vector, which is the number of elements in the vector. | Optional. | 
 
 The following are generic configuration parameters that can be applied to the task and are not specific to the LLM Search Index task.
@@ -89,11 +86,11 @@ The LLM Search Index task will return the following parameters.
 | Parameter | Description |
 | --------- | ----------- | 
 | result | A JSON array containing the results of the query. | 
-| score | Represents a value quantifying the degree of likeness between a specific item and a query vector, facilitating ranking and ordering of results. Higher scores denote stronger relevance to the query vector. |
-| metadata | An object containing additional metadata related to the retrieved document. |
-| docId | The unique identifier of the queried document. |
-| parentDocId | An identifier that denotes a parent document in hierarchical or relational data structures. | 
-| text | The actual content retrieved. |
+| result.score | Represents a value quantifying the degree of likeness between a specific item and a query vector, facilitating ranking and ordering of results. Higher scores denote stronger relevance to the query vector. |
+| result.metadata | An object containing additional metadata related to the retrieved document. |
+| result.docId | The unique identifier of the queried document. |
+| result.parentDocId | An identifier that denotes a parent document in hierarchical or relational data structures. | 
+| result.text | The actual content retrieved. |
 
 ## Examples
 
@@ -102,6 +99,6 @@ Here are some examples for using the LLM Search Index task.
 <details markdown="1">
 <summary>Using an LLM Search Index task in a workflow</summary>
 
-See an example of [building a document retrieval workflow using Orkes Conductor](http://orkes.io/content/tutorials/document-retrieval-workflow).
+See an example of [building a document retrieval workflow using Orkes Conductor](/tutorials/document-retrieval-workflow).
 
 </details>

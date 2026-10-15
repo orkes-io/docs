@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - docs_site_revamp
   workflow_dispatch:
 
 permissions:

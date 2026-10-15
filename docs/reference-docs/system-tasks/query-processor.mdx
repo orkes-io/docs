@@ -13,8 +13,12 @@ The Query Processor task is used to execute queries across different data source
 
 Conductor supports querying from two primary sources:
 
-- **Conductor Search API**—This query type retrieves workflow execution data from the Conductor Search API using various parameters.
-- **Conductor Metrics (Prometheus)**—This query type retrieves [workflow and task performance metrics](/content/developer-guides/metrics-and-observability) as well as system statistics through Prometheus.
+- **Conductor Search API**: This query type retrieves workflow execution data from the Conductor Search API using various parameters.
+- **Conductor Metrics (Prometheus)**: This query type retrieves [workflow and task performance metrics](/content/developer-guides/metrics-and-observability) as well as system statistics through Prometheus. This query type requires your Conductor cluster to be connected to a Prometheus server.
+
+:::note
+The Query Processor task is not enabled by default. Contact Orkes support to enable it for your cluster.
+:::
 
 ## Task parameters
 
@@ -22,7 +26,7 @@ Configure these parameters for the Query Processor task.
 
 | Parameter                      | Description                                                                                                                                                            | Required/ Optional |
 | ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
-| inputParameters. **queryType** | The type of query. Supported types:<ul><li>`CONDUCTOR_API`—For querying using Conductor Search API.</li><li>`metrics`—For querying using Prometheus metrics.</li></ul> | Required           |
+| inputParameters. **queryType** | The type of query. Supported types:<ul><li>`CONDUCTOR_API`: For querying using Conductor Search API.</li><li>`METRICS`: For querying using Prometheus metrics.</li></ul>Values are case-sensitive. If `queryType` is missing or has an unsupported value, the workflow fails. | Required           |
 
 <Tabs>
 <TabItem value="CONDUCTOR_API_config" label="CONDUCTOR_API">
@@ -32,8 +36,8 @@ Configure these parameters for the Query Processor task.
 | inputParameters. **workflowNames**  | The names of the workflows to query. Can be a string or an array.                                                                                                                      | Optional.          |
 | inputParameters. **correlationIds** | The correlation IDs of the workflows to query. Can be a string or an array.                                                                                                               | Optional.          |
 | inputParameters. **statuses**       | The statuses of the workflows to query. Can be a string or an array. Supported values:<ul><li>RUNNING</li><li>COMPLETED</li><li>FAILED</li><li>TIMED_OUT</li><li>TERMINATED</li><li>PAUSED</li></ul>           | Optional.          |
-| inputParameters. **startTimeFrom**  | The beginning of the start time range for the query, in minutes from the current time. For example, setting this to 15 means the query will include data starting from 15 minutes ago. | Optional.          |
-| inputParameters. **startTimeTo**    | The end of the start-time range for the query in minutes from the current time. Setting this to 0 means the query will include data up to the current time.                            | Optional.          |
+| inputParameters. **startTimeFrom**  | The beginning of the start-time range, in minutes before the current time. Use with `startTimeTo` to query workflows that started between the two times. For example, `startTimeFrom` 15 and `startTimeTo` 0 query workflows that started in the last 15 minutes. | Optional.          |
+| inputParameters. **startTimeTo**    | The end of the start-time range, in minutes before the current time. Use with `startTimeFrom`. Setting this to 0 includes workflows up to the current time. The value must be lower than `startTimeFrom`, or the task fails. | Optional.          |
 | inputParameters. **endTimeFrom**    | The beginning of the end-time range for the query, measured in minutes from the current time.                                                                                          | Optional.          |
 | inputParameters. **endTimeTo**      | The end of the end time range for the query, measured in minutes from the current time.                                                                                                | Optional.          |
 | inputParameters. **freeText**       | Free text search parameter.                                                                                                                                                            | Optional.          |
@@ -44,9 +48,9 @@ Configure these parameters for the Query Processor task.
 | Parameter                         | Description                                                                                                                                                                                                                    | Required/ Optional |
 | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------ |
 | inputParameters. **metricsQuery** | The Prometheus query to execute. Refer to [the list of metrics published to the Conductor server](/content/developer-guides/metrics-and-observability) to formulate your query.                              | Required.          |
-| inputParameters. **metricsStart** | The beginning of the time range for the query, in minutes from the current time. For example, setting this to 15 means the query will include data starting from 15 minutes ago.                                               | Required.          |
-| inputParameters. **metricsEnd**   | The end of the time range for the query, in minutes from the current time. Setting this to 0 means the query will include data up to the current time.                                                                         | Required.          |
-| inputParameters. **metricsStep**  | The time duration, in seconds, between data points in the query result (also known as the step or interval of the metrics query). For example, setting this to 1 means the query will include a data point for every 1 second. | Required.          |
+| inputParameters. **metricsStart** | The beginning of the time range for the query, in minutes from the current time. For example, setting this to 15 means the query will include data starting from 15 minutes ago. Must be a string, for example `"15"`. | Required.          |
+| inputParameters. **metricsEnd**   | The end of the time range for the query, in minutes from the current time. Setting this to 0 means the query will include data up to the current time. Must be a string, for example `"0"`. | Required.          |
+| inputParameters. **metricsStep**  | The time duration, in seconds, between data points in the query result (also known as the step or interval of the metrics query). For example, setting this to 1 means the query will include a data point for every 1 second. Must be a string, for example `"60"`. | Required.          |
 
 </TabItem>
 </Tabs>
@@ -90,9 +94,9 @@ This is the task configuration for a Query Processor task.
   "taskReferenceName": "query_processor_ref",
   "inputParameters": {
     "metricsQuery": "avg_over_time(cpu_usage{instance=\"your_instance\"}[1h])",
-    "metricsStart": "2024-01-01T00:00:00Z",
-    "metricsEnd": "2024-01-30T23:59:59Z",
-    "metricsStep": "5m",
+    "metricsStart": "60",
+    "metricsEnd": "0",
+    "metricsStep": "60",
     "queryType": "METRICS"
   },
   "type": "QUERY_PROCESSOR"
@@ -109,23 +113,23 @@ The Query Processor task will return the following parameters.
 <Tabs>
 <TabItem value="CONDUCTOR_API_ouput" label="CONDUCTOR_API">
 
-| Parameter    | Description                                                                                         |
-| ------------ | --------------------------------------------------------------------------------------------------- |
-| result       | A key value map containing the workflow query details.                                              |
-| totalHits    | Total number of hits or results matching the query criteria.                                        |
-| count        | The number of workflows returned in the current response.                                           |
-| workflowsUrl | URL linking to the queried workflow executions in the Conductor UI, with specific query parameters. |
-| workflows    | An array containing detailed information about each workflow returned by the query.                 |
+| Parameter           | Description                                                                                         |
+| ------------------- | --------------------------------------------------------------------------------------------------- |
+| result              | An object that contains the query results.                                                          |
+| result.count        | The number of workflows returned in the current response.                                           |
+| result.totalHits    | Total number of workflows matching the query criteria.                                              |
+| result.workflows    | An array containing detailed information about each workflow returned by the query.                 |
+| result.workflowsUrl | URL linking to the queried workflow executions in the Conductor UI, with specific query parameters. |
 
 </TabItem>
 
 <TabItem value="METRICS_output" label="METRICS">
 
-| Parameter | Description                                                                                                                         |
-| --------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| result    | A key-value map containing the Prometheus query details.                                                                            |
-| metric    | A key-value map containing the details of the Conductor cluster that was queried, such as the cluster name, pod, and workflow name. |
-| values    | An array containing the queried metric at each timestamp interval.                                                                  |
+| Parameter                   | Description                                                                                                                 |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| result                      | An object that contains the Prometheus query response.                                                                      |
+| result.data.result[].metric | A key-value map of the details of the Conductor cluster that was queried, such as the cluster name, pod, and workflow name. |
+| result.data.result[].values | An array containing the queried metric at each timestamp interval.                                                          |
 
 </TabItem>
 </Tabs>
@@ -187,7 +191,7 @@ You will build and run a workflow that queries completed executions of a particu
 <li>Save the workflow.</li>
 </ol>
 
-Replace `<YOUR-WORKFLOW-NAME-TO-BE-MONITORED>` with the name of the workflow you want to query. In this example, the Query Processor task retrieves completed executions of `WorkflowTest` from the last 15 minutes.
+Replace `<YOUR-WORKFLOW-NAME-TO-BE-MONITORED>` with the name of the workflow you want to query. In this example, the Query Processor task retrieves completed executions of that workflow from the last 15 minutes.
 
 Select **Execute** to run the workflow. When the workflow runs, the Query Processor task queries the Conductor Search API and returns execution details for matching workflows.
 

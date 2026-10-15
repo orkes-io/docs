@@ -166,9 +166,6 @@ const ROUTE_METADATA_OVERRIDES = {
   "reference-docs/operators/human": {
     title: "Human",
   },
-  "reference-docs/api/workflow": {
-    title: "Terminate Workflow API",
-  },
   "quickstarts/workflows": {
     title: "Workflow Concepts",
   },
@@ -564,6 +561,9 @@ const EXCLUDED_OSS_SOURCES = new Set([
   // (step-by-step Orkes webhook setup). Incoming webhooks and WAIT_FOR_WEBHOOK
   // are Orkes Enterprise features; conductor-oss has no backend for them.
   "devguide/how-tos/incoming-webhooks.md",
+  // "Use Orkes cloud" page, circular on the Orkes site; redirected to
+  // get-orkes-conductor in docs-redirects.json.
+  "devguide/running/hosted.md",
 ]);
 
 function collectSourceEntries() {
@@ -969,11 +969,24 @@ function routeFromOutRel(outRel) {
     .replace(/\/index$/, "");
 }
 
+// Strip HTML tags, repeating until the string stabilises so malformed or nested
+// markup cannot leave a partial tag behind. For extracting plain text from our
+// own docs at build time — not a sanitizer for untrusted HTML output.
+function stripHtmlTags(value, replacement = "") {
+  let s = String(value);
+  let prev;
+  do {
+    prev = s;
+    s = s.replace(/<[^>]+>/g, replacement);
+  } while (s !== prev);
+  return s;
+}
+
 function extractTitle(body, frontMatter, fallback) {
   if (frontMatter.title) return frontMatter.title;
   if (frontMatter.sidebar_label) return frontMatter.sidebar_label;
   const h1 = body.match(/^#\s+(.+)$/m);
-  if (h1) return h1[1].replace(/<[^>]+>/g, "").trim();
+  if (h1) return stripHtmlTags(h1[1]).trim();
   return fallback
     .split("/")
     .pop()
@@ -1182,11 +1195,9 @@ function convertTableNote(body) {
   return body.replace(
     /<TableNote\s+title=["']([^"']+)["']>([\s\S]*?)<\/TableNote>/g,
     (_all, title, content) => {
-      const inline = content
-        .trim()
-        .replace(/<\/li>\s*<li>/g, ", ")
-        .replace(/<[^>]+>/g, "")
-        .trim();
+      const inline = stripHtmlTags(
+        content.trim().replace(/<\/li>\s*<li>/g, ", "),
+      ).trim();
       return `<span class="table-note"><strong>${escapeHtml(title)}:</strong> ${escapeHtml(inline)}</span>`;
     },
   );
@@ -1692,18 +1703,1073 @@ function enhancePositioningPage(body, route) {
     );
   }
 
-  if (route === "reference-docs/system-tasks/jdbc") {
+  if (route === "reference-docs/system-tasks/http") {
+    // Orkes-only HTTP task content: a Remote Services paragraph before the
+    // parameters table, and extra parameter rows after the last OSS table row.
+    // Throws if an anchor disappears so an upstream rewrite cannot silently
+    // drop them.
+    const readTimeOutRow = /^\| readTimeOut .*$/m;
+    if (!readTimeOutRow.test(output) || !output.includes("\n## Task parameters") || !output.includes("\n## Examples")) {
+      throw new Error("HTTP task page: anchors not found; update the Orkes-only content.");
+    }
     output = output.replace(
-      "## Connection configuration",
+      "\n## Task parameters",
+      "\nYou can reuse an HTTP service registered in [Remote Services](/content/remote-services) to populate the HTTP task's endpoint details. Global service settings and circuit breaker settings apply to HTTP tasks.\n\n## Task parameters",
+    );
+    output = output.replace(readTimeOutRow, (row) =>
       [
-        "## Connection configuration",
+        row,
+        "| hedgingConfig.maxAttempts | Integer | The maximum number of parallel requests to send. The first successful response is used, which helps reduce tail latency in remote services. Hedging makes parallel requests, so use it only for idempotent services. | Optional. |",
+        "| encode | Boolean | Whether Conductor encodes the query parameters of the URI before sending the request. Set to `false` if the URI is already encoded. The default value is `true`. | Optional. |",
+        '| acceptedStatusCodes <span class="table-note"><strong>Available since:</strong> v5.2.97 and later</span> | List[String] | A list of HTTP status codes or families to treat as successful. Supports exact codes such as `"404"` and family wildcards such as `"4xx"`. If not set, only 2xx responses are treated as successful. If set, only the listed codes are accepted, so add `"2xx"` explicitly to accept it as well. | Optional. |',
+      ].join("\n"),
+    );
+    output =
+      output.trimEnd() +
+      [
         "",
-        '!!! note "Open-source Conductor"',
         "",
-        "    The `conductor.jdbc.instances` configuration below applies to the open-source",
-        "    Conductor server. On Orkes Conductor, connect your database as an integration",
-        "    and reference it with `integrationName` - see",
-        "    [Relational Database Integration](/content/integrations/rdbms/relational-database).",
+        "### Accepting non-2xx status codes",
+        "",
+        "Use `acceptedStatusCodes` when your workflow should continue even if the HTTP response is not a 2xx status code.",
+        "",
+        "```json",
+        "{",
+        '  "name": "http",',
+        '  "taskReferenceName": "http_ref",',
+        '  "type": "HTTP",',
+        '  "inputParameters": {',
+        '    "uri": "https://example.com/api/resource/123",',
+        '    "method": "GET",',
+        '    "accept": "application/json",',
+        '    "contentType": "application/json",',
+        '    "acceptedStatusCodes": ["2xx", "404"]',
+        "  }",
+        "}",
+        "```",
+        "",
+        'When `acceptedStatusCodes` is set, "2xx" is not automatically included. Add it explicitly if you want both 2xx and other codes to be accepted.',
+        "",
+      ].join("\n");
+  }
+
+  if (route === "reference-docs/system-tasks/event") {
+    // The OSS provider paragraph lists OSS providers. Replace it with the
+    // Orkes sink prefixes and format. Throws if the OSS wording changes.
+    const providerParagraph = /^In OSS, registered provider identifiers are .*$/m;
+    const introParagraph = /^`EVENT` publishes a JSON message through a registered event-queue provider\. It is the generic publishing task: .*$/m;
+    if (!providerParagraph.test(output) || !introParagraph.test(output)) {
+      throw new Error("Event task page: intro or provider paragraph not found; update the Orkes-only content.");
+    }
+    // Kafka Publish has no Orkes page, so drop the pointer to it.
+    output = output.replace(introParagraph, "`EVENT` publishes a JSON message through a registered event-queue provider.");
+    // Kafka example, inserted after the OSS conductor sink example.
+    const walkthroughLine = /^For a practical first-use walkthrough/m;
+    if (!walkthroughLine.test(output)) {
+      throw new Error("Event task page: example anchor not found; update the Orkes-only content.");
+    }
+    output = output.replace(
+      walkthroughLine,
+      (line) =>
+        [
+          "### Publish to a Kafka topic",
+          "",
+          "In this example, the Event task publishes the order status to a Kafka topic. Replace `<INTEGRATION-NAME>` with the name of your Kafka integration and `<TOPIC-NAME>` with the name of the topic.",
+          "",
+          "```json",
+          "{",
+          '  "name": "publish_order_status",',
+          '  "taskReferenceName": "publish_order_status",',
+          '  "type": "EVENT",',
+          '  "sink": "kafka:<INTEGRATION-NAME>:<TOPIC-NAME>",',
+          '  "inputParameters": {',
+          '    "orderId": "${workflow.input.orderId}",',
+          '    "status": "READY"',
+          "  },",
+          '  "asyncComplete": false',
+          "}",
+          "```",
+          "",
+          "The sink is written as the message broker type, the integration name and the topic. For the other brokers, only the prefix and the destination change.",
+          "",
+          line,
+        ].join("\n"),
+    );
+    output = output.replace(
+      providerParagraph,
+      "In Orkes Conductor, the sink format is `message-broker-type:integration-name:topic/queue-name`. The `message-broker-type` is the message broker where the payload is sent: `amqp`, `sqs`, `azure`, `kafka`, `nats`, `gcp_pubsub`, or `ibm_mq`. The `integration-name` is the name of the [message broker integration](/content/category/integrations/message-broker) added to the cluster. The `topic/queue-name` is the name of the queue or topic where the payload is sent.",
+    );
+  }
+
+  if (route === "reference-docs/system-tasks/jq-transform") {
+    // Orkes-only queryOutput parameter row after the last OSS table row, and a
+    // secret masking note after the parameters table.
+    // Throws if the anchor disappears so an upstream rewrite cannot silently
+    // drop it.
+    const lastParamRow = /^\| inputParameters .*$/m;
+    if (!lastParamRow.test(output) || !output.includes("\n## JSON configuration")) {
+      throw new Error("JSON JQ Transform page: anchors not found; update the Orkes-only content.");
+    }
+    output = output.replace(lastParamRow, (row) =>
+      [
+        row,
+        '| queryOutput <span class="table-note"><strong>Available since:</strong> v5.2.72 and later</span> | String | Controls which output fields are populated. Set to `single` to return the first value in `result`, with `resultList` empty. Set to `list` to return all values in `resultList`, with `result` null. If not set, both `result` and `resultList` are populated. | Optional. |',
+      ].join("\n"),
+    );
+    output = output.replace(
+      "\n## JSON configuration",
+      "\n!!! note\n    If your JSON JQ Transform expression references a workflow secret (such as `${workflow.secrets.<secret-name>}`), the resolved value is automatically masked in the task output. For details on masking behavior, see [Masking Parameters](/content/developer-guides/masking-parameters#masking-secret-references-and-secret-values).\n\n## JSON configuration",
+    );
+  }
+
+  if (route === "reference-docs/system-tasks/inline") {
+    // Orkes supports only the graaljs evaluator. Throws if the OSS rows
+    // change so an upstream rewrite cannot silently drop the patch.
+    const evaluatorRow = /^\| evaluatorType .*$/m;
+    const expressionRow = /^\| expression .*$/m;
+    if (!evaluatorRow.test(output) || !expressionRow.test(output)) {
+      throw new Error("Inline task page: parameter rows not found; update the Orkes-only content.");
+    }
+    output = output.replace(
+      evaluatorRow,
+      "| evaluatorType | String | The type of evaluator used. Supported types: `graaljs` (recommended), `javascript`, `value-param`. | Required. |",
+    );
+    output = output.replace(
+      expressionRow,
+      "| expression | String | The expression to be evaluated by the evaluator. The expression must return a value. <br/><br/> The `graaljs` evaluator uses GraalVM JavaScript and supports modern ECMAScript. The `javascript` evaluator is a legacy option. The `value-param` evaluator returns a parameter value directly. | Required. |",
+    );
+    output = output.replace(/"evaluatorType": "javascript"/g, '"evaluatorType": "graaljs"');
+    // Orkes-only sections after the parameters table.
+    if (!output.includes("\n## JSON configuration")) {
+      throw new Error("Inline task page: JSON configuration heading not found; update the Orkes-only content.");
+    }
+    output = output.replace(
+      "\n## JSON configuration",
+      () => [
+        "",
+        "## Variable access inside expressions",
+        "",
+        "Every key you add to `inputParameters`, other than `expression` and `evaluatorType`, is automatically available inside your JavaScript as a property of the `$` object.",
+        "",
+        "For example, given:",
+        "",
+        "```json",
+        '"inputParameters": {',
+        '  "expression": "...",',
+        '  "evaluatorType": "graaljs",',
+        '  "value1": "${workflow.input.x}",',
+        '  "value2": 42',
+        "}",
+        "```",
+        "",
+        "You can read `$.value1` and `$.value2` inside the expression. This is why custom keys appear at the same indentation level as `expression` and `evaluatorType`. They are input variables, not configuration keys.",
+        "",
+        "If your Inline expression references a workflow secret (such as `${workflow.secrets.<secret-name>}`), the resolved value is masked in the task output. For details on masking behavior, see [Masking Parameters](/content/developer-guides/masking-parameters#masking-secret-references-and-secret-values).",
+        "",
+        "## Console logging",
+        "",
+        "The GraalJS evaluator does not expose a built-in console object, but Orkes Conductor provides a console bridge that makes `console.log`, `console.info`, and `console.error` available inside Inline task scripts.",
+        "",
+        "The console bridge accepts a single string argument. To include variable values, use string concatenation.",
+        "",
+        "```javascript",
+        "// Correct",
+        "console.log('Discount value: ' + $.discount);",
+        "",
+        "// Incorrect - will fail",
+        "console.log('Discount value:', $.discount);",
+        "```",
+        "",
+        "The output appears in the task's execution logs.",
+        "",
+        "!!! note",
+        "    As of v5.4.0, the `console.*` log destination is configurable. By default, logs appear in the task's execution logs in the UI, but can be redirected to server logs or discarded entirely. Contact the Orkes team to change this for your cluster.",
+        "",
+        "## JSON configuration",
+      ].join("\n"),
+    );
+    // Console logging example, appended after the last OSS example.
+    if (!output.includes("### Formatting data")) {
+      throw new Error("Inline task page: Formatting data example not found; update the Orkes-only content.");
+    }
+    output = output.trimEnd() + "\n" + (
+      [
+        "",
+        "### Using console logging",
+        "",
+        "In this example, the Inline task validates a discount percentage and uses `console.log` to write the input and the result to the task logs.",
+        "",
+        "```json",
+        "{",
+        '  "name": "validate_discount",',
+        '  "taskReferenceName": "validate_discount_ref",',
+        '  "type": "INLINE",',
+        '  "inputParameters": {',
+        '    "evaluatorType": "graaljs",',
+        '    "expression": "(function () { console.log(\'Validating discount: \' + $.discount); var isValid = $.discount >= 0 && $.discount <= 100; console.log(\'Result: \' + isValid); return isValid; })();",',
+        '    "discount": "${workflow.input.discount}"',
+        "  }",
+        "}",
+        "```",
+        "",
+        'If the workflow input is `{"discount": 15}`, the task output is `result: true`, and the Logs tab of the task shows two entries: `[Log] "Validating discount: 15"` and `[Log] "Result: true"`.',
+      ].join("\n")
+    ) + "\n";
+  }
+
+  if (route === "reference-docs/system-tasks/jdbc") {
+    const integrationLink =
+      "[Relational Database integration](/content/integrations/rdbms/relational-database)";
+    // Throws if an anchor disappears so an upstream rewrite cannot silently drop this.
+    if (
+      !/^\| connectionId .*\n/m.test(output) ||
+      !/^\| integrationName .*$/m.test(output) ||
+      !/^\| expectedUpdateCount .*$/m.test(output) ||
+      !/## Connection configuration[\s\S]*?(?=## Execution)/.test(output) ||
+      !output.includes("The `connectionId` doesn't match any configured instance.")
+    ) {
+      throw new Error("JDBC task page: anchors not found; update the Orkes-only patch.");
+    }
+    output = output.replace(/^\| connectionId .*\n/m, "");
+    output = output.replace(
+      /"connectionId": "mysql-prod"/g,
+      '"integrationName": "postgres-prod"',
+    );
+    output = output.replace(
+      /"connectionId": "postgres-analytics"/g,
+      '"integrationName": "postgres-analytics"',
+    );
+    output = output.replace(
+      "The `connectionId` doesn't match any configured instance.",
+      "The `integrationName` doesn't match any configured integration.",
+    );
+    output = output.replace(
+      /^\| integrationName .*$/m,
+      `| integrationName | String | The name of the configured ${integrationLink}. | Required. |`,
+    );
+    output = output.replace(
+      /^\| expectedUpdateCount .*$/m,
+      "| expectedUpdateCount | Integer | For `UPDATE` type only. The number of rows the statement is expected to change. If the actual count is different, the transaction is rolled back and the task fails. Must be greater than 0. If not set, or set to 0, the update count is not checked. | Optional. |",
+    );
+    output = output.replace(/## Connection configuration[\s\S]*?(?=## Execution)/, "");
+  }
+
+  if (route === "documentation/configuration/workflowdef/operators/exclusive-join-task") {
+    // Orkes-verified corrections to the OSS wording: joinOn is evaluated in list order,
+    // the output is the joined task's output, the default list applies whenever the
+    // picked task has not completed, and the join waits indefinitely if nothing ran.
+    // Throws if an anchor disappears so an upstream rewrite cannot silently drop it.
+    const intro =
+      "`EXCLUSIVE_JOIN` waits for the first task among `joinOn` to complete, rather than waiting for every branch as `JOIN` does. It is useful for race or fallback patterns.";
+    const defaultRow =
+      "| `defaultExclusiveJoinTask` | No | Fallback task-reference list used when no listed task is selected. |";
+    const afterExample = "\n\nThe mapper passes `joinOn`";
+    if (!output.includes(intro) || !output.includes(defaultRow) || !output.includes(afterExample)) {
+      throw new Error("Exclusive Join page: anchors not found; update the Orkes-only content.");
+    }
+    output = output.replace(
+      intro,
+      () =>
+        "`EXCLUSIVE_JOIN` waits for one task from `joinOn` to complete, rather than waiting for every branch as `JOIN` does. It checks `joinOn` in the order listed and joins on the first task that was scheduled and not skipped. It is useful for rejoining the branches of a Switch, or for fallback patterns.\n\nThe output of `EXCLUSIVE_JOIN` is the output of the task it joined on.",
+    );
+    output = output.replace(
+      defaultRow,
+      () =>
+        "| `defaultExclusiveJoinTask` | No | Task reference names to join on instead when the task picked from `joinOn` has not completed. |",
+    );
+    output = output.replace(
+      afterExample,
+      () =>
+        "\n\nIf none of the tasks in `joinOn` ran and no default task ran either, `EXCLUSIVE_JOIN` stays in progress and the workflow does not continue.\n\nThe mapper passes `joinOn`",
+    );
+  }
+
+  if (route === "reference-docs/operators/wait") {
+    // Orkes-only yield parameter, added after the last OSS table row (until).
+    // Throws if the anchor disappears so an upstream rewrite cannot silently drop it.
+    const untilRow = /^\| until .*$/m;
+    if (!untilRow.test(output) || !output.includes("\n## JSON configuration") || !output.includes("\n## Examples") || !output.includes("\n## Overriding the Wait task")) {
+      throw new Error("Wait page: anchors not found; update the Orkes-only patch.");
+    }
+    const oldIntro =
+      "The Wait task (`WAIT`) is used to pause the workflow until a certain duration or timestamp. It is a a no-op task that will remain IN_PROGRESS until the configured time has passed, at which point it will be marked as COMPLETED.";
+    if (!output.includes(oldIntro)) {
+      throw new Error("Wait page: intro paragraph not found; update the Orkes-only patch.");
+    }
+    output = output.replace(
+      oldIntro,
+      () =>
+        "The Wait task (`WAIT`) is used to pause the workflow until a certain duration, until a timestamp, or until an external signal is received. It is a no-op task that remains IN_PROGRESS until the configured time has passed or the task is completed externally, at which point it is marked as COMPLETED.",
+    );
+    output = output.replace(untilRow, (row) =>
+      [
+        row,
+        '| yield <span class="table-note"><strong>Available since:</strong> v5.2.95 and later</span> | Boolean | When set to `true`, the [synchronous API](/content/reference-docs/api/workflow/synchronous-workflow-execution) returns immediately instead of holding the HTTP connection open until the Wait task completes or `waitForSeconds` is reached. The duration timer still runs in the background, and the workflow is not skipped. The default value is `false`. | Optional. |',
+      ].join("\n"),
+    );
+    output = output.replace(
+      "\n## JSON configuration",
+      "\n!!! note \"When to use `yield: true`\"\n    If you are [executing a workflow synchronously](/content/reference-docs/api/workflow/synchronous-workflow-execution) or [sending a signal to a running task synchronously](/content/reference-docs/api/task/signal-running-task-synchronously), and the next task is a long-running WAIT with a duration (for example, 1 hour), your HTTP client would normally be blocked until the Wait task completes or `waitForSeconds` is reached. Set `yield: true` to receive an immediate response while the WAIT continues running in the background.\n\n## JSON configuration",
+    );
+    output = output.replace(
+      "\n## Examples",
+      [
+        "",
+        "### Using signal",
+        "",
+        "```json",
+        "{",
+        '  "name": "wait",',
+        '  "taskReferenceName": "wait_ref",',
+        '  "type": "WAIT",',
+        '  "inputParameters": {',
+        "  }",
+        "}",
+        "```",
+        "",
+        "## Examples",
+      ].join("\n"),
+    );
+    output = output.replace(
+      "\n## Overriding the Wait task",
+      [
+        "",
+        "### Using `yield: true` with a duration wait",
+        "",
+        "This example configures a Wait task to pause execution for 1 hour while allowing the synchronous API to return immediately.",
+        "",
+        "```json",
+        "{",
+        '  "name": "wait",',
+        '  "taskReferenceName": "wait_ref",',
+        '  "type": "WAIT",',
+        '  "inputParameters": {',
+        '    "duration": "1 hour",',
+        '    "yield": true',
+        "  }",
+        "}",
+        "```",
+        "",
+        "When the workflow reaches this task, the 1-hour timer starts in the background. If you are [executing the workflow synchronously](/content/reference-docs/api/workflow/synchronous-workflow-execution) or [sending a signal to a running task synchronously](/content/reference-docs/api/task/signal-running-task-synchronously), the response is returned immediately instead of holding the HTTP connection open until `waitForSeconds` is reached.",
+        "",
+        "## Overriding the Wait task",
+      ].join("\n"),
+    );
+  }
+
+  if (route === "reference-docs/operators/set-variable") {
+    // The OSS payload-size check (256KB) lives in the OSS SetVariable class, which Orkes
+    // excludes in favor of OrkesSetVariable, so the limit does not apply on Orkes.
+    // Throws if the anchor disappears so an upstream rewrite cannot silently drop this.
+    const payloadBullet = /^\* \*\*Payload limit\*\*.*\n/m;
+    if (!payloadBullet.test(output)) {
+      throw new Error("Set Variable page: payload limit bullet not found; update the Orkes-only patch.");
+    }
+    output = output.replace(payloadBullet, "");
+    output = output.replace("Here are some limitation when using", "Here is a limitation when using");
+  }
+
+  if (route === "reference-docs/operators/terminate") {
+    // Clarifies the output shape: an object workflowOutput is returned as is, any other
+    // type is wrapped under `output`. Also notes that the failure workflow runs for TERMINATED
+    // as well as FAILED. Throws if an anchor disappears after an upstream rewrite.
+    const failureAnchor = "For FAILED workflows, this reason is passed to any configured `failureWorkflow`.";
+    if (!output.includes(failureAnchor)) {
+      throw new Error("Terminate page: failureWorkflow sentence not found; update the patch.");
+    }
+    output = output.replace(
+      failureAnchor,
+      "For FAILED or TERMINATED workflows, this reason is passed to any configured `failureWorkflow`.",
+    );
+    const outputAnchor = "as defined in `workflowOutput`.";
+    if (!output.includes(outputAnchor)) {
+      throw new Error("Terminate page: output row anchor not found; update the patch.");
+    }
+    output = output.replace(
+      outputAnchor,
+      () =>
+        outputAnchor +
+        " If `workflowOutput` is an object, its keys become the output. For any other type, such as a string, number, or array, the value is returned under the `output` key.",
+    );
+  }
+
+  if (route === "reference-docs/operators/switch") {
+    // Adds the Orkes-only console bridge section before the Output section, and a sentence on
+    // referencing selectedCase after the Output table.
+    // Throws if the anchor disappears so an upstream rewrite cannot silently drop this.
+    const outputHeading = /^## Output$/m;
+    if (!outputHeading.test(output)) {
+      throw new Error("Switch page: Output heading not found; update the Orkes-only patch.");
+    }
+    output = output.replace(outputHeading, (match) =>
+      [
+        "## Console logging",
+        "",
+        "When using the JavaScript evaluator, Orkes Conductor provides a console bridge that makes `console.log`, `console.info`, and `console.error` available inside the expression. The messages are written to the task's Logs tab.",
+        "",
+        "The console bridge accepts a single string argument. To include variable values, use string concatenation, for example `console.log('Status: ' + $.status)`.",
+        "",
+        match,
+      ].join("\n"),
+    );
+    // Output access sentence, added after the Output table.
+    const selectedCaseRow = /^\| selectedCase \|.*$/m;
+    if (!selectedCaseRow.test(output)) {
+      throw new Error("Switch page: selectedCase output row not found; update the Orkes-only patch.");
+    }
+    output = output.replace(selectedCaseRow, (match) =>
+      [
+        match,
+        "",
+        "You can access the output of the Switch task in subsequent tasks using `${switchTaskName.output.selectedCase}`, replacing `switchTaskName` with the task reference name.",
+      ].join("\n"),
+    );
+  }
+
+  if (route === "reference-docs/operators/fork-join") {
+    // The OSS example forks three branches but its Join waits on only two, so the next task
+    // can start before the HTTP branch finishes (tested on content-team v5.5.6).
+    // Throws if the anchor disappears so an upstream rewrite cannot silently drop this.
+    const joinOnAnchor = '"email_notification_ref",\n      "sms_notification_ref"\n    ]';
+    if (!output.includes(joinOnAnchor)) {
+      throw new Error("Fork page: example joinOn list not found; update the Orkes-only patch.");
+    }
+    output = output.replace(
+      joinOnAnchor,
+      () => '"email_notification_ref",\n      "sms_notification_ref",\n      "http_notification_ref"\n    ]',
+    );
+  }
+
+  if (route === "reference-docs/operators/join") {
+    // Orkes-only join script: expression + evaluatorType. The script runs only when both are set;
+    // expression alone is ignored (tested on content-team v5.5.6). Text adapted from the old
+    // Enterprise page. Throws if an anchor disappears so an upstream rewrite cannot drop this.
+    const replaceOnce = (pattern, replacement, label) => {
+      const found = typeof pattern === "string" ? output.includes(pattern) : pattern.test(output);
+      if (!found) {
+        throw new Error(`Join page: ${label} not found; update the Orkes-only patch.`);
+      }
+      output = output.replace(pattern, () => replacement);
+    };
+    const joinOnRow = /^\| joinOn +\|.*\n/m;
+    if (!joinOnRow.test(output)) {
+      throw new Error("Join page: joinOn row not found; update the Orkes-only patch.");
+    }
+    output = output.replace(
+      joinOnRow,
+      (row) =>
+        row +
+        "| expression | String | The join script, which controls how the Join task completes if specified. | Optional. |\n" +
+        "| evaluatorType | String | The language of the join script. Use `graaljs`, `js`, or `javascript`. The join script runs only when both `evaluatorType` and `expression` are set. | Optional. |\n",
+    );
+    // Switch note from the old Enterprise page; both halves tested on content-team v5.5.6
+    // (runs ca116ecd and caf21d92).
+    replaceOnce(
+      "\n## JSON configuration\n",
+      [
+        "",
+        "When a Join task is used after a Switch task, the Join task can complete when the Switch task completes, even if the tasks within the switch branches have not finished. To handle this, add a task such as Set Variable at the end of the outermost Switch task and configure the Join task to join on that task. This ensures the Join task waits until all switch branch execution is complete before the workflow continues.",
+        "",
+        "## JSON configuration",
+        "",
+      ].join("\n"),
+      "Switch note anchor",
+    );
+    replaceOnce(
+      "\n## JSON configuration\n",
+      [
+        "",
+        "## Join script configuration",
+        "",
+        "A join script is optional and allows custom control over when the Join task completes. Script parameters can be passed through the Join task's input parameters. For predictable behavior, tasks referenced by the join script should be marked as optional.",
+        "",
+        "Example join script:",
+        "",
+        "```javascript",
+        "(function(){",
+        "  let results = {};",
+        "  let pendingJoinsFound = false;",
+        "  // $.joinOn is an array of task reference name strings, as configured in joinOn.",
+        "  // $[element] is the task data object for that reference, containing status and output.",
+        "  if($.joinOn){",
+        "    $.joinOn.forEach((element)=>{",
+        "      if($[element] && !['COMPLETED', 'COMPLETED_WITH_ERRORS'].includes($[element].status)){",
+        "        results[element] = $[element].status;",
+        "        pendingJoinsFound = true;",
+        "      }",
+        "    });",
+        "    if(pendingJoinsFound){",
+        "      return {",
+        '        "status":"IN_PROGRESS",',
+        '        "reasonForIncompletion":"Pending",',
+        '        "outputData":{',
+        '          "scriptResults": results',
+        "        }",
+        "      };",
+        "    }",
+        "    return true;",
+        "  }",
+        "})();",
+        "```",
+        "",
+        "In the example script, `$.joinOn` is an array of task reference name strings, matching the `joinOn` configuration. For each reference name, `$[element]` provides the corresponding task data object, including its status and output. The script checks whether each task to be joined has finished, meaning its status is COMPLETED or COMPLETED_WITH_ERRORS. An optional task that fails finishes with COMPLETED_WITH_ERRORS. If any task is still pending, the script returns the IN_PROGRESS status and the Join task keeps waiting. The example script can be modified to suit your use case.",
+        "",
+        "## JSON configuration",
+        "",
+      ].join("\n"),
+      "JSON configuration heading",
+    );
+    replaceOnce(
+      '  "joinOn": [\n    // List of task reference names that the join should wait for\n  ]\n}',
+      '  "joinOn": [\n    // List of task reference names that the join should wait for\n  ],\n  "evaluatorType": "graaljs",\n  "expression": ""\n}',
+      "static fork JSON block",
+    );
+    // Join script example adapted from the old Enterprise page, with evaluatorType added (the script
+    // is ignored without it). Tested on content-team v5.5.6, runs 2bbd7075 (with evaluatorType) and
+    // 2ae0a3ce (without: script ignored).
+    if (!output.includes("### Ignoring one fork")) {
+      throw new Error("Join page: Ignoring one fork example not found; update the Orkes-only patch.");
+    }
+    const joinScript = [
+      "(function(){",
+      "  let pending = false;",
+      "  let results = {};",
+      "",
+      "  $.joinOn.forEach((ref) => {",
+      "    if ($[ref] && !['COMPLETED', 'COMPLETED_WITH_ERRORS'].includes($[ref].status)) {",
+      "      pending = true;",
+      "      results[ref] = $[ref].status;",
+      "    }",
+      "  });",
+      "",
+      "  if (pending) {",
+      "    return {",
+      "      status: 'IN_PROGRESS',",
+      "      reasonForIncompletion: 'Waiting for forked tasks',",
+      "      outputData: {",
+      "        pendingTasks: results",
+      "      }",
+      "    };",
+      "  }",
+      "",
+      "  return true;",
+      "})();",
+    ].join("\n");
+    const joinScriptTasks = [
+      {
+        name: "fork_tasks",
+        taskReferenceName: "fork_tasks_ref",
+        inputParameters: {},
+        type: "FORK_JOIN",
+        forkTasks: [
+          [
+            {
+              name: "wait_short",
+              taskReferenceName: "wait_short_ref",
+              inputParameters: { duration: "5 seconds" },
+              type: "WAIT",
+              optional: true,
+            },
+          ],
+          [
+            {
+              name: "wait_long",
+              taskReferenceName: "wait_long_ref",
+              inputParameters: { duration: "30 seconds" },
+              type: "WAIT",
+              optional: true,
+            },
+          ],
+        ],
+      },
+      {
+        name: "join_with_script",
+        taskReferenceName: "join_with_script_ref",
+        inputParameters: {},
+        type: "JOIN",
+        joinOn: ["wait_short_ref", "wait_long_ref"],
+        evaluatorType: "graaljs",
+        expression: joinScript,
+      },
+    ];
+    output =
+      output.replace(/\s*$/, "\n") +
+      [
+        "",
+        "### Using a join script",
+        "",
+        "In this example, a Fork task runs two branches in parallel. One branch waits for 5 seconds and the other waits for 30 seconds. Both Wait tasks are marked as `optional`. The Join task uses a join script to control when the workflow can proceed, by explicitly checking the status of the forked tasks.",
+        "",
+        "```json",
+        JSON.stringify(joinScriptTasks, null, 2),
+        "```",
+        "",
+        "The join script is:",
+        "",
+        "```javascript",
+        joinScript,
+        "```",
+        "",
+        "This script completes the Join task only when all the forked tasks have finished, either COMPLETED or COMPLETED_WITH_ERRORS for an optional task that failed. If any forked task is still pending, the script returns the IN_PROGRESS status and the Join task keeps waiting.",
+        "",
+        "When the workflow runs:",
+        "",
+        "1. The branch with the 5 second Wait task (`wait_short`) completes first.",
+        "2. The Join task stays IN_PROGRESS while the 30 second Wait task is still running.",
+        "3. After the 30 second Wait task completes, the join script returns true and the Join task completes.",
+        "",
+      ].join("\n");
+    // With a script the output holds the full task data of each joined task, not just its output
+    // (tested on content-team v5.5.6, runs e5df7148 and 3e557864).
+    replaceOnce(
+      "\n## Examples\n",
+      [
+        "",
+        "### With a join script",
+        "",
+        "If a join script is used, the Join task output is different. It contains `joinOn`, the list of task reference names being joined, and under each reference name the full task data of that task (such as its status, input, and output), not only its output. Any `outputData` returned by the script is also added to the Join task output.",
+        "",
+        "```json",
+        "{",
+        '  "joinOn": [',
+        '    "taskReferenceName",',
+        '    "anotherTaskReferenceName"',
+        "  ],",
+        '  "taskReferenceName": {',
+        '    "referenceTaskName": "taskReferenceName",',
+        '    "taskType": "SIMPLE",',
+        '    "status": "COMPLETED",',
+        '    "input": {},',
+        '    "output": {',
+        '      "outputKey": "outputValue"',
+        "    }",
+        "  },",
+        '  "anotherTaskReferenceName": {',
+        '    "referenceTaskName": "anotherTaskReferenceName",',
+        '    "taskType": "SIMPLE",',
+        '    "status": "COMPLETED",',
+        '    "input": {},',
+        '    "output": {',
+        '      "outputKey": "outputValue"',
+        "    }",
+        "  }",
+        "}",
+        "```",
+        "",
+        "## Examples",
+        "",
+      ].join("\n"),
+      "Examples heading",
+    );
+  }
+
+  if (route === "reference-docs/operators/dynamic-fork") {
+    // On Orkes, forkTaskName (or forkTaskWorkflow) is required with forkTaskInputs: saving a
+    // workflow with only forkTaskType is rejected by server validation (tested on content-team
+    // v5.5.6 via CLI and POST /api/metadata/workflow). forkTaskType is optional; it defaults to the
+    // system task type named by forkTaskName, otherwise SIMPLE.
+    // Throws if an anchor disappears so an upstream rewrite cannot silently drop this.
+    const replaceOnce = (pattern, replacement, label) => {
+      const found = typeof pattern === "string" ? output.includes(pattern) : pattern.test(output);
+      if (!found) {
+        throw new Error(`Dynamic Fork page: ${label} not found; update the Orkes-only patch.`);
+      }
+      output = output.replace(pattern, () => replacement);
+    };
+    replaceOnce(
+      "Use `forkTaskType` and `forkTaskInputs` for any task type",
+      "Use `forkTaskName` and `forkTaskInputs` for any task type",
+      "intro bullet",
+    );
+    replaceOnce(
+      /^\| forkTaskType +\|.*$/m,
+      '| forkTaskType | String (enum) | The type of task that will be executed in each fork. For example, "HTTP", or "SIMPLE". If omitted, the type is taken from `forkTaskName` when it is a system task type such as HTTP, otherwise SIMPLE. | Optional. |',
+      "forkTaskType row",
+    );
+    replaceOnce(
+      /^\| forkTaskName\s+\|.*$/m,
+      "| forkTaskName | String | The name of the task that will be executed in each fork. For a system task, use the task type, for example HTTP. | Required. |",
+      "forkTaskName row",
+    );
+    replaceOnce(
+      '"inputParameters": {\n    "forkTaskType": "HTTP",',
+      '"inputParameters": {\n    "forkTaskName": "",\n    "forkTaskType": "HTTP",',
+      "JSON configuration block",
+    );
+    // When forkTaskInputs is a list it takes precedence over dynamicForkTasksParam (tested on
+    // content-team v5.5.6).
+    replaceOnce(
+      "When using `forkTaskInputs` with `forkTaskType` (or `forkTaskWorkflow`), the `dynamicForkTasksParam` and `dynamicForkTasksInputParamName` fields are not required.",
+      "When using `forkTaskInputs` with `forkTaskName` (or `forkTaskWorkflow`), the `dynamicForkTasksParam` and `dynamicForkTasksInputParamName` fields are not required. If they are also present in the task, `forkTaskInputs` takes precedence and they are ignored.",
+      "Worker example note",
+    );
+    replaceOnce(
+      '        "forkTaskType": "HTTP",\n        "forkTaskInputs": [\n          {\n            "http_request"',
+      '        "forkTaskName": "HTTP",\n        "forkTaskType": "HTTP",\n        "forkTaskInputs": [\n          {\n            "http_request"',
+      "HTTP task example",
+    );
+    // __index and the `input` wrapper are OSS behavior that the OSS page never documents; text is
+    // adapted from the old Enterprise page, placed after the Worker task example.
+    replaceOnce(
+      '"output": "${join_task_ref.output}"\n  },\n  "schemaVersion": 2,\n  "ownerEmail": "example@email.com"\n}\n```\n',
+      [
+        '"output": "${join_task_ref.output}"\n  },\n  "schemaVersion": 2,\n  "ownerEmail": "example@email.com"\n}\n```\n',
+        "During execution, Conductor adds a parameter called `__index` to each `forkTaskInputs` element. It holds the position of the element in the source array, starting at 0. For example, if the third element of `forkTaskInputs` is an object with `fruit` set to \"kiwi\" and `inventoryNo` set to 3, the forked task receives this input:",
+        "",
+        "```json",
+        "{",
+        '  "fruit": "kiwi",',
+        '  "inventoryNo": 3,',
+        '  "__index": 2',
+        "}",
+        "```",
+        "",
+        'If `forkTaskInputs` contains plain values, for example ["apple", "orange", "kiwi"], Conductor sets each value in a parameter called `input` and still adds `__index`. The first fork receives this input:',
+        "",
+        "```json",
+        "{",
+        '  "input": "apple",',
+        '  "__index": 0',
+        "}",
+        "```",
+        "",
+      ].join("\n"),
+      "Worker task example end",
+    );
+  }
+
+  if (route === "reference-docs/operators/do-while") {
+    // On Orkes, `items` is read from inputParameters (a top-level `items` is ignored) and the
+    // current item is exposed as output.item; loopItem and loopIndex do not exist.
+    // Throws if an anchor disappears so an upstream rewrite cannot silently drop this.
+    const replaceOnce = (pattern, replacement, label) => {
+      const found = typeof pattern === "string" ? output.includes(pattern) : pattern.test(output);
+      if (!found) {
+        throw new Error(`Do While page: ${label} not found; update the Orkes-only patch.`);
+      }
+      output = output.replace(pattern, () => replacement);
+    };
+    // loopCondition is required on Orkes even for list iteration (a save without it is rejected).
+    replaceOnce(
+      "When using `items` for list iteration, this is optional. | Required (for counter-based iteration). <br/>Optional (for list iteration). |",
+      "When using `items` for list iteration, the condition does not stop the loop, but this parameter must still be set. | Required. |",
+      "loopCondition row",
+    );
+    // The OSS "Orkes Conductor compatibility" section (_items alias) is OSS migration text; the
+    // Orkes code reads only `items`.
+    replaceOnce(
+      /^## Orkes Conductor compatibility\n[\s\S]*?recommended approach for new workflows\.\n\n/m,
+      "",
+      "Orkes Conductor compatibility section",
+    );
+    // The OSS Nashorn claim does not hold on Orkes: the default evaluator runs on GraalJS
+    // (ES6 supported, no Nashorn globals), and value-param conditions are an input key, not JS.
+    replaceOnce(
+      "This is a JavaScript expression, evaluated using the Nashorn engine.",
+      "The expression format depends on the evaluator type. For the `value-param` evaluator, the expression is the input parameter key. Otherwise, it is an ES6-compatible JavaScript expression.",
+      "Nashorn sentence",
+    );
+    // Script expression section (graaljs syntax, boolean return requirement), before JSON configuration.
+    replaceOnce(
+      /^## JSON configuration$/m,
+      [
+        "### Script expression",
+        "",
+        "When using the `graaljs` evaluator, the `loopCondition` can be written as an ES6-compatible JavaScript function:",
+        "",
+        "```javascript",
+        "(function () {",
+        "  // statements",
+        "})();",
+        "```",
+        "",
+        "Or:",
+        "",
+        "```javascript",
+        "(() => {",
+        "  // statements",
+        "})();",
+        "```",
+        "",
+        "The expression must return a boolean value. If it returns any other type, such as a number or a string, the Do While task stays in progress and the workflow does not continue. To reference other input parameters or task outputs in the script, use the `$` prefix, for example `$.do_while_ref['iteration']`.",
+        "",
+        "### Console logging",
+        "",
+        "When using the `graaljs` evaluator, you can use `console.log`, `console.info`, and `console.error` inside the `loopCondition` script for debugging. The output appears in the Do While task's Logs tab. The console bridge accepts a single string argument. To include variable values, use string concatenation. For example:",
+        "",
+        "```json",
+        "{",
+        '  "name": "do_while",',
+        '  "taskReferenceName": "do_while_ref",',
+        '  "type": "DO_WHILE",',
+        '  "evaluatorType": "graaljs",',
+        '  "inputParameters": {',
+        '    "number": 3,',
+        '    "iteration": "${do_while_ref.output.iteration}"',
+        "  },",
+        '  "loopCondition": "(function () { console.log(\'Iteration: \' + $.iteration + \', limit: \' + $.number); return $.iteration < $.number; })();",',
+        '  "loopOver": [',
+        "    {",
+        '      "name": "http",',
+        '      "taskReferenceName": "http_ref",',
+        '      "type": "HTTP",',
+        '      "inputParameters": {',
+        '        "uri": "https://api.example.com/status",',
+        '        "method": "GET"',
+        "      }",
+        "    }",
+        "  ]",
+        "}",
+        "```",
+        "",
+        "Console logging is available only when `evaluatorType` is set to `graaljs`. If `evaluatorType` is not set, `console` is not defined and the task fails.",
+        "",
+        "## JSON configuration",
+      ].join("\n"),
+      "JSON configuration heading",
+    );
+    // With captureOutput false no per-iteration map is created, so the sentence needs "By default".
+    replaceOnce(
+      "In addition, a map will be created for each iteration, keyed by its iteration number (e.g., 1, 2, 3), and will contain the task outputs for all of the `loopOver` tasks.",
+      "By default, a map is created for each iteration, keyed by its iteration number (e.g., 1, 2, 3), and contains the task outputs for all of the `loopOver` tasks.",
+      "per-iteration map sentence",
+    );
+    // Downstream references to loop output (tested on Orkes), placed before Execution.
+    replaceOnce(
+      /^## Execution$/m,
+      [
+        "### Using loop output in downstream tasks",
+        "",
+        "After the Do While task completes, a downstream task can read the output of a loop task in two ways.",
+        "",
+        "**Last iteration:** use the loop task's reference name without the iteration suffix. For example, `${task_ref.output.someField}` returns the value from the last iteration.",
+        "",
+        "**Specific iteration:** use the Do While task's output, keyed by iteration number. For example, `${do_while_ref.output['2'].task_ref.someField}` returns the value from iteration 2. Replace `do_while_ref` with the Do While task's reference name, `2` with the iteration number, and `task_ref` with the loop task's reference name.",
+        "",
+        "If `keepLastN` is set, only the last n iterations are available, and a reference to an earlier iteration returns `null`.",
+        "",
+        "## Execution",
+      ].join("\n"),
+      "Execution heading",
+    );
+    // loopCondition evaluation errors fail the workflow with the script error as the reason.
+    replaceOnce(
+      "and upon retry, the iteration number will restart from 1.",
+      "and upon retry, the iteration number will restart from 1. If an exception occurs while evaluating the `loopCondition`, the workflow fails and the reason for incompletion contains the script error.",
+      "Execution failure sentence",
+    );
+    // Task parameters table: drop the top-level items row.
+    replaceOnce(/^\| items +\| String .*\n/m, "", "items task parameter row");
+    // Task parameters table: add evaluatorType before loopCondition.
+    replaceOnce(
+      /^\| loopCondition /m,
+      "| evaluatorType | String | The type of evaluator used. Supported types:<ul><li>`value-param`: Evaluates a boolean input parameter in the Do While task.</li><li>`graaljs`: Evaluates JavaScript expressions and computes the value. Allows you to use ES6-compatible JavaScript.</li></ul>If not specified, defaults to a built-in JavaScript evaluator. | Optional. |\n| loopCondition ",
+      "loopCondition row for evaluatorType",
+    );
+    // keepLastN: Orkes treats values below 2 as 2.
+    replaceOnce("Minimum value: 1.", "Minimum value: 2. Lower values are treated as 2.", "keepLastN minimum");
+    // Input parameters table: add items after keepLastN.
+    const keepLastNRow = output.match(/^\| keepLastN .*$/m);
+    if (!keepLastNRow) {
+      throw new Error("Do While page: keepLastN row not found; update the Orkes-only patch.");
+    }
+    output = output.replace(
+      keepLastNRow[0],
+      () =>
+        keepLastNRow[0] +
+        "\n| items | List | An array of items to iterate over in the loop. The number of iterations equals the list size, and no loop condition is needed to stop the loop. The current item is available in each iteration as `${do_while_ref.output.item}`. If `items` is an empty list, the Do While task completes without executing the loop tasks. | Optional. |\n| captureOutput <span class=\"table-note\"><strong>Available since:</strong> v5.3.0 and later</span> | Boolean | Whether to capture and store per-iteration task outputs in the Do While task's output. Defaults to `true`. When set to `false`, iteration outputs are not aggregated and only `iteration` (and `item`, if applicable) is returned. Useful for large loops where storing every iteration's output would cause memory or performance issues. | Optional. |",
+    );
+    // Output table: replace loopItem and loopIndex with item.
+    replaceOnce(
+      /^\| loopItem \|.*\n/m,
+      "| item | Any | (If `items` is used as an input parameter) The value of the last item in the `items` array. |\n",
+      "loopItem output row",
+    );
+    replaceOnce(/^\| loopIndex \|.*\n/m, "", "loopIndex output row");
+    // JSON configuration, list iteration block.
+    replaceOnce(
+      '  "items": "${workflow.input.myList}",\n',
+      '  "loopCondition": "false",\n  "inputParameters": {\n    "items": "${workflow.input.myList}"\n  },\n',
+      "configuration items line",
+    );
+    replaceOnce(
+      '        "item": "${do_while_ref.output.loopItem}",\n        "index": "${do_while_ref.output.loopIndex}"\n',
+      '        "item": "${do_while_ref.output.item}"\n',
+      "configuration loopItem references",
+    );
+    // Examples, list iteration (simplified approach).
+    replaceOnce(
+      '  "items": "${workflow.input.itemList}",\n',
+      '  "loopCondition": "false",\n  "inputParameters": {\n    "items": "${workflow.input.itemList}"\n  },\n',
+      "example items line",
+    );
+    replaceOnce(
+      '            "item": "${process_items_ref.output.loopItem}",\n            "index": "${process_items_ref.output.loopIndex}"\n',
+      '            "item": "${process_items_ref.output.item}"\n',
+      "example loopItem references",
+    );
+    replaceOnce(
+      /^- `loopItem` contains.*\n- `loopIndex` contains.*\n- No `loopCondition` needed.*\n/m,
+      "- `item` contains the current item (for example, the first iteration gets `itemList[0]`)\n",
+      "example bullets",
+    );
+    // A loopCondition cannot stop a list loop early on Orkes (the loop runs while the iteration
+    // is below the list size OR the condition is true), so drop the early-termination example.
+    replaceOnce(
+      /\*\*Optional condition with list iteration:\*\*[\s\S]*?This loop will stop either[^\n]*\n\n/,
+      "",
+      "optional condition example",
+    );
+    replaceOnce(
+      "- If the input list is empty (`[]`), the Do While task completes immediately without executing loop tasks\n",
+      "- If the input list is empty (`[]`), the Do While task completes immediately without executing loop tasks\n- The loop runs once for each item. A `loopCondition` cannot stop it early.\n",
+      "empty list bullet",
+    );
+  }
+
+  if (route === "reference-docs/operators/start-workflow") {
+    // Replaces the single OSS startWorkflow row (which defers to the OSS API page) with one row
+    // per startWorkflow field, including the Orkes idempotency fields.
+    // Throws if the anchor disappears so an upstream rewrite cannot silently drop this.
+    const startWorkflowRow = /^\| startWorkflow .*$/m;
+    if (!startWorkflowRow.test(output)) {
+      throw new Error("Start Workflow page: startWorkflow row not found; update the Orkes-only patch.");
+    }
+    output = output.replace(startWorkflowRow, () =>
+      [
+        "| startWorkflow | Map[String, Any] | A map that includes the requested workflow’s configuration, such as the name and version. | Required. |",
+        "| startWorkflow.name | String | The name of the workflow to be executed. This workflow should have a pre-existing definition in Conductor. | Required. |",
+        "| startWorkflow.version | Integer | The version of the workflow to be executed. If not set, the latest version is used. | Optional. |",
+        "| startWorkflow.correlationId | String | A unique identifier for the workflow execution, used to correlate the current workflow instance with other workflows. If not set, the started workflow uses the correlation ID of the current workflow. | Optional. |",
+        "| startWorkflow.idempotencyKey | String | A unique, user-generated key to prevent duplicate workflow executions. Idempotency data is retained for the life of the workflow execution. | Optional. |",
+        "| startWorkflow.idempotencyStrategy | String | The idempotency strategy for handling duplicate requests. Supported values:<ul><li>`RETURN_EXISTING`: Return the `workflowId` of the workflow instance with the same idempotency key.</li><li>`FAIL`: Start a new workflow instance only if there are no workflow executions with the same idempotency key.</li><li>`FAIL_ON_RUNNING`: Start a new workflow instance only if there are no RUNNING or PAUSED workflows with the same idempotency key. Completed workflows can run again.</li></ul> | Optional. If `idempotencyKey` is set and no strategy is given, `FAIL` is used. |",
+        "| startWorkflow.input | Map[String, Any] | Defines the input parameters for the workflow being started. These values are passed directly to the invoked workflow. | Optional. |",
+      ].join("\n"),
+    );
+  }
+
+  if (route === "reference-docs/operators/dynamic") {
+    // Adds Sub Workflow support (intro, configuration section, config example) from the Orkes page.
+    // Throws if an anchor disappears so an upstream rewrite cannot silently drop this.
+    const introSentence =
+      "The Dynamic task accepts as input the name of a task, which can be a system task or a Worker task (`SIMPLE`) registered on Conductor.";
+    if (!output.includes(introSentence)) {
+      throw new Error("Dynamic page: intro sentence not found; update the Orkes-only patch.");
+    }
+    output = output.replace(
+      introSentence,
+      () => "The Dynamic task accepts as input the name of a task, which can be a system task, a Sub Workflow task, or a Worker task registered on Conductor.",
+    );
+
+    const jsonConfigHeading = /^## JSON configuration$/m;
+    if (!jsonConfigHeading.test(output)) {
+      throw new Error("Dynamic page: JSON configuration heading not found; update the Orkes-only patch.");
+    }
+    output = output.replace(jsonConfigHeading, () =>
+      [
+        "## Configuration for calling a sub-workflow",
+        "",
+        "If the Dynamic task calls a Sub Workflow task, set `taskToExecute` to `SUB_WORKFLOW`. Then add one of the following to `inputParameters`.",
+        "",
+        "Using the workflow name and version:",
+        "",
+        "```json",
+        '"inputParameters": {',
+        '  "taskToExecute": "SUB_WORKFLOW",',
+        '  "subWorkflowName": "someName",',
+        '  "subWorkflowVersion": 1',
+        "}",
+        "```",
+        "",
+        "If `subWorkflowVersion` is not set, the latest version of the sub-workflow is used.",
+        "",
+        "Using the workflow definition JSON:",
+        "",
+        "```json",
+        '"inputParameters": {',
+        '  "taskToExecute": "SUB_WORKFLOW",',
+        '  "subWorkflowDefinition": { // sub-workflow JSON definition }',
+        "}",
+        "```",
+        "",
+        "Use the workflow definition when the sub-workflow is not registered on the Conductor server. If `subWorkflowDefinition` is set, `subWorkflowName` and `subWorkflowVersion` are ignored.",
+        "",
+        "## JSON configuration",
+      ].join("\n"),
+    );
+
+    const outputHeading = /^#{1,2} Output$/m;
+    if (!outputHeading.test(output)) {
+      throw new Error("Dynamic page: Output heading not found; update the Orkes-only patch.");
+    }
+    output = output.replace(outputHeading, (heading) =>
+      [
+        "For a sub-workflow:",
+        "",
+        "```json",
+        "{",
+        '  "name": "dynamic",',
+        '  "taskReferenceName": "dynamic_ref",',
+        '  "inputParameters": {',
+        '    "taskToExecute": "SUB_WORKFLOW",',
+        '    "subWorkflowName": "${workflow.input.subWorkflowName}",',
+        '    "subWorkflowVersion": 1',
+        "  },",
+        '  "type": "DYNAMIC",',
+        '  "dynamicTaskNameParam": "taskToExecute"',
+        "}",
+        "```",
+        "",
+        heading,
+      ].join("\n"),
+    );
+
+    // Orkes does not fail on an unregistered task name (OrkesDynamicTaskMapper falls back to an empty
+    // task definition), so the OSS "Invalid task specified" sentence is dropped and the null-name
+    // sentence is kept.
+    const incorrectNameSentence =
+      /At runtime, if an incorrect task name is provided and the task does not exist, the workflow will fail with the error "Invalid task specified\. Cannot find task by name in the task definitions\."\s*\n+Likewise, if null reference/;
+    if (!incorrectNameSentence.test(output)) {
+      throw new Error("Dynamic page: Execution paragraph not found; update the Orkes-only patch.");
+    }
+    output = output.replace(incorrectNameSentence, () => "At runtime, if null reference");
+  }
+
+  if (route === "reference-docs/operators/sub-workflow") {
+    // Adds the Orkes-only priority and idempotency fields after the taskToDomain row.
+    // Throws if the anchor disappears so an upstream rewrite cannot silently drop this.
+    const taskToDomainRow = /^\| subWorkflowParam\.taskToDomain .*$/m;
+    if (!taskToDomainRow.test(output)) {
+      throw new Error("Sub Workflow page: subWorkflowParam.taskToDomain row not found; update the Orkes-only patch.");
+    }
+    output = output.replace(taskToDomainRow, (row) =>
+      [
+        row,
+        "| subWorkflowParam.priority | Integer | The priority of the sub-workflow. Supports values from 0 to 99 and can be passed as a dynamic variable. If set, this priority overrides the parent workflow’s priority. If not set, the sub-workflow inherits the parent workflow’s priority. | Optional. |",
+        "| subWorkflowParam.idempotencyKey | String | A unique, user-generated key to prevent duplicate workflow executions. Idempotency data is retained for the life of the workflow execution. | Optional. |",
+        "| subWorkflowParam.idempotencyStrategy | String | The idempotency strategy for handling duplicate requests. Supported values:<ul><li>`RETURN_EXISTING`: Return the `workflowId` of the workflow instance with the same idempotency key.</li><li>`FAIL`: Start a new workflow instance only if there are no workflow executions with the same idempotency key.</li><li>`FAIL_ON_RUNNING`: Start a new workflow instance only if there are no RUNNING or PAUSED workflows with the same idempotency key. Completed workflows can run again.</li></ul>If `idempotencyKey` is not set and `idempotencyStrategy` is set, the sub-workflow uses the idempotency key of the parent workflow. | Optional. |",
+      ].join("\n"),
+    );
+
+    // Adds the rerun note at the end of the Execution section, before Examples.
+    const examplesHeading = /^## Examples$/m;
+    if (!examplesHeading.test(output)) {
+      throw new Error("Sub Workflow page: Examples heading not found; update the Orkes-only patch.");
+    }
+    output = output.replace(examplesHeading, () =>
+      [
+        "To retry a sub-workflow from a specific task, call the [rerun workflow API](/content/reference-docs/api/workflow#rerun) with the sub-workflow's execution ID and set `reRunFromTaskId` to the ID of the task to rerun from. For example:",
+        "",
+        "```bash",
+        "curl -X POST 'https://<YOUR-CONDUCTOR-CLUSTER>/api/workflow/<SUBWORKFLOW-EXECUTION-ID>/rerun' \\",
+        "  -H 'Content-Type: application/json' \\",
+        "  -H 'x-authorization: <TOKEN>' \\",
+        "  -d '{",
+        '    "reRunFromTaskId": "<TASK-EXECUTION-ID>"',
+        "  }'",
+        "```",
+        "",
+        "## Examples",
       ].join("\n"),
     );
   }
@@ -2787,10 +3853,6 @@ function buildNav() {
   // the old quickstartSidebar stole the Platform concepts pages into Getting
   // Started. Tabs are still pushed to nav in display order below.
   const platformChildren = navFromItems(platformTabItems(), navSeen);
-  // Intentionally unlisted on the enterprise site (the page's message is "use
-  // Orkes cloud", which is circular here). Claim the id so enterprise sidebar
-  // extras don't resurrect it under an Enterprise group; the URL stays live.
-  navFromItems([d("devguide/running/hosted", "Hosted")], navSeen);
   const learnChildren = navFromItems(
     [
       d("learn", "Overview"),
@@ -4318,19 +5380,27 @@ function stripMarkdownFrontMatter(contents) {
 }
 
 function cleanMarkdownForLlms(contents) {
-  return stripMarkdownFrontMatter(contents)
-    .replace(/<script[\s\S]*?<\/script>/gi, "")
-    .replace(/<style[\s\S]*?<\/style>/gi, "")
+  let text = stripMarkdownFrontMatter(contents);
+  // Remove <script>/<style> blocks, repeating until stable. Permissive end tags
+  // (</script foo="bar">, </script >) are matched too.
+  let prev;
+  do {
+    prev = text;
+    text = text
+      .replace(/<script\b[\s\S]*?<\/script\b[^>]*>/gi, "")
+      .replace(/<style\b[\s\S]*?<\/style\b[^>]*>/gi, "");
+  } while (text !== prev);
+  text = text
     .replace(/<img\b[^>]*alt=["']([^"']*)["'][^>]*>/gi, (_all, alt) => (alt ? `Image: ${alt}` : ""))
     .replace(/<br\s*\/?>/gi, "\n")
-    .replace(/<\/(p|div|details|summary|li|tr|td|th)>/gi, "\n")
-    .replace(/<[^>]+>/g, "")
+    .replace(/<\/(p|div|details|summary|li|tr|td|th)>/gi, "\n");
+  return stripHtmlTags(text)
     .replace(/&rarr;/g, "->")
-    .replace(/&amp;/g, "&")
     .replace(/&lt;/g, "<")
     .replace(/&gt;/g, ">")
     .replace(/&quot;/g, '"')
     .replace(/&#39;/g, "'")
+    .replace(/&amp;/g, "&")
     .replace(/[ \t]+$/gm, "")
     .replace(/\n{4,}/g, "\n\n\n")
     .trim();

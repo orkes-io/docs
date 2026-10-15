@@ -4,9 +4,6 @@ slug: "/reference-docs/ai-tasks/llm-get-embeddings"
 description: "Learn how the LLM Get Embeddings task retrieves stored embeddings from a vector database."
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 # LLM Get Embeddings
 
 The LLM Get Embeddings task retrieves numerical vector representations of words, phrases, sentences, or documents that have been previously generated or learned by the model. Unlike the [LLM Generate Embeddings](/reference-docs/ai-tasks/llm-generate-embeddings) task, which creates vector representations from input data, this task focuses on efficiently accessing pre-existing embeddings. This is useful for utilizing embeddings that have already been computed and stored without regenerating them.
@@ -79,11 +76,11 @@ The LLM Get Embeddings task will return the following parameters.
 | Parameter | Description | 
 | --------- | ----------- | 
 | result | A JSON array containing the results of the query. |
-| score | Represents a value quantifying the degree of likeness between a specific item and a query vector, facilitating ranking and ordering of results. Higher scores denote stronger relevance to the query vector. |
-| metadata | An object containing additional metadata related to the retrieved document. |
-| docId | The unique identifier of the queried document. |
-| parentDocId | An identifier that denotes a parent document in hierarchical or relational data structures. | 
-| text | The actual content retrieved. | 
+| result.score | Represents a value quantifying the degree of likeness between a specific item and a query vector, facilitating ranking and ordering of results. Higher scores denote stronger relevance to the query vector. |
+| result.metadata | An object containing additional metadata related to the retrieved document. |
+| result.docId | The unique identifier of the queried document. |
+| result.parentDocId | An identifier that denotes a parent document in hierarchical or relational data structures. | 
+| result.text | The actual content retrieved. | 
 
 ## Examples
 

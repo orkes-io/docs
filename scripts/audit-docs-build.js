@@ -77,18 +77,29 @@ function listFiles(dir, predicate) {
 }
 
 function stripTags(value) {
-  return String(value || "")
-    .replace(/<script[\s\S]*?<\/script>/gi, "")
-    .replace(/<style[\s\S]*?<\/style>/gi, "")
-    .replace(/<[^>]+>/g, " ")
+  // Decode entities first so encoded tags (e.g. &lt;script&gt;) can't reappear
+  // after stripping, then remove <script>/<style> blocks and any remaining
+  // tags, repeating each pass until stable so malformed/nested markup can't
+  // re-form. Permissive end tags (</script foo="bar">) are matched too.
+  let clean = String(value || "")
     .replace(/&nbsp;/g, " ")
-    .replace(/&amp;/g, "&")
     .replace(/&lt;/g, "<")
     .replace(/&gt;/g, ">")
     .replace(/&quot;/g, '"')
     .replace(/&#39;/g, "'")
-    .replace(/\s+/g, " ")
-    .trim();
+    .replace(/&amp;/g, "&");
+  let prev;
+  do {
+    prev = clean;
+    clean = clean
+      .replace(/<script\b[\s\S]*?<\/script\b[^>]*>/gi, "")
+      .replace(/<style\b[\s\S]*?<\/style\b[^>]*>/gi, "");
+  } while (clean !== prev);
+  do {
+    prev = clean;
+    clean = clean.replace(/<[^>]+>/g, " ");
+  } while (clean !== prev);
+  return clean.replace(/\s+/g, " ").trim();
 }
 
 function routeForHtml(file) {
