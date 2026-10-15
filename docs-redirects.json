@@ -137,5 +137,7 @@
   "documentation/configuration/workflowdef/operators": "category/reference-docs/operators",
   "documentation/configuration/workflowdef/systemtasks": "category/reference-docs/system-tasks",
   "devguide/production-path": "devguide/workflows/production-path",
-  "devguide/running/hosted": "get-orkes-conductor"
+  "devguide/running/hosted": "get-orkes-conductor",
+  "reference-docs/api": "category/ref-docs/api",
+  "documentation/api": "category/ref-docs/api"
 }
