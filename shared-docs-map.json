@@ -307,11 +307,6 @@
       "route": "quickstart/task-lifecycle"
     },
     {
-      "source": "documentation/api/index.md",
-      "docId": "reference-docs/api",
-      "route": "reference-docs/api"
-    },
-    {
       "source": "documentation/clientsdks/index.md",
       "docId": "sdks/sdk-index",
       "route": "sdks/sdk-index"
