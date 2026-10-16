@@ -641,13 +641,7 @@ const sidebars = {
         {
             type: 'category',
             label: 'API Reference',
-            link: {
-                type: 'generated-index',
-                title: 'API Reference',
-                description: 'Explore the REST APIs used to programmatically manage workflows, tasks, metadata, and other resources in Conductor.',
-                slug: '/category/ref-docs/api',
-                keywords: ['reference', 'apis', 'api'],
-            },
+            link: { type: 'doc', id: 'reference-docs/api' },
             className: 'leftMenuHeader',
             items: [
                 { type: 'doc', id: 'sdks/authentication', label: 'Authentication' },
