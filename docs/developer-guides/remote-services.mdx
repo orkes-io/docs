@@ -300,3 +300,137 @@ The workflow and the HTTP task have the status `COMPLETED`. The output of the HT
 The body is the list of every pet with the status `available`. In this run it had 256 items.
 
 </details>
+
+<details markdown="1">
+
+<summary>Call a gRPC service from a workflow</summary>
+
+This example registers the public [grpcb.in](https://grpcb.in) test server, discovers its endpoints through server reflection, and calls its `SayHello` endpoint from a workflow. The API calls use [Orkes Developer Edition](https://developer.orkescloud.com). If you use another cluster, replace `https://developer.orkescloud.com` with your cluster URL.
+
+**Get access token**
+
+The API calls in this example need an access token. Create an [application](https://orkes.io/content/access-control-and-security/applications) with an access key, then exchange the key ID and secret for a JWT token:
+
+```bash
+curl -X POST 'https://developer.orkescloud.com/api/token' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "keyId": "<KEY_ID>",
+  "keySecret": "<KEY_SECRET>"
+}'
+```
+
+The response contains the token. Use this token as `<TOKEN>` in the `X-Authorization` header of the calls below. Tokens expire, so request a new one if a call returns an authorization error.
+
+**1. Register the service**
+
+For a gRPC service, `serviceURI` is the host and port, in the format `host:port`.
+
+```bash
+curl -X POST 'https://developer.orkescloud.com/api/registry/service' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name": "grpcbin",
+  "type": "gRPC",
+  "serviceURI": "grpcb.in:9000"
+}'
+```
+
+A `200` response means the service is registered.
+
+**2. Discover the endpoints**
+
+The server has reflection enabled, so Conductor can read its endpoints directly. Set `create=true` to save them on the service.
+
+```bash
+curl 'https://developer.orkescloud.com/api/registry/service/grpcbin/discover?create=true' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+Conductor registers 37 endpoints from the services on the server, such as `hello.HelloService` and `grpcbin.GRPCBin`. This is the endpoint we will use:
+
+```json
+{
+  "operationName": "hello.HelloService",
+  "methodName": "SayHello",
+  "methodType": "UNARY",
+  "inputType": "hello.HelloRequest",
+  "outputType": "hello.HelloResponse",
+  "requestParams": [
+    {
+      "name": "greeting",
+      "type": "STRING",
+      "required": false
+    }
+  ],
+  "exampleInput": {
+    "greeting": ""
+  },
+  "deprecated": false
+}
+```
+
+**3. Add the endpoint to a workflow**
+
+The workflow has one gRPC task. The `service` name links the task to the registered service. The `method` is the service name and the method name, `hello.HelloService/SayHello`. The input and output types come from the endpoint, and `request` holds the message to send.
+
+```bash
+curl -X POST 'https://developer.orkescloud.com/api/metadata/workflow' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name": "grpcbin_hello",
+  "version": 1,
+  "schemaVersion": 2,
+  "tasks": [
+    {
+      "name": "grpc",
+      "taskReferenceName": "grpc_ref",
+      "type": "GRPC",
+      "inputParameters": {
+        "service": "grpcbin",
+        "methodType": "UNARY",
+        "method": "hello.HelloService/SayHello",
+        "host": "grpcb.in",
+        "port": 9000,
+        "request": { "greeting": "Conductor" },
+        "inputType": "hello.HelloRequest",
+        "outputType": "hello.HelloResponse",
+        "useSSL": false,
+        "trustCert": false
+      }
+    }
+  ]
+}'
+```
+
+A `200` response means the workflow is registered. Port `9000` on this server does not use TLS, so `useSSL` is `false`.
+
+**4. Run the workflow and read the response**
+
+Start the workflow. The response is the workflow ID.
+
+```bash
+curl -X POST 'https://developer.orkescloud.com/api/workflow/grpcbin_hello' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{}'
+```
+
+Then get the execution using the workflow ID:
+
+```bash
+curl 'https://developer.orkescloud.com/api/workflow/<WORKFLOW-ID>?includeTasks=true' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+The workflow and the gRPC task have the status `COMPLETED`. The output of the gRPC task is the reply from the server:
+
+```json
+{
+  "reply": "hello Conductor"
+}
+```
+
+</details>
