@@ -156,3 +156,147 @@ Then configure the parameters specific to the task type:
 :::info Note
 A registered HTTP service can be reused across both HTTP and HTTP Poll tasks. Global service settings apply to both task types. However, circuit breaker configuration is applied only when the service is used with an HTTP task.
 :::
+
+## Examples
+
+<details markdown="1">
+
+<summary>Call the Petstore API from a workflow</summary>
+
+This example registers the public Petstore API, discovers its endpoints, and calls one of them from a workflow. The API calls use [Orkes Developer Edition](https://developer.orkescloud.com). If you use another cluster, replace `https://developer.orkescloud.com` with your cluster URL. Petstore is a shared public service, so the data it returns will differ from the sample below.
+
+**Get access token**
+
+The API calls in this example need an access token. Create an [application](https://orkes.io/content/access-control-and-security/applications) with an access key, then exchange the key ID and secret for a JWT token:
+
+```bash
+curl -X POST 'https://developer.orkescloud.com/api/token' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "keyId": "<KEY_ID>",
+  "keySecret": "<KEY_SECRET>"
+}'
+```
+
+The response contains the token. Use this token as `<TOKEN>` in the `X-Authorization` header of the calls below. Tokens expire, so request a new one if a call returns an authorization error.
+
+**1. Register the service**
+
+For an HTTP service, `serviceURI` must be the Swagger URL, ending in `swagger.json`. Discovery reads this URL, so a base URL such as `https://petstore.swagger.io/v2` makes discovery fail.
+
+```bash
+curl -X POST 'https://developer.orkescloud.com/api/registry/service' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name": "petstore",
+  "type": "HTTP",
+  "serviceURI": "https://petstore.swagger.io/v2/swagger.json"
+}'
+```
+
+A `200` response means the service is registered.
+
+**2. Discover the endpoints**
+
+Set `create=true` to save the discovered endpoints on the service. Without it, the call only returns them.
+
+```bash
+curl 'https://developer.orkescloud.com/api/registry/service/petstore/discover?create=true' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+Conductor reads the Swagger file and registers 20 endpoints, such as `findPetsByStatus`, `getPetById`, and `getInventory`. It also registers the hosts it finds in the specification. This is the endpoint we will use:
+
+```json
+{
+  "operationName": "findPetsByStatus",
+  "methodName": "/pet/findByStatus",
+  "methodType": "GET",
+  "outputType": "findPetsByStatus_Response",
+  "requestParams": [
+    {
+      "name": "status",
+      "type": "query",
+      "required": true,
+      "schema": { "type": "array" }
+    }
+  ],
+  "description": "Multiple status values can be provided with comma separated strings",
+  "deprecated": false
+}
+```
+
+**3. Add the endpoint to a workflow**
+
+The workflow has one HTTP task. The task keeps the `service` name, which Conductor uses to apply the service's circuit breaker. The `uri`, `method`, `accept`, and `contentType` values come from the endpoint, and `status=available` is the query parameter.
+
+```bash
+curl -X POST 'https://developer.orkescloud.com/api/metadata/workflow' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name": "petstore_pets",
+  "version": 1,
+  "schemaVersion": 2,
+  "tasks": [
+    {
+      "name": "http",
+      "taskReferenceName": "http_ref",
+      "type": "HTTP",
+      "inputParameters": {
+        "service": "petstore",
+        "uri": "http://petstore.swagger.io/v2/pet/findByStatus?status=available",
+        "method": "GET",
+        "accept": "application/json",
+        "contentType": "application/json"
+      }
+    }
+  ]
+}'
+```
+
+A `200` response means the workflow is registered.
+
+**4. Run the workflow and read the response**
+
+Start the workflow. The response is the workflow ID.
+
+```bash
+curl -X POST 'https://developer.orkescloud.com/api/workflow/petstore_pets' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{}'
+```
+
+Then get the execution using the workflow ID:
+
+```bash
+curl 'https://developer.orkescloud.com/api/workflow/<WORKFLOW-ID>?includeTasks=true' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+The workflow and the HTTP task have the status `COMPLETED`. The output of the HTTP task holds the status code and the response body:
+
+```json
+{
+  "response": {
+    "statusCode": 200,
+    "body": [
+      {
+        "id": 566039,
+        "category": { "id": 566039, "name": "kangs name" },
+        "name": "doggie",
+        "photoUrls": [ "kangs url" ],
+        "tags": [ { "id": 566039, "name": "kangs tag 566039" } ],
+        "status": "available"
+      },
+      ...
+    ]
+  }
+}
+```
+
+The body is the list of every pet with the status `available`. In this run it had 256 items.
+
+</details>
