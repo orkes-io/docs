@@ -33,13 +33,33 @@ Use the [Create Service](https://orkes.io/content/reference-docs/api/remote-serv
 
 | Parameter | Description |
 | --------- | ----------- |
-| Service registry name | A unique name for the service. |
-| Service type | The type of service. Supported values: HTTP, gRPC. |
-| Swagger URL (HTTP only) | The Swagger specification URL, ending in .json. For example: https://petstore.swagger.io/v2/swagger.json. |
-| Host (gRPC only) | The service's host. |
-| Port (gRPC only) | The port where the service is running. |
-| Host (Optional) | An additional endpoint host. Conductor automatically discovers available hosts from the server during endpoint discovery, but you can add extra hosts here for testing. |
-| Authorization key and Value (Optional) | The key and value, if the endpoint requires authorization. |
+| name | A unique name for the service. |
+| type | The type of service. Supported values: HTTP, gRPC. |
+| serviceURI | The service address. For HTTP services, enter the Swagger specification URL, ending in .json. For example: https://petstore.swagger.io/v2/swagger.json. For gRPC services, enter the host and port in the format `host:port`. |
+| servers.url (Optional) | An additional endpoint host. Conductor automatically discovers available hosts from the server during endpoint discovery, but you can add extra hosts here for testing. |
+| servers.type (Optional) | The URL type. Supported values: OPENAPI_SPEC, USER_DEFINED. |
+| authMetadata.key (Optional) | The HTTP header name, if the endpoint requires authorization. For example: Authorization. |
+| authMetadata.value (Optional) | The HTTP header value, if the endpoint requires authorization. For example: Bearer <token>. |
+
+The following is a sample JSON for a service:
+
+```json
+{
+  "name": "petstore",
+  "type": "HTTP",
+  "serviceURI": "https://petstore.swagger.io/v2/swagger.json",
+  "servers": [
+    {
+      "url": "https://petstore.swagger.io/v2",
+      "type": "USER_DEFINED"
+    }
+  ],
+  "authMetadata": {
+    "key": "Authorization",
+    "value": "Bearer <token>"
+  }
+}
+```
 
 ## Discover or add endpoints
 
@@ -81,20 +101,46 @@ To add a new endpoint, use the [Add Method to Service](https://orkes.io/content/
 
 | Parameter | Description |
 | --------- | ----------- |
-| Resource Name/Operation Name | The action or purpose of the endpoint. |
-| Description | A description of the endpoint. |
-| Path/Method Name | The method name for the endpoint. |
-| Method Type | The method type for the service. Supported values:<ul><li>For HTTP services: GET, POST, PUT, DELETE, PATCH</li><li>For gRPC services: UNARY, SERVER_STREAMING, CLIENT_STREAMING, BIDIRECTIONAL_STREAMING</li></ul> |
-| Accept (HTTP only) | The accept header required by the server. Supported types:<ul><li>application/java-archive</li><li>application/EDI-X12</li><li>application/EDIFACT</li><li>application/javascript</li><li>application/octet-stream</li><li>application/ogg</li><li>application/pdf</li><li>application/xhtml+xml</li><li>application/x-shockwave-flash</li><li>application/json</li><li>application/ld+json</li><li>application/xml</li><li>application/zip</li><li>application/x-www-form-urlencoded</li><li>audio/mpeg</li><li>audio/x-ms-wma</li><li>audio/vnd.rn-realaudio</li><li>audio/x-wav</li><li>image/gif</li><li>image/jpeg</li><li>image/png</li><li>image/tiff</li><li>image/vnd.microsoft.icon</li><li>image/x-icon</li><li>image/vnd.djvu</li><li>image/svg+xml</li></ul> |
-| Content-Type (HTTP only) | The content-type for the server. Supported types:<ul><li>application/java-archive</li><li>application/EDI-X12</li><li>application/EDIFACT</li><li>application/javascript</li><li>application/octet-stream</li><li>application/ogg</li><li>application/pdf</li><li>application/xhtml+xml</li><li>application/x-shockwave-flash</li><li>application/json</li><li>application/ld+json</li><li>application/xml</li><li>application/zip</li><li>application/x-www-form-urlencoded</li><li>audio/mpeg</li><li>audio/x-ms-wma</li><li>audio/vnd.rn-realaudio</li><li>audio/x-wav</li><li>image/gif</li><li>image/jpeg</li><li>image/png</li><li>image/tiff</li><li>image/vnd.microsoft.icon</li><li>image/x-icon</li><li>image/vnd.djvu</li><li>image/svg+xml</li></ul> |
-| Input Schema/Input Type | Select an input schema from existing [schemas in Conductor](https://orkes.io/content/developer-guides/schema-validation). |
-| Output Schema/Output Type | Select an output schema from existing [schemas in Conductor](https://orkes.io/content/developer-guides/schema-validation). |
-| Request Parameters (HTTP only)<br/><TableNote title="Available since">v5.4.2 and later</TableNote> | Select **+ Add Parameter** and add the request parameters. |
-| Deprecated | Enable to mark the endpoint as deprecated. |
+| operationName | The action or purpose of the endpoint. |
+| description | A description of the endpoint. |
+| methodName | The method name for the endpoint. |
+| methodType | The method type for the service. Supported values:<ul><li>For HTTP services: GET, POST, PUT, DELETE, PATCH</li><li>For gRPC services: UNARY, SERVER_STREAMING, CLIENT_STREAMING, BIDIRECTIONAL_STREAMING</li></ul> |
+| accept (HTTP only) | The accept header required by the server. Supported types:<ul><li>application/java-archive</li><li>application/EDI-X12</li><li>application/EDIFACT</li><li>application/javascript</li><li>application/octet-stream</li><li>application/ogg</li><li>application/pdf</li><li>application/xhtml+xml</li><li>application/x-shockwave-flash</li><li>application/json</li><li>application/ld+json</li><li>application/xml</li><li>application/zip</li><li>application/x-www-form-urlencoded</li><li>audio/mpeg</li><li>audio/x-ms-wma</li><li>audio/vnd.rn-realaudio</li><li>audio/x-wav</li><li>image/gif</li><li>image/jpeg</li><li>image/png</li><li>image/tiff</li><li>image/vnd.microsoft.icon</li><li>image/x-icon</li><li>image/vnd.djvu</li><li>image/svg+xml</li></ul> |
+| requestContentType (HTTP only) | The content-type of the request to the server. Supported types:<ul><li>application/java-archive</li><li>application/EDI-X12</li><li>application/EDIFACT</li><li>application/javascript</li><li>application/octet-stream</li><li>application/ogg</li><li>application/pdf</li><li>application/xhtml+xml</li><li>application/x-shockwave-flash</li><li>application/json</li><li>application/ld+json</li><li>application/xml</li><li>application/zip</li><li>application/x-www-form-urlencoded</li><li>audio/mpeg</li><li>audio/x-ms-wma</li><li>audio/vnd.rn-realaudio</li><li>audio/x-wav</li><li>image/gif</li><li>image/jpeg</li><li>image/png</li><li>image/tiff</li><li>image/vnd.microsoft.icon</li><li>image/x-icon</li><li>image/vnd.djvu</li><li>image/svg+xml</li></ul> |
+| responseContentType (HTTP only) | The content-type of the response from the server. Supported types:<ul><li>application/java-archive</li><li>application/EDI-X12</li><li>application/EDIFACT</li><li>application/javascript</li><li>application/octet-stream</li><li>application/ogg</li><li>application/pdf</li><li>application/xhtml+xml</li><li>application/x-shockwave-flash</li><li>application/json</li><li>application/ld+json</li><li>application/xml</li><li>application/zip</li><li>application/x-www-form-urlencoded</li><li>audio/mpeg</li><li>audio/x-ms-wma</li><li>audio/vnd.rn-realaudio</li><li>audio/x-wav</li><li>image/gif</li><li>image/jpeg</li><li>image/png</li><li>image/tiff</li><li>image/vnd.microsoft.icon</li><li>image/x-icon</li><li>image/vnd.djvu</li><li>image/svg+xml</li></ul> |
+| inputType | Select an input schema from existing [schemas in Conductor](https://orkes.io/content/developer-guides/schema-validation). |
+| outputType | Select an output schema from existing [schemas in Conductor](https://orkes.io/content/developer-guides/schema-validation). |
+| requestParams (HTTP only)<br/><TableNote title="Available since">v5.4.2 and later</TableNote> | The request parameters for the endpoint. Each entry has `name`, `type` (for example, `path`), `required`, and `schema`. |
+| deprecated | Set to true to mark the endpoint as deprecated. |
 
 </details>
 
 This saves the endpoint within the service definition.
+
+The following is a sample JSON for an endpoint:
+
+```json
+{
+  "operationName": "findPetsByStatus",
+  "description": "Finds pets by status",
+  "methodName": "/pet/findByStatus",
+  "methodType": "GET",
+  "accept": "application/json",
+  "requestContentType": "application/json",
+  "responseContentType": "application/json",
+  "inputType": "findPetsByStatus_Request",
+  "outputType": "findPetsByStatus_Response",
+  "requestParams": [
+    {
+      "name": "status",
+      "type": "query",
+      "required": true,
+      "schema": { "type": "array" }
+    }
+  ],
+  "deprecated": false
+}
+```
 
 ## Configure circuit breaker pattern for individual services
 
@@ -107,29 +153,48 @@ The Circuit Breaker pattern has two circuit states:
 
 To configure the circuit breaker pattern for a service, use the [Create Service](https://orkes.io/content/reference-docs/api/remote-services/create-service) API or go to the **Circuit Breaker Configuration** tab in your remote service definition, toggle on **Circuit Breaker Configuration**, configure the following parameters, and select **Save**.
 
-<details markdown="1">
-
-<summary>View Circuit Breaker parameters</summary>
-
 | Parameter | Description | Type | 
 | --------- | ----------- | ---- | 
-| Failure rate threshold | The failure rate threshold is a percentage between 0 and 100; when the failure rate equals or exceeds this value, the circuit breaker opens to block further calls. Default is 50.<br/><br/>For example, setting the threshold to 50 means the circuit will open when half of the calls fail. Set it to 0 to disable this behavior. | Float. | 
-| Sliding window size | The size of the sliding window, which is used to record the outcome of calls when the circuit breaker is closed. The value ranges between 1 and 1000. Default is 100. | Integer. | 
-| Minimum number of calls | The minimum number of calls required within a sliding window before the circuit breaker evaluates the error rate or slow call rate. The minimum value is 1, and the maximum value should not exceed the *Sliding window size*. Default is 100.<br/><br/>For example, if this value is 10, then at least 10 calls must be recorded before the failure rate can be calculated. If only 9 calls have been recorded, the Circuit Breaker will not transition to open even if all 9 calls have failed. | Integer. | 
-| Wait duration in open state (ms) | The time in ms that the circuit breaker must wait before transitioning from open to half-open. The value ranges between 1000-300000. Default is 1000. | Integer. | 
-| Permitted number of calls in half open state | The number of calls allowed while the Circuit Breaker is in the half-open state. The value ranges between 1 and 100. Default is 100. | Integer. | 
-| Slow call rate threshold (%) | The percentage threshold for calls classified as slow. A call is considered slow if its duration exceeds the *Slow call duration threshold*.<br/><br/>If the percentage of slow calls within the sliding window equals or exceeds this threshold, the Circuit Breaker transitions to the open state and begins short-circuiting calls.<br/><br/>The value ranges between 0 and 100. Set to 0 to disable slow-call triggering. Default is 50. | Float/Decimal. | 
-| Slow call duration threshold (ms) | The duration threshold (in ms) above which calls are considered slow. Calls exceeding this time increase the slow call rate. The value ranges between 1000-60000. Default is 100. | Integer. | 
-| Max wait duration in half open state (ms) | The maximum wait duration (in ms) the circuit breaker can remain in the half-open state before transitioning back to the open state. A value of 0 means the circuit breaker will remain half-open indefinitely until all permitted calls are completed.<br/><br/>The value can range between 1 and 300000. Default is 1. | Integer. | 
-| Automatic transition from open to half open enabled | If set to true, the circuit breaker automatically transitions from the open state to the half-open state, and no call is required to trigger the transition. Enabled by default.<br/><br/>If set to false, the transition to half-open occurs only when a call is made. | N/A | 
+| circuitBreakerEnabled | Enables the circuit breaker for the service. | Boolean. | 
+| config.circuitBreakerConfig. failureRateThreshold | The failure rate threshold is a percentage between 0 and 100; when the failure rate equals or exceeds this value, the circuit breaker opens to block further calls. Default is 50.<br/><br/>For example, setting the threshold to 50 means the circuit will open when half of the calls fail. Set it to 0 to disable this behavior. | Float. | 
+| config.circuitBreakerConfig. slidingWindowSize | The size of the sliding window, which is used to record the outcome of calls when the circuit breaker is closed. The value ranges between 1 and 1000. Default is 100. | Integer. | 
+| config.circuitBreakerConfig. minimumNumberOfCalls | The minimum number of calls required within a sliding window before the circuit breaker evaluates the error rate or slow call rate. The minimum value is 1, and the maximum value should not exceed the *slidingWindowSize*. Default is 100.<br/><br/>For example, if this value is 10, then at least 10 calls must be recorded before the failure rate can be calculated. If only 9 calls have been recorded, the Circuit Breaker will not transition to open even if all 9 calls have failed. | Integer. | 
+| config.circuitBreakerConfig. waitDurationInOpenState | The time in ms that the circuit breaker must wait before transitioning from open to half-open. The value ranges between 1000-300000. Default is 1000. | Integer. | 
+| config.circuitBreakerConfig. permittedNumberOfCallsInHalfOpenState | The number of calls allowed while the Circuit Breaker is in the half-open state. The value ranges between 1 and 100. Default is 100. | Integer. | 
+| config.circuitBreakerConfig. slowCallRateThreshold | The percentage threshold for calls classified as slow. A call is considered slow if its duration exceeds the *slowCallDurationThreshold*.<br/><br/>If the percentage of slow calls within the sliding window equals or exceeds this threshold, the Circuit Breaker transitions to the open state and begins short-circuiting calls.<br/><br/>The value ranges between 0 and 100. Set to 0 to disable slow-call triggering. Default is 50. | Float/Decimal. | 
+| config.circuitBreakerConfig. slowCallDurationThreshold | The duration threshold (in ms) above which calls are considered slow. Calls exceeding this time increase the slow call rate. The value ranges between 1000-60000. Default is 100. | Integer. | 
+| config.circuitBreakerConfig. maxWaitDurationInHalfOpenState | The maximum wait duration (in ms) the circuit breaker can remain in the half-open state before transitioning back to the open state. A value of 0 means the circuit breaker will remain half-open indefinitely until all permitted calls are completed.<br/><br/>The value can range between 1 and 300000. Default is 1. | Integer. | 
+| config.circuitBreakerConfig. automaticTransitionFromOpenToHalfOpenEnabled | If set to true, the circuit breaker automatically transitions from the open state to the half-open state, and no call is required to trigger the transition. Enabled by default.<br/><br/>If set to false, the transition to half-open occurs only when a call is made. | N/A | 
 
-</details>
+The following is a sample JSON for a service with the circuit breaker enabled:
+
+```json
+{
+  "name": "petstore",
+  "type": "HTTP",
+  "serviceURI": "https://petstore.swagger.io/v2/swagger.json",
+  "circuitBreakerEnabled": true,
+  "config": {
+    "circuitBreakerConfig": {
+      "failureRateThreshold": 50,
+      "slidingWindowSize": 100,
+      "minimumNumberOfCalls": 10,
+      "waitDurationInOpenState": 5000,
+      "permittedNumberOfCallsInHalfOpenState": 10,
+      "slowCallRateThreshold": 50,
+      "slowCallDurationThreshold": 2000,
+      "maxWaitDurationInHalfOpenState": 1000,
+      "automaticTransitionFromOpenToHalfOpenEnabled": true
+    }
+  }
+}
+```
 
 ## Test endpoints
 
-Before you use an endpoint in a workflow, call it from the service page to check that it works.
+Before you use an endpoint in a workflow, you can test it in the Orkes UI to check that it works.
 
-To test an endpoint, select the test (▶) icon next to it on your service registry definition page, make the required configuration changes, and select **Execute**.
+To test an endpoint, go to **Definitions** > **Remote Services** and open your service. Select the test (▶) icon next to the endpoint, make the required configuration changes, and select **Execute**.
 
 The test returns the server response and a link to the sample workflow execution that made the call. While testing the endpoints, you can also select the required host from the testing interface.
 
