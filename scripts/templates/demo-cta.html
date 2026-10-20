@@ -1,0 +1,20 @@
+{% block header %}
+  {{ super() }}
+  <aside class="orkes-demo-bar" aria-label="Explore Orkes Conductor">
+    <div class="md-grid orkes-demo-bar__inner">
+      <span>Building agents and workflows for production?</span>
+      <a class="orkes-demo-link" data-orkes-demo href="https://orkes.io/demo">Get a demo</a>
+    </div>
+  </aside>
+{% endblock %}
+
+{% block content %}
+  {{ super() }}
+  {% if page and page.url not in ['index.html', '404.html'] %}
+    <aside class="orkes-demo-card" aria-label="Get an Orkes Conductor demo">
+      <h2>See your workflows in Orkes Conductor</h2>
+      <p>Explore retries, human approvals, and operational visibility with a demo for your use case.</p>
+      <a class="orkes-demo-link" data-orkes-demo href="https://orkes.io/demo">Get a demo</a>
+    </aside>
+  {% endif %}
+{% endblock %}

@@ -4075,6 +4075,10 @@ extra:
 
 extra_css:
   - css/custom.css
+  - css/demo-cta.css
+
+extra_javascript:
+  - js/demo-cta.js
 
 plugins:
   - search
@@ -4561,6 +4565,8 @@ function writeOverrides() {
     );
   }
 
+  // Keep Orkes commercial navigation out of the shared OSS content.
+  main += "\n" + read(path.join(ROOT, "scripts", "templates", "demo-cta.html"));
   write(mainPath, main);
 
   const notFoundPath = path.join(OVERRIDES_DIR, "404.html");
