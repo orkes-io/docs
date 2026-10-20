@@ -5,7 +5,7 @@ description: "Learn how to configure Google Cloud integration so workflows can s
 
 # GCP Integration with Orkes Conductor
 
-To use AI tasks like [List Files](/content/reference-docs/ai-tasks/list-files) and [Parse Document](/content/reference-docs/ai-tasks/parse-document) that need to access files or documents stored in Google Cloud Storage (GCS), you must integrate your Conductor cluster with GCP. This integration is required when accessing private buckets or resources that aren’t publicly available. This guide explains how to integrate GCP with Orkes Conductor. Here’s an overview:
+To use tasks like [List Files](/content/reference-docs/ai-tasks/list-files), [Parse Document](/content/reference-docs/ai-tasks/parse-document), and [Business Rule](/content/reference-docs/system-tasks/business-rule) that need to access files or documents stored in Google Cloud Storage (GCS) or Google Sheets, you must integrate your Conductor cluster with GCP. This integration is required when accessing private buckets or resources that aren’t publicly available. This guide explains how to integrate GCP with Orkes Conductor. Here’s an overview:
 
 1. Get the required credentials from GCP.
 2. Configure a new GCP integration in Orkes Conductor.
@@ -13,11 +13,16 @@ To use AI tasks like [List Files](/content/reference-docs/ai-tasks/list-files) a
 
 ## Step 1: Get the GCP credentials
 
-To integrate GCP with Orkes Conductor, retrieve the following credentials from the Google Cloud console. You must also enable the Cloud Storage API for the selected GCP project.
+To integrate GCP with Orkes Conductor, retrieve the following credentials from the Google Cloud console:
 
 - Project ID
 - Location
 - Service account JSON
+
+You must also enable the following APIs for the selected GCP project:
+
+- Cloud Storage API: Required for tasks that read from Cloud Storage buckets.
+- Google Drive API: Required only if the Business Rule task reads from Google Sheets.
 
 ### Get the project ID
 
@@ -38,7 +43,7 @@ For more information, refer to the official documentation on [Bucket location](h
 
 **To get the service account JSON:**
 
-1. Go to **IAM & Admin** > **Service Accounts** from the left menu on your GCP console. 
+1. Go to [**IAM & Admin**](https://console.cloud.google.com/iam-admin) > **Service Accounts** from the left menu on your GCP console. 
 2. Create a new service or select an existing one.
 3. In the **Keys** tab, select **Add key** > **Create new key**.
 4. Select the key type as **JSON**.
@@ -53,7 +58,39 @@ To use GCP with Orkes Conductor, you must enable Cloud Storage from the GCP cons
 2. Select **+ Enable APIs and Services**.
 3. In the **API Library**, search for **Cloud Storage API**.
 4. Select **Enable**.
+
 Once enabled, the Cloud Storage API is ready for use with your GCP project.
+
+### Enable Google Drive API
+
+Only required if the Business Rule task reads from Google Sheets.
+
+**To enable Google Drive API:**
+
+1. Go to **APIs & Services** > **Enabled APIs & services** from the left menu on your GCP console.
+2. Select **+ Enable APIs and Services**.
+3. In the **API Library**, search for **Google Drive API**.
+4. Select **Enable**.
+
+Once enabled, the Google Drive API is ready for use with your GCP project.
+
+### Grant the service account access to your files
+
+The service account needs read access to the files your tasks read from Cloud Storage or Google Sheets. Use the service account email, which is the `client_email` value in the JSON key, or the email shown under **IAM & Admin** > **Service Accounts** in the GCP console.
+
+**To grant access to a Cloud Storage bucket:**
+
+1. In the GCP console, go to **Cloud Storage** > **Buckets** and open the bucket.
+2. Open the **Permissions** tab and select **Grant access**.
+3. In **New principals**, enter the service account email.
+4. In **Select a role**, choose **Storage Object Viewer**.
+5. Select **Save**.
+
+**To grant access to a Google Sheet (only needed for the Business Rule task):**
+
+1. Open the sheet in Google Sheets and select **Share**.
+2. Enter the service account email and set the role to **Viewer**.
+3. Select **Send**.
 
 ## Step 2: Add an integration for GCP
 
