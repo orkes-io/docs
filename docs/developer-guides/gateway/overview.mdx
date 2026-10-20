@@ -1,21 +1,30 @@
 ---
 slug: "/developer-guides/mcp-api-gateway"
-description: "Learn how to expose workflows as APIs and MCP tools using the Gateway so external applications and AI agents can invoke workflow logic."
+description: "Learn how Gateway gives applications and AI agents an entry point to your workflows, and how Service Orchestration lets workflows call external HTTP and gRPC services."
 ---
 
-# API and MCP Gateway
+# Gateway and Service Orchestration
 
-Orkes Conductor's Gateway lets you expose any workflow as an API endpoint or MCP tool. Use it when the durable workflow is the product surface: an application calls an HTTP route, or an AI agent calls a tool, and Conductor handles the multi-step orchestration behind it.
+Orkes Conductor workflows can be exposed as APIs and can orchestrate the services they depend on. Gateway gives applications and AI agents a single entry point to your workflows, as an HTTP route or an MCP tool, with authentication and access control applied. Service Orchestration is how a workflow calls the external HTTP and gRPC services it depends on. You register each service once, and every workflow reuses it, with execution history recorded for every call.
 
-Gateway is different from simple request routing. Each route can trigger a workflow that calls services, branches, waits for humans, retries failures, applies compensation, and records a full execution history.
+## Gateway: Expose workflows as APIs or MCP tools
 
-Use **API Gateway** when external applications or internal services need a stable HTTP interface for invoking workflow logic. Use **MCP Gateway** when AI agents need discoverable tools that execute governed business workflows.
+Gateway lets applications and AI agents call a workflow. You group routes under a service, link each route to a workflow, and set the authentication for the service. When a request arrives, Conductor runs the workflow and returns its output. Retries, branching, human steps and the full execution history come with the workflow.
 
-:::tip 5-minute path
-Create the workflow first, grant an application permission to execute it, create an authenticated Gateway service, add a route, test the route, then monitor the execution in Conductor.
-:::
+A Gateway service is one of two types:
 
-Gateway routes inherit authentication, authorization, schema validation, caching, rate limits, and operational metrics from Orkes Conductor. This keeps endpoint behavior tied to durable execution instead of scattering orchestration, retries, and audit trails across clients.
+- [API Gateway](/content/developer-guides/api-gateway): Exposes a workflow as APIs that applications and internal services call.
+- [MCP Gateway](/content/developer-guides/mcp-gateway): Exposes a workflow as MCP tools that AI agents discover and call.
+
+## Service Orchestration: Call external services
+
+Workflows call external HTTP and gRPC services through [Remote Services](/content/remote-services). You register a service once, with its address, authentication and endpoints. Workflows then pick a call from the catalog instead of repeating URLs and headers. You can also register schemas and add a circuit breaker.
+
+## Which one do I need
+
+- An application or agent should trigger a workflow: Gateway, with an API or MCP service.
+- A workflow should call an external HTTP or gRPC service from several places: Remote Services.
+- A workflow makes a one-off external call: Use an [HTTP task](/content/reference-docs/system-tasks/http) directly.
 
 ```mdx-code-block
 import DocCardList from '@theme/DocCardList';
