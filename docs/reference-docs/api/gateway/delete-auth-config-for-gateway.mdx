@@ -18,7 +18,9 @@ Deletes an auth config of a gateway service.
 
 ## Response
 
-Returns 200 OK, indicating that the auth config is deleted.
+* Returns a `200 OK` response, indicating that the auth config is deleted.
+* Returns 404 Not Found if no auth config exists with the given `id`.
+* Returns 403 Forbidden if you do not have permission to delete the auth config.
 
 ## Examples
 

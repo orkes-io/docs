@@ -18,7 +18,9 @@ Retrieves the details of a specific gateway service.
 
 ## Response
 
-Returns a 200 OK response with service details, including its id, name, path, and route metadata.
+* Returns a `200 OK` response with service details, including its id, name, path, and route metadata.
+* Returns 404 Not Found if no service exists with the given `serviceId`.
+* Returns 403 Forbidden if you do not have access to the service.
 
 ## Examples
 
@@ -29,7 +31,7 @@ Returns a 200 OK response with service details, including its id, name, path, an
 
 ```shell
 curl -X 'GET' \
-  'https://<YOUR-SERVER-UR>/api/gateway/config/services/ticket-tools' \
+  'https://<YOUR-SERVER-URL>/api/gateway/config/services/ticket-tools' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>'
 ```

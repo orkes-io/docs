@@ -1,0 +1,57 @@
+---
+sidebar_position: 20
+slug: "/reference-docs/api/gateway/get-tags-from-gateway-service-routes"
+description: "Learn how to retrieve the tags of a route in a gateway service."
+---
+
+# Get Tags from Gateway Service Routes
+
+**Endpoint**: `GET /api/gateway/config/services/{serviceId}/routes/tags`
+
+Retrieves the tags of a route in a gateway service.
+
+## Path parameters
+
+| Parameter | Description | Type | Required/ Optional |
+| --------- | ------------ | ---- | ------------------- |
+| serviceId | The unique identifier of the gateway service that contains the route to retrieve tags from. | string | Required. |
+
+## Query parameters
+
+| Parameter | Description | Type | Required/ Optional |
+| --------- | ------------ | ---- | ------------------- |
+| method | The HTTP method of the route to retrieve tags from. | string | Required. |
+| path | The path of the route to retrieve tags from. | string | Required. |
+
+## Response
+
+* Returns a `200 OK` response with an array of tag objects, each containing a key and a value. The array is empty if the route has no tags.
+* Returns 403 Forbidden if you do not have access to the service.
+* Returns 404 Not Found if no service exists with the given `serviceId`, or no route exists with the given `method` and `path`.
+
+## Examples
+
+<details markdown="1">
+<summary>Get tags from a route</summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/gateway/config/services/test-service/routes/tags?method=POST&path=%2Fcreate' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+[
+  {
+    "key": "blogs",
+    "value": "test"
+  }
+]
+```
+
+</details>
