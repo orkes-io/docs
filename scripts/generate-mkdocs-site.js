@@ -4147,6 +4147,229 @@ copyright: Orkes, Inc.
   write(path.join(ROOT, "mkdocs.yml"), mkdocsOut);
 }
 
+// Server-rendered "Get a demo" button + modal for the docs header (CLOUD-1314).
+// Same HubSpot form as the orkes.io header; GTM/LinkedIn aren't loaded on docs,
+// so the conversion pushes are guarded no-ops here.
+const ORKES_DEMO_CTA_BLOCK = `{% block header %}
+  {{ super() }}
+  <button type="button" class="orkes-demo-cta" data-orkes-demo>Get a demo</button>
+  <style>
+    /* Header button — hidden until moved into the header bar. */
+    .orkes-demo-cta { display: none; }
+    .md-header__inner .orkes-demo-cta {
+      display: inline-flex; align-items: center; flex-shrink: 0;
+      height: 36px; margin-left: 1rem; padding: 0 16px;
+      border: 1px solid #835edd; border-radius: 6px; background: #fff; color: #27223d;
+      font: inherit; font-size: 15px; font-weight: 600; white-space: nowrap; cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .md-header__inner .orkes-demo-cta:hover { background: #f6f3fd; }
+    [data-md-color-scheme="slate"] .md-header__inner .orkes-demo-cta { background: transparent; color: #e6defa; }
+    @media screen and (max-width: 44.984375em) {
+      .md-header__inner .orkes-demo-cta { height: 32px; margin-left: 0.5rem; padding: 0 10px; font-size: 13px; }
+    }
+
+    /* Modal — ported from the orkes.io demo modal (marketing-site
+       src/components/solution-landings/demoModal.css), scoped under
+       .orkes-demo-modal so nothing leaks into the docs theme. */
+    .orkes-demo-modal { position: fixed; inset: 0; z-index: 1000; overflow-y: auto; background: rgba(0, 0, 0, 0.5); }
+    .orkes-demo-modal[hidden] { display: none; }
+    .orkes-demo-modal__center { display: flex; min-height: 100%; align-items: center; justify-content: center; padding: 16px; }
+    .orkes-demo-modal, .orkes-demo-modal * { box-sizing: border-box; }
+    .orkes-demo-modal__card { position: relative; display: flex; width: 100%; max-width: 800px; overflow: hidden; border-radius: 16px; background: #fff; color: #313435; font-size: 16px; line-height: 1.5; text-align: left; }
+    .orkes-demo-modal__close { position: absolute; inset: 10px 10px auto auto; z-index: 1; width: 32px; height: 32px; padding: 4px; border: 0; border-radius: 50vh; background: transparent; cursor: pointer; }
+    .orkes-demo-modal__close img { display: block; width: 24px; height: 24px; }
+    .orkes-demo-modal__content { display: flex; flex-direction: column; align-items: flex-start; width: 60%; padding: 30px; }
+    .orkes-demo-modal__title { margin: 0 0 10px; color: #313435; font-size: 32px; font-weight: 600; line-height: 1.2; }
+    .orkes-demo-modal__sub { margin: 0 0 12px; color: #333; font-size: 16px; font-weight: 300; line-height: 24px; }
+    .orkes-demo-modal__spinner { width: 40px; height: 40px; margin: 80px auto; border: 3px solid #dddcf4; border-top-color: #6c37bd; border-radius: 50%; animation: orkes-demo-spin 0.7s linear infinite; }
+    @keyframes orkes-demo-spin { to { transform: rotate(360deg); } }
+
+    #orkes-demo-form { width: 100%; }
+    #orkes-demo-form .hbspt-form { max-width: 450px; margin: 0 auto; background: #fff; }
+    #orkes-demo-form .hs-form { margin: 10px 0; padding: 0; font-size: 14px; line-height: 20px; background: #fff; }
+    #orkes-demo-form .hs-form-field { margin-bottom: 24px; }
+    #orkes-demo-form .hs-form .input { margin-right: 0; }
+    #orkes-demo-form .hs-form .hs-form-field label { display: none; }
+    #orkes-demo-form fieldset { max-width: none !important; }
+    #orkes-demo-form .hs-form input[type="text"],
+    #orkes-demo-form .hs-form input[type="email"],
+    #orkes-demo-form .hs-form input[type="tel"],
+    #orkes-demo-form .hs-form select {
+      width: 100% !important; height: 46px; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px;
+      background-color: #fff; color: #333; font: inherit; font-size: 16px; outline: none;
+    }
+    #orkes-demo-form .hs-form select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 10px center; background-size: 20px;
+    }
+    #orkes-demo-form .hs-form input::placeholder { color: #999; }
+    #orkes-demo-form .form-columns-2 { display: flex; gap: 20px; }
+    #orkes-demo-form .form-columns-2 .hs-form-field { flex: 1; width: auto !important; float: none !important; }
+    #orkes-demo-form .form-columns-1 .hs-form-field { width: 100% !important; float: none !important; }
+    #orkes-demo-form .hs-form input[type="submit"] {
+      width: 100% !important; height: 46px; border: none; border-radius: 8px; cursor: pointer;
+      background-image: linear-gradient(120deg, #835edd, #1dcaff); color: #fff; font: inherit; font-size: 18px;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    #orkes-demo-form .hs-form input[type="submit"]:hover { transform: translate(2px, -2px); box-shadow: -1px 1px 16px 1px #0003; }
+    #orkes-demo-form .hs-error-msgs { position: relative; margin: -10px 0 10px 5px; padding: 0; list-style: none; color: #f56c6c; font-size: 16px; }
+    #orkes-demo-form fieldset .hs-error-msgs { display: none; }
+    #orkes-demo-form .submitted-message { display: none !important; }
+
+    .orkes-demo-modal__dev { display: flex; flex-direction: column; align-items: center; gap: 20px; width: 100%; text-align: center; color: #333; font-size: 16px; font-weight: 300; }
+    .orkes-demo-modal__dev a {
+      display: flex; align-items: center; justify-content: center; height: 44px; padding: 0 1.5rem;
+      border: 2px solid transparent; border-radius: 6px; color: #313435; font-size: 14px; font-weight: 400; text-decoration: none;
+      background: linear-gradient(#fff, #fff) padding-box, linear-gradient(120deg, #835edd, #1dcaff) border-box;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .orkes-demo-modal__dev a:hover { transform: translate(2px, -2px); box-shadow: -1px 1px 16px 1px #0003; }
+
+    .orkes-demo-modal__done { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 100%; max-width: 450px; margin: 20px auto; padding: 20px; text-align: center; }
+    .orkes-demo-modal__done h3 { margin: 8px 0 0; color: #313435; font-size: 20px; font-weight: 600; }
+    .orkes-demo-modal__done p { margin: 0; color: #57637f; }
+    .orkes-demo-modal__done button { min-width: 120px; height: 46px; margin-top: 8px; border: none; border-radius: 8px; cursor: pointer; background-image: linear-gradient(120deg, #835edd, #1dcaff); color: #fff; font: inherit; font-size: 18px; }
+
+    .orkes-demo-modal__aside {
+      width: 40%; padding: 60px 30px; border: 1px solid #342960; border-top-right-radius: 15px; border-bottom-right-radius: 15px; color: #fff;
+      background-image: linear-gradient(#27223d, #27223d00), url("{{ 'img/demo-modal/testimonial-patch.jpg' | url }}");
+      background-position: 0 0, 50%; background-size: auto, cover;
+    }
+    .orkes-demo-modal__aside > img { margin-bottom: 20px; }
+    .orkes-demo-modal__quote { margin: 0; font-size: 16px; font-weight: 300; line-height: 30px; }
+    .orkes-demo-modal__credit { display: flex; align-items: center; gap: 10px; margin-top: 20px; }
+    .orkes-demo-modal__credit img { height: 72px; border-radius: 50vw; }
+    .orkes-demo-modal__credit div { display: flex; flex-direction: column; line-height: 26px; }
+
+    @media screen and (max-width: 991px) {
+      .orkes-demo-modal__aside { display: none; }
+      .orkes-demo-modal__card { min-width: 80vw; }
+      .orkes-demo-modal__content { width: 100%; }
+      .orkes-demo-modal__title, .orkes-demo-modal__sub { width: 100%; text-align: center; }
+      #orkes-demo-form { max-width: 500px; margin: auto; }
+    }
+    @media screen and (max-width: 420px) {
+      .orkes-demo-modal__card { min-width: 95vw; }
+      #orkes-demo-form .form-columns-2 { flex-direction: column; gap: 0; }
+    }
+  </style>
+  <script>
+    (function () {
+      var btn = document.querySelector("[data-orkes-demo]");
+      var inner = document.querySelector(".md-header__inner");
+      if (!btn || !inner) return;
+      inner.appendChild(btn);
+
+      var IMG = "{{ 'img/demo-modal/' | url }}";
+      var modal = null;
+
+      function formView() {
+        return (
+          '<div id="orkes-demo-form"><div class="orkes-demo-modal__spinner"></div></div>' +
+          '<div class="orkes-demo-modal__dev">Are you a student or working on a personal project?' +
+            '<a href="https://developer.orkescloud.com/" target="_blank" rel="noopener">Check out our developer edition here</a>' +
+          '</div>'
+        );
+      }
+      function showSubmitted() {
+        modal.querySelector(".orkes-demo-modal__title").textContent = "You\\u2019re all set!";
+        modal.querySelector(".orkes-demo-modal__sub").textContent = "Form submitted successfully";
+        modal.querySelector(".orkes-demo-modal__body").innerHTML =
+          '<div class="orkes-demo-modal__done">' +
+            '<svg width="64" height="64" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#10B981"/><path d="M9 12l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+            '<h3>Thanks for submitting a demo request</h3>' +
+            '<p>A team member will reach out shortly to schedule a time to connect.</p>' +
+            '<button type="button" data-orkes-demo-done>Got it</button>' +
+          '</div>';
+        modal.querySelector("[data-orkes-demo-done]").addEventListener("click", close);
+      }
+      function createForm() {
+        if (!window.hbspt) return;
+        window.hbspt.forms.create({
+          portalId: "20882608",
+          formId: "e0553b12-5fe4-4b27-86a8-3e619c4f6319",
+          target: "#orkes-demo-form",
+          onFormReady: function () {
+            var s = modal.querySelector(".orkes-demo-modal__spinner");
+            if (s) s.remove();
+          },
+          onFormSubmit: function ($form, data) {
+            // Same conversion signals as the orkes.io modal. GTM / LinkedIn
+            // aren't loaded on docs, so these are no-ops here unless they are.
+            var email = "";
+            (data || []).forEach(function (f) { if (f.name === "email") email = f.value; });
+            if (window.dataLayer) window.dataLayer.push({ event: "formSubmitted", leadsUserData: { email: email } });
+            if (window.lintrk) window.lintrk("track", { conversion_id: 19206580 });
+          },
+          onFormSubmitted: showSubmitted,
+        });
+      }
+      function loadHubSpot() {
+        if (window.hbspt) return createForm();
+        var s = document.createElement("script");
+        s.src = "https://js.hsforms.net/forms/embed/v2.js";
+        s.async = true;
+        s.onload = createForm;
+        s.onerror = function () {
+          var f = modal.querySelector("#orkes-demo-form");
+          if (f) f.innerHTML = '<p>Couldn\\u2019t load the form. <a href="https://orkes.io/demo">Request a demo on orkes.io</a>.</p>';
+        };
+        document.head.appendChild(s);
+      }
+      function close() {
+        // Remove the modal so the next open starts with a fresh form.
+        if (modal) modal.remove();
+        modal = null;
+        document.body.style.overflow = "";
+        btn.focus();
+      }
+      function onKey(e) {
+        if (e.key === "Escape" && modal) close();
+      }
+      function open() {
+        if (modal) return;
+        modal = document.createElement("div");
+        modal.className = "orkes-demo-modal";
+        modal.setAttribute("role", "dialog");
+        modal.setAttribute("aria-modal", "true");
+        modal.setAttribute("aria-labelledby", "orkes-demo-title");
+        modal.innerHTML =
+          '<div class="orkes-demo-modal__center">' +
+            '<div class="orkes-demo-modal__card">' +
+              '<button type="button" class="orkes-demo-modal__close" aria-label="Close"><img src="' + IMG + 'close-icon.svg" alt=""></button>' +
+              '<div class="orkes-demo-modal__content">' +
+                '<h2 id="orkes-demo-title" class="orkes-demo-modal__title">See Orkes in action</h2>' +
+                '<p class="orkes-demo-modal__sub">Book a 30 minute demo and get access to an Enterprise Free Trial</p>' +
+                '<div class="orkes-demo-modal__body" style="width:100%">' + formView() + '</div>' +
+              '</div>' +
+              '<div class="orkes-demo-modal__aside">' +
+                '<img src="' + IMG + 'foxtel-logo.svg" alt="Foxtel" loading="lazy">' +
+                '<p class="orkes-demo-modal__quote">\\u201COrkes has been instrumental in increasing developer agility, creating cost efficiencies, and building highly reliable and secure applications. We\\u2019re so impressed with the results that we are migrating more workflows from other platforms to Orkes and initiating all flows on Orkes.\\u201D</p>' +
+                '<div class="orkes-demo-modal__credit">' +
+                  '<img src="' + IMG + 'thisara.png" alt="Thisara Alawala" loading="lazy">' +
+                  '<div><span>Thisara Alawala,</span><span class="orkes-demo-modal__quote">Lead Architect, Foxtel</span></div>' +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+          '</div>';
+        document.body.appendChild(modal);
+        modal.addEventListener("click", function (e) {
+          if (e.target === modal || e.target.classList.contains("orkes-demo-modal__center")) close();
+        });
+        modal.querySelector(".orkes-demo-modal__close").addEventListener("click", close);
+        document.body.style.overflow = "hidden";
+        modal.querySelector(".orkes-demo-modal__close").focus();
+        loadHubSpot();
+      }
+      document.addEventListener("keydown", onKey);
+      btn.addEventListener("click", open);
+    })();
+  </script>
+{% endblock %}
+`;
+
 function writeOverrides() {
   copyRecursive(path.join(OSS_DOCS, "overrides"), OVERRIDES_DIR);
 
@@ -4560,6 +4783,18 @@ function writeOverrides() {
 {% block extrahead %}`,
     );
   }
+
+  // "Get a demo" header CTA (CLOUD-1314). Appended as Material's `header`
+  // block: super() keeps the theme's own header (no drift on theme upgrades),
+  // the button is server-rendered on every page (crawlable), and a small script
+  // moves it into the header bar and opens the same HubSpot demo form as the
+  // orkes.io header (portal 20882608, form e0553b12-…).
+  if (/{%\s*block header\s*%}/.test(main)) {
+    throw new Error(
+      "OSS main.html now defines {% block header %}; merge the Orkes demo CTA into it.",
+    );
+  }
+  main = main.trimEnd() + "\n\n" + ORKES_DEMO_CTA_BLOCK;
 
   write(mainPath, main);
 
