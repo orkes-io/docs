@@ -18,7 +18,6 @@
   "reference-docs/api/metadata/get-all-workflow-definitions": "reference-docs/api/metadata",
   "reference-docs/api/metadata/get-task-definition": "reference-docs/api/metadata",
   "reference-docs/api/metadata/get-workflow-definition": "reference-docs/api/metadata",
-  "reference-docs/api/metadata/import-bpmn": "reference-docs/api/metadata",
   "reference-docs/api/metadata/update-task-definitions": "reference-docs/api/metadata",
   "reference-docs/api/metadata/update-workflow-definitions": "reference-docs/api/metadata",
   "reference-docs/api/schedule/add-tags-to-schedule": "reference-docs/api/schedule",
