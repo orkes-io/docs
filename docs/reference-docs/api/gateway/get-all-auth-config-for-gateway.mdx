@@ -12,7 +12,9 @@ Retrieves all auth configuration settings for Gateway.
 
 ## Response
 
-Returns an array of gateway objects, each including its id, authentication type, application ID associated with, and more configuration details.
+* Returns an array of gateway objects, each including its id, authentication type, application ID associated with, and more configuration details.
+* Returns only the auth configs you have read access to.
+* For auth configs that use API keys, the `apiKeys` field returns each key masked as `***`. The actual key values are never returned.
 
 ## Examples
 
@@ -23,7 +25,7 @@ Returns an array of gateway objects, each including its id, authentication type,
 
 ```shell
 curl -X 'GET' \
-  'https://<YOUR-SERVER-CLUSTER>/api/gateway/config/auth' \
+  'https://<YOUR-SERVER-URL>/api/gateway/config/auth' \
   -H 'accept: application/json' \
   -H 'X-Authorization: <TOKEN>'
 ```

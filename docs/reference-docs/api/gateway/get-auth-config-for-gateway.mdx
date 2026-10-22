@@ -18,7 +18,9 @@ Retrieves the details of a specific auth config.
 
 ## Response
 
-Returns a `200 OK` response with auth config details, including its application ID associated with, and the authentication metadata.
+* Returns a `200 OK` response with auth config details, including its application ID associated with, and the authentication metadata. For auth configs that use API keys, the `apiKeys` field returns each key masked as `***`. The actual key values are never returned.
+* Returns 404 Not Found if no auth config exists with the given `id`.
+* Returns 403 Forbidden if you do not have access to the auth config.
 
 ## Examples
 

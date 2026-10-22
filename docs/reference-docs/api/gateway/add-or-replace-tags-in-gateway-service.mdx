@@ -1,0 +1,84 @@
+---
+sidebar_position: 11
+slug: "/reference-docs/api/gateway/add-or-replace-tags-in-gateway-service"
+description: "Learn how to add or replace the tags of a gateway service."
+---
+
+# Add or Replace Tags in Gateway Service
+
+**Endpoint**: `PUT /api/gateway/config/services/{serviceId}/tags`
+
+Adds or replaces the tags of a gateway service. Any existing tag that is not in the request body is removed.
+
+## Path parameters
+
+| Parameter | Description | Type | Required/ Optional |
+| --------- | ------------ | ---- | ------------------- |
+| serviceId | The unique identifier of the gateway service to add/replace tags. | string | Required. |
+
+## Request body
+
+The request body should be an array of tag objects.
+
+| Parameter | Description | Type | Required/ Optional |
+| --------- | ------------ | ---- | ------------------- |
+| key | The tag key. | string | Required. |
+| value | The tag value. | string | Required. |
+
+## Response
+
+* Returns 200 OK, indicating that the tags have been set on the gateway service.
+* Returns 404 Not Found if no service exists with the given `serviceId`.
+* Returns 403 Forbidden if you do not have permission to update the service.
+
+## Examples
+
+<details markdown="1">
+<summary>Add a tag to a gateway service</summary>
+
+**Request**
+
+```shell
+curl -X 'PUT' \
+  'https://<YOUR-SERVER-URL>/api/gateway/config/services/feedback-service/tags' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  {
+    "key": "docs",
+    "value": "test"
+  }
+]'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the tag has been added to the gateway service.
+
+</details>
+
+<details markdown="1">
+<summary>Replace a tag in a gateway service</summary>
+
+**Request**
+
+```shell
+curl -X 'PUT' \
+  'https://<YOUR-SERVER-URL>/api/gateway/config/services/feedback-service/tags' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  {
+    "key": "blogs",
+    "value": "test"
+  }
+]'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the tag has been replaced in the gateway service.
+
+</details>

@@ -17,10 +17,6 @@ Here’s an overview of how to expose workflows as APIs in Conductor:
 4. Define an API service.
 5. Define and test routes.
 
-:::tip 5-minute path
-Create the workflow, create an application with Execute permission on it, configure authentication, define a service with a base path and auth config, then add a route mapped to the workflow and test it.
-:::
-
 ## Step 1: Create workflows to define the logic for each endpoint
 
 API Gateway exposes workflows as APIs. Before configuring the endpoints, create the required workflows for each endpoint’s logic. 
@@ -40,6 +36,10 @@ You can [create workflows](https://orkes.io/content/developer-guides/workflows) 
 5. In the **Workflow** tab, select the workflow created in [Step 1](/content/developer-guides/api-gateway#step-1-create-workflows-to-define-the-logic-for-each-endpoint) and enable **EXECUTE** permission.
 
 6. Save the application.
+
+:::note APIs
+Manage applications programmatically with the [Applications API](/content/reference-docs/api/applications).
+:::
 
 The next step is to create an authentication setting for the API service.
 
@@ -65,6 +65,10 @@ Authentication settings control how clients are authorized to access a service. 
 <ol start="4">
 <li>Select <strong>Save</strong>.</li>
 </ol>
+
+:::note APIs
+Create an authentication setting programmatically with the [Create Auth Config for Gateway API](/content/reference-docs/api/gateway/create-auth-config-for-gateway).
+:::
 
 ## Step 4: Define an API service
 
@@ -175,6 +179,10 @@ A **service** represents a logical grouping of API endpoints (called **routes**)
 <ol start="4">
 <li>Select <strong>Save</strong>.</li>
 </ol>
+
+:::note APIs
+Create a service programmatically with the [Create Gateway Service API](/content/reference-docs/api/gateway/create-gateway-service).
+:::
 
 ## Step 5: Define and test a route
 
@@ -410,6 +418,10 @@ Each endpoint in a service must be defined as a route, which is mapped to the Co
 <li>Select <strong>Save</strong>.</li>
 </ol>
 
+:::note APIs
+Create a route programmatically with the [Create Route in Gateway Service API](/content/reference-docs/api/gateway/create-route-in-gateway-service).
+:::
+
 ### Test a route
 
 You can test route behavior directly from the Conductor UI before exposing it as an API.
@@ -446,18 +458,6 @@ You can test route behavior directly from the Conductor UI before exposing it as
 
 1. Go to **APIs** > **Services**, and select the service. 
 2. In **Metadata & Resources**, select **View API documentation**.
-
-## Production notes
-
-- Restrict **Allowed Origins** to known domains instead of using `*`, since a permissive CORS policy lets any origin call the endpoint from a browser.
-- Use **API Key** authentication for production services. **No Authentication** makes the endpoint publicly callable by anyone with the URL.
-- Pin the route's **Version** once the API is in production, so a new workflow version doesn't silently change API behavior.
-- Set a **Rate Limit Key** and **Concurrent Execution Limit** on routes that handle high or unpredictable traffic to protect the underlying workflow from overload.
-- Re-test pre-request and post-response scripts and schemas after any change, since a malformed script or schema causes valid requests to fail.
-
-## Examples
-
-See an example of a [feedback service exposing a feedback workflow as a public API](/content/tutorials/expose-feedback-workflow-as-api).
 
 ## Monitor gateway metrics
 
@@ -498,3 +498,16 @@ The **Errors** tab visualizes failure trends and error types.
 - **Error Breakdown**: Types of errors returned (e.g., 400 Bad Request, 500 Internal Server Error) and their frequency.
 
 Hover over the graph to inspect error events by timestamp. Use this to correlate API failures with recent deployments or configuration changes.
+
+:::note APIs
+Retrieve metrics programmatically with the [Get Gateway Service Metrics API](/content/reference-docs/api/gateway/get-gateway-service-metrics).
+:::
+
+## Examples
+
+<details markdown="1">
+<summary>Feedback service exposing a feedback workflow as a public API</summary>
+
+See an example of a [feedback service exposing a feedback workflow as a public API](/content/tutorials/expose-feedback-workflow-as-api).
+
+</details>

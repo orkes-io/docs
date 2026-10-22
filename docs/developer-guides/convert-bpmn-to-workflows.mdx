@@ -11,33 +11,31 @@ description: "Learn how to convert BPMN files into Orkes Conductor workflows. Up
 
 In Orkes Conductor, you can quickly convert BPMN (Business Process Model and Notation) files into workflow definitions. This simplifies the migration from BPMN-based systems by supporting standard XML and BPMN formats. Whether you’re transitioning from legacy tools or starting with predefined processes, the BPMN importer enables a fast, code-free transition into the Conductor ecosystem.
 
-:::tip 5-minute path
-Import the BPMN file, inspect the generated workflow JSON, normalize task reference names, add retries and timeouts, then test the workflow with representative input.
-:::
+## When to use it
+
+Use the importer when you are migrating from a BPMN-based tool, or when you already have BPMN models and want Conductor workflows as a starting point. Treat the result as a first draft: it converts the supported BPMN structure, so review the generated workflow before running it.
 
 ## Importing BPMN files
 
-**To import a BPMN file:**
+Use the [Import BPMN File](/content/reference-docs/api/metadata/import-bpmn) API (`POST /api/metadata/workflow-importer/import-bpm`) or go to **Definitions** > **Workflow**, select **Import BPMN**.
 
-1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor cluster.
-2. Select the **⏷** icon next to **+ Define workflow**.
-3. From the dropdown menu, select **Import BPMN**.
-4. Import files using one of the following methods:
-    - **Select file**: Upload a .bpmn file from your local device.
-    - **Drag and drop**: Drop the BPMN files directly into the designated area in the UI.
-    - **Code**: Paste the raw XML content of your BPMN directly in the code tab.
-5. The **Workflow Name** field is pre-filled with the file name by default. Edit it if you want to use a different name.
-6. Toggle **Overwrite workflow** on to replace an existing workflow definition with the same name.  Disable this option if you want to prevent overwrites.
-7. Select **Import**.
+Import files using one of the following methods:
+
+- **Select file**: Upload a `.bpmn` file from your local device.
+- **Drag and drop**: Drop the BPMN files directly into the designated area in the UI.
+- **Code**: Paste the raw XML content of your BPMN directly in the code tab.
+
+The **Workflow Name** is pre-filled from the file name. Edit it if you want a different name. **Overwrite workflow** is on by default, so an existing workflow with the same name is replaced. Turn it off to prevent overwriting. Then select **Import**.
 
 The BPMN file is converted into workflow definitions in Orkes Conductor. Each process defined in the imported BPMN file is converted into an equivalent Orkes Conductor workflow definition. 
 
-After importing, the newly created workflows appear in **Definitions** > **Workflows**. 
+After importing, the newly created workflows appear in the workflow definitions list.
 
 The import will fail with an error if the BPMN file:
 
 - Contains a circular reference
 - Has multiple start events
+- Uses sequential lanes, which are not supported
 - Is incomplete or malformed
 
 ## Validate the generated workflow
@@ -71,11 +69,3 @@ Check the following after every BPMN import:
 - Retry, timeout, and compensation behavior. Register task definitions for worker tasks, and add `retryCount`, `retryLogic`, `timeoutSeconds`, `responseTimeoutSeconds`, and `pollTimeoutSeconds` where needed.
 - Schemas, if workflow or task input contracts must be validated.
 - A failure workflow, if the process needs compensation.
-
-## Production notes
-
-- BPMN import is a migration tool, not a replacement for reviewing the generated workflow contract.
-- Imported workflows should go through the same testing and versioning process as hand-authored workflows.
-- Keep existing URLs and external callers pinned to known workflow versions while migrating.
-- Use [Versioning Workflows](/content/developer-guides/versioning-workflows) and [Executing Workflows](/content/developer-guides/running-workflows) before moving traffic.
-

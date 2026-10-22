@@ -18,10 +18,6 @@ Here’s an overview of how to expose workflows as MCP services in Conductor:
 5. Define and test routes.
 6. Connect the service with AI agents as an MCP tool.
 
-:::tip 5-minute path
-Create the workflow, create an application with Execute permission on it, configure authentication, define a service, add a route with a clear tool description, test it, then connect the MCP endpoint to your AI agent.
-:::
-
 ## Step 1: Create workflows that define tool behavior
 
 The MCP Gateway allows you to expose Conductor workflows as APIs that can be called by an MCP tool. Before defining any MCP routes, ensure that the workflows implementing your endpoint logic are already created.
@@ -41,6 +37,10 @@ You can [create workflows](https://orkes.io/content/developer-guides/workflows) 
 5. In the **Workflow** tab, select the workflow created in [Step 1](/content/developer-guides/mcp-gateway#step-1-create-workflows-that-define-tool-behavior) and enable **EXECUTE** permission.
 
 6. Save the application.
+
+:::note APIs
+Manage applications programmatically with the [Applications API](/content/reference-docs/api/applications).
+:::
 
 ## Step 3: Configure authentication settings
 
@@ -64,6 +64,10 @@ Authentication controls how external agent systems connect to your MCP tools. Yo
 <ol start="4">
 <li>Select <strong>Save</strong>.</li>
 </ol>
+
+:::note APIs
+Create an authentication setting programmatically with the [Create Auth Config for Gateway API](/content/reference-docs/api/gateway/create-auth-config-for-gateway).
+:::
 
 ## Step 4: Define an MCP service
 
@@ -174,6 +178,10 @@ A **service** is a logical container for MCP endpoints, referred to as **routes*
 <ol start="4">
 <li>Select <strong>Save</strong>.</li>
 </ol>
+
+:::note APIs
+Create an MCP service programmatically with the [Create Gateway Service API](/content/reference-docs/api/gateway/create-gateway-service).
+:::
 
 ## Step 5: Define and test a route
 
@@ -409,6 +417,10 @@ Each endpoint in a service is defined as a route, and every route maps to a Cond
 <li>Select <strong>Save</strong>.</li>
 </ol>
 
+:::note APIs
+Create a route programmatically with the [Create Route in Gateway Service API](/content/reference-docs/api/gateway/create-route-in-gateway-service).
+:::
+
 ### Test a route
 
 You can test route behavior directly from the Conductor UI before exposing it as an MCP tool.
@@ -477,18 +489,6 @@ Each route in the service appears as an MCP tool. You can select a tool, provide
 
 Each tool call triggers the workflow mapped to that route. This validation step helps ensure that your MCP service is correctly configured before connecting it to an AI agent.
 
-## Production notes
-
-- Write a specific, detailed route **Description**, since AI agents rely on it to decide when and how to invoke the tool.
-- Use **API Key** authentication for production services. **No Authentication** makes the endpoint callable by anyone with the URL.
-- Pin the route's **Version** once agents are using the tool, so a new workflow version doesn't silently change tool behavior.
-- Set a **Rate Limit Key**, **Concurrent Execution Limit**, and **Timeout** on routes, since agents may call or retry tools more aggressively than typical API clients.
-- Re-verify the tool in a workbench (such as Orkes MCP Workbench) after any route change, before relying on it in a live agent.
-
-## Examples
-
-See an example of a [ticket service called an MCP tool](/content/tutorials/expose-ticket-service-using-mcp-gateway).
-
 ## Monitor gateway metrics
 
 Orkes Conductor's API and MCP Gateways provide built-in metrics at both service and route levels. These metrics help you monitor performance, identify usage trends, and troubleshoot issues in real time.
@@ -528,3 +528,16 @@ The **Errors** tab visualizes failure trends and error types.
 - **Error Breakdown**: Types of errors returned (e.g., 400 Bad Request, 500 Internal Server Error) and their frequency.
 
 Hover over the graph to inspect error events by timestamp. Use this to correlate API failures with recent deployments or configuration changes.
+
+:::note APIs
+Retrieve metrics programmatically with the [Get Gateway Service Metrics API](/content/reference-docs/api/gateway/get-gateway-service-metrics).
+:::
+
+## Examples
+
+<details markdown="1">
+<summary>Ticket service called as an MCP tool</summary>
+
+See an example of a [ticket service called an MCP tool](/content/tutorials/expose-ticket-service-using-mcp-gateway).
+
+</details>
