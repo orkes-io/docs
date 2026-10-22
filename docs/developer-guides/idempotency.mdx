@@ -8,11 +8,7 @@ import TabItem from "@theme/TabItem";
 
 # Idempotency in Conductor Workflows
 
-Idempotency is the property of an operation where executing it multiple times produces the same result as executing it once. In distributed systems, network failures, retries, and duplicate events are inevitable. Without idempotency controls, these conditions can cause workflows to run multiple times for the same logical event, leading to duplicate side effects such as double-charging a customer, creating redundant records, or triggering conflicting downstream processes.
-
-:::tip 5-minute path
-Choose a stable business key, pass it as the workflow idempotency key, choose a conflict strategy, then test two identical starts and verify the second request behaves as expected.
-:::
+**Idempotency** is the property of an operation where executing it multiple times produces the same result as executing it once. In distributed systems, network failures, retries, and duplicate events are inevitable. Without idempotency controls, these conditions can cause workflows to run multiple times for the same logical event, leading to duplicate side effects such as double-charging a customer, creating redundant records, or triggering conflicting downstream processes.
 
 Orkes Conductor provides built-in idempotency support at multiple layers:
 
@@ -50,7 +46,7 @@ Conductor supports three idempotency strategies:
 
 ### Via the Start Workflow API
 
-Use the [Start Workflow API](/content/reference-docs/api/workflow/start-workflow-execution) and pass the `idempotencyKey` and `idempotencyStrategy` as header parameters: 
+Use the [Start Workflow API](/content/reference-docs/api/workflow/start-workflow-execution) and pass the idempotency key in the `X-Idempotency-key` header and the strategy in the `X-on-conflict` header: 
 
 ```bash
 curl -X 'POST' \
@@ -149,18 +145,30 @@ request := &model.StartWorkflowRequest{
 workflowId, err := executor.StartWorkflow(request)
 ```
 </TabItem>
+
+<TabItem value="Ruby" label="Ruby">
+
+[Ruby SDK](https://github.com/conductor-oss/ruby-sdk)
+
+```ruby
+request = Conductor::Http::Models::StartWorkflowRequest.new(
+  name: 'order-processing-workflow',
+  version: 1,
+  idempotency_key: 'order-42-attempt-1',
+  idempotency_strategy: Conductor::Http::Models::StartWorkflowRequest::IdempotencyStrategy::RETURN_EXISTING
+)
+
+workflow_id = workflow_executor.start_workflow(request)
+```
+</TabItem>
 </Tabs>
 
 ### Via the Conductor UI
 
-[When running a workflow from the UI](/content/how-to-videos/run-workflow):
+Go to **Definitions** > **Workflow**, select **Run Workflow** at the top right, enter the input parameters, and set the following:
 
-1. Go to **Executions** > **Workflow** or **Definitions** > **Workflow**.
-2. Select **Run Workflow**.
-3. Enter your input parameters.
-4. In **Idempotency key**, enter a unique key value.
-5. Select an **Idempotency strategy**.
-6. Select **Run Workflow**.
+- **Idempotency key**: A unique key that identifies this run.
+- **Idempotency strategy**: How Conductor handles a duplicate request with the same key. Select `FAIL`, `RETURN_EXISTING`, or `FAIL_ON_RUNNING`.
 
 ### Via the Start Workflow task
 
@@ -227,7 +235,7 @@ When defining a [workflow schedule](/content/developer-guides/scheduling-workflo
      "place": "seattle"
    },
    "idempotencyKey": "order-123",
-   "idempotencyStrategy": "RETURN_EXISTING"
+   "idempotencyStrategy": "FAIL_ON_RUNNING"
  },
  "zoneId": "UTC"
 }
@@ -320,7 +328,7 @@ This is useful for verifying whether a duplicate request was correctly deduplica
 | ---------|----------------------|
 | Payment processing: Charge exactly once | FAIL |
 | REST client retries on timeout: Return same result | RETURN_EXISTING | 
-| Event-driven trigger with at-least-once delivery | RETURN_EXISTING or FAIL_ON_RUNNING | 
+| Event-driven trigger with at-least-once delivery | RETURN_EXISTING | 
 | Scheduled job, no concurrency, but re-run after it finishes is OK | FAIL_ON_RUNNING | 
 
 ## Best practices
