@@ -4165,8 +4165,21 @@ const ORKES_DEMO_CTA_BLOCK = `{% block header %}
     }
     .md-header__inner .orkes-demo-cta:hover { background: #f6f3fd; }
     [data-md-color-scheme="slate"] .md-header__inner .orkes-demo-cta { background: transparent; color: #e6defa; }
+    /* Phones (Material's <720px breakpoint) — CLOUD-1330: the header row must
+       fit the viewport (no horizontal scroll). Drop the header Slack/YouTube
+       icons (they're in the footer), drop the empty title slot's margins, and
+       use a compact button that can shrink rather than overflow. */
     @media screen and (max-width: 44.984375em) {
-      .md-header__inner .orkes-demo-cta { height: 32px; margin-left: 0.5rem; padding: 0 10px; font-size: 13px; }
+      .md-header__inner .md-header__social { display: none; }
+      /* Logo, menu and search buttons: no margins, so the full label fits. */
+      .md-header__inner .md-header__button { margin: 0; }
+      /* Keep the title slot as a flexible spacer, but hide its text: on a phone
+         there's only room for a truncated "A…". */
+      .md-header__inner .md-header__title { margin-left: 0; margin-right: 0; visibility: hidden; }
+      .md-header__inner .orkes-demo-cta {
+        flex-shrink: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis;
+        height: 32px; margin-left: 0.25rem; padding: 0 8px; font-size: 13px;
+      }
     }
 
     /* Modal — ported from the orkes.io demo modal (marketing-site
