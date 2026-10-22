@@ -4171,6 +4171,9 @@ const ORKES_DEMO_CTA_BLOCK = `{% block header %}
        use a compact button that can shrink rather than overflow. */
     @media screen and (max-width: 44.984375em) {
       .md-header__inner .md-header__social { display: none; }
+      /* No dark-mode toggle in the phone header (CLOUD-1331) — wasted space.
+         Desktop/tablet keep it; the saved scheme still applies on phones. */
+      .md-header__inner [data-md-component="palette"] { display: none; }
       /* Logo, menu and search buttons: no margins, so the full label fits. */
       .md-header__inner .md-header__button { margin: 0; }
       /* Keep the title slot as a flexible spacer, but hide its text: on a phone
