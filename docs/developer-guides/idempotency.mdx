@@ -243,7 +243,7 @@ When defining a [workflow schedule](/content/developer-guides/scheduling-workflo
 
 ### Via Webhooks
 
-Configure a webhook to [use a workflow input variable as the idempotency key](/content/developer-guides/webhook-integration#step-2-create-a-webhook-in-orkes-conductor):
+Configure a webhook to use a workflow input variable as the idempotency key:
 
 1. Go to **Definitions** > **Webhook** and select **+ New webhook**.
 2. Configure the source platform and headers.
@@ -314,9 +314,9 @@ Avoid using the task attempt ID alone for irreversible side effects. A retry cre
 
 ## Searching executions by idempotency key
 
-You can use the idempotency key to look up past workflow executions from the Conductor UI:
+You can use the idempotency key to look up past workflow or agent executions from the Conductor UI:
 
-1. Go to **Executions** > **Workflow**.
+1. Go to **Executions** > **Workflow** or **Executions** > **Agents**.
 2. In the search filters, enter your key in the **Idempotency key** field.
 3. Conductor returns all matching executions.
 
