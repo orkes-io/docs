@@ -7,10 +7,6 @@ description: "Learn how task output caching stores task results based on input p
 
 You can cache task outputs to reuse them in subsequent workflow executions. When you enable caching, the system stores the task output for a specified duration and reuses it when the same task runs again with matching input parameters. This feature can be configured in the **task configuration**.
 
-:::tip 5-minute path
-Add `cacheConfig.key` and `cacheConfig.ttlInSecond` to the task configuration. Build the key only from task input values that determine the output.
-:::
-
 ## When to use caching
 
 Good fits:
@@ -46,16 +42,26 @@ Caching is available for the following task types:
 - [Yield](/content/reference-docs/operators/yield)
 - [LLM Text Complete](../reference-docs/ai-tasks/llm-text-complete)
 - [LLM Generate Embeddings](../reference-docs/ai-tasks/llm-generate-embeddings)
-- [LLM Store Embeddings](../reference-docs/ai-tasks)
+- [LLM Store Embeddings](../reference-docs/ai-tasks/llm-store-embeddings)
 - [LLM Get Embeddings](../reference-docs/ai-tasks/llm-get-embeddings)
+- [LLM Search Embeddings](../reference-docs/ai-tasks/llm-search-embeddings)
 - [LLM Index Document](../reference-docs/ai-tasks/llm-index-document)
 - [Get Document](../reference-docs/ai-tasks/llm-get-document)
 - [LLM Index Text](../reference-docs/ai-tasks/llm-index-text)
 - [LLM Search Index](../reference-docs/ai-tasks/llm-search-index)
-- [LLM Chat Complete](../reference-docs/ai-tasks)
+- [LLM Chat Complete](../reference-docs/ai-tasks/llm-chat-complete)
 - [Chunk Text](../reference-docs/ai-tasks/chunk-text)
+- [Agent](../reference-docs/ai-tasks/agent)
+- [Get Agent Card](../reference-docs/ai-tasks/get-agent-card)
+- [Cancel Agent](../reference-docs/ai-tasks/cancel-agent)
+- [Generate Image](../reference-docs/ai-tasks/generate-image)
+- [Generate Audio](../reference-docs/ai-tasks/generate-audio)
+- [Generate Video](../reference-docs/ai-tasks/generate-video)
+- [Generate PDF](../reference-docs/ai-tasks/generate-pdf)
+- [List MCP Tools](../reference-docs/ai-tasks/list-mcp-tools)
+- [Call MCP Tool](../reference-docs/ai-tasks/call-mcp-tool)
 
-## Parameters
+## Configuration
 
 Configure the following parameters to enable task caching in your task configuration.
 
@@ -64,7 +70,7 @@ Configure the following parameters to enable task caching in your task configura
 | cacheConfig.**key**        | The cache key is a unique identifier for the cached output and must be constructed exclusively from the task’s input parameters. <br/><br/> It can be a string concatenation that contains the task’s input keys, such as `${uri}-${method}` or `re_${uri}_${method}`. | Required.          |
 | cacheConfig.**ttlInSecond**| The time to live in seconds, which is the duration for the output to be cached.                                                                                                                                                                                        | Required.          |
 
-## Configuration
+If `ttlInSecond` is 0 or less, or `key` is blank, the task runs normally and its output is not cached. No error is returned.
 
 To configure caching, add the `cacheConfig` object to your task configuration:
 
@@ -82,10 +88,10 @@ When designing `cacheConfig.key`, include every task input value that can affect
 
 | Key design | Example | Outcome |
 | ---------- | ------- | ------- |
-| Good — includes all inputs that affect the output | `"key": "${url}-${mediaType}-${workflow.input.tenantId}"` | Distinguishes cached results correctly across `url`, `mediaType`, and `tenantId` |
+| Good — includes all inputs that affect the output | `"key": "${url}-${mediaType}-${tenantId}"` | Distinguishes cached results correctly across `url`, `mediaType`, and `tenantId` |
 | Risky — omits inputs that affect the output | `"key": "${url}"` | Ignores `mediaType` and `tenantId`, so it can return the wrong cached result if those values differ between executions |
 
-## Using workflow input in a cache key
+### Using workflow input in a cache key
 
 To reference a workflow input in `cacheConfig.key`, first map it to a task input parameter, then reference that task input parameter in the key. The key itself can only reference the task's input parameters, not `workflow.input` directly.
 
@@ -114,17 +120,20 @@ Before a task is scheduled, the server checks if there is cached output for the 
 
 If no cached output is found, the task is scheduled as usual. When the task completes successfully, the output is cached under the specified cache key for the specified duration.
 
+## Cache expiry
+
+The output stays cached for the number of seconds set in `cacheConfig.ttlInSecond`. When the TTL ends, the cached output is discarded and the next run executes the task fresh.
+
+## Clear cache
+
+To remove all cached outputs for a task, call the Clear task execution cache API (`POST /api/admin/cache/clear/{taskDefName}`) with the task definition name. This requires admin permission. The next execution of the task runs fresh and caches its output again.
+
 ## Example
 
 <details markdown="1">
 <summary>Cache hit</summary>
 
-Run the following workflow twice with the same input. The second run returns the cached result.
-
-**To create and run workflow from Conductor UI:**
-
-1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor UI.
-2. Select **+ Define workflow** and paste the following code in the **Code** tab:
+Create the following workflow in **Definitions** > **Workflow**, then run it twice with the same input. The second run returns the cached result.
 
 ```json
 {
@@ -156,7 +165,7 @@ Run the following workflow twice with the same input. The second run returns the
 }
 ```
 
-3. Go to the **Run** tab and run the workflow using the following input:
+Go to the **Run** tab and run the workflow using the following input:
 
 ```json
 {
@@ -195,12 +204,7 @@ Each unique cache key has its own independent cache entry. Running with `env: "p
 <details markdown="1">
 <summary>Cache expiry (TTL)</summary>
 
-When the TTL expires, the cached result is discarded and the next run executes the task fresh.
-
-**To create and run workflow from Conductor UI:**
-
-1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor UI.
-2. Select **+ Define workflow** and paste the following code in the **Code** tab:
+When the TTL expires, the cached result is discarded and the next run executes the task fresh. Create the following workflow in **Definitions** > **Workflow**:
 
 ```json
 {
@@ -231,8 +235,8 @@ When the TTL expires, the cached result is discarded and the next run executes t
 }
 ```
 
-3. Run the workflow once and then a second time immediately.
-4. Wait for 30 seconds and run for a third time.
+1. Run the workflow once and then a second time immediately.
+2. Wait for 30 seconds and run for a third time.
 
 **For the first execution**: Task executes the API call. The result is cached for 30 seconds, and the `pollCount` is 1.
 
@@ -251,12 +255,7 @@ When the TTL expires, the cached result is discarded and the next run executes t
 <details markdown="1">
 <summary>Cache output using task input parameters</summary>
 
-Cache the task output based on a value passed directly in the task's `inputParameters`. Here, the `method` field is used as part of the cache key, so GET and POST requests are cached separately.
-
-**To create and run workflow from Conductor UI:**
-
-1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor UI.
-2. Select **+ Define workflow** and paste the following code in the **Code** tab:
+Cache the task output based on a value passed directly in the task's `inputParameters`. Here, the `method` field is used as part of the cache key, so GET and POST requests are cached separately. Create the following workflow in **Definitions** > **Workflow**:
 
 ```json
 {
@@ -287,7 +286,7 @@ Cache the task output based on a value passed directly in the task's `inputParam
 }
 ```
 
-3. Go to the **Run** tab and run the workflow once and then a second time immediately using the following input:
+Go to the **Run** tab and run the workflow once and then a second time immediately using the following input:
 
 ```json
 {
@@ -310,10 +309,7 @@ Running with `"method": "POST"` computes the key `api_POST` — a cache miss. GE
 <details markdown="1">
 <summary>Cache output using workflow inputs</summary>
 
-Cache the task output based on a workflow-level input. Each unique input value gets its own cache entry.
-
-1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor UI.
-2. Select **+ Define workflow** and paste the following code in the **Code** tab:
+Cache the task output based on a workflow-level input. Each unique input value gets its own cache entry. Create the following workflow in **Definitions** > **Workflow**:
 
 ```json
 {
@@ -345,7 +341,7 @@ Cache the task output based on a workflow-level input. Each unique input value g
 }
 ```
 
-3. Go to the **Run** tab and run the workflow once and then a second time immediately using the following input:
+Go to the **Run** tab and run the workflow once and then a second time immediately using the following input:
 
 ```json
 {
@@ -368,10 +364,7 @@ Running with another workflow input is a cache miss. Each user ID has its own in
 <details markdown="1">
 <summary>Cache output using variables from previous tasks</summary>
 
-Cache the task output based on a value set by an earlier task in the workflow. The [Set Variable](/content/reference-docs/operators/set-variable) task captures the input and stores it as a workflow variable, which is then referenced in the cache key.
-
-1. Go to **Definitions** > **Workflow** from the left navigation menu on your Conductor UI.
-2. Select **+ Define workflow** and paste the following code in the **Code** tab:
+Cache the task output based on a value set by an earlier task in the workflow. The [Set Variable](/content/reference-docs/operators/set-variable) task captures the input and stores it as a workflow variable, which is then referenced in the cache key. Create the following workflow in **Definitions** > **Workflow**:
 
 ```json
 {
@@ -411,7 +404,7 @@ Cache the task output based on a value set by an earlier task in the workflow. T
 }
 ```
 
-3. Go to the **Run** tab and run the workflow once and then a second time immediately using the following input:
+Go to the **Run** tab and run the workflow once and then a second time immediately using the following input:
 
 ```json
 {
@@ -430,11 +423,3 @@ Cache the task output based on a value set by an earlier task in the workflow. T
 Running with another workflow input is a cache miss. Each region has its own independent cache entry.
 
 </details>
-
-## Production notes
-
-- Keep TTL short until you know the data freshness requirements.
-- Include tenant, user, region, language, model, and version fields when they affect output.
-- Do not cache mutating requests.
-- Monitor cache hit rate and stale-data incidents.
-- Treat cache key changes as behavior changes and test them with representative input.
