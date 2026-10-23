@@ -8,11 +8,13 @@ import TabItem from "@theme/TabItem";
 
 # Masking Parameters
 
-Masking prevents sensitive values from being exposed in workflow execution payloads, task inputs, task outputs, logs, and archived execution data. Use it for tokens, API keys, credentials, authorization headers, customer identifiers, or any field that should not be visible during debugging.
+**Masking** prevents sensitive values from being exposed in workflow execution payloads, task inputs, task outputs, logs, and archived execution data. Use it for tokens, API keys, credentials, authorization headers, customer identifiers, or any field that should not be visible during debugging.
 
-:::tip 5-minute path
-Store long-lived credentials as secrets, reference them with `${workflow.secrets.<secretName>}`, and use `_masked`, `_secrets`, or `maskedFields` for sensitive runtime values.
-:::
+You can mask data in a workflow definition using the following parameters:
+
+- **`_secrets`**
+- **`_masked`**
+- **`maskedFields`**
 
 ## Masking sensitive data
 
@@ -127,9 +129,7 @@ The system masks fields that reference workflow secrets during execution. To ref
 ${workflow.secrets.<secretName>}
 ```
 
-where `<secretName>` is the name of your secret.
-
-When the system resolves these expressions, it replaces their values with `***` anywhere they appear, including workflow inputs, task inputs, task outputs, and the execution JSON.
+where `<secretName>` is the name of your secret. When the system resolves these expressions, it replaces their values with `***` anywhere they appear, including workflow inputs, task inputs, task outputs, and the execution JSON. Secret references are not resolved in a workflow's output parameters.
 
 For example,
 
@@ -166,7 +166,7 @@ For long-running or restartable workflows, prefer workflow secrets for durable c
 <details markdown="1">
 <summary>Using _secrets parameter</summary>
 
-Consider a workflow with a task having an input masked using `_secrets`:
+Consider a workflow with an Inline task that has an input masked using `_secrets`:
 
 ```json
 "inputParameters": {
@@ -183,20 +183,33 @@ Here's the complete workflow definition:
   "version": 1,
   "tasks": [
     {
-      "name": "simple",
-      "taskReferenceName": "simple_ref",
+      "name": "inline_check",
+      "taskReferenceName": "inline_check_ref",
+      "type": "INLINE",
       "inputParameters": {
-        "_secrets": "${workflow.input.somedata}"
-      },
-      "type": "SIMPLE"
+        "evaluatorType": "graaljs",
+        "_secrets": "${workflow.input.somedata}",
+        "expression": "(function(){ return { valueLength: String($._secrets).length }; })()"
+      }
     }
   ],
   "inputParameters": ["somedata"],
+  "outputParameters": {
+    "valueLength": "${inline_check_ref.output.result.valueLength}"
+  },
   "schemaVersion": 2
 }
 ```
 
-When you run the workflow, the system masks the parameters in the execution results within the task input and the workflow input.
+Start the workflow with this input:
+
+```json
+{
+  "somedata": "my-sensitive-value"
+}
+```
+
+When you run the workflow, the system masks the parameters in the execution results within the task input and the workflow input. The Inline task still receives the original value. In this example, it returns the length of the value (18) to show that.
 
 ![Masked inputs using the _secrets parameter](/content/img/masked-inputs-using-secrets-parameter.png)
 
@@ -205,7 +218,7 @@ When you run the workflow, the system masks the parameters in the execution resu
 <details markdown="1">
 <summary>Using _masked parameter</summary>
 
-Consider a workflow with a task having an input parameter masked using `_masked`:
+Consider a workflow with an Inline task that has an input masked using `_masked`:
 
 ```json
 "inputParameters": {
@@ -222,20 +235,33 @@ Here's the complete workflow definition:
   "version": 1,
   "tasks": [
     {
-      "name": "simple",
-      "taskReferenceName": "simple_ref",
+      "name": "inline_check",
+      "taskReferenceName": "inline_check_ref",
+      "type": "INLINE",
       "inputParameters": {
-        "_masked": "${workflow.input.somedata}"
-      },
-      "type": "SIMPLE"
+        "evaluatorType": "graaljs",
+        "_masked": "${workflow.input.somedata}",
+        "expression": "(function(){ return { valueLength: String($._masked).length }; })()"
+      }
     }
   ],
   "inputParameters": ["somedata"],
+  "outputParameters": {
+    "valueLength": "${inline_check_ref.output.result.valueLength}"
+  },
   "schemaVersion": 2
 }
 ```
 
-When you run the workflow, the system masks the parameters in the execution results within the task input and the workflow input.
+Start the workflow with this input:
+
+```json
+{
+  "somedata": "my-masked-value"
+}
+```
+
+When you run the workflow, the system masks the parameters in the execution results within the task input and the workflow input. The Inline task still receives the original value. In this example, it returns the length of the value (15) to show that.
 
 ![Masked inputs using the masked parameter](/content/img/masked-inputs-using-masked-parameter.png)
 
@@ -300,7 +326,7 @@ When you run the execution, `input1` and `output1` are masked.
 <details markdown="1">
 <summary>Passing sensitive data between tasks</summary>
 
-Consider a workflow where a sensitive value from one task's output needs to be passed to another task. To ensure the data remains masked, nest the parameter under `_secrets` in the receiving task's input parameters.
+Consider a workflow where a sensitive value from one task's output needs to be passed to another task. To ensure the data remains masked, nest the parameter under `_secrets` in the receiving task's input parameters. In this example, the first Inline task generates a token and the second one receives it.
 
 ```json
 {
@@ -309,21 +335,30 @@ Consider a workflow where a sensitive value from one task's output needs to be p
   "version": 1,
   "tasks": [
     {
-      "name": "simple-demo",
-      "taskReferenceName": "simple_demo_ref",
-      "type": "SIMPLE"
+      "name": "generate_token",
+      "taskReferenceName": "generate_token_ref",
+      "type": "INLINE",
+      "inputParameters": {
+        "evaluatorType": "graaljs",
+        "expression": "(function(){ return { token: 'tok-' + 'abc123' }; })()"
+      }
     },
     {
-      "name": "simple",
-      "taskReferenceName": "simple_ref",
+      "name": "use_token",
+      "taskReferenceName": "use_token_ref",
+      "type": "INLINE",
       "inputParameters": {
+        "evaluatorType": "graaljs",
         "_secrets": {
-          "parameter": "${simple_demo_ref.output.result}"
-        }
-      },
-      "type": "SIMPLE"
+          "parameter": "${generate_token_ref.output.result.token}"
+        },
+        "expression": "(function(){ return { valueLength: String($._secrets.parameter).length }; })()"
+      }
     }
   ],
+  "outputParameters": {
+    "valueLength": "${use_token_ref.output.result.valueLength}"
+  },
   "schemaVersion": 2
 }
 ```
@@ -332,7 +367,7 @@ Consider a workflow where a sensitive value from one task's output needs to be p
 You can also use the `_masked` parameter to mask the data in this scenario.
 :::
 
-When you run this workflow, the system masks the sensitive data from `simple_demo_ref.output.result` in the execution results because it is nested under `_secrets` as the input parameter to the second task.
+When you run this workflow, the system masks the sensitive data from `generate_token_ref.output.result.token` in the execution results because it is nested under `_secrets` as the input parameter to the second task. The second task still receives the original value, and it returns the length of the value (10) to show that.
 
 ![Passing data between tasks](/content/img/passing-data-between-tasks-output.png)
 
