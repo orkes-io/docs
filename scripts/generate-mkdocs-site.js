@@ -3635,6 +3635,7 @@ function ossNavTabs() {
     d("devguide/concepts/agents", "Agent Concepts"),
     d("devguide/ai/durable-agents", "Durable Agents"),
     d("devguide/ai/why-conductor", "Why Conductor for Agents"),
+    "agentic-workflow-engine",
     cat("Build", [
       d("devguide/ai/conductor-agents", "Conductor Agents"),
       d("devguide/ai/agent-framework-recipes", "Framework Agents"),

@@ -56,6 +56,7 @@
   "reference-docs/api/workflow/upgrade-workflow": "reference-docs/api/workflow",
   "developer-guides/using-vector-databases-in-your-orkes-conductor-workflows": "category/reference-docs/ai-tasks",
   "reference-docs/ai-tasks": "category/reference-docs/ai-tasks",
+  "documentation/configuration/workflowdef/systemtasks/ai-tasks": "category/reference-docs/ai-tasks",
   "quickstart/first-workflow": "quickstarts",
   "ai-orchestration": "developer-guides/ai-orchestration",
   "conductor-architecture": "core-concepts",
