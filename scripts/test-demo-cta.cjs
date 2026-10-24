@@ -3,12 +3,9 @@ const vm = require('node:vm');
 const assert = require('node:assert/strict');
 const test = require('node:test');
 
-// Exercise the actual generated inline handler, without loading HubSpot,
-// analytics, or creating a lead.
-const html = fs.readFileSync('mkdocs_overrides/main.html', 'utf8');
-const script = [...html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script\s*>/gi)]
-  .map(m => m[1]).find(s => s.includes('data-orkes-demo'));
-assert.ok(script, 'demo modal handler was generated');
+// Exercise the same modal handler injected by the site generator, without
+// parsing HTML, loading HubSpot/analytics, or creating a lead.
+const script = fs.readFileSync('scripts/templates/demo-modal.js', 'utf8');
 
 function fixture() {
   const handlers = {}, forms = [], signals = [], linkedIn = [];
