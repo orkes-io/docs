@@ -1,0 +1,80 @@
+---
+sidebar_position: 15
+slug: "/reference-docs/api/gateway/update-route-in-gateway-service"
+description: "Learn how to update a route in a gateway service."
+---
+
+# Update Route in Gateway Service
+
+**Endpoint**: `PUT /api/gateway/config/services/{serviceId}/routes`
+
+Updates a route in a gateway service. The route is identified by the `httpMethod` and `path` in the request body, so they cannot be changed. The request body replaces the existing route configuration, so include all the fields you want to keep.
+
+## Path parameters
+
+| Parameter | Description | Type | Required/ Optional |
+| --------- | ------------ | ---- | ------------------- |
+| serviceId | The unique identifier of the gateway service that contains the route to update. | string | Required. |
+
+## Request body
+
+Format the request body as a JSON object with the following parameters:
+
+| Parameter | Description | Type | Required/ Optional |
+| --------- | ------------ | ---- | ------------------- |
+| httpMethod | The HTTP method for the route. Supported methods:<ul><li>GET</li><li>POST</li><li>PUT</li><li>DELETE</li><li>PATCH</li></ul> | string | Required. |
+| path | The path for the request.<ul><li>Must start with a forward slash. For example, `/update`.</li><li>Use {} for path parameters. For example, `/update/{userId}`.</li></ul> | string | Required. |
+| description | A description of the route. | string | Optional. |
+| mappedWorkflow | The workflow that runs when the route is called. It has the following fields:<ul><li>`name`: The workflow name (required).</li><li>`version`: The workflow version, where the latest version is used if not set.</li></ul> | object | Required. |
+| waitUntilTasks | The task to wait for before returning a response. The API will return the output of this task, instead of the workflow output.<br/><br/>This is useful if the workflow contains tasks that take a long time to complete, but a response from the API is required before the connection times out. | string | Optional. |
+| timeoutInSeconds | The duration in seconds to wait before returning a response. | integer | Optional. |
+| inputSchemaRef and outputSchemaRef | A schema already created in Conductor, as name and version, used to validate the request and the response. | object | Optional. |
+| inputSchema and outputSchema | A schema entered directly as a JSON string. | string | Optional. |
+| queryParameters | The query parameters the route accepts, each with `name` and `required`. Names can contain only letters, numbers, underscores, and hyphens. | array of objects | Optional. |
+| inputScript | A JavaScript function that transforms the request payload before it is passed to the workflow. | string | Optional. |
+| outputScript | A JavaScript function that transforms the workflow output before it is returned. | string | Optional. |
+| cacheConfig | Caches responses. It has `key`, the cache key, and `ttlInSecond`, how long a cached value stays valid in seconds. | object | Optional. |
+| rateLimitConfig | Limits executions. It has `rateLimitKey`, the rate limit scope, and `concurrentExecLimit`, the maximum concurrent executions. | object | Optional. |
+
+## Response
+
+* Returns a `200 OK` response with the message "Route updated".
+* Returns 400 Bad Request if the request body is invalid, for example a query parameter name or a schema that does not exist.
+* Returns 403 Forbidden if you do not have permission to update the service, or if the application used by the service does not have EXECUTE permission on the mapped workflow.
+* Returns 404 Not Found if no service exists with the given `serviceId`, or no route exists with the given `httpMethod` and `path`.
+* Returns 409 Conflict if the update conflicts with another route in the service.
+
+## Examples
+
+<details markdown="1">
+<summary>Update a route</summary>
+
+**Request**
+
+```shell
+curl -X 'PUT' \
+  'https://<YOUR-SERVER-URL>/api/gateway/config/services/test-service/routes' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "httpMethod": "POST",
+  "path": "/create",
+  "description": "Updated sample route",
+  "mappedWorkflow": {
+    "name": "test_http_wf",
+    "version": 1
+  },
+  "timeoutInSeconds": 30
+}'
+```
+
+**Response**
+
+```json
+{
+  "message": "Route updated"
+}
+```
+
+</details>

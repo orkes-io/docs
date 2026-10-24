@@ -1,0 +1,102 @@
+---
+sidebar_position: 18
+slug: "/reference-docs/api/gateway/get-all-routes-in-gateway-service"
+description: "Learn how to retrieve all routes in a gateway service."
+---
+
+# Get All Routes in Gateway Service
+
+**Endpoint**: `GET /api/gateway/config/services/{serviceId}/routes`
+
+Retrieves all routes in a gateway service, along with the metrics of each route for a time range.
+
+## Path parameters
+
+| Parameter | Description | Type | Required/ Optional |
+| --------- | ------------ | ---- | ------------------- |
+| serviceId | The unique identifier of the gateway service to retrieve routes from. | string | Required. |
+
+## Query parameters
+
+| Parameter | Description | Type | Required/ Optional |
+| --------- | ------------ | ---- | ------------------- |
+| start | The start of the period to calculate metrics for, as a Unix timestamp in milliseconds. If not set, metrics cover the last 24 hours. | string | Optional. |
+| end | The end of the period to calculate metrics for, as a Unix timestamp in milliseconds. If not set, metrics cover the last 24 hours. | string | Optional. |
+
+## Response
+
+* Returns a `200 OK` response with an array of objects, one for each route. Each object has the route configuration under `route`, and its metrics under `serviceRouteMetrics`. The `serviceRouteMetrics` field is omitted if there is no data for the route in the time range. If `start` and `end` are not both set, the last 24 hours are used. The array is empty if the service has no routes.
+* Returns 403 Forbidden if you do not have access to the service.
+* Returns 404 Not Found if no service exists with the given `serviceId`.
+
+## Examples
+
+<details markdown="1">
+<summary>Get all routes in gateway service</summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/gateway/config/services/test-service/routes' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+[
+  {
+    "route": {
+      "httpMethod": "POST",
+      "path": "/create",
+      "description": "Sample route",
+      "serviceId": "test-service",
+      "mappedWorkflow": {
+        "name": "test_http_wf",
+        "version": 1,
+        "requestMetadataAsInput": true
+      },
+      "workflowMetadataInOutput": false,
+      "timeoutInSeconds": 0,
+      "createTime": 1792575045543,
+      "updateTime": 1792575045543,
+      "tags": [],
+      "createdBy": "john.doe@acme.com",
+      "queryParameters": [
+        {
+          "name": "userId",
+          "required": false
+        }
+      ],
+      "orgId": "0000"
+    }
+  },
+  {
+    "route": {
+      "httpMethod": "DELETE",
+      "path": "/users",
+      "description": "Deletes all users",
+      "serviceId": "test-service",
+      "mappedWorkflow": {
+        "name": "docs_test_df_http",
+        "version": 1,
+        "requestMetadataAsInput": true
+      },
+      "workflowMetadataInOutput": false,
+      "workflowExecutionMode": "SYNCHRONOUS",
+      "waitUntilTasks": "",
+      "timeoutInSeconds": 0,
+      "createTime": 1792575154414,
+      "updateTime": 1792575154414,
+      "tags": [],
+      "createdBy": "john.doe@acme.com",
+      "queryParameters": [],
+      "orgId": "0000"
+    }
+  }
+]
+```
+
+</details>

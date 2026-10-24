@@ -1,0 +1,50 @@
+---
+sidebar_position: 12
+slug: "/reference-docs/api/gateway/get-tags-from-gateway-service"
+description: "Learn how to retrieve the tags of a gateway service."
+---
+
+# Get Tags from Gateway Service
+
+**Endpoint**: `GET /api/gateway/config/services/{serviceId}/tags`
+
+Retrieves tags from a gateway service.
+
+## Path parameters
+
+| Parameter | Description | Type | Required/ Optional |
+| --------- | ------------ | ---- | ------------------- |
+| serviceId | The unique identifier of the gateway service to retrieve tags from. | string | Required. |
+
+## Response
+
+* Returns a `200 OK` response with an array of tag objects, each containing a key and a value. The array is empty if the service has no tags.
+* Returns 404 Not Found if no service exists with the given `serviceId`.
+* Returns 403 Forbidden if you do not have access to the service.
+
+## Examples
+
+<details markdown="1">
+<summary>Get tags from a gateway service</summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/gateway/config/services/feedback-service/tags' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+[
+  {
+    "key": "docs",
+    "value": "test"
+  }
+]
+```
+
+</details>

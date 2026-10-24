@@ -1,0 +1,86 @@
+---
+sidebar_position: 14
+slug: "/reference-docs/api/gateway/create-route-in-gateway-service"
+description: "Learn how to create a route in a gateway service."
+---
+
+# Create Route in Gateway Service
+
+**Endpoint**: `POST /api/gateway/config/services/{serviceId}/routes`
+
+Creates a route in a gateway service. A route maps an HTTP method and path to the workflow that runs it.
+
+## Path parameters
+
+| Parameter | Description | Type | Required/ Optional |
+| --------- | ------------ | ---- | ------------------- |
+| serviceId | The unique identifier of the gateway service to add the route to. | string | Required. |
+
+## Request body
+
+Format the request body as a JSON object with the following parameters:
+
+| Parameter | Description | Type | Required/ Optional |
+| --------- | ------------ | ---- | ------------------- |
+| httpMethod | The HTTP method for the route. Supported methods:<ul><li>GET</li><li>POST</li><li>PUT</li><li>DELETE</li><li>PATCH</li></ul> | string | Required. |
+| path | The path for the request.<ul><li>Must start with a forward slash. For example, `/update`.</li><li>Use {} for path parameters. For example, `/update/{userId}`.</li></ul> | string | Required. |
+| description | A description of the route. | string | Optional. |
+| mappedWorkflow | The workflow that runs when the route is called. It has the following fields:<ul><li>`name`: The workflow name (required).</li><li>`version`: The workflow version, where the latest version is used if not set.</li></ul> | object | Required. |
+| waitUntilTasks | The task to wait for before returning a response. The API will return the output of this task, instead of the workflow output.<br/><br/>This is useful if the workflow contains tasks that take a long time to complete, but a response from the API is required before the connection times out. | string | Optional. |
+| timeoutInSeconds | The duration in seconds to wait before returning a response. | integer | Optional. |
+| inputSchemaRef and outputSchemaRef | A schema already created in Conductor, as name and version, used to validate the request and the response. | object | Optional. |
+| inputSchema and outputSchema | A schema entered directly as a JSON string. | string | Optional. |
+| queryParameters | The query parameters the route accepts, each with `name` and `required`. Names can contain only letters, numbers, underscores, and hyphens. | array of objects | Optional. |
+| inputScript | A JavaScript function that transforms the request payload before it is passed to the workflow. | string | Optional. |
+| outputScript | A JavaScript function that transforms the workflow output before it is returned. | string | Optional. |
+| cacheConfig | Caches responses. It has `key`, the cache key, and `ttlInSecond`, how long a cached value stays valid in seconds. | object | Optional. |
+| rateLimitConfig | Limits executions. It has `rateLimitKey`, the rate limit scope, and `concurrentExecLimit`, the maximum concurrent executions. | object | Optional. |
+
+## Response
+
+* Returns a `200 OK` response with the message "Route created".
+* Returns 400 Bad Request if the request body is invalid, for example a missing path, method, or workflow name, or a schema that does not exist.
+* Returns 403 Forbidden if you do not have permission to update the service, or if the application used by the service does not have EXECUTE permission on the mapped workflow.
+* Returns 404 Not Found if no service exists with the given `serviceId`.
+* Returns 409 Conflict if the route already exists or conflicts with another route in the service.
+
+## Examples
+
+<details markdown="1">
+<summary>Create a route</summary>
+
+**Request**
+
+```shell
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/gateway/config/services/test-service/routes' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "httpMethod": "POST",
+  "path": "/create",
+  "description": "Sample route",
+  "mappedWorkflow": {
+    "name": "test_http_wf",
+    "version": 1
+  },
+  "timeoutInSeconds": 0,
+  "queryParameters": [
+    {
+      "name": "userId",
+      "required": false
+    }
+  ]
+}'
+```
+
+**Response**
+
+```json
+{
+  "message": "Route created"
+}
+```
+
+</details>

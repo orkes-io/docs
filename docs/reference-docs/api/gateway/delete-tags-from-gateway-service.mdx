@@ -1,0 +1,59 @@
+---
+sidebar_position: 13
+slug: "/reference-docs/api/gateway/delete-tags-from-gateway-service"
+description: "Learn how to delete tags from a gateway service."
+---
+
+# Delete Tags from Gateway Service
+
+**Endpoint**: `DELETE /api/gateway/config/services/{serviceId}/tags`
+
+Deletes tags from a gateway service.
+
+## Path parameters
+
+| Parameter | Description | Type | Required/ Optional |
+| --------- | ------------ | ---- | ------------------- |
+| serviceId | The unique identifier of the gateway service to remove tags from. | string | Required. |
+
+## Request body
+
+The request body should be an array of tag objects. A tag is deleted only if both its key and value match.
+
+| Parameter | Description | Type | Required/ Optional |
+| --------- | ------------ | ---- | ------------------- |
+| key | The tag key to be removed. | string | Required. |
+| value | The tag value to be removed. | string | Required. |
+
+## Response
+
+* Returns 200 OK, indicating that the tags have been deleted from the gateway service. Tags in the request body that are not on the service are ignored.
+* Returns 404 Not Found if no service exists with the given `serviceId`.
+* Returns 403 Forbidden if you do not have permission to update the service.
+
+## Examples
+
+<details markdown="1">
+<summary>Delete a tag from a gateway service</summary>
+
+**Request**
+
+```shell
+curl -X 'DELETE' \
+  'https://<YOUR-SERVER-URL>/api/gateway/config/services/feedback-service/tags' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  {
+    "key": "docs",
+    "value": "test"
+  }
+]'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the tag has been deleted from the gateway service.
+
+</details>

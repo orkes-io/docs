@@ -6,7 +6,7 @@ description: "Learn how to update a gateway service."
 
 # Update Gateway Service
 
-**Endpoint**: `PUT /api/gateway/config/service`
+**Endpoint**: `PUT /api/gateway/config/services/{serviceId}`
 
 Updates a gateway service.
 
@@ -26,7 +26,7 @@ Format the request body as a JSON object with the following parameters:
 | name | A user-friendly name for the service. | string | Required. |
 | path | The base path for all routes in the service. The path must start with a forward slash (for example, `/api/v1/users`). Including `api` in the path is optional. This cannot be renamed once saved. | string | Required. |
 | authConfigId | The ID of the authentication configuration to use for the service. You can retrieve this value using the [Get Auth Config of Gateway Service](/reference-docs/api/gateway/get-auth-config-for-gateway) endpoint. | string | Required. |
-| corsConfig | The CORS configuration for the service. It can include the following parameters:<ul><li>`corsConfig.accessControlAllowHeaders`: The origins (URLs) that can access this service. Use `*` to allow all origins.</li><li>`corsConfig.accessControlAllowMethods`: The HTTP methods that can be used in cross-origin requests. Supported values are GET, POST, PUT, DELETE, PATCH, and OPTIONS.</li><li>`corsConfig.accessControlAllowHeaders`: The HTTP headers that can be sent in requests from allowed origins. Use `*` to allow all headers.</li></ul> | object | Required. |
+| corsConfig | The CORS configuration for the service. It can include the following parameters:<ul><li>`corsConfig.accessControlAllowOrigin`: The origins (URLs) that can access this service. Use `*` to allow all origins.</li><li>`corsConfig.accessControlAllowMethods`: The HTTP methods that can be used in cross-origin requests. Supported values are GET, POST, PUT, DELETE, PATCH, and OPTIONS.</li><li>`corsConfig.accessControlAllowHeaders`: The HTTP headers that can be sent in requests from allowed origins. Use `*` to allow all headers.</li></ul> | object | Required. |
 | description | A description of the service. | string | Optional. |
 | enabled | Determines whether the service is active. Set this value to `true` to enable the service or `false` to disable it. | boolean | Required. |
 | mcpEnabled | Determines whether MCP is enabled for the service. Set this value to `true` when exposing workflows as MCP tools. Set it to `false` when exposing workflows as API endpoints. | boolean | Required. |
@@ -35,7 +35,9 @@ Format the request body as a JSON object with the following parameters:
 
 ## Response
 
-Returns 200 OK, with a message indicating that the gateway service was updated successfully.
+* Returns a `200 OK` response with the message "Service updated".
+* Returns 400 Bad Request if no service exists with the given `serviceId`, or if the request body fails validation.
+* Returns 403 Forbidden if you do not have permission to modify the service.
 
 ## Examples
 

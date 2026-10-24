@@ -52,6 +52,9 @@ Conductor provides native AI system tasks with direct integration with 14+ LLM p
 | [Generate PDF](/content/reference-docs/ai-tasks/generate-pdf) | `GENERATE_PDF` | Convert Markdown content into a styled PDF document. |
 | [List MCP Tools](/content/reference-docs/ai-tasks/list-mcp-tools) | `LIST_MCP_TOOLS` | Connect to an MCP server and list the tools it exposes. |
 | [Call MCP Tool](/content/reference-docs/ai-tasks/call-mcp-tool) | `CALL_MCP_TOOL` | Invoke a specific tool exposed by an MCP server and return its result. |
+| [Agent](/content/reference-docs/ai-tasks/agent) | `AGENT` | Run an agent from a workflow, either a remote A2A agent or an agent deployed on Conductor. |
+| [Get Agent Card](/content/reference-docs/ai-tasks/get-agent-card) | `GET_AGENT_CARD` | Fetch the Agent Card of a remote A2A agent to discover its endpoint, skills, and capabilities. |
+| [Cancel Agent](/content/reference-docs/ai-tasks/cancel-agent) | `CANCEL_AGENT` | Cancel an agent run in progress, either a remote A2A task or a Conductor agent run. |
 
 **Supported providers:** Anthropic (Claude), OpenAI (GPT), Azure OpenAI, Google Gemini, AWS Bedrock, Mistral, Cohere, HuggingFace, Ollama, Perplexity, Grok (xAI), and more. Switch providers by changing a configuration parameter — no code changes required.
 

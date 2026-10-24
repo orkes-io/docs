@@ -1,0 +1,66 @@
+---
+sidebar_position: 21
+slug: "/reference-docs/api/gateway/delete-tags-from-gateway-service-routes"
+description: "Learn how to delete the tags of a route in a gateway service."
+---
+
+# Delete Tags from Gateway Service Routes
+
+**Endpoint**: `DELETE /api/gateway/config/services/{serviceId}/routes/tags`
+
+Deletes the tags from a route in a gateway service.
+
+## Path parameters
+
+| Parameter | Description | Type | Required/ Optional |
+| --------- | ------------ | ---- | ------------------- |
+| serviceId | The unique identifier of the gateway service that contains the route to delete tags from. | string | Required. |
+
+## Query parameters
+
+| Parameter | Description | Type | Required/ Optional |
+| --------- | ------------ | ---- | ------------------- |
+| method | The HTTP method of the route to delete tags from. | string | Required. |
+| path | The path of the route to delete tags from. | string | Required. |
+
+## Request body
+
+The request body should be an array of tag objects. A tag is deleted only if both its key and value match.
+
+| Parameter | Description | Type | Required/ Optional |
+| --------- | ------------ | ---- | ------------------- |
+| key | The tag key. | string | Required. |
+| value | The tag value. | string | Required. |
+
+## Response
+
+* Returns 200 OK, indicating that the tags have been deleted from the route. Tags in the request body that are not on the route are ignored.
+* Returns 403 Forbidden if you do not have permission to update the service.
+* Returns 404 Not Found if no service exists with the given `serviceId`, or no route exists with the given `method` and `path`.
+
+## Examples
+
+<details markdown="1">
+<summary>Delete tags from a route</summary>
+
+**Request**
+
+```shell
+curl -X 'DELETE' \
+  'https://<YOUR-SERVER-URL>/api/gateway/config/services/test-service/routes/tags?method=POST&path=%2Fcreate' \
+  -H 'accept: */*' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  {
+    "key": "blogs",
+    "value": "test"
+  }
+]'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the tag has been deleted from the route.
+
+</details>

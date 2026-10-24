@@ -1,0 +1,27 @@
+---
+sidebar_position: 22
+slug: "/reference-docs/api/gateway/get-gateway-service-metrics"
+description: "Learn how to retrieve metrics for gateway services."
+---
+
+# Get Gateway Service Metrics
+
+**Endpoint**: `GET /api/gateway/config/services/metrics`
+
+Retrieves metrics for gateway services for a time range. You can retrieve metrics for all services you have access to, for one service, or for one route in a service.
+
+## Query parameters
+
+| Parameter | Description | Type | Required/ Optional |
+| --------- | ------------ | ---- | ------------------- |
+| serviceId | The unique identifier of the gateway service to retrieve metrics for. If not set, metrics are returned for all services you have access to. | string | Optional. |
+| method | The HTTP method of the route. Set it together with a path to retrieve metrics for a single route. | string | Optional. |
+| path | The path of the route. Set it together with a method to retrieve metrics for a single route. | string | Optional. |
+| start | The start of the period to calculate metrics for, as a Unix timestamp in milliseconds. If start and end are not both set, metrics cover the last 24 hours. | long | Optional. |
+| end | The end of the period to calculate metrics for, as a Unix timestamp in milliseconds. If start and end are not both set, metrics cover the last 24 hours. | long | Optional. |
+
+## Response
+
+* Returns a `200 OK` response with the metrics for each service, keyed by service ID. The object is empty or has no services if there is nothing to report.
+* Returns 403 Forbidden if you do not have API Gateway view or management permission, or do not have access to the given service.
+* Returns 404 Not Found if no service exists with the given `serviceId`.

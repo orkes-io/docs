@@ -1,0 +1,74 @@
+---
+sidebar_position: 16
+slug: "/reference-docs/api/gateway/get-route-in-gateway-service"
+description: "Learn how to retrieve a route in a gateway service."
+---
+
+# Get Route in Gateway Service
+
+**Endpoint**: `GET /api/gateway/config/services/{serviceId}/routes/route`
+
+Retrieves the details of a route in a gateway service, along with its metrics for a time range.
+
+## Path parameters
+
+| Parameter | Description | Type | Required/ Optional |
+| --------- | ------------ | ---- | ------------------- |
+| serviceId | The unique identifier of the gateway service that contains the route to retrieve. | string | Required. |
+
+## Query parameters
+
+| Parameter | Description | Type | Required/ Optional |
+| --------- | ------------ | ---- | ------------------- |
+| method | The HTTP method of the route, for example `POST`. | string | Required. |
+| path | The path of the route, for example `/create`. | string | Required. |
+| start | The start of the period to calculate metrics for, as a Unix timestamp in milliseconds. If not set, metrics cover the last 24 hours. | string | Optional. |
+| end | The end of the period to calculate metrics for, as a Unix timestamp in milliseconds. If not set, metrics cover the last 24 hours. | string | Optional. |
+
+## Response
+
+* Returns a `200 OK` response with the route configuration under `route`, and its metrics under `serviceRouteMetrics`. The `serviceRouteMetrics` field is omitted if there is no data for the route in the time range. If `start` and `end` are not both set, the last 24 hours are used.
+* Returns 403 Forbidden if you do not have access to the service.
+* Returns 404 Not Found if no service exists with the given `serviceId`, or no route exists with the given `method` and `path`.
+
+## Examples
+
+<details markdown="1">
+<summary>Get a route in gateway service</summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/gateway/config/services/test-service/routes/route?method=POST&path=%2Fcreate' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+{
+  "route": {
+    "httpMethod": "POST",
+    "path": "/create",
+    "description": "Updated sample route",
+    "serviceId": "test-service",
+    "mappedWorkflow": {
+      "name": "test_http_wf",
+      "version": 1,
+      "requestMetadataAsInput": true
+    },
+    "workflowMetadataInOutput": false,
+    "timeoutInSeconds": 30,
+    "createTime": 1792573286129,
+    "updateTime": 1792573688849,
+    "tags": [],
+    "createdBy": "john.doe@acme.com",
+    "updatedBy": "john.doe@acme.com",
+    "orgId": "0000"
+  }
+}
+```
+
+</details>

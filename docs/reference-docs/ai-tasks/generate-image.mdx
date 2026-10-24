@@ -4,14 +4,11 @@ slug: "/reference-docs/ai-tasks/generate-image"
 description: "Learn how the Generate Image task generates images from a text prompt using a configured AI model integration."
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 # Generate Image
 
 The Generate Image task is used to generate images from a text prompt using a configured AI model integration. It supports OpenAI, Azure OpenAI, Google Gemini, and Google Vertex as image-generation providers. For Google Gemini and Google Vertex, image generation uses the Imagen model family.
 
-During execution, the task sends the prompt (either literal text or a saved AI Prompt) to the configured provider and model, and returns the generated image(s) as output, either as a URL or base64-encoded data. Use it to produce illustrations, product mockups, or other visual content as part of a workflow, or to feed generated images into downstream tasks.
+During execution, the task sends the prompt (either literal text or a saved AI Prompt) to the configured provider and model, and returns the generated image(s) as output, either as the path where it is stored or as base64-encoded data. Use it to produce illustrations, product mockups, or other visual content as part of a workflow, or to feed generated images into downstream tasks.
 
 :::info Prerequisites
 
@@ -31,14 +28,16 @@ Configure these parameters for the Generate Image task.
 | --------- | ----------- | ----------------- |
 | inputParameters.**llmProvider** | The integration name of the AI model provider configured with your Conductor cluster. | Required. |
 | inputParameters.**model** | The model or deployment name registered under the integration (e.g. `dall-e-3`, `gpt-image-1`, `imagen-3.0-generate-002`). | Required. |
-| inputParameters.**prompt** | The image description. By default, this value is looked up as the name of a saved AI Prompt rather than used as literal text. To use literal text, set `allowRawPrompts` to `true`. | Required. |
+| inputParameters.**prompt** | The image description. This can be used in two different ways:<ol><li>Use the AI prompt created in Orkes Conductor, by entering the prompt’s name in this field. If you haven’t created an AI prompt for your language model, refer to the documentation on [creating AI Prompts in Orkes Conductor](/developer-guides/creating-and-managing-gen-ai-prompt-templates).</li></ol>OR<ol start="2"><li>The prompt text itself with the parameter `allowRawPrompts` set to `true`.</li></ol> | Required. |
 | inputParameters.**allowRawPrompts** | Whether to treat `prompt` as literal text instead of a saved AI prompt.<br/><br/>**Note:** If omitted or set to `false`, and `prompt` doesn't match an existing prompt name, the task fails. | Optional. |
+| inputParameters.**promptVariables** | For pre-created prompts that involve variables, provide the input to these variables as key-value pairs, where the key is the variable name defined in the prompt. Values can be string, number, boolean, null, or object/array. For example: `"promptVariables": {"subject": "${workflow.input.subject}"}`. | Required if the AI prompt has variables. |
 | inputParameters.**n** | Number of images to generate. Default is 1. | Optional. |
 | inputParameters.**size** | Image dimensions, e.g. `1024x1024`. | Optional. |
 | inputParameters.**width** | Image width in pixels, used as an alternative to `size`. Default is 1024. | Optional. |
 | inputParameters.**height** | Image height in pixels, used as an alternative to `size`. Default is 1024. | Optional. |
 | inputParameters.**style** | Provider-specific style hints, such as `vivid` or `natural`. | Optional. |
-| inputParameters.**outputFormat** | Output image format. Supported values: `jpg`, `png`, `webp`. Default is `png`. | Optional. |
+| inputParameters.**outputFormat** | Sets the `mimeType` of the returned image. Supported values: `jpg`, `png`, `webp`. Default is `png`. | Optional. |
+| inputParameters.**weight** | The weight of the prompt text, for providers that support prompt weighting. Default is 0. | Optional. |
 
 The following are generic configuration parameters that can be applied to the task and are not specific to the Generate Image task.
 
@@ -91,7 +90,7 @@ The Generate Image task will return the following parameters.
 
 | Parameter | Description | 
 | --------- | ----------- | 
-| media | Array of generated images. Each element contains either a location (URL to the generated image) or base64-encoded data, tagged with a `mimeType` such as `image/png`. |
+| media | Array of generated images. Each element contains either a location (the path where the generated image is stored) or base64-encoded data, tagged with a `mimeType` such as `image/png`. |
 
 ## Examples
 

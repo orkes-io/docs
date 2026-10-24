@@ -1,0 +1,54 @@
+---
+sidebar_position: 17
+slug: "/reference-docs/api/gateway/delete-route-in-gateway-service"
+description: "Learn how to delete a route from a gateway service."
+---
+
+# Delete Route in Gateway Service
+
+**Endpoint**: `DELETE /api/gateway/config/services/{serviceId}/routes`
+
+Deletes a route from a gateway service.
+
+## Path parameters
+
+| Parameter | Description | Type | Required/ Optional |
+| --------- | ------------ | ---- | ------------------- |
+| serviceId | The unique identifier of the gateway service that contains the route to delete. | string | Required. |
+
+## Query parameters
+
+| Parameter | Description | Type | Required/ Optional |
+| --------- | ------------ | ---- | ------------------- |
+| method | The HTTP method of the route to delete. | string | Required. |
+| path | The path of the route to delete. | string | Required. |
+
+## Response
+
+* Returns a `200 OK` response with the message "Route deleted".
+* Returns 403 Forbidden if you do not have permission to update the service.
+* Returns 404 Not Found if no service exists with the given `serviceId`, or no route exists with the given `method` and `path`.
+
+## Examples
+
+<details markdown="1">
+<summary>Delete a route in gateway service</summary>
+
+**Request**
+
+```shell
+curl -X 'DELETE' \
+  'https://<YOUR-SERVER-URL>/api/gateway/config/services/test-service/routes?method=POST&path=%2Fcreate' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+{
+  "message": "Route deleted"
+}
+```
+
+</details>
