@@ -1554,6 +1554,8 @@ const CONNECTED_APPS_NOTE = [
 // enablement note right after its "Available since" admonition.
 function injectConnectedAppsNote(body, sourceRel) {
   if (!sourceRel.startsWith("integrations/connected-apps/")) return body;
+  // Lambda keeps its existing source path, but uses AWS Cloud Credentials.
+  if (sourceRel === "integrations/connected-apps/cloud/aws-lambda.mdx") return body;
   if (/-operations\.mdx?$/.test(sourceRel)) return body;
   return insertAfterIntro(body, CONNECTED_APPS_NOTE);
 }

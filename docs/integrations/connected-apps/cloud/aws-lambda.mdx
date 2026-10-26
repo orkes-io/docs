@@ -1,47 +1,42 @@
 ---
 slug: "/integrations/aws-lambda"
-description: "Learn how to integrate AWS Lambda with Orkes Conductor to automate your workflows and manage your AWS Lambda directly from Conductor."
+description: "Learn how the AWS Lambda task invokes functions using a saved AWS integration, with synchronous responses or asynchronous callback completion."
 ---
 
-# AWS Lambda Integration with Orkes Conductor
+# AWS Lambda
 
-:::info Available since
-- v5.3.0 and later
+The AWS Lambda task invokes an existing Lambda function from a workflow. Use it to run function code with a JSON payload and make the result available to subsequent tasks.
+
+The task uses a saved AWS integration for authentication and region. You select the function and optional version or alias in each task, so the same integration can be reused across multiple functions.
+
+By default, the task invokes the function synchronously and completes when the function returns. For asynchronous invocation, the task waits for an external completion callback after AWS accepts the request.
+
+:::info Prerequisites
+- An existing Lambda function and permission to invoke it.
+- An active **AWS** integration under **Cloud Credentials**, configured for the function's region.
+- Execute permission on the integration for the user or application running the workflow.
 :::
 
-Integrating AWS Lambda with Orkes Conductor lets you build workflows that interact with your AWS Lambda using the following operations:
+<details markdown="1">
+<summary>Set up an AWS integration for Lambda</summary>
 
-- List Functions
-- Create Function
-- Get Function Details
-- Update Function Configuration
-- Invoke Function
-- Delete Function
+**To create the integration:**
 
-This guide explains how to set up and use the integration. Here's an overview:
+1. Go to **Integrations** > **Connections and Resources** in your Conductor cluster.
+2. Select **+ New integration**.
+3. Under **Cloud Credentials**, choose **AWS**, and select **+ Add**.
+4. Enter an **Integration name**, choose a **Connection Type**, and configure the credentials using the table below.
+5. Enter the **Region** where your Lambda function is deployed, such as `us-east-1`, and a **Description**. The **Account Id** field is not required for Lambda invocation.
+6. Leave **Active** enabled and select **Save**.
+7. Grant the user or application running the workflow Execute permission on this integration through **Access Control**.
 
-1. Get the required credentials from AWS.
-2. Configure a new AWS Lambda integration in Orkes Conductor.
-3. Use AWS Lambda integration in workflows.
+| Connection type | Configuration |
+| --------------- | ------------- |
+| Current Conductor Role | Uses credentials available to the Lambda worker through the AWS SDK default credential chain, such as environment credentials, an AWS profile, or an attached IAM role. No access key or secret is entered in the integration. The identity must have permission to invoke the function. |
+| Assume External Role | Uses the worker's default AWS credentials to assume the configured **Role ARN**. Configure both **Role ARN** and **External Id**; External Id is required for this task. The target role must trust the calling identity, and the caller must have permission to assume it. If the trust policy checks an external ID, its value must match the integration. The assumed role must have permission to invoke the function. |
+| Access Key/Secret | Uses the access key ID and secret access key configured in the integration. The corresponding identity must have permission to invoke the function. This connection type does not provide a session-token field for temporary credentials. |
 
-## Step 1: Get the AWS credentials
-
-To integrate AWS Lambda with Orkes Conductor, create an IAM user in AWS and generate access keys with the required Lambda permissions.
-
-**To create an IAM user and generate access keys:**
-
-1. Log in to the [AWS Console](https://console.aws.amazon.com) and search for **IAM** in the top search bar.
-2. In the left navigation, go to **Access Management** > **IAM Users**.
-3. Select an existing user or select **Create user** to create a new one.
-4. Select the user, go to the **Security credentials** tab, scroll to **Access keys**, and select **Create access key**.
-5. For **Use case**, select **Application running outside AWS** and complete the creation flow.
-6. On the final screen, copy the **Access key** and **Secret access key**. Store these securely as the secret access key is shown only once.
-
-**To attach IAM policy to the user:**
-
-1. Go to **Access Management** > **IAM Users** and select your user.
-2. Go to the **Permissions** tab, and select **Add permissions** > **Create inline policy**.
-3. Switch to the **JSON** tab, and paste a policy granting at minimum: `lambda:InvokeFunction`, `lambda:ListFunctions`, `lambda:GetFunction`, `lambda:CreateFunction`, `lambda:UpdateFunctionConfiguration`, `lambda:DeleteFunction`, and `iam:PassRole`. For example:
+The invoking identity needs `lambda:InvokeFunction` on the target function. When invoking a version or alias, ensure its qualified ARN is also permitted. For example, this policy allows invocation of one function and its versions or aliases:
 
 ```json
 {
@@ -49,86 +44,174 @@ To integrate AWS Lambda with Orkes Conductor, create an IAM user in AWS and gene
   "Statement": [
     {
       "Effect": "Allow",
-      "Action": [
-        "lambda:InvokeFunction",
-        "lambda:ListFunctions",
-        "lambda:GetFunction",
-        "lambda:CreateFunction",
-        "lambda:UpdateFunctionConfiguration",
-        "lambda:DeleteFunction"
-      ],
-      "Resource": "arn:aws:lambda:*:*:function:*"
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "iam:PassRole"
-      ],
-      "Resource": "arn:aws:iam::*:role/lambda-execution-role"
+      "Action": "lambda:InvokeFunction",
+      "Resource": [
+        "arn:aws:lambda:us-east-1:123456789012:function:process-order",
+        "arn:aws:lambda:us-east-1:123456789012:function:process-order:*"
+      ]
     }
   ]
 }
 ```
 
-4. Give the policy a name and select **Create policy**.
+Replace the region, account ID, and function name with your values. For external-role connections, the caller also needs `sts:AssumeRole` on the target role. The Lambda function's execution role is separate from the identity that invokes it.
+
+The integration stores connection settings, not a function name or qualifier. Configure those in each Lambda task.
+
+</details>
+
+## Task parameters
+
+Configure these parameters for the AWS Lambda task.
+
+| Parameter | Description | Required/ Optional |
+| --------- | ----------- | ------------------ |
+| inputParameters.invocationConfiguration.**integrationName** | The name of an active AWS integration configured in your Conductor cluster. The integration supplies authentication and region. | Required. |
+| inputParameters.invocationConfiguration.**functionName** | The function name or ARN to invoke. For example, `process-order` or `arn:aws:lambda:us-east-1:123456789012:function:process-order`. The function must be accessible in the integration's region. | Required. |
+| inputParameters.invocationConfiguration.**qualifier** | A published version number or alias, such as `1` or `production`. If omitted, the task invokes the target specified by *functionName* without a separate qualifier. Omit this field rather than supplying an empty string. | Optional. |
+| inputParameters.invocationConfiguration.**asyncComplete** | Controls invocation and completion behavior. Set to `false` for synchronous invocation (`RequestResponse`), or `true` for asynchronous invocation (`Event`) followed by external callback completion. If omitted, uses the task-level *asyncComplete* setting, which defaults to `false`. The resolved value must be a boolean. | Optional. |
+| inputParameters.**payload** | The JSON object sent to the function. It can contain nested objects, arrays, and workflow expressions. Use `{}` when no business input is needed. Only this object is sent to Lambda; *invocationConfiguration* is not included. | Required. |
+
+Use workflow expressions such as `${workflow.input.functionName}` or `${workflow.input.order}` to supply configuration and payload values dynamically. Authentication and region must come from the integration, not from fields in *invocationConfiguration*.
+
+## Task configuration
+
+This is the configuration for a synchronous AWS Lambda task.
+
+```json
+{
+  "name": "invoke_order",
+  "taskReferenceName": "invoke_order_ref",
+  "type": "AWS_LAMBDA",
+  "inputParameters": {
+    "invocationConfiguration": {
+      "integrationName": "aws-production",
+      "functionName": "process-order",
+      "asyncComplete": false
+    },
+    "payload": {
+      "orderId": "${workflow.input.orderId}",
+      "items": "${workflow.input.items}"
+    }
+  }
+}
+```
+
+**To configure the task in Conductor UI:**
+
+1. Go to **Definitions** > **Workflow**, and create or open a workflow.
+2. Select the **+** icon in the workflow and search for **AWS Lambda**.
+3. In **Lambda configuration**, select the **Integration** and enter the **Function name or ARN**.
+4. Optionally enter a **Qualifier (version or alias)** and choose **Async complete**. Leave **Async complete** empty to use the task-level setting.
+5. Under **Input parameters**, add the business input for the function. Use the JSON editor for nested values.
+6. Save the workflow.
+
+## Task output
+
+For a successful synchronous invocation, the task returns the following parameters.
+
+| Parameter | Description |
+| --------- | ----------- |
+| requestId | The AWS request ID for the invocation request. |
+| response | The function's returned payload. JSON objects, arrays, and numbers are returned as their corresponding types. JSON strings are unquoted; JSON boolean and null values are returned as the strings `"true"`, `"false"`, and `"null"`. Non-JSON text is returned as text. |
+
+For example, a function returning an order confirmation produces this task output:
+
+```json
+{
+  "requestId": "example-aws-request-id",
+  "response": {
+    "orderId": "order-123",
+    "status": "processed"
+  }
+}
+```
+
+A subsequent task can read the result using `${invoke_order_ref.output.response}` or individual fields such as `${invoke_order_ref.output.response.status}`.
+
+For an asynchronous invocation, AWS acceptance produces a *requestId* and a null *response*, not the function's eventual result. The task waits for an external callback to set its final status and output. Task and workflow timeouts still apply while it waits.
+
+The task fails if the invocation cannot be made, authentication fails, or Lambda reports a function execution error in the synchronous response. Error details appear in the task's **Logs** tab and failure reason. A function execution error can fail the task even when the AWS invocation API returns HTTP 200.
+
+Returning a normal JSON object containing fields such as `"success": false` or `"statusCode": 500` does not by itself fail the task. These fields are business output, not Lambda execution errors. For asynchronous invocations, function failures must be communicated through the external completion mechanism; acceptance alone does not report the function's outcome.
+
+## Examples
+
+Here are some examples for using the AWS Lambda task.
+
+<details markdown="1">
+<summary>Invoking a specific version or alias</summary>
+
+Set *qualifier* to the published version number or alias you want to invoke. This example invokes the `production` alias using the same saved integration as the synchronous example.
+
+```json
+{
+  "name": "invoke_order",
+  "taskReferenceName": "invoke_order_ref",
+  "type": "AWS_LAMBDA",
+  "inputParameters": {
+    "invocationConfiguration": {
+      "integrationName": "aws-production",
+      "functionName": "process-order",
+      "qualifier": "production"
+    },
+    "payload": {
+      "orderId": "${workflow.input.orderId}"
+    }
+  }
+}
+```
+
+The alias or version must exist, and the integration's AWS identity must have permission to invoke it.
+
+</details>
+
+<details markdown="1">
+<summary>Invoking asynchronously and completing the task</summary>
+
+Set *invocationConfiguration.asyncComplete* to `true` to submit an asynchronous invocation. This setting takes precedence over the task-level *asyncComplete* setting.
+
+```json
+{
+  "name": "invoke_order",
+  "taskReferenceName": "invoke_order_ref",
+  "type": "AWS_LAMBDA",
+  "inputParameters": {
+    "invocationConfiguration": {
+      "integrationName": "aws-production",
+      "functionName": "process-order",
+      "asyncComplete": true
+    },
+    "payload": {
+      "orderId": "${workflow.input.orderId}",
+      "workflowId": "${workflow.workflowId}"
+    }
+  }
+}
+```
+
+AWS queues the invocation and returns without waiting for the function to finish. Conductor then waits for task completion. The task does not automatically send a callback or add workflow and task identifiers to the function's input; include any correlation data your completion mechanism needs in *payload*.
+
+Your Lambda function or another service must authenticate to Conductor and update the waiting task through the Tasks API (`POST /tasks`, relative to your cluster's API base URL). Use the workflow execution ID and the task execution ID of the current waiting attempt, available from the workflow execution details. The task execution ID is not the task reference name or the AWS request ID.
+
+For example, send this body when processing succeeds, replacing the placeholder IDs with the actual execution IDs:
+
+```json
+{
+  "workflowInstanceId": "<WORKFLOW-EXECUTION-ID>",
+  "taskId": "<TASK-EXECUTION-ID>",
+  "status": "COMPLETED",
+  "outputData": {
+    "orderId": "order-123",
+    "status": "processed"
+  }
+}
+```
+
+The callback supplies the final task output; downstream tasks can read fields such as `${invoke_order_ref.output.status}`. To report a failure, use `"status": "FAILED"` and provide a *reasonForIncompletion*. If no callback arrives, the task continues waiting until an applicable task or workflow timeout is reached.
 
 :::note
-If your Orkes Conductor instance runs on AWS (EC2 or ECS), you can skip creating access keys. Instead, attach an IAM role with the required Lambda permissions to your EC2 instance or ECS task, and leave the **Access Key ID** and **Secret Access Key** fields empty when configuring the integration in Conductor. Conductor will automatically use the role's credentials.
+Asynchronous acceptance does not mean the function completed successfully. Configure the completion callback and appropriate timeouts before using asynchronous invocation in a workflow.
 :::
 
-## Step 2: Add an integration for AWS Lambda
-
-After obtaining the credentials, add an AWS Lambda integration to your Conductor cluster.
-
-**To create an integration:**
-
-<ol>
-<li>Go to <strong>Integrations</strong> &gt; <strong>Connected Apps</strong> from the left navigation menu on your Conductor cluster.</li>
-<li>Select <strong>+ New integration</strong>.</li>
-<li>In the <strong>Cloud</strong> section, choose <strong>AWS Lambda</strong>.</li>
-<li>Select <strong>+ Add</strong> and enter the following parameters:</li>
-</ol>
-
-| Parameter | Description | Required/Optional |
-| --------- | ----------- | ----------------- |
-| Integration name | A name for the integration. | Required. |
-| Access Key ID | The AWS Access Key ID generated from [Step 1](/content/integrations/aws-lambda#step-1-get-the-aws-credentials).<br/><br/>If left empty, it uses any AWS credentials already configured in the environment (environment variables, credentials file, or IAM role). | Optional. |
-| Secret Access Key | The Secret Access Key generated from [Step 1](/content/integrations/aws-lambda#step-1-get-the-aws-credentials).<br/><br/>If left empty, it uses any AWS credentials already configured in the environment (environment variables, credentials file, or IAM role). | Optional. |
-| Region | The AWS region where your Lambda functions are deployed. For example `us-east-1`. | Required. |
-| Description | A description of the integration. | Required. |
-
-<ol start="5">
-<li>(Optional) Toggle the <strong>Active</strong> button off if you don't want to activate the integration instantly.</li>
-<li>Select <strong>Save</strong>.</li>
-</ol>
-
-## Step 3: Use AWS Lambda integration in workflows
-
-Once the integration is ready, this can be used directly within the workflows.
-
-**To use AWS Lambda integration in a workflow:**
-
-<ol>
-<li>Go to <strong>Definitions</strong> &gt; <strong>Workflow</strong> from the left navigation menu on your Conductor cluster.</li>
-<li>Select <strong>+ Define workflow</strong>.</li>
-<li>In your workflow, select the (<strong>+</strong>) icon and select <strong>Connected Apps</strong>.</li>
-<li>In <strong>Add Task</strong> panel on the right, search for <strong>AWS Lambda</strong>, and select the integration created in <a href="/content/integrations/aws-lambda#step-2-add-an-integration-for-aws-lambda">Step 2</a>.</li>
-</ol>
-
-The following operations are available for use with this integration.
-
-| Operation | Description |
-| --------- | ----------- |
-| [List Functions](/content/integrations/aws-lambda-operations#list-functions) | Lists all Lambda functions in your AWS account. |
-| [Create Function](/content/integrations/aws-lambda-operations#create-function) | Creates a new Lambda function from a base64-encoded ZIP package. |
-| [Get Function Details](/content/integrations/aws-lambda-operations#get-function-details) | Retrieves full configuration details of a specific Lambda function, including runtime, handler, IAM role, memory, timeout, and code location. |
-| [Update Function Configuration](/content/integrations/aws-lambda-operations#update-function-configuration) | Updates the configuration of an existing Lambda function, without redeploying code. |
-| [Invoke Function](/content/integrations/aws-lambda-operations#invoke-function) | Invokes a Lambda function with a JSON payload. Supports synchronous (`RequestResponse`) and asynchronous (`Event`) invocation types. |
-| [Delete Function](/content/integrations/aws-lambda-operations#delete-function) | Permanently deletes a Lambda function from your AWS account. |
-
-<ol start="5">
-<li>Select the required operation, configure the parameters, and select <strong>Save</strong> &gt; <strong>Confirm</strong>.</li>
-<li>Select <strong>Execute</strong> to run the workflow.</li>
-</ol>
-
-For the complete operations parameters and output reference, see [AWS Lambda Operations Reference](/content/integrations/aws-lambda-operations).
+</details>

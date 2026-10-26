@@ -599,6 +599,7 @@ const sidebars = {
                         'reference-docs/system-tasks/get-signed-jwt',
                         'reference-docs/system-tasks/update-task',
                         'reference-docs/system-tasks/grpc',
+                        { type: 'doc', id: 'integrations/connected-apps/cloud/aws-lambda', label: 'AWS Lambda' },
                         {
                             type: 'category',
                             label: 'Alerting Tasks',
@@ -1228,18 +1229,6 @@ const sidebars = {
                                             type: 'doc',
                                             id: 'integrations/connected-apps/cloud/google-cloud-functions-operations',
                                             label: 'Google Cloud Functions Operations Reference',
-                                        },
-                                    ],
-                                },
-                                {
-                                    type: 'category',
-                                    label: 'AWS Lambda',
-                                    link: { type: 'doc', id: 'integrations/connected-apps/cloud/aws-lambda' },
-                                    items: [
-                                        {
-                                            type: 'doc',
-                                            id: 'integrations/connected-apps/cloud/aws-lambda-operations',
-                                            label: 'AWS Lambda Operations Reference',
                                         },
                                     ],
                                 },
