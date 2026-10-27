@@ -1,0 +1,24 @@
+{% block content %}
+  {{ super() }}
+  {% set guide = page.url.replace('.html', '').rstrip('/') if page else '' %}
+  {% set offers = {
+    'ai-cookbook/production-agent-architecture': ['architecture', 'Take your agent architecture into production', 'Walk through retries, checkpoints, and approval gates for your use case with an Orkes engineer.', 'Request an architecture demo'],
+    'devguide/ai/agent-guardrails': ['guardrails', 'See agent guardrails in action', 'Explore how to validate outputs and tool arguments before an agent takes the next step.', 'Request a guardrails demo'],
+    'ai-cookbook/failure-semantics': ['failure-recovery', 'See your failure recovery flow in action', 'Walk through retries, timeouts, and recovery for a workflow like yours.', 'Request a recovery demo']
+  } %}
+  {% if guide in offers %}
+    {% set offer = offers[guide] %}
+    <aside class="orkes-guide-demo" aria-label="Explore an Orkes demo">
+      <h2>{{ offer[1] }}</h2>
+      <p>{{ offer[2] }}</p>
+      <button type="button" data-orkes-demo data-docs-demo-placement="guide_end" data-docs-guide="{{ offer[0] }}">{{ offer[3] }}</button>
+    </aside>
+    <style>
+      .orkes-guide-demo { margin: 2rem 0 1rem; padding: 1.1rem 1.3rem; border: 1px solid #bca5ed; border-radius: 12px; background: var(--md-code-bg-color); }
+      .md-typeset .orkes-guide-demo h2 { margin: 0 0 .5rem; font-size: 1.2rem; }
+      .orkes-guide-demo p { margin: 0 0 .9rem; }
+      .orkes-guide-demo button { padding: .6rem 1rem; border-radius: 6px; background: #6c37bd; color: white; font: inherit; font-weight: 600; cursor: pointer; }
+      .orkes-guide-demo button:focus-visible { outline: 3px solid var(--md-accent-fg-color); outline-offset: 3px; }
+    </style>
+  {% endif %}
+{% endblock %}
