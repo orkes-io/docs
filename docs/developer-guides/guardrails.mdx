@@ -9,7 +9,7 @@ description: "Learn how to scrub or validate text going into or out of an LLM ta
 - v5.5.0 and later
 :::
 
-LLM task guardrails let you scrub or validate text going into or out of an LLM task, without adding an extra step to your workflow. A guardrail runs as a pre-call (input) or post-call (output) hook inside the task itself — the workflow's task list still shows just the one LLM task.
+LLM task guardrails let you scrub or validate text going into or out of an LLM task, without adding an extra step to your workflow. An input guardrail runs before the model is called, and an output guardrail runs after the model responds.
 
 ## Supported tasks
 
@@ -20,7 +20,7 @@ LLM task guardrails let you scrub or validate text going into or out of an LLM t
 | [LLM Generate Embeddings](/content/reference-docs/ai-tasks/llm-generate-embeddings) | ✅ | ❌ (output is a numeric vector, not text) |
 | [Parse Document](/content/reference-docs/ai-tasks/parse-document) | ❌ (input is a file, not scrubbable text) | ✅ |
 
-Configuring an unsupported combination (for example, `inputGuardrail` on Parse Document, or either guardrail on a task type not listed here) is rejected when you save the workflow definition — it does not fail silently at runtime.
+Configuring an unsupported combination (for example, `inputGuardrail` on Parse Document, or either guardrail on a task type not listed here) is rejected when you save the workflow definition.
 
 ## Configuration
 
@@ -36,17 +36,17 @@ Add `inputGuardrail` and/or `outputGuardrail` to the task's input parameters:
 
 | Field | Description | Required |
 |---|---|---|
-| `type` | Supportes types are `JAVASCRIPT`, `HTTP`, or `WORKFLOW`. | Yes |
+| `type` | Supported types are `JAVASCRIPT`, `HTTP`, or `WORKFLOW`. | Yes |
 | `target` | A JS expression, a URL, or a workflow name, depending on `type`. | Yes |
-| `version` | `WORKFLOW` type only — pins a specific workflow version. Defaults to the latest version. | No |
-| `headers` | `HTTP` type only — extra request headers (for example, an API key) sent with the scrub request. | No |
+| `version` | `WORKFLOW` type only. Pins a specific workflow version. Defaults to the latest version. | No |
+| `headers` | `HTTP` type only. Extra request headers (for example, an API key) sent with the scrub request. | No |
 | `failureMode` | `FAIL` (default) or `WARN`. See [Failure modes](#failure-modes). | No |
 
 ## Guardrail types
 
-- **`JAVASCRIPT`** — evaluates the expression inline (GraalJS) against the text, available as `$.prompt`. Best for simple, self-contained rules like a regex redaction.
-- **`HTTP`** — sends `POST {"prompt": "<text>"}` to `target` and expects a JSON response containing `{"prompt": "<scrubbed text>"}`. Use this to call an external PII/DLP scanning service.
-- **`WORKFLOW`** — runs the named workflow with input `{"prompt": "<text>"}` and expects `prompt` in its output. The workflow must already be registered — this is checked when the LLM task's workflow definition is saved.
+- **`JAVASCRIPT`**: Evaluates the expression inline (GraalJS) against the text, available as `$.prompt`. Best for simple, self-contained rules like a regex redaction.
+- **`HTTP`**: Sends `POST {"prompt": "<text>"}` to `target` and expects a JSON response containing `{"prompt": "<scrubbed text>"}`. Use this to call an external PII/DLP scanning service.
+- **`WORKFLOW`**: Runs the named workflow with input `{"prompt": "<text>"}` and expects `prompt` in its output. The workflow must already be registered. This is checked when the LLM task's workflow definition is saved. A guardrail workflow can contain its own LLM task. That task does not apply its own guardrails, so a guardrail can never trigger itself in a loop.
 
 ## What gets scrubbed
 
@@ -58,78 +58,295 @@ For a chat-complete task, the input guardrail runs separately against every piec
 
 The output guardrail runs once, against the model's final response text.
 
-Each guardrail invocation executes as an independent, trigger-and-wait sub-workflow, tagged `correlationId: guardrail:<taskId>` — so every scrub is visible and auditable in workflow execution history, linked back to the LLM task that triggered it.
+The other supported tasks work like this:
+
+- **LLM Text Complete**: The input guardrail runs against the prompt, and the output guardrail runs against the response text.
+- **LLM Generate Embeddings**: The input guardrail runs against the text to be embedded.
+- **Parse Document**: The output guardrail runs against each chunk of parsed text.
+
+Each guardrail invocation executes as an independent, trigger-and-wait sub-workflow, tagged `correlationId: guardrail:<taskId>`, so every scrub is visible and auditable in workflow execution history, linked back to the LLM task that triggered it.
 
 ## Failure modes
 
 | Mode | Behavior when the guardrail fails or returns no result |
 |---|---|
-| `FAIL` (default) | The LLM task fails. The model is never called. |
+| `FAIL` (default) | The LLM task fails. For an input guardrail, the model is never called. |
 | `WARN` | The failure is logged, and the task proceeds using the original, unscrubbed text. |
 
-Use `FAIL` for guardrails protecting sensitive data (for example, PII or financial data) — a broken guardrail should never silently let unredacted content through. `WARN` suits non-critical guardrails where availability matters more than strict enforcement.
+Use `FAIL` for guardrails protecting sensitive data (for example, PII or financial data), because a broken guardrail should never silently let unredacted content through. `WARN` suits non-critical guardrails where availability matters more than strict enforcement.
 
 ## Examples
 
 <details markdown="1">
-<summary>Redact card numbers with an inline JAVASCRIPT guardrail</summary>
+<summary>Redact card numbers with an inline JAVASCRIPT input guardrail</summary>
+
+This example keeps a card number from reaching the model. The input guardrail is set to replace any run of 13 to 19 digits with `[REDACTED]` in the text sent to the model. The task asks the model to repeat the user's message, so the result shows exactly what the model received.
 
 ```json
-"inputGuardrail": {
-  "type": "JAVASCRIPT",
-  "target": "$.prompt.replace(/\\d{13,19}/g, '[REDACTED]')",
-  "failureMode": "FAIL"
+{
+  "name": "guardrail_input_example",
+  "description": "Redacts card numbers with a JAVASCRIPT input guardrail",
+  "version": 1,
+  "schemaVersion": 2,
+  "tasks": [
+    {
+      "name": "llm_chat_complete",
+      "taskReferenceName": "chat_ref",
+      "type": "LLM_CHAT_COMPLETE",
+      "inputParameters": {
+        "llmProvider": "<YOUR-AI-PROVIDER>",
+        "model": "<YOUR-AI-MODEL>",
+        "allowRawPrompts": true,
+        "instructions": "Repeat the user's message back exactly, nothing else.",
+        "messages": [
+          {
+            "role": "user",
+            "message": "order 1234567890123 has shipped"
+          }
+        ],
+        "temperature": 0,
+        "inputGuardrail": {
+          "type": "JAVASCRIPT",
+          "target": "$.prompt.replace(/\\d{13,19}/g, '[REDACTED]')",
+          "failureMode": "FAIL"
+        }
+      }
+    }
+  ],
+  "inputParameters": [],
+  "outputParameters": {
+    "result": "${chat_ref.output.result}"
+  }
 }
 ```
 
-Any 13–19 digit run in the resolved system instructions, `userInput`, or user messages is replaced with `[REDACTED]` before the model sees it. Because `failureMode` is `FAIL`, a broken expression fails the task instead of forwarding unredacted text.
+The user's message contains the 13-digit number 1234567890123. An input guardrail runs before the model is called, so Conductor applies the rule first and the model only sees "order [REDACTED] has shipped". The model repeats that text, and the original number never reaches it. The task output is:
+
+```json
+{ "result": "order [REDACTED] has shipped" }
+```
+
+Because `failureMode` is `FAIL`, an error in the rule would stop the task before the model is called, instead of letting the unredacted number through.
 
 </details>
 
 <details markdown="1">
-<summary>Call an external DLP service with an HTTP guardrail</summary>
+<summary>Redact a word from the response with a JAVASCRIPT output guardrail</summary>
+
+This example changes the model's answer before it is returned. The output guardrail is set to replace the word "Paris" with `[REDACTED]` in the response. The task asks the model for the capital of France.
 
 ```json
-"outputGuardrail": {
-  "type": "HTTP",
-  "target": "https://dlp.internal.example.com/scrub",
-  "headers": {
-    "Authorization": "Bearer ${workflow.secrets.dlp_api_key}"
-  },
-  "failureMode": "FAIL"
+{
+  "name": "guardrail_output_example",
+  "description": "Redacts a word from the response with a JAVASCRIPT output guardrail",
+  "version": 1,
+  "schemaVersion": 2,
+  "tasks": [
+    {
+      "name": "llm_text_complete",
+      "taskReferenceName": "text_ref",
+      "type": "LLM_TEXT_COMPLETE",
+      "inputParameters": {
+        "llmProvider": "<YOUR-AI-PROVIDER>",
+        "model": "<YOUR-AI-MODEL>",
+        "allowRawPrompts": true,
+        "promptName": "Reply with one word only: the capital of France",
+        "temperature": 0,
+        "outputGuardrail": {
+          "type": "JAVASCRIPT",
+          "target": "$.prompt.replace(/Paris/g, '[REDACTED]')",
+          "failureMode": "FAIL"
+        }
+      }
+    }
+  ],
+  "inputParameters": [],
+  "outputParameters": {
+    "result": "${text_ref.output.result}"
+  }
 }
 ```
 
-Conductor sends `POST {"prompt": "<model response>"}` to the DLP service and expects `{"prompt": "<scrubbed response>"}` back. Store the service credential as a [secret](/content/developer-guides/secrets-in-conductor) rather than inlining it in `headers`.
+An output guardrail runs after the model responds. The model answers "Paris", and then Conductor applies the rule to that answer before the task returns, so the task output is:
+
+```json
+{ "result": "[REDACTED]" }
+```
 
 </details>
 
 <details markdown="1">
 <summary>Route through a registered workflow with a WORKFLOW guardrail</summary>
 
+This example moves the scrubbing into a separate workflow, so you can reuse and version it. First register a guardrail workflow that takes `prompt` as input and returns the scrubbed text as `prompt` in its output. This one uses an Inline task to replace any run of 13 to 19 digits with `[REDACTED]`:
+
 ```json
-"inputGuardrail": {
-  "type": "WORKFLOW",
-  "target": "pii_scrub_workflow",
-  "version": 3,
-  "failureMode": "WARN"
+{
+  "name": "pii_scrub_workflow",
+  "version": 1,
+  "schemaVersion": 2,
+  "tasks": [
+    {
+      "name": "inline_scrub",
+      "taskReferenceName": "scrub_ref",
+      "type": "INLINE",
+      "inputParameters": {
+        "evaluatorType": "javascript",
+        "expression": "(function () { return { prompt: $.prompt.replace(/\\d{13,19}/g, '[REDACTED]') }; })()",
+        "prompt": "${workflow.input.prompt}"
+      }
+    }
+  ],
+  "inputParameters": ["prompt"],
+  "outputParameters": {
+    "prompt": "${scrub_ref.output.result.prompt}"
+  }
 }
 ```
 
-Conductor runs `pii_scrub_workflow` (version 3) with input `{"prompt": "<text>"}` as a trigger-and-wait sub-workflow and expects `prompt` in its output. Because `failureMode` is `WARN`, if the sub-workflow fails or is deregistered, the LLM task proceeds with the original, unscrubbed text instead of failing outright — appropriate here only because this guardrail isn't the last line of defense for sensitive data.
+Then use it in an LLM task. This workflow has one LLM Chat Complete task that sets its input guardrail to run `pii_scrub_workflow`:
+
+```json
+{
+  "name": "guardrail_workflow_example",
+  "description": "Scrubs card numbers with a WORKFLOW input guardrail",
+  "version": 1,
+  "schemaVersion": 2,
+  "tasks": [
+    {
+      "name": "llm_chat_complete",
+      "taskReferenceName": "chat_wf_ref",
+      "type": "LLM_CHAT_COMPLETE",
+      "inputParameters": {
+        "llmProvider": "<YOUR-AI-PROVIDER>",
+        "model": "<YOUR-AI-MODEL>",
+        "allowRawPrompts": true,
+        "instructions": "Repeat the user's message back exactly, nothing else.",
+        "messages": [
+          { "role": "user", "message": "order 1234567890123 has shipped" }
+        ],
+        "temperature": 0,
+        "inputGuardrail": {
+          "type": "WORKFLOW",
+          "target": "pii_scrub_workflow",
+          "version": 1,
+          "failureMode": "FAIL"
+        }
+      }
+    }
+  ],
+  "inputParameters": [],
+  "outputParameters": {
+    "result": "${chat_wf_ref.output.result}"
+  }
+}
+```
+
+Before the model is called, Conductor runs `pii_scrub_workflow` with input `{"prompt": "<text>"}` as a trigger-and-wait sub-workflow and sends the workflow's `prompt` output to the model. For the message "order 1234567890123 has shipped", the workflow returns "order [REDACTED] has shipped", and that is what the model receives and repeats, so the task output is:
+
+```json
+{ "result": "order [REDACTED] has shipped" }
+```
+
+The guardrail run appears in workflow execution history with correlation ID `guardrail:<taskId>`.
 
 </details>
 
-## Production notes
+<details markdown="1">
+<summary>Call an external DLP service with an HTTP guardrail</summary>
 
-- Use `failureMode: FAIL` for any guardrail protecting sensitive data — `WARN` lets unscrubbed text through silently when the guardrail itself breaks.
-- Prefer `JAVASCRIPT` for simple, self-contained rules (regex redaction); reach for `HTTP` or `WORKFLOW` only when the scrubbing logic needs an external service, model, or shared workflow.
-- Store any credential a guardrail needs (API keys, tokens) as a [secret](/content/developer-guides/secrets-in-conductor) and reference it in `headers`, never inline.
-- Pin a `version` on `WORKFLOW` guardrails used in production so an unrelated update to the latest version can't silently change scrubbing behavior.
-- Each guardrail call is its own sub-workflow execution tagged `correlationId: guardrail:<taskId>` — use that to audit what was scrubbed for a given LLM task run.
-- Guardrail/task-type combinations are validated at save time, not at execution time — a misconfigured guardrail is caught before the workflow ever runs.
+This example sends the model's response to an external DLP service before it is returned. The output guardrail is set to POST the response to the service and use the scrubbed text it sends back.
 
-## Related pages
+```json
+{
+  "name": "guardrail_http_example",
+  "description": "Scrubs the model response with an external DLP service",
+  "version": 1,
+  "schemaVersion": 2,
+  "tasks": [
+    {
+      "name": "llm_chat_complete",
+      "taskReferenceName": "chat_dlp_ref",
+      "type": "LLM_CHAT_COMPLETE",
+      "inputParameters": {
+        "llmProvider": "<YOUR-AI-PROVIDER>",
+        "model": "<YOUR-AI-MODEL>",
+        "allowRawPrompts": true,
+        "instructions": "Answer the user's question.",
+        "messages": [
+          {
+            "role": "user",
+            "message": "${workflow.input.question}"
+          }
+        ],
+        "temperature": 0,
+        "outputGuardrail": {
+          "type": "HTTP",
+          "target": "https://dlp.internal.example.com/scrub",
+          "headers": {
+            "Authorization": "Bearer ${workflow.secrets.dlp_api_key}"
+          },
+          "failureMode": "FAIL"
+        }
+      }
+    }
+  ],
+  "inputParameters": [
+    "question"
+  ],
+  "outputParameters": {
+    "result": "${chat_dlp_ref.output.result}"
+  }
+}
+```
 
-- [Agent Guardrails](/content/devguide/ai/agent-guardrails) — native `AgentConfig`/`ToolConfig` guardrails for Conductor Agents built with the Agent SDK, not the LLM task params documented on this page.
-- [LLM with Guardrails](/content/devguide/ai/cookbook/llm-guardrails) — a workflow-pattern recipe that fences an `LLM_CHAT_COMPLETE` call using ordinary tasks (a deterministic screen, policy checks, and a bounded repair), for cases where you want each check visible as its own task in the graph.
+After the model responds, Conductor sends `POST {"prompt": "<model response>"}` to the DLP service and expects `{"prompt": "<scrubbed response>"}` back. The scrubbed text becomes the task output. Store the service credential as a [secret](/content/developer-guides/secrets-in-conductor) rather than inlining it in `headers`.
+
+If the service does not return a `prompt` field, the guardrail fails. With `FAIL`, the task fails with a reason like:
+
+```
+Guardrail (HTTP) failed: Guardrail (HTTP) workflow <workflowId> did not return a 'prompt' output
+```
+
+With `WARN`, the task continues with the original text.
+
+</details>
+
+<details markdown="1">
+<summary>Redact text from a parsed document with an output guardrail</summary>
+
+This example scrubs a document after it is parsed. Parse Document supports only an output guardrail, because its input is a file and not text. The guardrail is set to replace any run of 13 to 19 digits with `[REDACTED]`.
+
+```json
+{
+  "name": "guardrail_parse_example",
+  "description": "Redacts digit runs from parsed document text with an output guardrail",
+  "version": 1,
+  "schemaVersion": 2,
+  "tasks": [
+    {
+      "name": "parse_document",
+      "taskReferenceName": "parse_ref",
+      "type": "PARSE_DOCUMENT",
+      "inputParameters": {
+        "url": "<DOCUMENT-URL>",
+        "mediaType": "auto",
+        "chunkSize": 1024,
+        "outputGuardrail": {
+          "type": "JAVASCRIPT",
+          "target": "$.prompt.replace(/\\d{13,19}/g, '[REDACTED]')",
+          "failureMode": "FAIL"
+        }
+      }
+    }
+  ],
+  "inputParameters": [],
+  "outputParameters": {
+    "chunks": "${parse_ref.output.result}"
+  }
+}
+```
+
+Conductor first parses the document into chunks, then runs the guardrail on each chunk. Every string in the task's `result` array comes back with its 13 to 19 digit runs replaced with `[REDACTED]`.
+
+</details>
