@@ -1822,6 +1822,20 @@ function enhancePositioningPage(body, route) {
     );
   }
 
+  if (route === "quickstart/tasks") {
+    // maxRetryDelaySeconds, backoffJitterMs and totalTimeoutSeconds are
+    // accepted by the server but not implemented, so drop them from the
+    // example and the list. Throws if the OSS text changes.
+    for (const field of ["maxRetryDelaySeconds", "backoffJitterMs", "totalTimeoutSeconds"]) {
+      const exampleLine = new RegExp(`^  "${field}": .*\\n`, "m");
+      const bulletLine = new RegExp(`^- \\*\\*${field}\\*\\* .*\\n`, "m");
+      if (!exampleLine.test(output) || !bulletLine.test(output)) {
+        throw new Error(`Tasks page: ${field} not found; update the Orkes-only content.`);
+      }
+      output = output.replace(exampleLine, "").replace(bulletLine, "");
+    }
+  }
+
   if (route === "reference-docs/system-tasks/inline") {
     // Orkes supports only the graaljs evaluator. Throws if the OSS rows
     // change so an upstream rewrite cannot silently drop the patch.
@@ -1888,6 +1902,61 @@ function enhancePositioningPage(body, route) {
         "## JSON configuration",
       ].join("\n"),
     );
+    // Orkes-only Retries section before JSON configuration: an Inline task is retried
+    // only with a task definition, and the server applies no retry delay. On OSS
+    // a script error is a terminal failure, so this is not in the shared page.
+    if (!output.includes("\n## JSON configuration")) {
+      throw new Error("Inline task page: JSON configuration heading not found; update the Orkes-only content.");
+    }
+    const retryLoopWorkflow = {
+      name: "inline_retry_with_wait",
+      version: 1,
+      tasks: [
+        {
+          name: "retry_loop",
+          taskReferenceName: "loop_ref",
+          type: "DO_WHILE",
+          inputParameters: { lastStatus: "${inline_ref.status}" },
+          loopCondition:
+            "if ($.loop_ref['iteration'] < 5 && $.lastStatus != 'COMPLETED') { true; } else { false; }",
+          loopOver: [
+            {
+              name: "flaky_inline",
+              taskReferenceName: "inline_ref",
+              type: "INLINE",
+              optional: true,
+              inputParameters: {
+                evaluatorType: "graaljs",
+                expression: "(function () { return callExternalLogic($.input); })();",
+                input: "${workflow.input.value}",
+              },
+            },
+            {
+              name: "wait_between_attempts",
+              taskReferenceName: "wait_ref",
+              type: "WAIT",
+              inputParameters: { duration: "3 seconds" },
+            },
+          ],
+        },
+      ],
+    };
+    output = output.replace(
+      "\n## JSON configuration",
+      () => [
+        "",
+        "## Retries",
+        "",
+        "To retry an Inline task, register a task definition with the same name as the task and set `retryCount` there. Without a task definition, the task is not retried, even if `retryCount` is set on the task configuration in the workflow.",
+        "",
+        "Inline tasks are executed by Conductor, so retries happen immediately. The `retryDelaySeconds` and `retryLogic` settings in the task definition are not applied. To add a delay between attempts, use one of these options:",
+        "",
+        "* Run the logic as a Worker task (SIMPLE). Retry delays and backoff are applied to Worker tasks.",
+        "* Build the retry into the workflow. Put the Inline task in a DO_WHILE loop with `optional` set to true, and after each failed attempt run a WAIT task before the next one. A failed optional task ends as COMPLETED_WITH_ERRORS. See [Retrying with a wait](#retrying-with-a-wait).",
+        "",
+        "## JSON configuration",
+      ].join("\n"),
+    );
     // Console logging example, appended after the last OSS example.
     if (!output.includes("### Formatting data")) {
       throw new Error("Inline task page: Formatting data example not found; update the Orkes-only content.");
@@ -1913,6 +1982,14 @@ function enhancePositioningPage(body, route) {
         "```",
         "",
         'If the workflow input is `{"discount": 15}`, the task output is `result: true`, and the Logs tab of the task shows two entries: `[Log] "Validating discount: 15"` and `[Log] "Result: true"`.',
+        "",
+        "### Retrying with a wait",
+        "",
+        "A failed optional Inline task ends as COMPLETED_WITH_ERRORS. This workflow runs the Inline task again after a 3 second wait until it completes, up to 5 attempts.",
+        "",
+        "```json",
+        JSON.stringify(retryLoopWorkflow, null, 2),
+        "```",
       ].join("\n")
     ) + "\n";
   }
