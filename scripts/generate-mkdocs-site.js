@@ -1689,6 +1689,23 @@ function enhancePositioningPage(body, route) {
   }
 
   if (route === "error-handling") {
+    // Orkes-only: tasks that run inside the server retry immediately, and the
+    // OSS INLINE task treats script errors as terminal, so this stays out of
+    // the shared page. Throws if the anchor disappears.
+    if (!output.includes("\n### FIXED\n")) {
+      throw new Error("Error handling page: '### FIXED' anchor not found; update the Orkes-only content.");
+    }
+    output = output.replace(
+      "\n### FIXED\n",
+      [
+        "",
+        "Tasks that run inside the Conductor server, such as INLINE and JSON_JQ_TRANSFORM, are retried immediately by default: `retryDelaySeconds` and `retryLogic` do not delay the retry. See the [Inline task](/content/reference-docs/system-tasks/inline) page for the options.",
+        "",
+        "### FIXED",
+        "",
+      ].join("\n"),
+    );
+
     output = output.replace(
       "## Implement a Workflow Status Listener",
       [
