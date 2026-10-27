@@ -1822,6 +1822,20 @@ function enhancePositioningPage(body, route) {
     );
   }
 
+  if (route === "quickstart/tasks") {
+    // maxRetryDelaySeconds, backoffJitterMs and totalTimeoutSeconds are
+    // accepted by the server but not implemented, so drop them from the
+    // example and the list. Throws if the OSS text changes.
+    for (const field of ["maxRetryDelaySeconds", "backoffJitterMs", "totalTimeoutSeconds"]) {
+      const exampleLine = new RegExp(`^  "${field}": .*\\n`, "m");
+      const bulletLine = new RegExp(`^- \\*\\*${field}\\*\\* .*\\n`, "m");
+      if (!exampleLine.test(output) || !bulletLine.test(output)) {
+        throw new Error(`Tasks page: ${field} not found; update the Orkes-only content.`);
+      }
+      output = output.replace(exampleLine, "").replace(bulletLine, "");
+    }
+  }
+
   if (route === "reference-docs/system-tasks/inline") {
     // Orkes supports only the graaljs evaluator. Throws if the OSS rows
     // change so an upstream rewrite cannot silently drop the patch.
