@@ -11,7 +11,8 @@
     <aside class="orkes-guide-demo" aria-label="Explore an Orkes demo">
       <h2>{{ offer[1] }}</h2>
       <p>{{ offer[2] }}</p>
-      <button type="button" data-orkes-demo data-docs-demo-placement="guide_end" data-docs-guide="{{ offer[0] }}">{{ offer[3] }}</button>
+      <button type="button" data-orkes-demo data-orkes-offer="architecture" data-docs-demo-placement="guide_end" data-docs-guide="{{ offer[0] }}">{{ offer[3] }}</button>
+      <p style="margin-top:.8rem"><a href="{{ 'resources/architecture-review.html' | url }}">What an architecture review covers</a></p>
     </aside>
     <style>
       .orkes-guide-demo { margin: 2rem 0 1rem; padding: 1.1rem 1.3rem; border: 1px solid #bca5ed; border-radius: 12px; background: var(--md-code-bg-color); }

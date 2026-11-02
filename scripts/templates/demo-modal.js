@@ -7,6 +7,11 @@
       var IMG = "{{ 'img/demo-modal/' | url }}";
       var modal = null;
       var lastTrigger = btn;
+      var currentOffer = null;
+      var offers = {
+        architecture: { title: "Review your production architecture", description: "Request a 30-minute discussion of your workflow, failure handling, integrations, and deployment constraints." },
+        migration: { title: "Assess your workflow migration", description: "Request a 30-minute discussion of compatibility, integration boundaries, and a practical migration pilot." },
+      };
 
       function formView() {
         return (
@@ -22,8 +27,8 @@
         modal.querySelector(".orkes-demo-modal__body").innerHTML =
           '<div class="orkes-demo-modal__done">' +
             '<svg width="64" height="64" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#10B981"/><path d="M9 12l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
-            '<h3>Thanks for submitting a demo request</h3>' +
-            '<p>A team member will reach out shortly to schedule a time to connect.</p>' +
+            '<h3>Thanks for your request</h3>' +
+            '<p>Next: look for an email from the Orkes team to arrange a time and confirm the workflow you want to discuss. Your meeting is not scheduled yet.</p>' +
             '<button type="button" data-orkes-demo-done>Got it</button>' +
           '</div>';
         modal.querySelector("[data-orkes-demo-done]").addEventListener("click", close);
@@ -33,13 +38,21 @@
         var submissionTracked = false;
         var submittedEmail = "";
         var formModal = modal;
+        var formOffer = currentOffer;
         window.hbspt.forms.create({
           portalId: "20882608",
           formId: "e0553b12-5fe4-4b27-86a8-3e619c4f6319",
           target: "#orkes-demo-form",
-          onFormReady: function () {
+          onFormReady: function ($form) {
             var s = modal.querySelector(".orkes-demo-modal__spinner");
             if (s) s.remove();
+            var formElement = $form && ($form[0] || $form);
+            var submit = formElement && formElement.querySelector && formElement.querySelector('[type="submit"]');
+            if (submit && formOffer) {
+              var label = formOffer === "migration" ? "Request a migration assessment" : "Request an architecture review";
+              if (submit.tagName === "INPUT") submit.value = label;
+              else submit.textContent = label;
+            }
           },
           onFormSubmit: function ($form, data) {
             // Preserve the existing conversion payload, but wait for HubSpot
@@ -50,7 +63,7 @@
           onFormSubmitted: function () {
             if (submissionTracked) return;
             submissionTracked = true;
-            if (window.dataLayer) window.dataLayer.push({ event: "formSubmitted", leadsUserData: { email: submittedEmail } });
+            if (window.dataLayer) window.dataLayer.push({ event: "formSubmitted", docs_offer: formOffer || "demo", leadsUserData: { email: submittedEmail } });
             if (window.lintrk) window.lintrk("track", { conversion_id: 19206580 });
             // The existing GTM HubSpot success listener owns form_submit_success.
             // Do not duplicate it here or count a CTA click as a conversion.
@@ -83,12 +96,15 @@
       function open(trigger) {
         if (modal) return;
         lastTrigger = trigger;
+        var requestedOffer = trigger.getAttribute("data-orkes-offer");
+        currentOffer = Object.prototype.hasOwnProperty.call(offers, requestedOffer) ? requestedOffer : null;
         // Non-conversion event. No query strings, click IDs or personal data.
         window.dataLayer = window.dataLayer || [];
         window.dataLayer.push({
           event: "docs_demo_cta_click",
           docs_cta_placement: trigger.getAttribute("data-docs-demo-placement") || "header",
           docs_guide: trigger.getAttribute("data-docs-guide") || "documentation",
+          docs_offer: currentOffer || "demo",
           page_path: window.location.pathname,
         });
         modal = document.createElement("div");
@@ -116,6 +132,10 @@
             '</div>' +
           '</div>';
         document.body.appendChild(modal);
+        if (currentOffer) {
+          modal.querySelector(".orkes-demo-modal__title").textContent = offers[currentOffer].title;
+          modal.querySelector(".orkes-demo-modal__sub").textContent = offers[currentOffer].description;
+        }
         modal.addEventListener("click", function (e) {
           if (e.target === modal || e.target.classList.contains("orkes-demo-modal__center")) close();
         });

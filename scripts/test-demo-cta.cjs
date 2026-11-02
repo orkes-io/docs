@@ -7,7 +7,7 @@ const test = require('node:test');
 // parsing HTML, loading HubSpot/analytics, or creating a lead.
 const script = fs.readFileSync('scripts/templates/demo-modal.js', 'utf8');
 
-function fixture() {
+function fixture(offer = null) {
   const handlers = {}, forms = [], signals = [], linkedIn = [];
   let focused;
   function element() {
@@ -34,7 +34,7 @@ function fixture() {
   };
   vm.runInNewContext(script, { document: doc, window: win });
   const trigger = {
-    getAttribute: name => name === 'data-docs-demo-placement' ? 'guide_end' : 'failure-recovery',
+    getAttribute: name => ({'data-docs-demo-placement':'guide_end', 'data-docs-guide':'failure-recovery', 'data-orkes-offer':offer})[name] || null,
     focus() { focused = this; },
   };
   function open() { handlers.click({ target: { closest: () => trigger }, preventDefault() {} }); }
@@ -68,4 +68,21 @@ test('reopening keeps independent submission callbacks and restores focus', () =
   f.forms[1].onFormSubmitted();
   f.forms[1].onFormSubmitted();
   assert.equal(f.linkedIn.length, 2);
+});
+
+test('offer identity survives confirmed receipt without counting an attempt', () => {
+  for (const offer of ['architecture', 'migration']) {
+    const f = fixture(offer); f.open();
+    assert.equal(f.signals[0].docs_offer, offer);
+    f.forms[0].onFormSubmit(null, []);
+    assert.equal(f.signals.length, 1);
+    f.forms[0].onFormSubmitted();
+    assert.equal(f.signals[1].docs_offer, offer);
+    assert.equal(f.signals[1].event, 'formSubmitted');
+  }
+});
+
+test('unknown offer data falls back to the existing demo', () => {
+  const f = fixture('__proto__'); f.open();
+  assert.equal(f.signals[0].docs_offer, 'demo');
 });
