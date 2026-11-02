@@ -150,8 +150,8 @@ const sidebars = {
                     items: [
                         {
                             type: 'doc',
-                            id: 'developer-guides/orchestrating-human-tasks',
-                            label: 'Human Task Orchestration',
+                            id: 'developer-guides/using-ai-prompts',
+                            label: 'Using AI Prompts',
                         },
                         {
                             type: 'doc',
@@ -160,18 +160,8 @@ const sidebars = {
                         },
                         {
                             type: 'doc',
-                            id: 'developer-guides/ai-orchestration',
-                            label: 'Using AI Models or LLMs',
-                        },
-                        {
-                            type: 'doc',
-                            id: 'documentation/configuration/workflowdef/systemtasks/ai-tasks',
-                            label: 'AI Tasks',
-                        },
-                        {
-                            type: 'doc',
-                            id: 'developer-guides/using-ai-prompts',
-                            label: 'Creating AI Prompts',
+                            id: 'developer-guides/orchestrating-human-tasks',
+                            label: 'Human Task Orchestration',
                         },
                     ],
                 },
