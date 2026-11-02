@@ -43,16 +43,9 @@
           portalId: "20882608",
           formId: "e0553b12-5fe4-4b27-86a8-3e619c4f6319",
           target: "#orkes-demo-form",
-          onFormReady: function ($form) {
+          onFormReady: function () {
             var s = modal.querySelector(".orkes-demo-modal__spinner");
             if (s) s.remove();
-            var formElement = $form && ($form[0] || $form);
-            var submit = formElement && formElement.querySelector && formElement.querySelector('[type="submit"]');
-            if (submit && formOffer) {
-              var label = formOffer === "migration" ? "Request a migration assessment" : "Request an architecture review";
-              if (submit.tagName === "INPUT") submit.value = label;
-              else submit.textContent = label;
-            }
           },
           onFormSubmit: function ($form, data) {
             // Preserve the existing conversion payload, but wait for HubSpot
