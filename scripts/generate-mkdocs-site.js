@@ -4091,7 +4091,7 @@ function buildNav() {
 
 function writeMkdocsConfig(nav) {
   const navLines = yamlNav(nav, 2).join("\n");
-const mkdocs = `site_name: Agentic Workflow Engine
+const mkdocs = `site_name: Orkes Conductor Documentation
 site_description: ${SITE_DESCRIPTION}
 site_url: ${SITE_URL}
 repo_url: https://github.com/conductor-oss/conductor
