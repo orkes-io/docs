@@ -27,7 +27,7 @@ This pulls the latest `main` of `conductor-oss/conductor` into `.cache/conductor
 
 ### Updating a doc page
 
-1. Edit the relevant `.mdx` file under [`docs/`](https://github.com/orkes-io/docs/tree/refactor/docs-oss-enterprise-merge/docs).
+1. Edit the relevant `.mdx` file under [`docs/`](https://github.com/orkes-io/docs/tree/main/docs).
 2. Preview locally with:
    ```
    npm run dev
