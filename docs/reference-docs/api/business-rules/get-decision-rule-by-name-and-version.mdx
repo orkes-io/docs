@@ -1,0 +1,56 @@
+---
+sidebar_position: 3
+slug: "/reference-docs/api/business-rules/get-decision-rule-by-name-and-version"
+description: "Learn how to retrieve a specific version of a decision rule by its name and version number."
+---
+
+# Get Decision Rule by Name and Version
+
+**Endpoint**: `GET /api/business-rules/{name}/{version}`
+
+Retrieves a specific version of a decision rule by its name and version number.
+
+## Path parameters
+
+| Parameter | Description | Type | Required/ Optional |
+| --------- | ----------- | ---- | ------------------ |
+| name | The name of the decision rule to retrieve. | string | Required. |
+| version | The version of the decision rule to retrieve. | integer | Required. |
+
+## Response
+
+* Returns 200 OK with the requested version of the decision rule, including its name, version, decision table in CSV format, create and update times in epoch milliseconds, the users who created and last updated it, and its tags.
+* Returns 404 Not Found if no decision rule exists with the given name and version.
+* Returns 403 Forbidden if you do not have access to the decision rule.
+* Returns 401 Unauthorized if the token is missing or invalid.
+
+## Examples
+
+<details markdown="1">
+<summary>Get a decision rule by name and version</summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/business-rules/shipping-rules-api-test/1' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+{
+  "name": "shipping-rules-api-test",
+  "version": 1,
+  "csvData": "shippingMethod,containerSize,shippingCharge\nmail,Any,10\nmail,small,15\nAny,small,20",
+  "createTime": 1793949407317,
+  "updateTime": 1793949407317,
+  "createdBy": "john.doe@acme.com",
+  "updatedBy": "john.doe@acme.com",
+  "tags": []
+}
+```
+
+</details>
