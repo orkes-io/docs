@@ -7,10 +7,13 @@ name: Deploy Docs to S3 — non-prod
 # Targets the marketing-non-prod account only and does NOT affect production
 # (orkes.io/content). Config lives in the `marketing-non-prod` GitHub Environment
 # (see deploy/SETUP-s3-cloudfront.md).
+#
+# Deploys on pushes to `dev` (staging). Production deploys from `main` via
+# deploy-docs-prod-s3.yml.
 
 on:
   push:
-    branches: [main]
+    branches: [dev]
   workflow_dispatch:
 
 permissions:

@@ -94,7 +94,11 @@ To smoke-test tags against a throwaway container, set `DOCS_GTM_ID` to that
 container instead of pointing non-prod at the real one.
 
 ## 5. Run it
-- Push to `main` — that is the branch `deploy-docs-s3.yml` triggers on.
+- Push to `dev` — that is the branch `deploy-docs-s3.yml` triggers on. Prod
+  (`deploy-docs-prod-s3.yml`) still deploys from `main`, so changes land on
+  non-prod first and reach prod when `dev` is merged into `main`.
+- The `marketing-non-prod` GitHub Environment must allow the `dev` branch
+  (Settings → Environments → Deployment branches).
 - Test: `https://<non-prod-cf-domain>/content/quickstarts`.
 
 > Both S3 workflows live on `main`, so `workflow_dispatch` (the **Run workflow**
