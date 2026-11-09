@@ -494,10 +494,10 @@ const sidebars = {
         { type: 'doc', id: 'orkes-cloud/team-and-access', label: 'Team & Access' },
         {
             type: 'category',
-            label: 'Deploying',
-            link: { type: 'doc', id: 'orkes-cloud/deployment' },
+            label: 'Deployment',
             items: [
-                { type: 'doc', id: 'orkes-cloud/deployment/orkes-hosted-setup', label: 'Orkes Hosted Setup' },
+                { type: 'doc', id: 'orkes-cloud/deployment', label: 'Deploy Your Cluster' },
+                { type: 'doc', id: 'orkes-cloud/deployment/orkes-hosted-setup', label: 'Orkes Hosted' },
                 { type: 'doc', id: 'orkes-cloud/deployment/architecture', label: 'Customer Hosted Architecture' },
                 { type: 'doc', id: 'orkes-cloud/deployment/aws', label: 'Deploy on AWS' },
                 { type: 'doc', id: 'orkes-cloud/deployment/azure', label: 'Deploy on Azure' },
