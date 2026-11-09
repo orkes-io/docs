@@ -5,7 +5,7 @@ description: "Set up an Orkes Hosted Conductor cluster, where Orkes provisions a
 
 # Deployment Guide: Orkes Hosted Cluster Setup
 
-With Orkes Hosted, Orkes provisions and operates your Conductor cluster's infrastructure for you. Setup is deliberately lightweight on your side; most of what a customer-hosted deployment requires (networking, compute, database, cache) is Orkes' responsibility, not yours.
+With Orkes Hosted, Orkes provisions and operates your Conductor cluster's infrastructure for you.
 
 ## What you provide
 
@@ -15,15 +15,20 @@ When requesting an Orkes Hosted cluster, you'll specify:
 - **Region**: Choose from Orkes' supported locations for your selected provider.
   - **AWS**:
     - US East, Virginia (us-east-1)
+    - US East, Ohio (us-east-2)
     - US West, Oregon (us-west-2)
+    - Canada, Central (ca-central-1)
     - EU West, Ireland (eu-west-1)
     - EU West, London (eu-west-2)
     - EU West, Paris (eu-west-3)
+    - EU Central, Frankfurt (eu-central-1)
+    - EU North, Stockholm (eu-north-1)
     - AP South, Mumbai (ap-south-1)
-    - AP Southeast, Singapore (ap-southeast-1)
     - AP Southeast, Sydney (ap-southeast-2)
-    - ME Central, UAE (me-central-1)
+    - AP Northeast, Tokyo (ap-northeast-1)
+    - AP Northeast, Seoul (ap-northeast-2)
     - AP Northeast, Osaka (ap-northeast-3)
+    - South America, São Paulo (sa-east-1)
   - **Azure**:
     - East US
     - East US 2
@@ -40,9 +45,10 @@ When requesting an Orkes Hosted cluster, you'll specify:
     - Europe West, Ireland (europe-west1)
     - Europe West, Frankfurt (europe-west3)
     - Asia Southeast, Singapore (asia-southeast1)
-- **Sizing tier**: Based on your expected workflow/task volume and environment (dev/staging/production)
-- **Cluster name:** A name for your Conductor cluster which the developers will use for building workflows and agents
-- **Environment type**: Production, Staging, Development, Test, or Proof of Concept
+- **OCU capacity**: The capacity for your cluster.
+- **Cluster name**: A name for your Conductor cluster which the developers will use for building workflows and agents.
+- **Environment**: Production, Staging, Development, Test, or Proof of Concept.
+- **Connectivity**: Internet access with authentication, or private access (VPN or peering required)
 
 ## What Orkes handles
 
@@ -51,12 +57,13 @@ Once you submit your request, Orkes automatically provisions everything your clu
 - Networking (VPC/VNet, subnets)
 - Kubernetes cluster and node capacity
 - Redis (the primary datastore for workflow and task state, deployed with replication for durability)
-- Postgres (persistence backend)
+- Postgres (indexing and search)
+- Archive store for completed workflow executions
 - Authentication configuration
 - Conductor server, agent, and monitoring deployment
 - Ingress and TLS certificates
 - DNS configuration for your cluster's domain
-- Health verification before your cluster is marked ready
+- Health checks scheduled for ongoing monitoring
 
 ## What to expect
 
