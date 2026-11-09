@@ -498,10 +498,10 @@ const sidebars = {
             items: [
                 { type: 'doc', id: 'orkes-cloud/deployment', label: 'Deploy Your Cluster' },
                 { type: 'doc', id: 'orkes-cloud/deployment/orkes-hosted-setup', label: 'Orkes Hosted' },
-                { type: 'doc', id: 'orkes-cloud/deployment/architecture', label: 'Customer Hosted Architecture' },
-                { type: 'doc', id: 'orkes-cloud/deployment/aws', label: 'Deploy on AWS' },
-                { type: 'doc', id: 'orkes-cloud/deployment/azure', label: 'Deploy on Azure' },
-                { type: 'doc', id: 'orkes-cloud/deployment/gcp', label: 'Deploy on GCP' },
+                { type: 'doc', id: 'orkes-cloud/deployment/architecture', label: 'Architecture: Customer Hosted' },
+                { type: 'doc', id: 'orkes-cloud/deployment/aws', label: 'Customer Hosted: AWS' },
+                { type: 'doc', id: 'orkes-cloud/deployment/azure', label: 'Customer Hosted: Azure' },
+                { type: 'doc', id: 'orkes-cloud/deployment/gcp', label: 'Customer Hosted: GCP' },
             ],
         },
         {

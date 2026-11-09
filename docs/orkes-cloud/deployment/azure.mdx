@@ -1,11 +1,11 @@
 ---
 slug: "/orkes-cloud/deployment/azure"
-description: "Orkes Conductor can be deployed as a customer-hosted cluster running entirely within your own Azure subscription."
+description: "Deploy a Customer Hosted Conductor cluster on Azure: set up resource providers, quotas, a resource group, and a VNet, then create the cluster from the Orkes Cloud portal."
 ---
 
-# How to deploy a customer-hosted cluster on Azure
+# How to deploy a customer hosted cluster on Azure
 
-Orkes Conductor can be deployed as a customer-hosted cluster running entirely within your own Azure subscription. This guide walks through provisioning a production-ready cluster in your Azure environment, from the prerequisites Azure requires to the steps for triggering and completing provisioning through the Orkes Cloud portal.
+Orkes Conductor can be deployed as a **customer hosted cluster** running within your own Azure subscription. This guide walks through provisioning a production-ready cluster in your Azure environment, from the prerequisites Azure requires to the steps for triggering and completing provisioning through the Orkes Cloud portal.
 
 ## Prerequisites
 
@@ -44,6 +44,7 @@ Create a resource group in a region of your preference. Supported regions are:
 - East US 2 (eastus2)
 - Central US (centralus)
 - South Central US (southcentralus)
+- West US 2 (westus2)
 - West US 3 (westus3)
 - Australia East (australiaeast)
 - France Central (francecentral)
@@ -56,7 +57,7 @@ Create a resource group in a region of your preference. Supported regions are:
 - Germany West Central (germanywestcentral)
 - UAE North (uaenorth)
 
-**Tip:** For lowest latency, we recommend choosing the same region as your Conductor cluster, unless you have data residency or other requirements that mandate otherwise.
+**Info:** For lowest latency, we recommend choosing the same region as your Conductor cluster, unless you have data residency or other requirements that mandate otherwise.
 
 ### Azure CLI
 
@@ -100,9 +101,9 @@ Supported IP ranges are /16 through /24.
 
 In this step, you'll log in to the Orkes Cloud portal to start deployment of the Orkes Conductor cluster into the VNet you created earlier.
 
-Your email must be shared with Orkes before you can create a cluster. If the **Create New Cluster** option isn't available to you in the portal, contact your Orkes representative to be added.
+If the **Create New Cluster** option isn't available to you in the portal, contact your Orkes representative.
 
-#### To provision a cluster:
+**To provision a cluster:**
 
 1. Log in to the [Orkes Cloud portal](https://cloud.orkes.io/).
 2. Go to **Clusters** from the left navigation menu.
@@ -110,47 +111,46 @@ Your email must be shared with Orkes before you can create a cluster. If the **C
 4. Select **Azure** as the cloud provider.
 5. Under **Deployment Type**, select **Conductor cluster**.
 6. Enter the following parameters:
-   1. **Cluster Name**: Max 18 characters; letters, numbers, and hyphens are allowed (can't start with a hyphen).
-   2. **Azure Resource Group Name**: The name of the Azure resource group you created earlier.
-   3. **Azure Region**: Select the region where this cluster needs to be deployed; this region should match the region your resource group is associated with.
-7. Select **Generate Script**.
+    1. **Cluster Name**: Max 18 characters; letters, numbers, and hyphens are allowed (can't start with a hyphen).
+    2. **Azure Resource Group Name**: The name of the Azure resource group you created earlier.
+    3. **Azure Region**: Select the region where this cluster needs to be deployed; this region should match the region your resource group is associated with.
+7. Select **Generate Script**. This creates a script that must be run by the administrator of your Azure account, using the Azure CLI. The script creates the applications, service principals, roles, and role assignments required for cluster provisioning, and prints the service principal credentials you'll enter in the next step to continue.
 
-Selecting **Generate Script** creates a script that must be run by the administrator of your Azure account, using the Azure CLI. The script creates the applications, service principals, roles, and role assignments required for cluster provisioning, and prints the service principal credentials you'll enter in the next step to continue.
-
-#### To run the script:
+**To run the script:**
 
 1. On the local machine where you'll run the script, log in to Azure and target the correct subscription. Replace `${AZURE_SUBSCRIPTION_ID}` with your subscription ID:
 
-   ```
-   az upgrade
-   az bicep upgrade
-   az login
-   az account set -s "${AZURE_SUBSCRIPTION_ID}"
-   ```
+    ```
+    az upgrade
+    az bicep upgrade
+    az login
+    az account set -s "${AZURE_SUBSCRIPTION_ID}"
+    ```
 
 2. Run the downloaded script:
 
-   ```
-   sh <downloaded script>
-   ```
+    ```
+    sh <downloaded script>
+    ```
 
-If any part of the script fails partway through, note the values already displayed, then rerun the script after resolving the issue; only the failed parts run again.
+If the script fails partway through, note any credentials already displayed. They are printed only the first time the service principal is created. Rerun the script after resolving the issue.
 
-#### To verify authorization:
+**To verify authorization:**
 
 1. From the script output, enter the following values into the Orkes Cloud portal:
-   - **Azure Subscription Id**
-   - **Azure Service Principal Application Id**
-   - **Azure Service Principal Password**
-   - **Azure Tenant Id**
+    - **Azure Subscription Id**
+    - **Azure Service Principal Application Id**
+    - **Azure Service Principal Password**
+    - **Azure Tenant Id**
 2. Select **Verify Authorization & Continue**.
 
-#### To complete provisioning:
+**To complete provisioning:**
 
 1. Once verification succeeds, enter the following on the next screen:
-   - Name of the VNet
-   - CIDR range of the VNet
-   - **Environment Type**: A tag for your cluster's environment (helpful for distinguishing between multiple clusters)
+    - Name of the VNet
+    - CIDR range of the VNet
+    - **Environment Type**: A tag for your cluster's environment (helpful for distinguishing between multiple clusters)
+    - Optionally, select the **Enable API Gateway** checkbox to deploy an API Gateway for this cluster. It is unchecked by default.
 2. Select **Create Provisioning Workflow** to start provisioning.
 
 You can track provisioning status from the cluster listing page.

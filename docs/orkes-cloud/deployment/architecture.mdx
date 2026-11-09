@@ -1,11 +1,11 @@
 ---
 slug: "/orkes-cloud/deployment/architecture"
-description: "Learn how a Customer Hosted Conductor cluster runs inside your own cloud account on AWS, Azure, or GCP, including traffic flow and managed cloud services."
+description: "How a Customer Hosted Conductor cluster is structured on AWS, Azure, and GCP: how traffic reaches it, what runs in Kubernetes, and the managed cloud services it uses."
 ---
 
 # Architecture: Customer Hosted Cloud Deployment
 
-When you deploy a customer-hosted Conductor cluster, the Conductor server and its supporting components run entirely inside your own cloud account, in a Kubernetes cluster you control. This page describes that architecture: how traffic reaches your cluster, what runs inside it, and which managed cloud services it depends on. The architecture is the same across AWS, Azure, and GCP; only the underlying service names differ.
+When you deploy a **customer-hosted Conductor cluster**, the Conductor server and its supporting components run inside your own cloud account, in a Kubernetes cluster you control. This page describes that architecture: how traffic reaches your cluster, what runs inside it, and which managed cloud services it depends on. The components are the same across AWS, Azure, and GCP; only the underlying service names differ.
 
 ![Customer Hosted cloud deployment architecture](/img/orkes-cloud/orkes-cloud-architecture.png)
 
@@ -13,26 +13,26 @@ When you deploy a customer-hosted Conductor cluster, the Conductor server and it
 
 Your Conductor cluster is reachable in two ways:
 
-- **Public access:** Clients (the Conductor UI in a browser, or SDK-based workers) connect over HTTPS on port 443 to a load balancer in front of your Kubernetes cluster. A DNS record points at this load balancer; either your own domain, or an Orkes-managed subdomain we provision for you.
-- **Private access:** If you've set up private network connectivity (VPC/VNet peering or a VPN), traffic reaches the same load balancer over that private path instead of the public internet.
+- **Public access:** Clients (the Conductor UI in a browser, or SDK-based workers) connect over HTTPS to a load balancer in front of your Kubernetes cluster. A DNS record points at this load balancer.
+- **Private access:** If you've set up private network connectivity (for example VPC/VNet peering, a VPN, or a private endpoint service such as AWS PrivateLink), traffic reaches the same load balancer over that private path instead of the public internet.
 
-Either way, the load balancer forwards traffic on port 443 toward your cluster. For most deployments, TLS is terminated at ingress-nginx, the Kubernetes Ingress controller running inside your cluster. For AWS clusters configured for private (VPC-only) access, TLS is instead terminated at the load balancer itself, using a certificate provisioned for your domain, with plain HTTP forwarded on to ingress-nginx.
+Either way, the load balancer forwards traffic toward your cluster. For most deployments, TLS is terminated at ingress-nginx, the Kubernetes Ingress controller running inside your cluster. For AWS clusters configured for private (VPC-only) access, TLS is instead terminated at the load balancer itself, using a certificate provisioned for your domain, with plain HTTP forwarded on to ingress-nginx.
 
 ## What runs inside your Kubernetes cluster
 
 Ingress-nginx routes incoming requests to the components running in your cluster:
 
 - **Conductor (`orkes-conductor`):** The Conductor server itself, serving both the API and the UI. Ingress-nginx routes UI and API traffic here.
-- **Workers (`orkes-workers`):** System workers that handle Conductor's own internal system tasks, separate from any workers you run for your own workflows.
-- **Agent (`orkes-agent`):** A lightweight agent with no inbound path. It only polls its assigned task domain from the Orkes control plane, so nothing needs to reach it from outside your cluster.
-- **Metrics proxy (`metrics-proxy`):** Routes requests to Prometheus and Grafana for cluster monitoring, over a dedicated Grafana subdomain.
+- **Workers (`orkes-workers`):** Orkes-managed workers that run Conductor's built-in tasks, separate from any workers you run for your own workflows.
+- **Agent (`orkes-agent`):** Runs cluster management commands issued by the Orkes control plane, such as health checks, pod and deployment status, log retrieval, restarts, scaling, and upgrades. It has no inbound path.
+- **Metrics proxy (`metrics-proxy`):** Routes requests to Prometheus and Grafana for cluster monitoring.
 
 ## Managed data services
 
-Conductor server depends on a few managed, encrypted services in your cloud account:
+Conductor server depends on a few managed services in your cloud account:
 
 - A **relational database** for indexing and search.
-- A **cache** that acts as the primary datastore for workflow and task state, deployed with replication for durability.
+- A **cache** that acts as the primary datastore for workflow and task state.
 - An **archive store** for completed workflow executions.
 - A **secrets store** that holds credentials and configuration secrets.
 
@@ -42,7 +42,7 @@ The following table maps each of these to the actual service used on each cloud:
 | --- | --- | --- | --- |
 | Kubernetes cluster | EKS | AKS | GKE |
 | Relational database | RDS PostgreSQL | Azure Database for PostgreSQL | Cloud SQL |
-| Cache / primary datastore | ElastiCache Redis | Azure Cache for Redis | Memorystore |
+| Cache / primary datastore | ElastiCache Redis | Azure Managed Redis | Memorystore |
 | Archive store | S3 | Blob Storage | Cloud Storage |
 | Secrets store | SSM Parameter Store | Key Vault | Secret Manager |
 

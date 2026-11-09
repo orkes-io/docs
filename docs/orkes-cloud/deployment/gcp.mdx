@@ -1,11 +1,11 @@
 ---
 slug: "/orkes-cloud/deployment/gcp"
-description: "Orkes Cloud can provision and manage a Conductor cluster inside your own Google Cloud project."
+description: "Deploy a Customer Hosted Conductor cluster on GCP: run the Orkes setup script in your Google Cloud project, choose a VPC option, and create the cluster from the Orkes Cloud portal."
 ---
 
-# How to deploy a customer-hosted cluster on GCP
+# How to deploy a customer hosted cluster on GCP
 
-Orkes Cloud can provision and manage a Conductor cluster inside your own Google Cloud project. This guide covers the prerequisites and steps to create a customer-hosted cluster on GCP through the Orkes Cloud portal.
+Orkes Cloud can provision and manage a Conductor cluster inside your own Google Cloud project. This guide covers the prerequisites and steps to create a **customer hosted cluster** on GCP through the Orkes Cloud portal.
 
 ## Prerequisites
 
@@ -13,70 +13,69 @@ To create a customer-hosted cluster on GCP, you need the following:
 
 - A GCP project you control, with billing enabled.
 - The gcloud CLI installed and configured, or access to GCP Cloud Shell, to run the setup script Orkes generates.
-- Permissions in that project to create a service account and grant it a custom IAM role.
-- If you're creating a new VPC or using an existing VPC from your own project, permissions to create VPC and subnet resources.
+- Permissions in that project to enable APIs, create a service account, and grant it a custom IAM role.
+- If you're using an existing VPC from your own project, an empty, custom-mode VPC with no subnets.
 - If you're using Shared VPC, someone on your network team who can run a setup script in the separate host project to create the VPC, subnet, and related resources.
 
 ## Steps to provision the cluster
 
-Your email must be shared with Orkes before you can create a cluster. If the **Create New Cluster** option isn't available to you in the portal, contact your Orkes representative to be added.
+If the **Create New Cluster** option isn't available to you in the portal, contact your Orkes representative.
 
 #### To create a customer hosted cluster on GCP:
 
 1. Log in to the [Orkes Cloud portal](https://cloud.orkes.io/).
 2. Go to **Clusters** from the left navigation menu.
 3. Select **Create New Cluster** > **Create New Customer Cluster**.
-4. Select **Google Cloud**.
+4. Select **Google Cloud** as the cloud provider.
 5. Enter:
-   1. **Cluster Name**: Max 18 characters. Letters, numbers, and hyphens only (can't start with a hyphen, and can't contain "google").
-   2. **GCP Project ID**: Your GCP project ID.
-   3. **GCP Region**: Select from the dropdown. Orkes supports the following:
-      - US Central (Iowa)
-      - US East (South Carolina)
-      - US East (Virginia)
-      - US West (Oregon)
-      - US West (Los Angeles)
-      - US West (Salt Lake City)
-      - US West (Las Vegas)
-      - Canada (Montreal)
-      - Canada (Toronto)
-      - South America (São Paulo)
-      - Europe West (Belgium)
-      - Europe West (London)
-      - Europe West (Frankfurt)
-      - Europe West (Netherlands)
-      - Europe West (Zurich)
-      - Europe North (Finland)
-      - Asia South (Mumbai)
-      - Asia Southeast (Singapore)
-      - Asia Southeast (Jakarta)
-      - Asia East (Taiwan)
-      - Asia East (Hong Kong)
-      - Asia Northeast (Tokyo)
-      - Asia Northeast (Osaka)
-      - Asia Northeast (Seoul)
-      - Australia (Sydney)
-      - Australia (Melbourne)
+    1. **Cluster Name**: Max 18 characters. Letters, numbers, and hyphens only (can't start with a hyphen, and can't contain "google").
+    2. **GCP Project ID**: Your GCP project ID.
+    3. **GCP Region**: Select from the dropdown. Orkes supports the following:
+        - US Central (Iowa)
+        - US East (South Carolina)
+        - US East (Virginia)
+        - US West (Oregon)
+        - US West (Los Angeles)
+        - US West (Salt Lake City)
+        - US West (Las Vegas)
+        - Canada (Montreal)
+        - Canada (Toronto)
+        - South America (São Paulo)
+        - Europe West (Belgium)
+        - Europe West (London)
+        - Europe West (Frankfurt)
+        - Europe West (Netherlands)
+        - Europe West (Zurich)
+        - Europe North (Finland)
+        - Asia South (Mumbai)
+        - Asia Southeast (Singapore)
+        - Asia Southeast (Jakarta)
+        - Asia East (Taiwan)
+        - Asia East (Hong Kong)
+        - Asia Northeast (Tokyo)
+        - Asia Northeast (Osaka)
+        - Asia Northeast (Seoul)
+        - Australia (Sydney)
+        - Australia (Melbourne)
 6. Select **Generate GCP Setup Script**. This opens the Authorize GCP Account dialog:
-   1. **Step 1, Download and Run Setup Script**: Download the script and run it with the gcloud CLI or in GCP Cloud Shell (bash setup-script.sh). It creates a dedicated service account, grants it a custom IAM role scoped to GKE, Cloud SQL, Memorystore, networking, and IAM management, and outputs a JSON key.
-   2. **Step 2, Paste Service Account JSON Key**: Paste the full JSON key the script outputs to the Orkes cloud portal, then select **Verify & Continue**.
+    1. **Step 1, Download and Run Setup Script**: Download the script and run it with the gcloud CLI or in GCP Cloud Shell (bash setup-script.sh). It creates a dedicated service account, grants it a custom IAM role covering GKE, Compute Engine and networking, Cloud SQL, Memorystore, Secret Manager, Cloud Storage, Cloud KMS, Cloud DNS, IAM, logging, and monitoring, and outputs a JSON key.
+    2. **Step 2, Paste Service Account JSON Key**: Paste the full JSON key the script outputs to the Orkes cloud portal, then select **Verify & Continue**.
 7. Once verified, configure the cluster in the Orkes Cloud portal:
-   1. **Domain Url**: Enter a subdomain and select a base domain. Only Orkes-managed domains are available for GCP; there's no option to use your own domain.
-   2. **Preferred Availability Zones**: Select up to 3 zones within your chosen region. The GKE cluster spreads across them.
-   3. **Ingress Type**: VPC Only (access via VPN or peering) or Internet (access using credentials).
-   4. **Cluster Capacity**: Small, Medium, Large, Extra Large, or Optimized for High Performance. Each maps to a specific GKE machine type and node range, Redis size, and Postgres tier.
-   5. **Environment Type**: Tag the cluster's environment (Production, Staging, Development, Test, or Proof of Concept).
-   6. **Enable authentication**: Yes or No. Yes adds a default authorization configuration you can later point at your own OAuth provider.
-   7. **VPC Configuration:** Select one of the following:
-      - **Create a new VPC**: Orkes provisions the VPC and subnets for you.
-      - **Use an existing VPC from your project**: Select an empty, custom-mode VPC with no existing subnets.
-      - **Use Shared VPC** (network managed in a separate host project): Enter the Host Project ID, then download a setup script for your network team to run once in that host project. It provisions the VPC, subnet, private service access, NAT, firewall rules, and IAM grants, and prints the resulting resource links. Paste back the VPC Self-Link, Subnet Self-Link, Pods Secondary Range Name, and Services Secondary Range Name it outputs.
+    1. **Domain Url**: Enter a subdomain and select a base domain. Only Orkes-managed domains are available for GCP; there's no option to use your own domain.
+    2. **Preferred Availability Zones**: Select up to 3 zones within your chosen region. The GKE cluster spreads across them.
+    3. **Ingress Type**: VPC Only (access via VPN or peering) or Internet (access using credentials).
+    4. **Cluster Capacity**: Small, Medium, Large, Extra Large, or Optimized for High Performance. Each maps to a specific GKE machine type and node range, Redis size, and Postgres tier.
+    5. **Environment Type**: Tag the cluster's environment (Production, Staging, Development, Test, or Proof of Concept).
+    6. **Enable authentication**: Yes or No. Yes adds a default authorization configuration you can later change to your own OpenID Connect (OIDC) identity provider.
+    7. **VPC Configuration:** Select one of the following:
+        - **Create a new VPC**: Orkes provisions the VPC and subnets for you.
+        - **Use an existing VPC from your project**: Select an empty, custom-mode VPC with no existing subnets.
+        - **Use Shared VPC** (network managed in a separate host project): Enter the Host Project ID, then download a setup script for your network team to run once in that host project. It provisions the VPC, subnet, private service access, NAT, firewall rules, and IAM grants, and prints the resulting resource links. Paste back the VPC Self-Link, Subnet Self-Link, Pods Secondary Range Name, and Services Secondary Range Name it outputs.
 8. For the **Create a new VPC** and **Use an existing VPC** options, you can optionally set (each has a default, so none are required):
-   1. **VPC CIDR Range**: /16 to /24, a private RFC1918 range. Defaults to 10.0.0.0/16.
-   2. **Pod CIDR Range**: The GKE pod IP range, /8 to /24. Defaults to 10.128.0.0/17. Immutable after provisioning.
-   3. **PSC Prefix Length**: Size of the Private Service Connection IP block used for Cloud SQL and Redis, /16 to /24. Defaults to /16. Immutable after provisioning.
-9. Optionally select **Show advanced infrastructure details** to preview the derived VPC and subnet CIDRs and the GKE, Redis, and Postgres sizing before submitting.
-10. Select **Create Provisioning Workflow**. Provisioning typically completes within an hour.
+    1. **VPC CIDR Range**: /16 to /24, a private RFC1918 range. Defaults to 10.0.0.0/16.
+    2. **Pod CIDR Range**: The GKE pod IP range, /8 to /24. Defaults to 10.128.0.0/17. Immutable after provisioning.
+    3. **PSC Prefix Length**: Size of the Private Service Connection IP block used for Cloud SQL and Redis, /16 to /24. Defaults to /16. Immutable after provisioning.
+9. Select **Create Provisioning Workflow**. Provisioning typically completes within an hour.
 
 ## Next Steps
 
