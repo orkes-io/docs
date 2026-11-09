@@ -1,0 +1,66 @@
+---
+slug: "/orkes-cloud/team-and-access"
+description: "Manage access in Orkes Cloud: cloud portal roles (Root, Admin, User) for your organization, and user access on the Conductor clusters themselves."
+---
+
+# Setting Up Your Team & Access
+
+Orkes has two separate layers of access: your organization in the cloud portal, where DevOps and platform teams manage infrastructure such as provisioning clusters and users, and the Conductor clusters themselves, where developers build and run workflows and agents. This page covers how to manage access for each.
+
+## Cloud portal access
+
+Your organization's users are managed in the cloud portal, where each user has a role (Root, Admin, or User) that controls what they can see and do there, for example, provisioning and managing clusters, inviting other users, or viewing environments. Following are the roles available in the cloud portal:
+
+- **Root**: Has complete access over the cloud portal. Can assign Root, Admin, or User roles to other users; invite and remove users; edit an existing user's roles; manage organization API access keys; and provision, manage, and delete clusters.
+- **Admin**: Invite users (as User role only) and remove users from the organization; manage organization API access keys; and provision, manage, and delete clusters. Can't grant Root or Admin roles, or edit an existing user's roles.
+- **User**: Can view clusters.
+
+Organization API access keys let scripts and services call the Cloud portal API directly, without a human logging in. A key acts with whatever role (Admin or Root) you assign it, so treat one as you would a member of your organization, for example, in a CI/CD pipeline that provisions or manages clusters on your behalf. Only Root and Admin can create or revoke these keys.
+
+### Adding a new user to Cloud portal
+
+To add a new user to your organization in Cloud portal:
+
+1. Log in to the [Orkes Cloud portal](https://cloud.orkes.io/).
+2. Go to **Organization Settings** from the left navigation menu.
+3. Select the **Users** tab.
+4. Select **+ Add User**.
+5. Enter the user's email address and select a **Role**. Root users can invite as Root, Admin, or User; Admin users can only invite as User.
+6. Select **Invite User**.
+
+To invite more than one user at once, select **Add User** again inside the dialog to add another row.
+
+### Managing organizations
+
+An organization is the top-level account in the cloud portal, the boundary that contains your clusters, users, roles, and billing. If your account belongs to more than one organization, you can switch between them without signing out.
+
+The **Switch Organization** field appears in the top navigation bar only when your account belongs to more than one organization.
+
+To switch organizations:
+
+1. In the top navigation bar, click the **Switch Organization** field.
+2. Type to search, or pick an organization from the list.
+3. Confirm the switch in the dialog that appears.
+4. Once the switch completes, you're redirected to the home page in the context of the new organization.
+
+## Conductor cluster access
+
+Access to a Conductor cluster's UI is separate from portal access, and is configured independently for that cluster. Human users who log into the cluster UI authenticate through single sign-on (SSO) via your identity provider.
+
+Applications, such as task workers or automation scripts calling the Conductor API directly, are a separate principal type with their own permissions, and can authenticate using access keys or a federated identity from your cloud provider.
+
+### Inviting users to a Conductor cluster
+
+A Conductor cluster maintains its own separate list of users and applications, independent of your cloud portal organization. Being invited to the cloud portal doesn't grant access to a cluster's UI or API, and vice versa. Cluster-level access is managed from within the Conductor UI itself: invite individual users directly, or connect your SSO provider so your existing directory controls access.
+
+For customer-hosted clusters, the person who provisions the cluster is automatically added as a user of that cluster. For Orkes Hosted clusters, the initial admins you name are added to your organization in the cloud portal.
+
+To add users directly to the Conductor cluster, refer to the [RBAC documentation](/content/access-control-and-security/users-and-groups#users).
+
+### SSO Setup
+
+Connect your Conductor cluster to your organization's identity provider so users log in with their existing credentials, or so applications authenticate directly without an Orkes-issued key. See [Single Sign-On for Conductor Clusters](/content/orkes-cloud/sso) for more information.
+
+## Next Steps
+
+With your team and access configured, see [Deploying Your Cluster](/content/orkes-cloud/deployment) to get your cluster provisioned.

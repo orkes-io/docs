@@ -1,0 +1,90 @@
+---
+slug: "/orkes-cloud/networking/aws-privatelink"
+description: "Set up private connectivity between your network and your Conductor cluster in either direction with AWS PrivateLink."
+---
+
+# Connect Conductor Cluster with AWS PrivateLink
+
+AWS PrivateLink lets you set up private connectivity between your network and your Conductor cluster, in either direction, using the same underlying service. Depending on your needs, you can set up:
+
+- **User network → Conductor cluster**, to remove public internet access to your cluster
+- **Conductor cluster → User network**, so HTTP tasks in your workflows can reach your internal APIs privately
+
+You can set up one direction or both.
+
+## Prerequisites
+
+- An Orkes-hosted AWS cluster with a VPC
+
+## User network → Conductor cluster
+
+Orkes creates an Endpoint Service (the side being reached) in front of your Conductor cluster, in the same AWS region as your cluster, and shares the service name and endpoint service DNS name with you. You create an Endpoint (the side that connects to it) in your own VPC, then set up your own private DNS to route your cluster's DNS name through it.
+
+**Note:** PrivateLink connections only work within the same AWS region as your Conductor cluster. To reach it from VPCs in other regions, you'll need to set up peering and routing rules to route the connection through the VPC where your Endpoint is running.
+
+### Share your AWS account ID
+
+1. Give Orkes the AWS account ID you'll use to create your Endpoint, so Orkes can allow it as a principal on the Endpoint Service.
+2. Orkes will notify you with the service name and endpoint service DNS name.
+
+### Select your VPC
+
+1. In the AWS Console, switch to the same region as your Conductor cluster.
+2. Select the VPC you want to connect to the PrivateLink.
+3. Make sure the VPC has **DNS hostnames** and **DNS resolution** enabled.
+
+### Create your Endpoint
+
+1. Go to **VPC > Endpoints > Create endpoint**.
+2. Enter a name for your endpoint.
+3. For **Type**, select **Endpoint services that use NLBs and GWLBs**.
+4. For **Service name**, enter the service name Orkes provided, and click **Verify service**.
+   - If you see "Service name could not be verified," confirm you're in the correct region and that your account ID matches what you gave Orkes. If both check out, reach out to Orkes.
+5. Once verified, select your VPC.
+6. Select availability zones (2 or 3, matching your cluster's AZs) and the corresponding subnets.
+7. Select the **IPv4** address type.
+8. Select a security group that allows HTTPS (443) traffic.
+9. Click **Create endpoint**.
+
+Your endpoint is created in a **Pending acceptance** state. Let Orkes know once you've created it so we can accept the connection request.
+
+### Set up DNS
+
+1. After Orkes accepts your connection, AWS provisions your endpoint.
+2. On your endpoint, enable **private DNS names**. This can take a few minutes.
+3. Set up your own private DNS so your Conductor cluster's DNS name routes to this endpoint.
+
+Once this is done, you'll be able to reach your Conductor cluster at its usual DNS name from within your VPC.
+
+## Conductor cluster → User network
+
+You create an Endpoint Service (the side being reached) on your side and share its details with Orkes. Orkes creates an Endpoint (the side that connects to it) in your cluster's VPC.
+
+**Note:** Your Endpoint Service must be set up in a VPC in the same AWS region as your Conductor cluster. If the service you want Orkes to reach lives in a different VPC than the one hosting your Endpoint Service, you'll need to set up peering and route tables from that VPC to the destination VPC.
+
+### Create Endpoint Service
+
+1. In the AWS Console, switch to the same region as your Conductor cluster.
+2. Select the VPC you want to provision the Endpoint Service in.
+3. Follow [AWS's instructions for creating an Endpoint Service](https://docs.aws.amazon.com/vpc/latest/privatelink/create-endpoint-service.html).
+4. Share the following with Orkes:
+
+   | Field | Example |
+   | --- | --- |
+   | Your Conductor cluster's DNS name (the one that will call this Endpoint Service) | `customer-abc.orkesconductor.io` |
+   | PrivateLink service name | `com.amazonaws.vpce.us-west-2.vpce-svc-xxxxxxxx` |
+   | PrivateLink DNS name | `internal.yourcompany.com` |
+   | The DNS name(s) your workflows will call through this connection | `internal-api.yourcompany.com` |
+   | A testing URL (for HTTP/S), or bootstrap server host:port (for a message queue like Kafka) | `https://internal-api.yourcompany.com/health` |
+
+### Accept the connection
+
+Once Orkes creates the corresponding Endpoint, accept the connection request, unless you configured your Endpoint Service with auto-acceptance.
+
+### What happens after
+
+Orkes tests the connection and confirms with you once your outbound PrivateLink connection is validated and ready to use.
+
+### Add a new DNS name to an existing connection
+
+If you need to reach another internal service through a connection that's already in place, share the new DNS name with Orkes and we'll add a record for it. No new Endpoint or Endpoint Service is required.

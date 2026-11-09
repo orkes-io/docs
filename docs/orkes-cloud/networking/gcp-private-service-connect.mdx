@@ -1,0 +1,56 @@
+---
+slug: "/orkes-cloud/networking/gcp-private-service-connect"
+description: "Set up one-directional private connectivity between your network and your Conductor cluster with GCP Private Service Connect."
+---
+
+# Connect Conductor Cluster with GCP Private Service Connect
+
+GCP Private Service Connect sets up private connectivity in one direction at a time between your network and your Conductor cluster. Depending on your needs, you can set up:
+
+- **Conductor cluster → User network**, so HTTP tasks in your workflows can reach your internal APIs privately
+- **User network → Conductor cluster**, to remove public internet access to your cluster
+
+Each direction is its own connection with its own setup. If you need both, set up each one separately.
+
+## Prerequisites
+
+- An Orkes-hosted GCP cluster
+
+## Conductor cluster → User network
+
+You publish your service using Private Service Connect (the side being reached) and share its Service Attachment with Orkes. Orkes creates an Endpoint (the side that connects to it), and the resulting IP address is what your Conductor cluster uses to reach your service.
+
+### Get Orkes's project and network details
+
+1. Contact Orkes to get the project number and network name you'll restrict access to.
+
+### Publish your service
+
+1. Follow [Google Cloud's instructions to publish a service using Private Service Connect](https://docs.cloud.google.com/vpc/docs/configure-private-service-connect-producer).
+2. Under **Connection preference**, restrict access to Orkes's project and network:
+   - **Project**: The project number Orkes provides
+   - **Network**: The network name Orkes provides
+3. Confirm your service is listed as **Published**.
+4. On the service's details page, copy the **Service attachment ID** (in the format `projects/your-project/regions/region/serviceAttachments/name`) and share it with Orkes.
+
+### What happens after
+
+Orkes creates an Endpoint using the Service Attachment you shared, in the network and subnetwork your cluster runs in. If your Service Attachment is in a different region than your cluster, Orkes enables global access for the connection. Once this is set up, the Endpoint is listed as **Accepted**, along with the IP address your Conductor cluster uses to reach your service.
+
+## User network → Conductor cluster
+
+Orkes publishes a service using Private Service Connect (the side being reached) for your Conductor cluster and shares its Service Attachment with you. You then create an Endpoint (the side that connects to it), restricted to your own project and network, and the resulting IP address is what you use to reach your Conductor cluster.
+
+### Share your project and network details
+
+1. Give Orkes the project number and network name you'll create your Endpoint in, so Orkes can restrict access to it.
+
+Orkes publishes a service for your Conductor cluster, restricted to the project and network you shared, and sends you the Service Attachment ID.
+
+### Create your Endpoint
+
+1. Follow [Google Cloud's instructions to access a published service through an endpoint](https://docs.cloud.google.com/vpc/docs/configure-private-service-connect-services).
+2. Click **Create endpoint**, select **Published service** as the target, and enter the Service Attachment ID Orkes provided.
+3. Select your network and subnetwork.
+4. If the Service Attachment is in a different region than yours, turn on global access.
+5. Confirm your Endpoint is listed as **Accepted**, along with the IP address you'll use to reach your Conductor cluster.

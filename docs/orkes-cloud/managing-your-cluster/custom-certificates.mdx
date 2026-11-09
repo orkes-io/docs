@@ -1,0 +1,38 @@
+---
+slug: "/orkes-cloud/managing-your-cluster/custom-certificates"
+description: "A custom certificate is a certificate authority (CA) certificate that you upload to your cluster so workers trust connections secured by it."
+---
+
+# Manage Custom Certificates
+
+A custom certificate is a certificate authority (CA) certificate that you upload to your cluster so workers trust connections secured by it. Workflows and workers sometimes need to connect to a service secured by a private or internal certificate authority, such as an internal API, database, or message broker. Without a custom certificate, these connections fail TLS validation because the cluster doesn't recognize that CA.
+
+Uploading a custom certificate adds it to the cluster's trust store, so components can establish secure connections to systems signed by that CA without disabling certificate validation.
+
+In Orkes Cloud portal, you can upload, view, and delete a certificate from a cluster.
+
+## Upload a certificate
+
+1. From your cluster's detail view, open **Select an Action** and choose **Upload Certificate**.
+2. In the **Upload Certificate** dialog, select **Browse** and choose the certificate file. Accepted file types are `.crt`, `.cer`, `.ca-bundle`, `.p7b`, `.p7c`, `.p7s`, and `.pem`.
+3. Select **Confirm**.
+
+Uploaded certificates are applied to the Workers component.
+
+### What happens after upload
+
+Orkes schedules the certificate for installation and mounts it as a custom trust store for the Workers component. This may take a few minutes to complete before the certificate becomes active.
+
+## View certificates
+
+From your cluster's detail view, select the **Certificates** tab to see all certificates uploaded to the cluster, listed with their file name, alias, path, and state.
+
+## Delete a certificate
+
+1. From the **Certificates** tab, find the certificate you want to remove. It must show a state of **Ready** to be deleted.
+2. Select the delete icon next to it.
+3. Type the certificate's alias to confirm.
+
+Deleting a certificate removes it from the trust store on the Workers component. If your workflows still need to reach the service it was trusting, upload a replacement certificate first to avoid connection failures.
+
+**Note**: Certificates you upload don't expire automatically or get flagged when they're close to expiring. If the certificate on the other end gets renewed or replaced, upload the new one and delete the old one yourself.

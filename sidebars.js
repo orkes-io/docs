@@ -487,6 +487,69 @@ const sidebars = {
     ],
 
     // ==========================================================================
+    // ORKES CLOUD — managed clusters: deployment, access, SSO, networking
+    // ==========================================================================
+    orkesCloudSidebar: [
+        { type: 'doc', id: 'orkes-cloud/getting-started', label: 'Getting Started', className: 'leftMenuHeader' },
+        { type: 'doc', id: 'orkes-cloud/team-and-access', label: 'Team & Access' },
+        {
+            type: 'category',
+            label: 'Deploying',
+            link: { type: 'doc', id: 'orkes-cloud/deployment' },
+            items: [
+                { type: 'doc', id: 'orkes-cloud/deployment/orkes-hosted-setup', label: 'Orkes Hosted Setup' },
+                { type: 'doc', id: 'orkes-cloud/deployment/architecture', label: 'Customer Hosted Architecture' },
+                { type: 'doc', id: 'orkes-cloud/deployment/aws', label: 'Deploy on AWS' },
+                { type: 'doc', id: 'orkes-cloud/deployment/azure', label: 'Deploy on Azure' },
+                { type: 'doc', id: 'orkes-cloud/deployment/gcp', label: 'Deploy on GCP' },
+                { type: 'doc', id: 'orkes-cloud/deployment/hosted-worker-setup', label: 'Hosted Workers on Azure' },
+            ],
+        },
+        {
+            type: 'category',
+            label: 'Managing Your Cluster',
+            link: { type: 'doc', id: 'orkes-cloud/managing-your-cluster' },
+            items: [
+                { type: 'doc', id: 'orkes-cloud/managing-your-cluster/custom-certificates', label: 'Custom Certificates' },
+                { type: 'doc', id: 'orkes-cloud/managing-your-cluster/upgrade-rollback-restart', label: 'Upgrade, Roll Back, and Restart' },
+                { type: 'doc', id: 'orkes-cloud/managing-your-cluster/details-protection-deletion', label: 'Details, Protection, and Deletion' },
+                { type: 'doc', id: 'orkes-cloud/managing-your-cluster/auth-domains-networking', label: 'Authentication, Domains, and Networking' },
+            ],
+        },
+        {
+            type: 'category',
+            label: 'Monitoring',
+            link: { type: 'doc', id: 'orkes-cloud/monitoring-your-cluster' },
+            items: [
+                { type: 'doc', id: 'orkes-cloud/monitoring-your-cluster/exporting-metrics', label: 'Exporting Advanced Metrics' },
+            ],
+        },
+        {
+            type: 'category',
+            label: 'Single Sign-On',
+            link: { type: 'doc', id: 'orkes-cloud/sso' },
+            items: [
+                { type: 'doc', id: 'orkes-cloud/sso/entra-id', label: 'Microsoft Entra ID' },
+                { type: 'doc', id: 'orkes-cloud/sso/oidc', label: 'OpenID Connect (OIDC)' },
+                { type: 'doc', id: 'orkes-cloud/sso/okta', label: 'Okta' },
+                { type: 'doc', id: 'orkes-cloud/sso/azure-federation', label: 'Azure Federation' },
+            ],
+        },
+        {
+            type: 'category',
+            label: 'Networking',
+            link: { type: 'doc', id: 'orkes-cloud/networking' },
+            items: [
+                { type: 'doc', id: 'orkes-cloud/networking/aws-privatelink', label: 'AWS PrivateLink' },
+                { type: 'doc', id: 'orkes-cloud/networking/azure-private-link', label: 'Azure Private Link' },
+                { type: 'doc', id: 'orkes-cloud/networking/gcp-private-service-connect', label: 'GCP Private Service Connect' },
+                { type: 'doc', id: 'orkes-cloud/networking/gcp-vpc-peering', label: 'GCP VPC Peering' },
+                { type: 'doc', id: 'orkes-cloud/networking/http-worker-proxy', label: 'Proxy for HTTP Workers' },
+            ],
+        },
+    ],
+
+    // ==========================================================================
     // DEPLOY — OSS self-managed deployment + advanced configuration
     // ==========================================================================
     deploySidebar: [

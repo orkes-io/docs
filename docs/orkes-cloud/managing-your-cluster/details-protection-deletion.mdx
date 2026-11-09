@@ -1,0 +1,52 @@
+---
+slug: "/orkes-cloud/managing-your-cluster/details-protection-deletion"
+description: "Manage the label, the two independent safeguards, and permanent deletion of a Conductor cluster in Orkes Cloud."
+---
+
+# Manage Cluster Details, Protection, and Deletion
+
+Every cluster has a label describing its purpose, two independent safeguards, and the ability to be permanently deleted when you no longer need it. This doc covers how to change a cluster's environment type, how its safeguards work, what actually happens when you delete a cluster, and what to expect if you need to reverse the process.
+
+## Change the cluster's environment type
+
+Every cluster is tagged with an environment type, a label describing its purpose: ***Production***, ***Staging***, ***Development***, ***Test***, or ***Proof of Concept***. This label doesn't change how the cluster behaves; it's for your own reference across the portal (it's shown on your **Clusters** list and the **Details** tab).
+
+#### To change it:
+
+1. From your cluster's detail view, open **Select an Action** and choose **Change Cluster Environment Type**.
+2. From the **Environment Type** dropdown, select the new type.
+3. Select **Confirm**.
+
+## Protect a cluster from deletion or changes
+
+From your cluster's detail view, select the **Details** tab. Two toggles control what actions are allowed on the cluster:
+
+- **Delete Protection**: When enabled, the cluster can't be deleted. The **Delete Cluster** button is disabled while this is on. Enable this on any cluster you don't want to be removed by accident, especially production clusters.
+- **Change Protection**: When enabled, any mutating action on the cluster (deleting it, deploying, upgrading, rolling back, and more, including pod restarts) is blocked by a warning dialog. To proceed, you must check two boxes: that you have express permission to make the change, and that you're making it within the agreed change window. Both must be checked before you can continue.
+
+Turning either toggle **on** takes effect immediately, no confirmation needed. Turning either toggle **off** requires typing the cluster's exact name to confirm, since disabling a safeguard is itself a meaningful change.
+
+Both toggles can be switched at any time, independently of each other. Re-enabling **Delete Protection** has no effect on a deletion that's already in progress. It only prevents a *new* delete request; the only way to stop a deletion already underway is to cancel it during its grace period, described below.
+
+## Delete a cluster
+
+Deleting a cluster is permanent. Once the deletion process completes, the cluster and its resources are removed and can't be recovered through the portal.
+
+1. From your cluster's detail view, select the **Details** tab.
+2. Turn off **Delete Protection**, if it's enabled.
+3. Select **Delete Cluster**.
+4. Type the cluster's exact name to confirm. This action cannot be undone, and all data will be permanently lost.
+
+### What happens after you delete a cluster
+
+Deleting a cluster doesn't tear it down right away. It enters a grace period first, shown as a **DELETION SCHEDULED** badge on your Clusters list, during which you can still cancel it. Once that window passes, Orkes proceeds with a full teardown of the cluster's infrastructure.
+
+## Cancel a scheduled deletion
+
+#### To cancel the deletion of a cluster within its grace period:
+
+1. From your cluster's detail view, select the **Details** tab.
+2. While the cluster shows **DELETION SCHEDULED**, select **Cancel Scheduled Deletion**.
+3. Confirm.
+
+This only works during the grace period, before teardown has actually started. Once the teardown begins, it can no longer be cancelled.

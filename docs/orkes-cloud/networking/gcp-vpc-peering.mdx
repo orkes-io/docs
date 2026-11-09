@@ -1,0 +1,30 @@
+---
+slug: "/orkes-cloud/networking/gcp-vpc-peering"
+description: "Set up a single, two-way private connection between your network and your Conductor cluster with GCP VPC Peering."
+---
+
+# Connect Conductor Cluster with GCP VPC Peering
+
+GCP VPC Peering sets up a single, two-way private connection between your network and your Conductor cluster, so traffic can flow in both directions over the same connection. This differs from GCP Private Service Connect, which requires a separate one-way connection for each direction you need.
+
+## Prerequisites
+
+- An Orkes-hosted GCP cluster
+
+## Set up VPC Peering
+
+### Share your network details
+
+1. Give Orkes the following details about your network:
+   - **Orkes Cluster** name
+   - **Region**
+   - **Zones**
+   - **CIDR**
+   - **GCP Project ID**
+   - **VPC Network Name**
+
+Orkes sets up the peering connection and shares the setup details with you.
+
+### Complete setup on your end
+
+1. Use the details Orkes provides to complete the peering setup in your GCP console. Follow [Google's instructions for creating a VPC Network Peering](https://docs.cloud.google.com/vpc/docs/using-vpc-peering#creating_a_peering_configuration), selecting **In another project** and entering the project ID and VPC network name Orkes shared.

@@ -1,0 +1,53 @@
+---
+slug: "/orkes-cloud/managing-your-cluster"
+description: "Every cluster you provision through Orkes Cloud is listed under Clusters in the cloud portal."
+---
+
+# Managing Your Cluster
+
+Every cluster you provision through Orkes Cloud is listed under **Clusters** in the cloud portal. From there, you can view a cluster's configuration, monitor its health, and perform management actions on it directly.
+
+## Viewing your cluster
+
+Open **Clusters** in the cloud portal and select a cluster to open its detail view. The detail view is organized into tabs, each covering a different aspect of the cluster:
+
+- **Details**: Cloud provider, region, capacity, and the deployed version of each component (Conductor Server, Workers, Agent, Metrics Proxy). Also shows who created and last updated the cluster, and when. Cluster deletion and the delete/change protection toggles live here.
+- **URLs**: The cluster's endpoint URLs, including its Swagger URL, and any custom subdomains. Subdomains are added or removed from this tab.
+- **Status**: 90-day uptime history for Conductor, Agent, Workers, and DNS.
+- **Network**: Networking configuration, ingress type, VPC ID and CIDR, subnet IDs, and availability zones.
+- **Persistence**: Connection details for the cluster's backing datastores (cache and database).
+- **Application Properties**: The runtime configuration properties currently applied to Conductor, Workers, and Agent.
+- **Authentication**: The cluster's current authentication type and, if configured, its OIDC settings. Authentication type is changed from here.
+- **Actions History**: A log of every management action taken on the cluster, with its execution status and timestamp.
+- **Pods**: The pods currently running in the cluster, with status, age, CPU/memory usage, and restart count.
+- **Releases**: A changelog of Conductor releases, each with its version, date, and summary.
+- **Certificates**: Custom CA certificates uploaded for the cluster. Certificates can be viewed, or deleted from here.
+
+## Actions that can be carried out
+
+From a cluster's detail view, you can manage it in a few ways: through the **Select an Action** dropdown, or directly from one of the detail view's tabs, depending on the action. The following actions are available:
+
+| Action | Description |
+| --- | --- |
+| [Upload, view, or delete custom certificates](/content/orkes-cloud/managing-your-cluster/custom-certificates) | Upload, view, and delete custom CA certificates so workers trust connections secured by them. |
+| [Upgrade deployment version (Conductor/worker/agent)](/content/orkes-cloud/managing-your-cluster/upgrade-rollback-restart) | Move Conductor, Workers, Agent, or other cluster components to a newer version. |
+| [Rollback Deployment](/content/orkes-cloud/managing-your-cluster/upgrade-rollback-restart) | Revert a component to a previous version from the cluster's version history. |
+| [Rollout Restart](/content/orkes-cloud/managing-your-cluster/upgrade-rollback-restart) | Restart a component's pods without changing its version. |
+| [Update Kubernetes](/content/orkes-cloud/managing-your-cluster/upgrade-rollback-restart) | Update the cluster's underlying Kubernetes version. Available for AWS Enterprise clusters only. |
+| [Pull Pod Logs](/content/orkes-cloud/managing-your-cluster/upgrade-rollback-restart) | Pull log output from a specific pod, with options to filter and limit the results. |
+| [Change Cluster Environment Type](/content/orkes-cloud/managing-your-cluster/details-protection-deletion) | Classify the cluster's purpose, such as Production, Staging, Development, Test, or Proof of Concept. |
+| [Delete cluster and cancel scheduled deletion](/content/orkes-cloud/managing-your-cluster/details-protection-deletion) | Permanently delete a cluster you no longer need, or cancel a scheduled deletion. |
+| [Delete protection toggle](/content/orkes-cloud/managing-your-cluster/details-protection-deletion) | Control whether the cluster can be deleted. |
+| [Change protection toggle](/content/orkes-cloud/managing-your-cluster/details-protection-deletion) | Control whether mutating actions on the cluster require explicit acknowledgment. |
+| [Add/remove sub domain](/content/orkes-cloud/managing-your-cluster/auth-domains-networking) | Add or remove hostnames that point to your Conductor UI. |
+| [Change cluster auth type (SSO on Conductor)](/content/orkes-cloud/managing-your-cluster/auth-domains-networking) | Switch your cluster's login between default authentication and your own identity provider via OIDC. |
+| [Enable API Gateway](/content/orkes-cloud/managing-your-cluster/auth-domains-networking) | Deploy an API Gateway in front of the cluster, including DNS and SSL setup for metrics access. |
+
+## Next Steps
+
+For step-by-step instructions on each action, see:
+
+- [Manage Custom Certificates](/content/orkes-cloud/managing-your-cluster/custom-certificates)
+- [Upgrade, Roll Back, and Restart Deployments](/content/orkes-cloud/managing-your-cluster/upgrade-rollback-restart)
+- [Manage Cluster Details, Protection, and Deletion](/content/orkes-cloud/managing-your-cluster/details-protection-deletion)
+- [Manage Cluster Authentication, Domains & Networking](/content/orkes-cloud/managing-your-cluster/auth-domains-networking)

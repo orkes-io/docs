@@ -1,0 +1,75 @@
+---
+slug: "/orkes-cloud/networking/azure-private-link"
+description: "Set up private connectivity between your network and your Conductor cluster in either direction with Azure Private Link, without traffic leaving the Azure network."
+---
+
+# Connect Conductor Cluster with Azure Private Link
+
+Azure Private Link lets you set up private connectivity between your network and your Conductor cluster, in either direction, without traffic leaving Azure's network. Depending on your needs, you can set up:
+
+- **User network → Conductor cluster**, to remove public internet access to your cluster
+- **Conductor cluster → User network**, so HTTP tasks in your workflows can reach your internal APIs privately
+
+You can set up one direction or both. Each direction is a separate Private Link connection, with the roles reversed.
+
+## Prerequisites
+
+- An Orkes hosted Azure cluster.
+- For User network → Conductor cluster, an existing resource group and virtual network (VNet) in your Azure environment where you want to connect from.
+
+## User network → Conductor cluster
+
+Orkes creates an Azure Private Link Service pointing to your cluster and shares an **Alias ID** with you. You then create a Private Endpoint in your own virtual network using that alias to establish the connection.
+
+### Set up your Private Endpoint
+
+1. In the Azure portal, create a **Private Endpoint**.
+   - Choose the resource group and VNet where you need connectivity.
+   - Select **Connect to an Azure resource by resource ID or alias**.
+   - Enter the alias Orkes provided you.
+2. Let Orkes know once you've submitted the request, so we can accept the connection.
+3. Once accepted, Azure allocates a private IP address from your VNet for the endpoint.
+
+### Configure DNS
+
+Depending on whether your network has public DNS resolution available, choose one of the following options.
+
+#### Public DNS available
+
+- Share your Private Endpoint IP address with Orkes.
+- Orkes creates a DNS entry for it and gives you a domain name to use.
+
+#### Private DNS only
+
+Choose one of the following:
+
+- Add a DNS A record pointing your cluster's domain name (for example, cluster.orkesconductor.io) to your Private Endpoint IP address.
+
+OR
+
+- Request an internal-only domain name from Orkes, then:
+  1. Create a private DNS zone for that domain name.
+  2. Link the zone to your VNet, leaving auto-registration off.
+  3. Add an A record for the domain pointing to your Private Endpoint IP address.
+
+Once your Private Endpoint and DNS are in place, Orkes creates the ingress route to your Conductor cluster using the private domain you've configured, and updates the allowed callback URLs so sign-in works with your new domain.
+
+Once everything is in place, verify you can reach your Conductor cluster at its new private domain from within your VNet.
+
+**Note:** If you have multiple Conductor clusters hosted on the same underlying infrastructure (for example, separate environments), Orkes may reuse an existing Private Link Service and give you the same Alias ID for each, instead of creating a new one. This doesn't change any of the steps above.
+
+## Conductor cluster → User network
+
+You create an Azure Private Link Service on your side and share its alias with Orkes. Orkes then creates a Private Endpoint in your cluster's virtual network using that alias.
+
+### Create a Private Link Service
+
+1. In the Azure portal, create a **Private Link Service** for the service you want your workflows to reach.
+2. In the **Access Level** setting, specify the Orkes Azure subscription ID. Contact your Orkes representative to get this ID.
+3. Select **Auto approval** for a faster turnaround.
+4. Once the Private Link Service is created, go to its **Overview** page and copy the **Alias** value.
+5. Share the alias with your Orkes representative.
+
+### Accept the connection
+
+Orkes creates the Private Endpoint in your cluster's virtual network using your alias, and configures private DNS for it. If you turned off auto approval, the connection shows as pending. Approve the connection request once your Orkes representative confirms the Private Endpoint has been created.

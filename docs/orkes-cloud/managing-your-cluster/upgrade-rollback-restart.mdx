@@ -1,0 +1,99 @@
+---
+slug: "/orkes-cloud/managing-your-cluster/upgrade-rollback-restart"
+description: "Upgrade, roll back, and restart the components of your Orkes Cloud cluster: Conductor, Workers, Agent, and Metrics Proxy."
+---
+
+# Upgrade, Roll Back, and Restart Deployments
+
+Your cluster runs several components, each at its own version: Conductor, Workers, Agent, and Metrics Proxy. The components available are:
+
+- **Conductor**: The orchestration server that runs and manages your workflows.
+- **Workers**: The services that execute the individual tasks within those workflows.
+- **Agent**: The component that polls the Orkes control plane for updates, without needing any inbound access to your cluster.
+- **Metrics Proxy**: The component that routes monitoring requests to Prometheus and Grafana.
+
+You can move any of these components to a newer version, revert one to a previous version if an upgrade causes issues, restart a component without changing its version, or pull logs from a pod to troubleshoot an issue.
+
+## Upgrade deployment
+
+1. From your cluster's detail view, open **Select an Action** and choose **Upgrade Deployment**.
+2. From the **Resource Type** dropdown, select the component to upgrade:
+   1. **Both Conductor Server and Workers:** Upgrades the Conductor server and workers together.
+   2. **Conductor Server:** Upgrades only the Conductor server.
+   3. **Conductor Workers:** Upgrades only the workers.
+   4. **Conductor Metrics Proxy:** Upgrades only the metrics proxy.
+   5. **Orkes Agent:** Upgrades only the agent.
+   6. **Conductor Server, Workers, and Metrics Proxy**: Upgrades all three together.
+3. In the **Version** field, select a target version from the list, or type a specific version directly.
+4. If you selected a single resource rather than one of the combined options, you can optionally add ***key-value parameters*** to set or update application properties for the upgrade.
+   1. Variable names can only contain letters, digits, dots, underscores, and hyphens, and can't start with a digit.
+   2. Leaving a value empty removes that property if it already exists.
+5. Select **Confirm**.
+
+Selecting a combined option upgrades each of its components as a separate action rather than one combined step. Check the **Actions History** tab to confirm all of them completed successfully.
+
+### Version compatibility
+
+You can only upgrade a component up to one major version above its current version by default. If you need to upgrade further than that, you'll be asked to explicitly acknowledge the jump before continuing. Additional versions become available as Orkes releases them.
+
+You can view a component's current application properties anytime from the **Application Properties** tab on your cluster's detail view, which lists Conductor, Workers, and Agent separately. Select **Refresh Application Properties** to pull the latest values.
+
+## Rollback deployment
+
+1. From your cluster's detail view, open **Select an Action** and choose **Rollback Deployment**.
+2. From the **Resource Type** dropdown, select the component to roll back:
+   1. **Conductor**: Rolls back the Conductor server.
+   2. **Workers**: Rolls back the workers.
+   3. **Agent**: Rolls back the agent.
+   4. **Metrics Proxy**: Rolls back the metrics proxy.
+3. In the **Version** field, select a previously installed version. Each entry shows the version number and the date and time it was installed.
+4. Review environment variables for that version. If it has environment variable changes, select **Include changes in the environment variables** to apply them as part of the rollback. The table shows each variable's name and value, alongside an icon indicating the type of change.
+5. Select **Confirm**.
+
+Unlike an upgrade, a rollback can't be pushed past a compatibility check with an acknowledgment. If a version falls outside the currently supported range for that component, it won't appear as an option to roll back to.
+
+## Rollout Restart
+
+If a component needs a fresh start without changing its version, for example, to clear a stuck process, you can trigger a rollout restart instead of an upgrade or rollback.
+
+1. From your cluster's detail view, open **Select an Action** and choose **Rollout Restart**.
+2. From the **Resource Type** dropdown, select the component to restart:
+   1. **Conductor Server**: Restarts only the Conductor server.
+   2. **Conductor Workers**: Restarts only the workers.
+   3. **Conductor Metrics Proxy**: Restarts only the metrics proxy.
+   4. **Orkes Agent**: Restarts only the agent.
+3. Select **Confirm**.
+
+Restarting a component doesn't change its version or configuration. The Pods tab refreshes automatically once the restart is triggered, so you can confirm it went through.
+
+### What happens after an upgrade, rollback, or restart
+
+Orkes triggers the change to apply it to your cluster's components in the background. You can track the status of any upgrade, rollback, or restart from the **Actions History** tab on your cluster's detail view, which lists each action's ID, operation, execution status, when it was created, and who triggered it. Select **Refresh** to pull the latest entries.
+
+## Update Kubernetes
+
+For AWS Enterprise clusters, you can also update the underlying Kubernetes (EKS) version your cluster runs on, separately from any Conductor component.
+
+1. From your cluster's detail view, open **Select an Action** and choose **Update Kubernetes**.
+2. The dialog shows your cluster's current Kubernetes version. From the **Target Version** dropdown, select a version to update to; the next available version is marked "(recommended)."
+3. Optionally, check **Force update** to skip compatibility checks.
+4. Select **Update Kubernetes**.
+
+This updates the EKS cluster, its addons, and all node groups. It can take 30–60 minutes and causes brief service interruptions while node groups update.
+
+## Troubleshooting: Pull Pod Logs
+
+If a component isn't behaving as expected after a change, you can pull log output directly from one of its pods.
+
+1. From your cluster's detail view, open **Select an Action** and choose **Pull Pod Logs**.
+2. Enter the **Pod Name**. You can find pod names on the **Pods** tab.
+3. Choose a **Fetching** mode:
+   - **Last (tail)**: Returns the most recent lines.
+   - **First (head)**: Returns lines starting from the beginning, or from a line you specify with Skipping.
+4. Set **Lines (up to 1000)** to how many lines you want returned.
+5. If you chose **First (head)**, optionally set **Skipping** to the number of lines to skip before fetching starts.
+6. Optionally, enter a **Grep** value to filter the output to lines matching that text.
+7. If you entered a **Grep** value, optionally choose **With context** to include surrounding lines: Before, After, or Context (both directions), and set **Context Length** to how many surrounding lines to include.
+8. Select **Confirm**.
+
+Orkes schedules the log pull and takes you to that action's entry on the **Actions History** tab, where the log output appears once it completes.

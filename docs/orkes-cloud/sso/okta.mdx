@@ -1,0 +1,46 @@
+---
+slug: "/orkes-cloud/sso/okta"
+description: "Orkes supports Okta as your identity provider through an OIDC connection."
+---
+
+# Configure Single-Sign-On (SSO) with Okta
+
+Orkes supports Okta as your identity provider through an OIDC connection. Setting this up involves creating an app integration in Okta, then using the Cloud portal to configure your Conductor cluster to use it.
+
+**Note**: Once you configure SSO with Okta, the cluster's current login method stops working. Before you make this change, confirm that at least one user who will have Admin access on the Conductor cluster can successfully log in through Okta, or you could lock yourself out of the cluster entirely.
+
+## Creating an app integration in Okta
+
+1. In Okta, create a new App Integration. Select **OIDC - OpenID Connect** as the sign-in method and **Single-Page Application** as the application type.
+2. Under **Grant type**, select:
+   - Authorization Code
+   - Interaction Code
+   - Refresh Token
+3. For **Sign-in redirect URI**, enter `https://[your cluster host]/login/callback`.
+4. For **Sign-out redirect URI**, enter `https://[your cluster host]`.
+5. Add `https://[your cluster host]` as a **Trusted Origin**.
+6. Grant access to the people in your organization who'll use Orkes Conductor.
+7. Go to **Security** > **API** and select or create an **Authorization Server**.
+8. In the Authorization Server's access policies, create or update a policy to include the **Authorization Code** and **Interaction Code** grant types.
+
+Once you've completed these steps, save the following values securely as they are needed in the next step:
+
+- Application Client ID
+- Authorization Server issuer URI
+- Authorization Server audience
+
+## Changing authentication via Orkes Cloud portal
+
+To switch the authentication method:
+
+1. Go to the [Orkes Cloud portal](https://cloud.orkes.io/).
+2. Go to **Clusters** > select your cluster.
+3. Go to the **URLs** tab, and confirm the URL matches what you registered with your Okta provider.
+4. Open the **Authentication** tab and select **Change Authentication Type**.
+   1. Choose **Okta OIDC Connect** and enter the values from the previous section:
+      1. **Audience**: The Authorization Server audience.
+      2. **Client Id**: The Application Client ID.
+      3. **Issuer**: The Authorization Server issuer URI.
+5. Select **Confirm**.
+
+Wait for the change to take effect in the cluster, usually within 5 to 10 minutes. Force-refresh your browser to see the new authentication type. If you see errors, try using an incognito window.

@@ -1,0 +1,182 @@
+---
+slug: "/orkes-cloud/deployment/azure"
+description: "Orkes Conductor can be deployed as a customer-hosted cluster running entirely within your own Azure subscription."
+---
+
+# How to deploy a customer-hosted cluster on Azure
+
+Orkes Conductor can be deployed as a customer-hosted cluster running entirely within your own Azure subscription. This guide walks through provisioning a production-ready cluster in your Azure environment, from the prerequisites Azure requires to the steps for triggering and completing provisioning through the Orkes Cloud portal.
+
+## Prerequisites
+
+To configure an Orkes Conductor cluster, you must have the following dependencies configured in your Azure portal:
+
+- Resource providers
+- Resource group
+- Azure CLI
+- Quotas and VM availability
+- VNet and IP range
+
+Once these prerequisites are in place, Orkes provisions everything else required to get a cluster up and running, typically within 45 minutes to an hour.
+
+### Resource providers
+
+Ensure the following resource providers are activated in your subscription:
+
+- Microsoft.Network
+- Microsoft.ManagedIdentity
+- Microsoft.Compute
+- Microsoft.Advisor
+- Microsoft.Storage
+- Microsoft.KeyVault
+- Microsoft.Kubernetes
+- Microsoft.KubernetesConfiguration
+- Microsoft.ContainerService
+- Microsoft.Insights
+- Microsoft.Cache
+- Microsoft.DBforPostgreSQL
+
+### Resource group
+
+Create a resource group in a region of your preference. Supported regions are:
+
+- East US (eastus)
+- East US 2 (eastus2)
+- Central US (centralus)
+- South Central US (southcentralus)
+- West US 3 (westus3)
+- Australia East (australiaeast)
+- France Central (francecentral)
+- North Europe (northeurope)
+- West Europe (westeurope)
+- Qatar Central (qatarcentral)
+- UK South (uksouth)
+- Canada Central (canadacentral)
+- Canada East (canadaeast)
+- Germany West Central (germanywestcentral)
+- UAE North (uaenorth)
+
+**Tip:** For lowest latency, we recommend choosing the same region as your Conductor cluster, unless you have data residency or other requirements that mandate otherwise.
+
+### Azure CLI
+
+[Install the Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest) on a local machine, and log in to the same Azure subscription you'll use for this deployment. You'll use it to run the verification commands in this guide, and later to run the provisioning script generated during cluster creation.
+
+### Quotas and VM availability
+
+Ensure your subscription has sufficient quota for the following resources in the region you selected for your resource group:
+
+| Resource | Minimum quota |
+| --- | --- |
+| Standard DADSv5 Family vCPUs | 16 |
+| Total regional vCPUs | 16 |
+
+**Check VM availability**: Confirm the VM type required for cluster deployment is active in your subscription by running the following command in the Azure CLI. Log in to the CLI with the same Azure subscription you'll use for the Orkes cluster deployment, and replace `<region>` with your resource group's region, for example, westeurope.
+
+```
+az vm list-skus -l <region> -o table | grep "NotAvailableForSubscription" | grep "Standard_D4ads_v5"
+```
+
+A blank result is expected. If it instead reports non-availability of this VM type in the specified region, reach out to Azure to activate it in your subscription before deployment.
+
+**Check Postgres availability**: Confirm Postgres Flexible Server is available in the same region.
+
+```
+az postgres flexible-server list-skus --location <region>
+```
+
+If this reports non-availability of Postgres in the specified region, choose another region or reach out to Azure to enable it.
+
+### VNet and IP range
+
+VNet creation is optional, but you'll need to provide your preferred VNet name and IP range:
+
+- If you already have a VNet, provide its name and IP range.
+- If you don't, provide your preferred IP range, and the cloud provisioning tool will create the VNet alongside the rest of the resources.
+
+Supported IP ranges are /16 through /24.
+
+## Cluster provisioning
+
+In this step, you'll log in to the Orkes Cloud portal to start deployment of the Orkes Conductor cluster into the VNet you created earlier.
+
+Your email must be shared with Orkes before you can create a cluster. If the **Create New Cluster** option isn't available to you in the portal, contact your Orkes representative to be added.
+
+#### To provision a cluster:
+
+1. Log in to the [Orkes Cloud portal](https://cloud.orkes.io/).
+2. Go to **Clusters** from the left navigation menu.
+3. Select **Create New Cluster** > **Create New Customer Cluster**.
+4. Select **Azure** as the cloud provider.
+5. Under **Deployment Type**, select **Conductor cluster**.
+6. Enter the following parameters:
+   1. **Cluster Name**: Max 18 characters; letters, numbers, and hyphens are allowed (can't start with a hyphen).
+   2. **Azure Resource Group Name**: The name of the Azure resource group you created earlier.
+   3. **Azure Region**: Select the region where this cluster needs to be deployed; this region should match the region your resource group is associated with.
+7. Select **Generate Script**.
+
+Selecting **Generate Script** creates a script that must be run by the administrator of your Azure account, using the Azure CLI. The script creates the applications, service principals, roles, and role assignments required for cluster provisioning, and prints the service principal credentials you'll enter in the next step to continue.
+
+#### To run the script:
+
+1. On the local machine where you'll run the script, log in to Azure and target the correct subscription. Replace `${AZURE_SUBSCRIPTION_ID}` with your subscription ID:
+
+   ```
+   az upgrade
+   az bicep upgrade
+   az login
+   az account set -s "${AZURE_SUBSCRIPTION_ID}"
+   ```
+
+2. Run the downloaded script:
+
+   ```
+   sh <downloaded script>
+   ```
+
+If any part of the script fails partway through, note the values already displayed, then rerun the script after resolving the issue; only the failed parts run again.
+
+#### To verify authorization:
+
+1. From the script output, enter the following values into the Orkes Cloud portal:
+   - **Azure Subscription Id**
+   - **Azure Service Principal Application Id**
+   - **Azure Service Principal Password**
+   - **Azure Tenant Id**
+2. Select **Verify Authorization & Continue**.
+
+#### To complete provisioning:
+
+1. Once verification succeeds, enter the following on the next screen:
+   - Name of the VNet
+   - CIDR range of the VNet
+   - **Environment Type**: A tag for your cluster's environment (helpful for distinguishing between multiple clusters)
+2. Select **Create Provisioning Workflow** to start provisioning.
+
+You can track provisioning status from the cluster listing page.
+
+## Post-deployment tasks
+
+Once the infrastructure is provisioned, you'll typically go through the following.
+
+### Switch to private access
+
+Before switching to private access, make sure connectivity is established to the VNet running the Conductor cluster. This is typically done by peering the VNet with the VNets hosting the services that need Conductor connectivity.
+
+Before you can switch to private connectivity, you'll need to:
+
+- Configure the required VNet peerings, and verify the private IP of the Conductor cluster is reachable from the source VNets.
+- Configure VPN access to reach the Conductor server (for UI access).
+- Optional: Use a custom AzureDNS domain instead of the default Orkes-provided one.
+
+Once private access is established, reach out to the Orkes team to remove the public load balancer and switch to a private one.
+
+### Switch the authentication mechanism
+
+Orkes Cloud supports multiple authentication mechanisms. By default, Auth0-based authentication is enabled. But this can be changed to one of the [other supported authentication mechanisms](/content/orkes-cloud/managing-your-cluster/auth-domains-networking) through the Orkes Cloud portal.
+
+## Next Steps
+
+Once your cluster is up and running, see [Managing Your Cluster](/content/orkes-cloud/managing-your-cluster) to see what you can do with it from the portal.
+
+Don't want to run your own task-worker compute? See the [Hosted Worker Setup Guide](/content/orkes-cloud/deployment/hosted-worker-setup) to have Orkes run your task workers inside your Azure subscription.

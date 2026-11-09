@@ -1,0 +1,119 @@
+---
+slug: "/orkes-cloud/deployment/aws"
+description: "Orkes Conductor can be deployed as a customer-hosted cluster running entirely within your own AWS account."
+---
+
+# How to deploy a customer-hosted cluster on AWS
+
+Orkes Conductor can be deployed as a customer-hosted cluster running entirely within your own AWS account. This keeps all data and compute associated with your workflow orchestrations within your own cloud environment.
+
+In this model, the Conductor cluster only makes outbound connections to Orkes Cloud, and you retain full control to manage and monitor that communication, for example, by egressing traffic through a firewall.
+
+Costs for the underlying infrastructure are billed directly to you by the cloud provider.
+
+## Prerequisites
+
+Before you begin, complete the following in your AWS account. The final authorization step (Authorize Orkes) needs to be run by someone with access privileges to log in to this AWS account.
+
+### AWS account and region
+
+- Identify the AWS account that will host the Conductor cluster.
+- Identify the AWS region where the cluster will be deployed.
+
+***Info**: We recommend choosing a region that's the same as, or close to, where most of your task workers are located, to minimize latency between the cluster and workers. This is a recommendation, not a requirement: the Conductor cluster can orchestrate tasks implemented in other regions, including a different cloud or your own on-site datacenters.*
+
+### VPC
+
+[Create a Virtual Private Cloud (VPC)](https://docs.aws.amazon.com/vpc/latest/userguide/create-vpc.html#Create-VPC) in your chosen region. You can use an existing VPC, but we recommend creating a new one to avoid conflicts with existing setups.
+
+- Choose one of the following subnet approaches:
+
+  1. Don't create any subnets, and let the Conductor provisioning process create them. This is the more common approach.\
+     **OR**
+  2. Create 2 subnets per Availability Zone (at least 2 AZs, max 3), with:
+     - One public subnet with a route pointing to the Internet Gateway.
+     - One private subnet with a route pointing to the NAT Gateway.
+
+  One of these two approaches must be followed exactly, or validation will fail. If you have custom requirements, let us know so we can work to accommodate them.
+
+- While creating a VPC, select a CIDR block between /16 and /23 for this VPC, for example, 10.1.1.0/20. If you plan to peer this VPC with other parts of your network, for example, to orchestrate workers in a different VPC, make sure the IP range you allocate here doesn't conflict with any other VPC in the peering graph.
+- After creating the VPC, go to its configuration settings and turn on both **Enable DNS resolution** and **Enable DNS hostnames**. Save the **VPC ID**, you'll need it later.
+
+### IAM service-linked roles
+
+Confirm the following IAM service-linked roles exist (these are present by default):
+
+- [Auto Scaling](https://docs.aws.amazon.com/autoscaling/plans/userguide/aws-auto-scaling-service-linked-roles.html) (AWSServiceRoleForAutoScaling)
+- [RDS](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAM.ServiceLinkedRoles.html) (AWSServiceRoleForRDS)
+- [ElastiCache](https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/using-service-linked-roles.html) (AWSServiceRoleForElastiCache)
+
+### Access model
+
+Decide whether this cluster should have a public IP endpoint or a private-only IP endpoint. If you choose private-only, you'll need a connectivity mechanism to reach the cluster, for example, a VPN connection.
+
+### Route 53 DNS zone
+
+Identify or create a Route 53 zone to host the DNS records for this cluster.
+
+- You can use the Orkes-provided DNS for your cluster. This is the more common approach.
+- If you use your own zone, it must be hosted on Route 53 and be of type public.
+- For clusters with a private-only IP endpoint, this zone will respond with private IPs.
+
+## Cluster provisioning
+
+In this step, you'll log in to the Orkes Cloud portal to start deployment of the Orkes Conductor cluster into the VPC you created earlier.
+
+Your email must be shared with Orkes before you can create a cluster. If the **Create New Cluster** option isn't available to you in the portal, contact your Orkes representative to be added.
+
+#### Create the cluster
+
+1. Log in to the [Orkes Cloud portal](https://cloud.orkes.io/).
+2. Go to **Clusters** from the left navigation menu.
+3. Select **Create New Cluster** > **Create New Customer Cluster**.
+4. Select **AWS** as the cloud provider.
+5. Enter the following parameters:
+   - **Cluster Name**: Max 18 characters. Letters, numbers, and hyphens are allowed (it can't start with a hyphen).
+   - **AWS Account Id**: The ID of your AWS account.
+6. Under **Customer-owned networking**, decide which subnet approach from the Prerequisites section you're using:
+   - Leave it unchecked if you want Orkes to create the VPC networking (subnet approach 1).
+   - Check it if you created your own subnets, route tables, and gateways (subnet approach 2). The generated authorization grants Orkes no permission to create, modify, or delete any of them.\
+     This choice can't be changed once you authorize Orkes in the next step. To switch approaches later, you'd need to start over with a new cluster name.
+7. Select **Authorize Orkes**.
+
+This step creates a CloudFormation Template (CFT) that, when run, creates an IAM role with the permissions specified in it (the exact permissions depend on whether you checked Customer-owned networking). You can download the CFT to inspect the configuration.
+
+8. Select **Authorize (Opens AWS Console)**.
+   - Complete the **Create Stack** flow.
+     1. You can leave the settings as is.
+     2. Stack creation takes a few minutes to complete.
+     3. Once finished, you've created an IAM role that Orkes can assume to proceed with provisioning.
+     4. In the **Resources** tab, you can find the new role that was created. Selecting it takes you to the IAM console for more details, and you can revoke access from there if needed.
+9. Go back to the Orkes Cloud portal and select **Close** on the dialog box.
+10. Select **Verify Authorization & Continue**.
+
+#### Configure cluster settings
+
+1. **Ignore VPC validation**: Leave this unchecked. It skips the background checks the portal runs on your VPC and subnets, and is meant as a troubleshooting fallback for working with Orkes support rather than a normal step in this flow. It has no effect if you checked Customer-owned networking earlier: validation can't be skipped for a customer-owned VPC.
+2. In the **Region** dropdown, select the AWS region you identified earlier.
+3. In the **VPC Id** dropdown, select the VPC you created earlier.
+   - Look for confirmation that Orkes has validated the VPC: "Great - We have validated this VPC and it meets the requirements for provisioning this Conductor cluster."
+   - If an error surfaces instead, debug if the VPC's CIDR block falls outside the /16 to /23 range (for example, /24), recreate the VPC with a CIDR block in that range and obtain a new VPC ID.
+4. In the **Preferred Availability Zones** dropdown, select the AZs in this region you want to deploy the Conductor across, up to a maximum of three. Adding more AZs increases overall availability but also increases underlying infrastructure usage.
+5. Next to **Domain Url**, enter your desired subdomain, then select a domain from the dropdown next to it (for example, orkesconductor.io) to complete your cluster's URL. The dropdown lists the Route 53 hosted zones available for this cluster, labeled as either "Orkes" (an Orkes-provided domain) or "Customer" (your own zone). Select a zone that can resolve the DNS query based on the access model (Internet or VPC) you specify in the next step.
+6. In the **Ingress Type** dropdown:
+   - Select **Internet - Access using Credentials** to access this cluster through the internet (with DNS records hosted on a public Route 53 hosted zone).
+   - Select **VPC Only - Access via VPN or Peering** to access this cluster through the private IP endpoint (with DNS records hosted on a private Route 53 hosted zone).
+7. In the **Cluster Capacity** dropdown, select the desired workflow capacity, for example, ***Small (100s-1000s of workflows/day)***.
+8. In the **Environment Type** dropdown, select a tag for the type of workloads you plan to run in this cluster, for example, *Production*, *Staging*, *Development*, *Test*, or *Proof of Concept*.
+9. In the **Enable authentication** field, select **Yes** to protect access to your Conductor cluster. A default authorization configuration is added, which you can later change to your own OAuth provider. This is near-mandatory for clusters with a public IP endpoint.
+10. If you're using your own pre-created subnets (Customer-owned networking, checked earlier), a **Cluster subnets** field appears. It's defaulted to every subnet with a route to the internet. Remove any you don't want the cluster placed in, so that exactly one subnet per availability zone remains, across 2 or 3 zones.
+
+#### Complete provisioning
+
+1. Verify all settings are correct, select **Create Provisioning Workflow**, and confirm the pop-up dialog to proceed.
+2. The provisioning starts and takes approximately 60 minutes to complete. You can check the status of cluster creation on the Orkes Cloud portal.
+3. Once the cluster is created, you can access it using the links on the cluster details page in the Orkes Cloud portal.
+
+## Next Steps
+
+Once your cluster is up and running, see [Managing Your Cluster](/content/orkes-cloud/managing-your-cluster) to see what you can do with it from the portal.

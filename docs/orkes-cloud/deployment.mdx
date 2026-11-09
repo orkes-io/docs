@@ -1,0 +1,42 @@
+---
+slug: "/orkes-cloud/deployment"
+description: "Compare the Orkes Hosted, Customer Hosted, and On-Prem deployment models for Orkes Conductor, and choose how to deploy your cluster."
+---
+
+# Deploying Your Cluster
+
+Orkes offers three deployment models: **Orkes Hosted**, where Orkes provisions and operates the infrastructure for you; **Customer Hosted**, where the cluster runs inside your own cloud account; and **On-Prem**, where you deploy and operate Conductor entirely within your own infrastructure. Customer Hosted also has a Hosted Workers sub-offering (currently for Azure only), where Orkes runs your task workers inside your own subscription.
+
+## Orkes Hosted
+
+With Orkes Hosted, your Orkes Conductor cluster runs inside Orkes Cloud, in a virtual network dedicated to your organization. Orkes provisions, operates, and scales this infrastructure for you, and can deploy it on AWS, GCP, or Azure depending on your preference.
+
+![Orkes Hosted](/img/orkes-cloud/orkes-hosted.png)
+
+Because Orkes owns and runs the underlying infrastructure, this model is fully managed end to end: Orkes handles version upgrades, scaling, patching, and infrastructure-level monitoring. Your team interacts with the cluster the same way regardless of which cloud provider it runs on underneath; you don't need cloud-specific expertise or your own infrastructure team to keep it running.
+
+Your task workers still run in your own environment and connect to the cluster over public or private connectivity, so your workflow logic and data never need to move into Orkes' infrastructure; only the Conductor cluster itself does.
+
+## Customer Hosted
+
+With Customer Hosted, your Orkes Conductor cluster runs inside your own cloud account (AWS, Azure, GCP) or on-prem environment, using your own infrastructure and subject to your own security and compliance controls. Your team (or infra provider) is responsible for provisioning and maintaining the underlying compute, networking, and storage the cluster runs on.
+
+![Customer Hosted](/img/orkes-cloud/customer-hosted.png)
+
+### Hosted Workers (Azure only)
+
+If you don't want to run your own task-worker compute, Orkes also offers Hosted Workers, where your task workers run in a dedicated environment inside your own Azure subscription, provisioned and managed by Orkes, rather than on infrastructure you set up and operate yourself. This is available on Azure only today. See the [Hosted Worker Setup Guide](/content/orkes-cloud/deployment/hosted-worker-setup) for details.
+
+## On-Prem
+
+With On-Prem, you deploy Orkes Conductor entirely within your own infrastructure, whether that's on-premises hardware, a private cloud, or a Kubernetes cluster you manage yourself. You provision and connect the required infrastructure (Redis, Postgres, object storage, and networking), then install Conductor using the Orkes Helm chart. On-prem clusters aren't provisioned or managed through the Orkes Cloud portal, so you handle upgrades and day-to-day operations yourself.
+
+## Next Steps
+
+See the individual setup guide for your path:
+
+- [Orkes Hosted Cluster Setup](/content/orkes-cloud/deployment/orkes-hosted-setup)
+- [Customer Hosted: AWS](/content/orkes-cloud/deployment/aws)
+- [Customer Hosted: Azure](/content/orkes-cloud/deployment/azure)
+- [Customer Hosted: GCP](/content/orkes-cloud/deployment/gcp)
+- [Hosted Worker Setup Guide](/content/orkes-cloud/deployment/hosted-worker-setup)

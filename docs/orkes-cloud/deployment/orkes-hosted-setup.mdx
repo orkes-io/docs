@@ -1,0 +1,71 @@
+---
+slug: "/orkes-cloud/deployment/orkes-hosted-setup"
+description: "Set up an Orkes Hosted Conductor cluster, where Orkes provisions and operates the infrastructure for you. Learn what you provide and how to create the cluster."
+---
+
+# Deployment Guide: Orkes Hosted Cluster Setup
+
+With Orkes Hosted, Orkes provisions and operates your Conductor cluster's infrastructure for you. Setup is deliberately lightweight on your side; most of what a customer-hosted deployment requires (networking, compute, database, cache) is Orkes' responsibility, not yours.
+
+## What you provide
+
+When requesting an Orkes Hosted cluster, you'll specify:
+
+- **Cloud provider**: AWS, GCP, or Azure
+- **Region**: Choose from Orkes' supported locations for your selected provider.
+  - **AWS**:
+    - US East, Virginia (us-east-1)
+    - US West, Oregon (us-west-2)
+    - EU West, Ireland (eu-west-1)
+    - EU West, London (eu-west-2)
+    - EU West, Paris (eu-west-3)
+    - AP South, Mumbai (ap-south-1)
+    - AP Southeast, Singapore (ap-southeast-1)
+    - AP Southeast, Sydney (ap-southeast-2)
+    - ME Central, UAE (me-central-1)
+    - AP Northeast, South Korea (ap-northeast-3)
+  - **Azure**:
+    - East US
+    - East US 2
+    - Central US
+    - South Central US
+    - West US 2
+    - Australia East
+  - **GCP**:
+    - US East
+    - South Carolina (us-east1)
+    - US East, Virginia (us-east4)
+    - US Central, Iowa (us-central1)
+    - US West, Oregon (us-west1)
+    - Europe West, Ireland (europe-west1)
+    - Europe West, Frankfurt (europe-west3)
+    - Asia Southeast, Singapore (asia-southeast1)
+- **Sizing tier**: Based on your expected workflow/task volume and environment (dev/staging/production)
+- **Cluster name:** A name for your Conductor cluster which the developers will use for building workflows and agents
+- **Environment type**: Production, Staging, Development, Test, or Proof of Concept
+
+## What Orkes handles
+
+Once you submit your request, Orkes automatically provisions everything your cluster needs:
+
+- Networking (VPC/VNet, subnets)
+- Kubernetes cluster and node capacity
+- Redis (the primary datastore for workflow and task state, deployed with replication for durability)
+- Postgres (persistence backend)
+- Authentication configuration
+- Conductor server, agent, and monitoring deployment
+- Ingress and TLS certificates
+- DNS configuration for your cluster's domain
+- Health verification before your cluster is marked ready
+
+## What to expect
+
+Your cluster will show a provisioning status in the portal while this runs, and you'll be notified once it's ready to use.
+
+## Next steps
+
+Once your cluster is provisioned:
+
+- See [Managing Your Cluster](/content/orkes-cloud/managing-your-cluster) for day-to-day actions like upgrades, certificates, and protection settings.
+- See [Monitoring Your Cluster](/content/orkes-cloud/monitoring-your-cluster) to check on cluster health, DNS/cert status, and actions history.
+- Head to the [Orkes Conductor docs](/content/) to start building workflows and agents.

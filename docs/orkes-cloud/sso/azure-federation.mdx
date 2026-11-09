@@ -1,0 +1,75 @@
+---
+slug: "/orkes-cloud/sso/azure-federation"
+description: "Let applications backed by a Microsoft Entra ID service principal authenticate to the Conductor API using their native Azure-issued JWT tokens."
+---
+
+# Configure Azure Federation
+
+Azure Federation lets applications backed by a Microsoft Entra ID service principal authenticate directly to the Conductor API using their native Azure-issued JSON Web Token (JWT), obtained through Azure AD's OAuth2 client credentials flow, instead of an Orkes API key and secret. The Azure token is passed directly in the `X-Authorization` header.
+
+Unlike the SSO setup docs (Microsoft Entra ID, OIDC, Okta), which cover human users signing in to the Conductor UI, Azure Federation authenticates applications directly to the API.
+
+**Prerequisites**
+
+- An Azure Entra ID application registered as the federation target, the app whose audience your worker applications' tokens are issued for.
+- Your Conductor cluster must already have PostgreSQL persistence and security enabled.
+
+## Registering applications in Microsoft Entra ID
+
+1. Register an application in Microsoft Entra ID to act as the federation target, the application whose audience your worker applications' tokens are issued for.
+   - In its manifest, add an identifier URI. Microsoft Entra ID requires these to be unique across your tenant, so include your tenant ID in the value, followed by a name of your choosing, for example `api://{tenantId}/conductor`.
+2. For each Azure service principal that needs to call the Conductor API, register a separate application. No manifest changes are needed for these applications.
+
+## Configuring the cluster for Azure Federation
+
+To set these properties, go to the [Orkes Cloud portal](https://cloud.orkes.io/), and follow these steps:
+
+1. Go to **Clusters** > select your cluster.
+2. From the **Select an Action** dropdown in the top-right corner, select **Upgrade Deployment.**
+   1. Choose **Conductor Server**.
+   2. Select **+** to add the following key-value pairs:
+
+      | Key | Value |
+      | --- | --- |
+      | `SPRING_PROFILES_ACTIVE` | Add the `security-azure-federation` profile to your existing list. **Note**: This also applies the underlying `conductor.security.azure.federation.enabled=true` setting for you. |
+      | `AZURE_FEDERATION_TENANT_ID` | Required. Your Azure tenant ID. |
+      | `AZURE_FEDERATION_AUDIENCE` | Optional. The identifier URI you configured on the federation application, for example `api://{tenantId}/conductor`. Leave empty to skip audience validation. |
+      | `AZURE_FEDERATION_AUTO_CREATE_APPS` | Optional. Whether Conductor automatically creates an application for a new Azure service principal the first time it authenticates. Defaults to true. Set to false if you want to create the Conductor application yourself beforehand; if it doesn't already exist, authentication fails. |
+      | `conductor.security.federated-clients.cache.enabled` | Optional. Whether Conductor caches validated Azure service principal client info. Defaults to true. |
+      | `conductor.security.federated-clients.cache.refresh-interval` | Optional. How often, in seconds, to refresh that cache. Defaults to 300. The cache also holds a fixed maximum of 2,000 entries; this isn't configurable via a property. |
+
+3. Select **Confirm**.
+
+Wait for the change to take effect in the cluster, usually within 5 to 10 minutes.
+
+**This completes the Azure Federation setup.** The following covers optional access restrictions and what to expect once applications start authenticating.
+
+## Restricting which applications can authenticate (optional)
+
+By default, any application in your tenant can request a token for the federation application and use it to call Conductor.
+
+Restricting this via `AZURE_FEDERATION_AUDIENCE` alone isn't reliable: whether it's enforced depends on which OAuth2 token version Microsoft Entra ID issues to the caller, not on anything you configure.
+
+| Token version | Issuer format | Audience |
+| --- | --- | --- |
+| v1 | `https://sts.windows.net/{tenantId}/` | Can be a custom Application ID URI, matching `AZURE_FEDERATION_AUDIENCE` |
+| v2 | `https://login.microsoftonline.com/{tenantId}/v2.0` | Always the application's GUID, `AZURE_FEDERATION_AUDIENCE` has no effect |
+
+A caller only receives a v1 token, where the custom audience is actually validated, if it requests your custom scope rather than the application's GUID (for example `api://{tenantId}/conductor/.default`, not `<application-guid>/.default`). Since you can't guarantee every caller does that, use the following steps instead to reliably restrict which applications can authenticate:
+
+1. In the federation application, create an app role.
+2. Go to **Enterprise applications**, select the federation application, and set **Assignment required** to **Yes**.
+3. In each worker application that should be allowed to authenticate, add the permission for the app role you created, and grant admin consent.
+
+### About auto-created applications
+
+Conductor extracts the caller's client ID from the `appid` claim on v1 tokens, or the `azp` claim on v2 tokens.
+
+When `AZURE_FEDERATION_AUTO_CREATE_APPS` is enabled, the first time an Azure service principal authenticates, Conductor creates an application for it:
+
+- ID: `azure-{clientId}`
+- Name: The application's display name from the token, followed by its client ID in parentheses, or `Azure App {clientId}` if no display name is present.
+- Role: Worker
+- Federated source: Azure
+
+If `AZURE_FEDERATION_AUTO_CREATE_APPS` is set to false, the application must already exist in Conductor; authentication fails if it doesn't.

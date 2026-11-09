@@ -3994,6 +3994,7 @@ function buildNav() {
   nav.push({ Reference: navFromItems(sidebars.referenceSidebar, navSeen) });
   pushExtras(platformChildren, [...guideExtras.Platform, ...sidebars.deploySidebar]);
   nav.push({ Platform: platformChildren });
+  nav.push({ "Orkes Cloud": navFromItems(sidebars.orkesCloudSidebar, navSeen) });
 
   // Keep legacy indexed category URLs even when their groups are intentionally
   // removed from the visible navigation.
