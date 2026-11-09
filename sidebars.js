@@ -502,7 +502,6 @@ const sidebars = {
                 { type: 'doc', id: 'orkes-cloud/deployment/aws', label: 'Deploy on AWS' },
                 { type: 'doc', id: 'orkes-cloud/deployment/azure', label: 'Deploy on Azure' },
                 { type: 'doc', id: 'orkes-cloud/deployment/gcp', label: 'Deploy on GCP' },
-                { type: 'doc', id: 'orkes-cloud/deployment/hosted-worker-setup', label: 'Hosted Workers on Azure' },
             ],
         },
         {
