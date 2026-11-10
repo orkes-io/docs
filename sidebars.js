@@ -1223,6 +1223,18 @@ const sidebars = {
                                 },
                                 {
                                     type: 'category',
+                                    label: 'Firebase Cloud Functions',
+                                    link: { type: 'doc', id: 'integrations/connected-apps/cloud/firebase' },
+                                    items: [
+                                        {
+                                            type: 'doc',
+                                            id: 'integrations/connected-apps/cloud/firebase-operations',
+                                            label: 'Firebase Cloud Functions Operations Reference',
+                                        },
+                                    ],
+                                },
+                                {
+                                    type: 'category',
                                     label: 'AWS Lambda',
                                     link: { type: 'doc', id: 'integrations/connected-apps/cloud/aws-lambda' },
                                     items: [

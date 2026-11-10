@@ -40,8 +40,26 @@ To integrate Azure Functions with Orkes Conductor, you need a Subscription ID, T
 6. Within the application, go to **Certificates & secrets** > **+ New client secret**.
 7. Add a description, set an expiration, select **Add**, and copy the secret value immediately, as it won't be shown again. This is your **Client Secret**.
 8. Go to your **Subscription** > select your subscription > **Access control (IAM)** > **+ Add** > **Add role assignment**.
-9. Assign the **Reader** role (minimum) or **Contributor** role (recommended) to the application you just registered. This grants the application, referred to as a Service Principal in Azure, permission to access your Azure resources.
+9. Assign a role to the application (service principal) at the Function App or resource-group scope. **Reader** supports discovery and reading configuration. For invocation with function-key authentication, use **Website Contributor** at that scope or a custom role that includes the read and key-listing permissions below.
 10. Go to **Subscriptions** and copy your **Subscription ID**.
+
+### Management permissions and function authentication
+
+The service principal authenticates calls to the Azure management API. The HTTP function endpoint has its own authentication requirements.
+
+| Operation | Required management permissions |
+| --------- | ------------------------------- |
+| List Function Apps / Get Function App Details | `Microsoft.Web/sites/read` at the scope being queried. |
+| List Functions In App / Get Function Details | `Microsoft.Web/sites/functions/read`, together with app read access. |
+| Invoke HTTP Function with **Use Function Key** enabled | App read access and `Microsoft.Web/sites/functions/listkeys/action` on the target function. |
+
+When access is limited to a resource group, specify that group in **List Function Apps**. Leaving that operation's Resource Group empty requests a subscription-wide list.
+
+**Use Function Key** defaults to `true`. Conductor retrieves a function-scoped key through Azure's management API and sends it in the `x-functions-key` request header. The key is not appended to the returned URL. A Reader-only identity cannot retrieve function keys.
+
+Set **Use Function Key** to `false` only when the function accepts requests without a function key, or when you supply the authentication required by that endpoint through the operation's Headers field. The service principal's management token is not automatically sent to the HTTP endpoint.
+
+See [Azure function keys](https://learn.microsoft.com/en-us/azure/azure-functions/function-keys-how-to) and the [List Function Keys API](https://learn.microsoft.com/en-us/rest/api/appservice/web-apps/list-function-keys).
 
 ## Step 2: Add an integration for Azure Functions
 
@@ -100,3 +118,10 @@ The following operations are available for use with this integration.
 </ol>
 
 For the complete operations parameters and output reference, see [Azure Functions Operations Reference](/content/integrations/azure-functions-operations).
+
+## Troubleshooting
+
+- **403 while listing Function Apps:** Verify the service principal's role assignment and query scope. If access is limited to a resource group, set Resource Group in List Function Apps.
+- **403 fetching a function key:** Reader permissions are insufficient for key-based invocation. Grant `Microsoft.Web/sites/functions/listkeys/action` on the target function through an appropriate role.
+- **Unknown operation POST:** Select Invoke HTTP Function as the operation and put `POST` in HTTP Method. The workflow's `method` field identifies the operation; `httpMethod` identifies the HTTP verb.
+- **Function not found:** Function App Name identifies the hosting app; Function Name identifies the function inside it, such as `echo`. They are separate values.
