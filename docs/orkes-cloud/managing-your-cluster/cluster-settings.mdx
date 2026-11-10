@@ -1,0 +1,60 @@
+---
+slug: "/orkes-cloud/managing-your-cluster/cluster-settings"
+description: "Change the environment type of your Orkes Conductor cluster, add or remove sub-domains for the Conductor UI, and enable or disable the API Gateway."
+---
+
+# Manage Environment Type, Sub-Domains, and API Gateway
+
+This page covers how to **change your cluster's environment type, add or remove sub-domains for your Conductor UI, and enable or disable the API Gateway**.
+
+## Change the cluster's environment type
+
+Every cluster is tagged with an environment type, a label describing its purpose: ***Production***, ***Staging***, ***Development***, ***Test***, or ***Proof of Concept***.
+
+#### To change it:
+
+1. From your cluster's detail view, open **Select an Action** and choose **Change Cluster Environment Type**.
+2. From the **Environment Type** dropdown, select the new type.
+3. Select **Confirm**.
+
+It's shown on your **Clusters** list and at the top of the cluster's detail view. Changing it redeploys Conductor with the new environment type.
+
+## Add/remove sub-domain
+
+If you're using your own domain for your cluster, you can add extra hostnames that point to your Conductor UI, for example, adding `staging.yourdomain.com` alongside your primary `app.yourdomain.com`. This is only available for clusters using a domain you brought yourself; it isn't available for clusters using an Orkes-managed domain, or for Orkes Hosted clusters.
+
+What you add here is another hostname for your existing Conductor UI, not a separate endpoint.
+
+### Add a sub-domain
+
+1. From your cluster's detail view, select the **URLs** tab.
+2. Select **Add Another**.
+3. Enter the sub-domain label you want to add; lowercase letters, numbers, and hyphens only, and it must start and end with a letter or number (for example, `staging`). Orkes appends it to your cluster's existing domain.
+4. Select **Confirm**.
+
+Orkes sets up the DNS record for the new hostname, so no action is needed on your end. This takes several minutes to complete and propagate.
+
+### Remove a sub-domain
+
+1. From the **URLs** tab, select **Delete** next to the sub-domain you want to remove.
+2. Type the full hostname to confirm.
+
+You can't remove a sub-domain if it's the only one your cluster has; at least one UI hostname must always remain.
+
+## Enable/Disable API Gateway
+
+You can enable or disable the API Gateway for your cluster.
+
+#### To enable the API Gateway:
+
+1. From your cluster's detail view, open **Select an Action** and choose **Enable API Gateway**.
+2. Review what enabling it will deploy: an InfluxDB instance for metrics collection, the API Gateway's ingress configuration, a DNS record at `api.<your cluster domain>`, an SSL certificate, and Route53 DNS configuration. This creates additional cloud resources and may take several minutes to complete.
+3. Select **Enable API Gateway**.
+
+#### To disable the API Gateway:
+
+1. From your cluster's detail view, open **Select an Action** and choose **Disable API Gateway**.
+2. Review the warning: the gateway is marked as disabled, and API endpoints are no longer accessible through it. Existing resources remain in place, and you can enable the gateway again later.
+3. Select **Disable API Gateway**.
+
+Learn more about [Orkes Conductor's Gateway](/content/reference-docs/api/gateway) feature.
