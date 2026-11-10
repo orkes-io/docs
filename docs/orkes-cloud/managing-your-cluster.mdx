@@ -35,13 +35,13 @@ From a cluster's detail view, you can manage it in a few ways: through the **Sel
 | [Rollout Restart](/content/orkes-cloud/managing-your-cluster/upgrade-rollback-restart) | Restart a component's pods without changing its version. |
 | [Update Kubernetes](/content/orkes-cloud/managing-your-cluster/upgrade-rollback-restart) | Update the cluster's underlying Kubernetes version. Available for AWS Enterprise clusters only. |
 | [Pull Pod Logs](/content/orkes-cloud/managing-your-cluster/upgrade-rollback-restart) | Pull log output from a specific pod, with options to filter and limit the results. |
-| [Change Cluster Environment Type](/content/orkes-cloud/managing-your-cluster/details-protection-deletion) | Classify the cluster's purpose, such as Production, Staging, Development, Test, or Proof of Concept. |
-| [Delete cluster and cancel scheduled deletion](/content/orkes-cloud/managing-your-cluster/details-protection-deletion) | Permanently delete a cluster you no longer need, or cancel a scheduled deletion. |
-| [Delete protection toggle](/content/orkes-cloud/managing-your-cluster/details-protection-deletion) | Control whether the cluster can be deleted. |
-| [Change protection toggle](/content/orkes-cloud/managing-your-cluster/details-protection-deletion) | Control whether mutating actions on the cluster require explicit acknowledgment. |
-| [Add/remove sub domain](/content/orkes-cloud/managing-your-cluster/auth-domains-networking) | Add or remove hostnames that point to your Conductor UI. |
-| [Change cluster auth type (SSO on Conductor)](/content/orkes-cloud/managing-your-cluster/auth-domains-networking) | Switch your cluster's login between default authentication and your own identity provider via OIDC. |
-| [Enable/Disable API Gateway](/content/orkes-cloud/managing-your-cluster/auth-domains-networking) | Turn Conductor’s Gateway on or off for the cluster. Enabling sets up the DNS record, SSL certificate, and metrics collection the gateway needs. |
+| [Delete cluster and cancel scheduled deletion](/content/orkes-cloud/managing-your-cluster/protection-deletion) | Permanently delete a cluster you no longer need, or cancel a scheduled deletion. |
+| [Delete protection toggle](/content/orkes-cloud/managing-your-cluster/protection-deletion) | Control whether the cluster can be deleted. |
+| [Change protection toggle](/content/orkes-cloud/managing-your-cluster/protection-deletion) | Control whether mutating actions on the cluster require explicit acknowledgment. |
+| [Change cluster auth type](/content/orkes-cloud/managing-your-cluster/authentication) | Switch your cluster's login between default authentication and your own identity provider via OIDC. |
+| Change Cluster Environment Type | Classify the cluster's purpose, such as Production, Staging, Development, Test, or Proof of Concept. |
+| Add/remove sub domain | Add or remove hostnames that point to your Conductor UI. |
+| Enable/Disable API Gateway | Turn Conductor’s Gateway on or off for the cluster. Enabling sets up the DNS record, SSL certificate, and metrics collection the gateway needs. |
 
 ## Next Steps
 
@@ -49,5 +49,5 @@ For step-by-step instructions on each action, see:
 
 - [Manage Custom Certificates](/content/orkes-cloud/managing-your-cluster/custom-certificates)
 - [Upgrade, Roll Back, and Restart Deployments](/content/orkes-cloud/managing-your-cluster/upgrade-rollback-restart)
-- [Manage Cluster Details, Protection, and Deletion](/content/orkes-cloud/managing-your-cluster/details-protection-deletion)
-- [Manage Cluster Authentication, Domains & Networking](/content/orkes-cloud/managing-your-cluster/auth-domains-networking)
+- [Cluster Protection and Deletion](/content/orkes-cloud/managing-your-cluster/protection-deletion)
+- [Manage Cluster Authentication](/content/orkes-cloud/managing-your-cluster/authentication)

@@ -506,13 +506,13 @@ const sidebars = {
         },
         {
             type: 'category',
-            label: 'Managing Your Cluster',
+            label: 'Cluster Management',
             link: { type: 'doc', id: 'orkes-cloud/managing-your-cluster' },
             items: [
                 { type: 'doc', id: 'orkes-cloud/managing-your-cluster/custom-certificates', label: 'Custom Certificates' },
                 { type: 'doc', id: 'orkes-cloud/managing-your-cluster/upgrade-rollback-restart', label: 'Upgrade, Roll Back, and Restart' },
-                { type: 'doc', id: 'orkes-cloud/managing-your-cluster/details-protection-deletion', label: 'Details, Protection, and Deletion' },
-                { type: 'doc', id: 'orkes-cloud/managing-your-cluster/auth-domains-networking', label: 'Authentication, Domains, and Networking' },
+                { type: 'doc', id: 'orkes-cloud/managing-your-cluster/protection-deletion', label: 'Protection and Deletion' },
+                { type: 'doc', id: 'orkes-cloud/managing-your-cluster/authentication', label: 'Authentication' },
             ],
         },
         {

@@ -1,13 +1,13 @@
 ---
 slug: "/orkes-cloud/managing-your-cluster/upgrade-rollback-restart"
-description: "Upgrade, roll back, and restart the components of your Orkes Cloud cluster: Conductor, Workers, Agent, and Metrics Proxy."
+description: "Learn how to upgrade, roll back, and restart Orkes Cloud cluster components, update Kubernetes, and pull pod logs to troubleshoot issues."
 ---
 
 # Upgrade, Roll Back, and Restart Deployments
 
-Your cluster runs several components, each at its own version: Conductor, Workers, Agent, and Metrics Proxy. The components available are:
+Your cluster runs several **components**, each at its own version: Conductor, Workers, Agent, and Metrics Proxy. The components available are:
 
-- **Conductor**: The orchestration server that runs and manages your workflows.
+- **Conductor**: The orchestration server that runs and manages your workflows and agents.
 - **Workers**: The services that execute the individual tasks within those workflows.
 - **Agent**: The component that polls the Orkes control plane for updates, without needing any inbound access to your cluster.
 - **Metrics Proxy**: The component that routes monitoring requests to Prometheus and Grafana.
@@ -18,39 +18,39 @@ You can move any of these components to a newer version, revert one to a previou
 
 1. From your cluster's detail view, open **Select an Action** and choose **Upgrade Deployment**.
 2. From the **Resource Type** dropdown, select the component to upgrade:
-   1. **Both Conductor Server and Workers:** Upgrades the Conductor server and workers together.
-   2. **Conductor Server:** Upgrades only the Conductor server.
-   3. **Conductor Workers:** Upgrades only the workers.
-   4. **Conductor Metrics Proxy:** Upgrades only the metrics proxy.
-   5. **Orkes Agent:** Upgrades only the agent.
-   6. **Conductor Server, Workers, and Metrics Proxy**: Upgrades all three together.
-3. In the **Version** field, select a target version from the list, or type a specific version directly.
+    1. **Both Conductor Server and Workers:** Upgrades the Conductor server and workers together.
+    2. **Conductor Server:** Upgrades only the Conductor server.
+    3. **Conductor Workers:** Upgrades only the workers.
+    4. **Conductor Metrics Proxy:** Upgrades only the metrics proxy.
+    5. **Orkes Agent:** Upgrades only the agent.
+    6. **Conductor Server, Workers, and Metrics Proxy**: Upgrades all three together.
+3. In the **Version** field, select a target version from the list, or type a specific version that is available for your cluster.
 4. If you selected a single resource rather than one of the combined options, you can optionally add ***key-value parameters*** to set or update application properties for the upgrade.
-   1. Variable names can only contain letters, digits, dots, underscores, and hyphens, and can't start with a digit.
-   2. Leaving a value empty removes that property if it already exists.
+    1. Variable names can only contain letters, digits, dots, underscores, and hyphens, and can't start with a digit.
+    2. Leaving a value empty removes that property if it already exists.
 5. Select **Confirm**.
 
 Selecting a combined option upgrades each of its components as a separate action rather than one combined step. Check the **Actions History** tab to confirm all of them completed successfully.
 
 ### Version compatibility
 
-You can only upgrade a component up to one major version above its current version by default. If you need to upgrade further than that, you'll be asked to explicitly acknowledge the jump before continuing. Additional versions become available as Orkes releases them.
+You can only upgrade a component up to one major version above its current version. Versions further ahead appear greyed out in the Version list and can't be selected. If the target is a newer major version, an **Agree to upgrade** toggle appears. Turn it on before you select Confirm.
 
-You can view a component's current application properties anytime from the **Application Properties** tab on your cluster's detail view, which lists Conductor, Workers, and Agent separately. Select **Refresh Application Properties** to pull the latest values.
+You can view a component's current application properties anytime from the **Application Properties** tab on your cluster's detail view, which lists Conductor, Workers, and Agent deployment separately.
 
 ## Rollback deployment
 
 1. From your cluster's detail view, open **Select an Action** and choose **Rollback Deployment**.
 2. From the **Resource Type** dropdown, select the component to roll back:
-   1. **Conductor**: Rolls back the Conductor server.
-   2. **Workers**: Rolls back the workers.
-   3. **Agent**: Rolls back the agent.
-   4. **Metrics Proxy**: Rolls back the metrics proxy.
+    1. **Conductor**: Rolls back the Conductor server.
+    2. **Workers**: Rolls back the workers.
+    3. **Agent**: Rolls back the agent.
+    4. **Metrics Proxy**: Rolls back the metrics proxy.
 3. In the **Version** field, select a previously installed version. Each entry shows the version number and the date and time it was installed.
-4. Review environment variables for that version. If it has environment variable changes, select **Include changes in the environment variables** to apply them as part of the rollback. The table shows each variable's name and value, alongside an icon indicating the type of change.
+4. Review the environment variables for that version. If it has environment variable changes, the **Include changes in the environment variables** checkbox appears, selected by default. Clear it to roll back without those changes. The table shows each variable's name and value, with a label (New, Updated, or Deleted) showing the type of change.
 5. Select **Confirm**.
 
-Unlike an upgrade, a rollback can't be pushed past a compatibility check with an acknowledgment. If a version falls outside the currently supported range for that component, it won't appear as an option to roll back to.
+Unlike an upgrade, a rollback can't be pushed past a compatibility check with an acknowledgment. If you choose a version outside the supported range for Conductor, Workers, or Metrics Proxy, the rollback is rejected.
 
 ## Rollout Restart
 
@@ -58,10 +58,10 @@ If a component needs a fresh start without changing its version, for example, to
 
 1. From your cluster's detail view, open **Select an Action** and choose **Rollout Restart**.
 2. From the **Resource Type** dropdown, select the component to restart:
-   1. **Conductor Server**: Restarts only the Conductor server.
-   2. **Conductor Workers**: Restarts only the workers.
-   3. **Conductor Metrics Proxy**: Restarts only the metrics proxy.
-   4. **Orkes Agent**: Restarts only the agent.
+    1. **Conductor Server**: Restarts only the Conductor server.
+    2. **Conductor Workers**: Restarts only the workers.
+    3. **Orkes Agent**: Restarts only the agent.
+    4. **Metrics Proxy**: Restarts only the metrics proxy.
 3. Select **Confirm**.
 
 Restarting a component doesn't change its version or configuration. The Pods tab refreshes automatically once the restart is triggered, so you can confirm it went through.
@@ -88,12 +88,12 @@ If a component isn't behaving as expected after a change, you can pull log outpu
 1. From your cluster's detail view, open **Select an Action** and choose **Pull Pod Logs**.
 2. Enter the **Pod Name**. You can find pod names on the **Pods** tab.
 3. Choose a **Fetching** mode:
-   - **Last (tail)**: Returns the most recent lines.
-   - **First (head)**: Returns lines starting from the beginning, or from a line you specify with Skipping.
+    - **Last (tail)**: Returns the most recent lines.
+    - **First (head)**: Returns lines starting from the beginning, or from a line you specify with Skipping.
 4. Set **Lines (up to 1000)** to how many lines you want returned.
 5. If you chose **First (head)**, optionally set **Skipping** to the number of lines to skip before fetching starts.
 6. Optionally, enter a **Grep** value to filter the output to lines matching that text.
 7. If you entered a **Grep** value, optionally choose **With context** to include surrounding lines: Before, After, or Context (both directions), and set **Context Length** to how many surrounding lines to include.
 8. Select **Confirm**.
 
-Orkes schedules the log pull and takes you to that action's entry on the **Actions History** tab, where the log output appears once it completes.
+Orkes schedules the log pull and takes you to that action's entry on the **Actions History** tab. Once it completes, select the ID field to copy or download logs.
