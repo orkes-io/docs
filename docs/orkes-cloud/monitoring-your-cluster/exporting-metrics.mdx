@@ -1,13 +1,13 @@
 ---
 slug: "/orkes-cloud/monitoring-your-cluster/exporting-metrics"
-description: "Send metrics from your Orkes Conductor cluster to an external observability platform, to monitor them alongside the rest of your stack."
+description: "Learn how to send Orkes Conductor cluster metrics to an external monitoring platform by adding application properties in the Orkes Cloud portal."
 ---
 
 # Exporting Advanced Metrics to an External Monitoring Platform
 
-You can send your Conductor cluster's metrics to an external observability platform, so you can monitor them alongside the rest of your stack. You set this up by adding the platform's connection details to your cluster as application properties. You don't need to change your workflows or workers.
+You can send **your Conductor cluster's metrics to an external observability platform**, so you can monitor them alongside the rest of your stack. You set this up by adding the platform's connection details to your cluster as application properties. You don't need to change your workflows or workers.
 
-Conductor uses [Micrometer](https://micrometer.io/) to collect metrics, so you can export to any of these platforms:
+Conductor uses [Micrometer](https://micrometer.io/) to collect metrics, so you can export them to any of the platforms below. In Step 2, you choose your platform from this list and start each property key with its property prefix. For example, to export to Dynatrace, every property key starts with `management.dynatrace.metrics.export`.
 
 | Platform | Property prefix |
 | --- | --- |
@@ -22,8 +22,6 @@ Conductor uses [Micrometer](https://micrometer.io/) to collect metrics, so you c
 | OpenTelemetry Protocol (OTLP) | `management.otlp.metrics.export` |
 | StackDriver | `management.stackdriver.metrics.export` |
 | StatsD | `management.statsd.metrics.export` |
-
-Export to each platform is turned off by default. To turn it on, set `<property prefix>.enabled` to `true` and add the platform's connection properties.
 
 ## Prerequisites
 
@@ -44,13 +42,13 @@ For Dynatrace, create an access token with the **metrics.ingest** scope, and not
 4. Leave the version field set to the version your cluster is running now, which is filled in for you. This step changes configuration only, so you don't need to change the version.
 5. Under **Key-Value parameters**, select **+** once for each property in the table below, and enter its key and value.
 
-   | Key | Example value | Description |
-   | --- | --- | --- |
-   | `management.dynatrace.metrics.export.enabled` | `true` | Turns on export to Dynatrace. |
-   | `management.dynatrace.metrics.export.uri` | `https://<environment-id>.live.dynatrace.com/api/v2/metrics/ingest` | Your Dynatrace metrics ingest endpoint. |
-   | `management.dynatrace.metrics.export.api-token` | `<your-api-token>` | The Dynatrace access token you created. |
-   | `management.dynatrace.metrics.export.v2.metric-key-prefix` | `orkes.conductor` | A prefix added to every metric key, so you can find Conductor metrics in Dynatrace. |
-   | `management.dynatrace.metrics.export.v2.default-dimensions.cluster` | `<your-cluster-label>` | Adds a `cluster` dimension to every metric, so you can filter or group metrics by cluster when you export from more than one cluster. Use any label that identifies this cluster to you in Dynatrace. It doesn't need to match the cluster's name in Orkes Cloud. |
+    | Key | Example value |
+    | --- | --- |
+    | `management.dynatrace.metrics.export.enabled` | Turns on export to Dynatrace. Set it to `true`. |
+    | `management.dynatrace.metrics.export.uri` | Your Dynatrace metrics ingest endpoint, for example `https://<environment-id>.live.dynatrace.com/api/v2/metrics/ingest`. |
+    | `management.dynatrace.metrics.export.api-token` | The Dynatrace access token you created. |
+    | `management.dynatrace.metrics.export.v2.metric-key-prefix` | A prefix added to every metric key, so you can find Conductor metrics in Dynatrace, for example `orkes.conductor`. |
+    | `management.dynatrace.metrics.export.v2.default-dimensions.cluster` | Adds a `cluster` dimension to every metric, so you can filter or group metrics by cluster when you export from more than one cluster. Use any label that helps in identifying the cluster. It doesn't need to match the cluster's name in Orkes Cloud. |
 
 6. Select **Confirm**.
 
@@ -61,7 +59,7 @@ For Dynatrace, create an access token with the **metrics.ingest** scope, and not
 
 ## Step 4: View your metrics in the monitoring platform
 
-Metrics start arriving shortly after the rollout finishes. Each metric key starts with the prefix you set in Step 2, `orkes.conductor` in this example.
+Each metric key starts with the prefix you set in Step 2, `orkes.conductor` in this example.
 
 In Dynatrace, you can check which Conductor metrics are arriving by running this DQL query in a Notebook:
 

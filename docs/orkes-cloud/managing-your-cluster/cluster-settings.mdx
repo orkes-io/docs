@@ -1,13 +1,13 @@
 ---
 slug: "/orkes-cloud/managing-your-cluster/cluster-settings"
-description: "Change the environment type of your Orkes Conductor cluster, add or remove sub-domains for the Conductor UI, and enable or disable the API Gateway."
+description: "Learn how to change the environment type of an Orkes Conductor cluster, manage Conductor UI sub-domains, and enable or disable the API Gateway."
 ---
 
 # Manage Environment Type, Sub-Domains, and API Gateway
 
-This page covers how to **change your cluster's environment type, add or remove sub-domains for your Conductor UI, and enable or disable the API Gateway**.
+Every cluster has an **environment type**, a label that describes its purpose, and one or more hostnames for the Conductor UI. You can also enable the optional **API Gateway** for a cluster. This page covers how to change the environment type, add or remove sub-domains for your Conductor UI, and enable or disable the API Gateway.
 
-## Change the cluster's environment type
+## Change cluster's environment type
 
 Every cluster is tagged with an environment type, a label describing its purpose: ***Production***, ***Staging***, ***Development***, ***Test***, or ***Proof of Concept***.
 
@@ -17,8 +17,7 @@ Every cluster is tagged with an environment type, a label describing its purpose
 2. From the **Environment Type** dropdown, select the new type.
 3. Select **Confirm**.
 
-It's shown on your **Clusters** list and at the top of the cluster's detail view. Changing it redeploys Conductor with the new environment type.
-
+It's shown on your **Clusters** list and at the top of the cluster's detail view.
 ## Add/remove sub-domain
 
 If you're using your own domain for your cluster, you can add extra hostnames that point to your Conductor UI, for example, adding `staging.yourdomain.com` alongside your primary `app.yourdomain.com`. This is only available for clusters using a domain you brought yourself; it isn't available for clusters using an Orkes-managed domain, or for Orkes Hosted clusters.
