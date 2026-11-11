@@ -26,7 +26,7 @@ PrivateLink connections only work within the same AWS region as your Conductor c
 
 ### Share your AWS account ID
 
-1. Give Orkes the AWS account ID you'll use to create your Endpoint, so Orkes can allow it as a principal on the Endpoint Service.
+1. Give Orkes the AWS account ID you'll use to create your Endpoint.
 2. Orkes will notify you with the service name and endpoint service DNS name.
 
 ### Select your VPC
@@ -43,7 +43,7 @@ PrivateLink connections only work within the same AWS region as your Conductor c
 4. For **Service name**, enter the service name Orkes provided, and click **Verify service**.
    - If you see "Service name could not be verified," confirm you're in the correct region and that your account ID matches what you gave Orkes. If both check out, reach out to Orkes.
 5. Once verified, select your VPC.
-6. Select availability zones (2 or 3, matching your cluster's AZs) and the corresponding subnets.
+6. Select availability zones (3 zones) and the corresponding subnets.
 7. Select the **IPv4** address type.
 8. Select a security group that allows HTTPS (443) traffic.
 9. Click **Create endpoint**.
