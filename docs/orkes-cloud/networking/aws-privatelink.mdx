@@ -20,7 +20,9 @@ You can set up one direction or both.
 
 Orkes creates an Endpoint Service (the side being reached) in front of your Conductor cluster, in the same AWS region as your cluster, and shares the service name and endpoint service DNS name with you. You create an Endpoint (the side that connects to it) in your own VPC, then set up your own private DNS to route your cluster's DNS name through it.
 
-**Note:** PrivateLink connections only work within the same AWS region as your Conductor cluster. To reach it from VPCs in other regions, you'll need to set up peering and routing rules to route the connection through the VPC where your Endpoint is running.
+:::note
+PrivateLink connections only work within the same AWS region as your Conductor cluster. To reach it from VPCs in other regions, you'll need to set up peering and routing rules to route the connection through the VPC where your Endpoint is running.
+:::
 
 ### Share your AWS account ID
 
@@ -60,7 +62,9 @@ Once this is done, you'll be able to reach your Conductor cluster at its usual D
 
 You create an Endpoint Service (the side being reached) on your side and share its details with Orkes. Orkes creates an Endpoint (the side that connects to it) in your cluster's VPC.
 
-**Note:** Your Endpoint Service must be set up in a VPC in the same AWS region as your Conductor cluster. If the service you want Orkes to reach lives in a different VPC than the one hosting your Endpoint Service, you'll need to set up peering and route tables from that VPC to the destination VPC.
+:::note
+Your Endpoint Service must be set up in a VPC in the same AWS region as your Conductor cluster. If the service you want Orkes to reach lives in a different VPC than the one hosting your Endpoint Service, you'll need to set up peering and route tables from that VPC to the destination VPC.
+:::
 
 ### Create Endpoint Service
 

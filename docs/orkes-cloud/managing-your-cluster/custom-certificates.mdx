@@ -35,4 +35,6 @@ From your cluster's detail view, select the **Certificates** tab to see all cert
 
 Deleting a certificate removes it from the custom trust store. If your workflows still need to reach the service it was trusting, upload a replacement certificate first to avoid connection failures.
 
-**Note**: Orkes doesn’t track the expiry date of uploaded certificates, and doesn’t flag them when they’re close to expiring. If the certificate on the other end gets renewed or replaced, upload the new one and delete the old one yourself.
+:::note
+Orkes doesn’t track the expiry date of uploaded certificates, and doesn’t flag them when they’re close to expiring. If the certificate on the other end gets renewed or replaced, upload the new one and delete the old one yourself.
+:::

@@ -1,23 +1,20 @@
 ---
 slug: "/orkes-cloud/sso/azure-federation"
-description: "Let applications backed by a Microsoft Entra ID service principal authenticate to the Conductor API using their native Azure-issued JWT tokens."
+description: "Let Azure service principals call the Conductor API with their native Azure-issued tokens. Set up Azure Federation on your cluster in the Orkes Cloud portal."
 ---
 
 # Configure Azure Federation
 
 Azure Federation lets applications backed by a Microsoft Entra ID service principal authenticate directly to the Conductor API using their native Azure-issued JSON Web Token (JWT), obtained through Azure AD's OAuth2 client credentials flow, instead of an Orkes API key and secret. The Azure token is passed directly in the `X-Authorization` header.
 
-Unlike the SSO setup docs (Microsoft Entra ID, OIDC, Okta), which cover human users signing in to the Conductor UI, Azure Federation authenticates applications directly to the API.
-
 **Prerequisites**
 
 - An Azure Entra ID application registered as the federation target, the app whose audience your worker applications' tokens are issued for.
-- Your Conductor cluster must already have PostgreSQL persistence and security enabled.
 
 ## Registering applications in Microsoft Entra ID
 
 1. Register an application in Microsoft Entra ID to act as the federation target, the application whose audience your worker applications' tokens are issued for.
-   - In its manifest, add an identifier URI. Microsoft Entra ID requires these to be unique across your tenant, so include your tenant ID in the value, followed by a name of your choosing, for example `api://{tenantId}/conductor`.
+    - In its manifest, add an identifier URI. Microsoft Entra ID only accepts certain identifier URI formats, so include your tenant ID in the value, followed by a name of your choosing, for example `api://{tenantId}/conductor`.
 2. For each Azure service principal that needs to call the Conductor API, register a separate application. No manifest changes are needed for these applications.
 
 ## Configuring the cluster for Azure Federation
@@ -26,8 +23,8 @@ To set these properties, go to the [Orkes Cloud portal](https://cloud.orkes.io/)
 
 1. Go to **Clusters** > select your cluster.
 2. From the **Select an Action** dropdown in the top-right corner, select **Upgrade Deployment.**
-   1. Choose **Conductor Server**.
-   2. Select **+** to add the following key-value pairs:
+    - Choose **Conductor Server**.
+    - Select **+** to add the following key-value pairs:
 
       | Key | Value |
       | --- | --- |
@@ -48,14 +45,14 @@ Wait for the change to take effect in the cluster, usually within 5 to 10 minute
 
 By default, any application in your tenant can request a token for the federation application and use it to call Conductor.
 
-Restricting this via `AZURE_FEDERATION_AUDIENCE` alone isn't reliable: whether it's enforced depends on which OAuth2 token version Microsoft Entra ID issues to the caller, not on anything you configure.
+Restricting this via `AZURE_FEDERATION_AUDIENCE` alone isn't reliable: whether the audience check can work depends on which OAuth2 token version Microsoft Entra ID issues, and which audience value the caller requests.
 
 | Token version | Issuer format | Audience |
 | --- | --- | --- |
 | v1 | `https://sts.windows.net/{tenantId}/` | Can be a custom Application ID URI, matching `AZURE_FEDERATION_AUDIENCE` |
 | v2 | `https://login.microsoftonline.com/{tenantId}/v2.0` | Always the application's GUID, `AZURE_FEDERATION_AUDIENCE` has no effect |
 
-A caller only receives a v1 token, where the custom audience is actually validated, if it requests your custom scope rather than the application's GUID (for example `api://{tenantId}/conductor/.default`, not `<application-guid>/.default`). Since you can't guarantee every caller does that, use the following steps instead to reliably restrict which applications can authenticate:
+Callers receive v1 tokens unless the federation application's manifest sets `requestedAccessTokenVersion` to 2. In a v1 token, the audience depends on the scope the caller requests, so it may not match `AZURE_FEDERATION_AUDIENCE`. Since you can't control what every caller requests, use the following steps to reliably restrict which applications can authenticate:
 
 1. In the federation application, create an app role.
 2. Go to **Enterprise applications**, select the federation application, and set **Assignment required** to **Yes**.

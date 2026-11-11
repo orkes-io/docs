@@ -56,7 +56,9 @@ Once your Private Endpoint and DNS are in place, Orkes creates the ingress route
 
 Once everything is in place, verify you can reach your Conductor cluster at its new private domain from within your VNet.
 
-**Note:** If you have multiple Conductor clusters hosted on the same underlying infrastructure (for example, separate environments), Orkes may reuse an existing Private Link Service and give you the same Alias ID for each, instead of creating a new one. This doesn't change any of the steps above.
+:::note
+If you have multiple Conductor clusters hosted on the same underlying infrastructure (for example, separate environments), Orkes may reuse an existing Private Link Service and give you the same Alias ID for each, instead of creating a new one. This doesn't change any of the steps above.
+:::
 
 ## Conductor cluster → User network
 
