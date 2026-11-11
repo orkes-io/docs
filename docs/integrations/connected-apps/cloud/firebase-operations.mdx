@@ -1,6 +1,6 @@
 ---
 slug: "/integrations/firebase-operations"
-description: "Reference Firebase Cloud Functions operation inputs, response fields, JSON payload handling, and workflow configuration in Orkes Conductor."
+description: "Look up the input and output parameters for each operation available in the Firebase Cloud Functions integration with Orkes Conductor."
 ---
 
 import Tabs from '@theme/Tabs';
@@ -8,99 +8,46 @@ import TabItem from '@theme/TabItem';
 
 # Firebase Cloud Functions Operations Reference
 
-This page covers the operations available in the [Firebase Cloud Functions integration](/content/integrations/firebase). The saved integration owns the endpoint and authentication tokens. Tasks supply function data; they cannot replace the integration's endpoint or credentials.
+Orkes Conductor integrates with Firebase Cloud Functions to let you invoke HTTP and callable functions directly from your workflows. Once you configure the Firebase Cloud Functions integration, you can use the following operations to invoke your functions.
+
+This page covers the parameters and expected output for each operation available in the [Firebase Cloud Functions integration](/content/integrations/firebase).
 
 ## Invoke HTTP Function
 
-Operation name: `invoke_http_function`.
-
-POSTs JSON to the exact HTTP endpoint configured on the integration. Supports **NONE** or **GOOGLE_ID_TOKEN** authentication. Configure the integration's Function type as **HTTP**.
+Invokes the HTTP function configured in the integration using a JSON POST request. Select `invoke_http_function` and use an integration configured for HTTP. Authentication is determined by the saved integration.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Data (JSON) (`dataJson`) | JSON text sent as the request body. For example, `{"hello":"firebase"}`. If omitted or blank and no direct `data` is supplied, the provider sends `{}`. | string | Optional. |
-| `data` | Alternative for hand-authored workflows: supply a JSON value directly instead of `dataJson`. Do not supply both a nonblank `dataJson` and `data`. | JSON value | Optional. |
-
-There is no per-task URL, authentication-token, or HTTP-method input. This operation uses POST.
+| Data (JSON) | JSON request body as text. For example, `{"hello":"firebase"}`. Uses the input key `dataJson`; if omitted or blank, sends `{}` unless direct `data` is supplied. | string | Optional. |
+| Data | Alternative for hand-authored workflows: supply a JSON value under `data` instead of `dataJson`. Do not combine it with nonblank Data (JSON). | JSON value | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-| Field | Description |
-| ----- | ----------- |
-| `status` | `success` for HTTP 2xx; otherwise `error`. |
-| `statusCode` | HTTP response code returned by the function. |
-| `result` | On success, the response body parsed as JSON when valid, otherwise text. Null on an unsuccessful HTTP response. |
-| `error` | On an unsuccessful HTTP response, the response body parsed as JSON when valid, otherwise text. Null on success. Failure output is subject to worker diagnostic redaction. |
-
-An error outcome fails the Conductor task. Transport or input errors may fail before an HTTP response is available.
+Returns `status`, `statusCode`, `result`, and `error`. For HTTP 2xx, `status` is `success`, `result` contains the response body, and `error` is null. The body is parsed as JSON when valid, otherwise returned as text. For an unsuccessful HTTP response, `status` is `error`, `result` is null, and `error` contains the response body. An error outcome fails the Conductor task.
 
 </TabItem>
 </Tabs>
 
 ## Invoke Callable Function
 
-Operation name: `invoke_callable_function`.
-
-Invokes the exact callable endpoint configured on the integration. Supports **NONE** or **FIREBASE_ID_TOKEN**, with an independent optional **Callable App Check Token**. Configure the integration's Function type as **Callable**.
+Invokes the callable function configured in the integration. Select `invoke_callable_function` and use an integration configured for Callable. Firebase user authentication and App Check are determined by the saved integration.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Data (JSON) (`dataJson`) | JSON text used as the callable's data. The provider wraps it in `{ "data": ... }`. For example, enter `{"hello":"firebase"}`, not `{ "data": { "hello":"firebase" } }`. | string | Optional. |
-| `data` | Alternative for hand-authored workflows: supply a JSON value directly instead of `dataJson`. Do not supply both a nonblank `dataJson` and `data`. | JSON value | Optional. |
-
-If both inputs are omitted, callable data is null. When `dataJson` is supplied, it must contain exactly one valid JSON value; trailing content is rejected.
+| Data (JSON) | Callable data as JSON text. For example, `{"hello":"firebase"}`. Uses the input key `dataJson`. Conductor adds the required `data` envelope automatically. If omitted or blank and no direct `data` is supplied, sends null as the callable data. | string | Optional. |
+| Data | Alternative for hand-authored workflows: supply a JSON value under `data` instead of `dataJson`. Do not combine it with nonblank Data (JSON). | JSON value | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-| Field | Description |
-| ----- | ----------- |
-| `status` | `success` for a valid callable result with HTTP 2xx; otherwise `error`. |
-| `statusCode` | HTTP response code returned by the callable endpoint. |
-| `result` | The callable response's `result` value, without the protocol envelope. Null on an error. |
-| `error` | The callable response's `error` object, or a protocol error when the response is malformed or the HTTP status is unsuccessful. Null on success. Failure output is subject to worker diagnostic redaction. |
-
-A callable error fails the Conductor task even if the endpoint returned HTTP 200. A valid response must use the Firebase callable `result` or `error` envelope. The provider does not treat a plain HTTP echo response as a successful callable result.
+Returns `status`, `statusCode`, `result`, and `error`. On success, `result` contains the callable's result without the protocol envelope, and `error` is null. On failure, `error` contains the callable error or a protocol-error description. A callable error, unsuccessful HTTP status, or invalid callable response fails the Conductor task, including a callable error returned with HTTP 200.
 
 </TabItem>
 </Tabs>
-
-## Workflow JSON
-
-This task invokes a saved callable integration named `firebase-callable`. Set the integration's endpoint, authentication mode, and tokens in Conductor before running the task.
-
-```json
-{
-  "name": "INTEGRATION",
-  "taskReferenceName": "invoke_firebase",
-  "type": "INTEGRATION",
-  "inputParameters": {
-    "integrationName": "firebase-callable",
-    "integrationType": "firebase",
-    "method": "invoke_callable_function",
-    "dataJson": "{\"hello\":\"firebase\"}"
-  }
-}
-```
-
-To supply structured workflow data, replace `dataJson` with a direct `data` value, for example:
-
-```json
-{
-  "integrationName": "firebase-callable",
-  "integrationType": "firebase",
-  "method": "invoke_callable_function",
-  "data": {
-    "hello": "firebase"
-  }
-}
-```
-
-For an HTTP integration, use `method: "invoke_http_function"`. The configured function type and endpoint must match the selected operation.

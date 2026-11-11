@@ -1,333 +1,133 @@
 ---
 slug: "/integrations/firebase"
-description: "Connect Firebase HTTP and callable Cloud Functions to Orkes Conductor with Google ID tokens, Firebase Authentication, and optional App Check."
+description: "Learn how to integrate Firebase Cloud Functions with Orkes Conductor to invoke HTTP and callable functions with authentication and optional App Check."
 ---
 
 # Firebase Cloud Functions Integration with Orkes Conductor
 
-The Firebase Cloud Functions integration invokes HTTP and callable functions from workflows. It supports these operations:
-
-- **Invoke HTTP Function** (`invoke_http_function`)
-- **Invoke Callable Function** (`invoke_callable_function`)
-
-Each saved integration configures one function type and one deployed endpoint. Authentication and tokens are configured on the integration, not supplied by workflow task arguments. This integration invokes functions; it does not expose Firestore database operations or deploy functions.
-
-This guide covers:
-
-1. Prepare the function endpoint and authentication credentials.
-2. Add a Firebase Cloud Functions integration in Conductor.
-3. Invoke the function in a workflow and verify authentication.
-
 :::info Availability
-Your cluster must include the **Firebase Cloud Functions** provider under **Integrations** > **Connected Apps** > **Cloud**.
+Your cluster must include the Firebase Cloud Functions provider under Connected Apps.
 :::
 
-## Step 1: Prepare the function and credentials
+Integrating Firebase Cloud Functions with Orkes Conductor lets you build workflows that invoke your Firebase functions using the following operations:
+
+- Invoke HTTP Function
+- Invoke Callable Function
+
+This guide explains how to set up and use the integration. Here's an overview:
+
+1. Get the required function URL and authentication credentials.
+2. Configure a new Firebase Cloud Functions integration in Orkes Conductor.
+3. Use Firebase Cloud Functions integration in workflows.
+
+## Step 1: Get the Firebase credentials
+
+To integrate Firebase Cloud Functions with Orkes Conductor, you need a deployed function URL and its required authentication tokens. Each integration connects to one function.
 
 **Prerequisites:**
+- A Firebase project with a deployed HTTP or callable function.
 
-- A Firebase project and an existing HTTP or callable function.
-- The function's deployed HTTPS URL ending in `.cloudfunctions.net` or `.run.app`.
-- Credentials required by the function's authentication policy, as described below.
+**To get the function URL:**
 
-Use an exact endpoint without a query string, fragment, or embedded credentials. The endpoint is fixed on the saved integration and cannot be overridden by an invocation input.
+1. Go to the [Firebase Console](https://console.firebase.google.com) and select your project.
+2. Go to **Build** > **Functions** and select the function.
+3. Copy its HTTPS trigger URL (`.cloudfunctions.net` or `.run.app`), without query parameters or a fragment.
 
-### Supported authentication combinations
+Get credentials based on the function's authentication requirements:
 
-User authentication and App Check serve different purposes. Firebase Authentication identifies a user; App Check attests the calling app. App Check can be used with or without Firebase user authentication.
-
-| Function type | Authentication | App Check token | Function configuration |
+| Function type | Authentication | App Check Token | Required configuration |
 | ------------- | -------------- | --------------- | ---------------------- |
-| HTTP | `NONE` | Not applicable. | Public HTTP endpoint that accepts requests without authentication. |
-| HTTP | `GOOGLE_ID_TOKEN` | Not applicable. | IAM-protected HTTP endpoint; the token's service account needs invocation permission. |
-| Callable | `NONE` | Empty. | Callable that does not require a Firebase user or App Check token. |
-| Callable | `FIREBASE_ID_TOKEN` | Empty. | Callable that requires a Firebase user; App Check enforcement disabled. |
-| Callable | `NONE` | Valid App Check token. | Callable with App Check enforced and no Firebase user requirement. |
-| Callable | `FIREBASE_ID_TOKEN` | Valid App Check token. | Callable that requires both Firebase user authentication and App Check. |
+| HTTP | `NONE` | Not applicable. | A public HTTP function; no identity token. |
+| HTTP | `GOOGLE_ID_TOKEN` | Not applicable. | A Google IAM ID token and invocation permission on the private function. |
+| Callable | `NONE` | Empty. | A callable function that accepts anonymous requests. |
+| Callable | `FIREBASE_ID_TOKEN` | Empty. | A Firebase user ID token; App Check enforcement disabled. |
+| Callable | `NONE` | Provided. | An App Check token; the callable requires App Check but not a Firebase user. |
+| Callable | `FIREBASE_ID_TOKEN` | Provided. | A Firebase user ID token and an App Check token. |
 
-Selecting **NONE** only omits the identity-token header. It does not disable authentication enforced by the function. A callable integration can still send an App Check token when Authentication is NONE.
+**To get a Google ID token for a private HTTP function:**
 
-### HTTP functions: NONE or Google ID token
+1. In [Google Cloud Console](https://console.cloud.google.com), select your project and go to **IAM & Admin** > **Service Accounts**.
+2. Create or select the calling service account.
+3. Grant **Cloud Run Invoker** on the backing Cloud Run service for Gen 2, or **Cloud Functions Invoker** on the function for 1st gen.
+4. Obtain a token using the [Google authentication library or impersonation](https://cloud.google.com/docs/authentication/get-id-token). For Gen 2, use the Cloud Run service URL as the integration endpoint and token audience. Impersonation requires **Service Account Token Creator** on the service account.
+5. Copy the token for **HTTP Google ID Token**. A Firebase user token cannot be used here.
 
-For `NONE`, the function must allow unauthenticated invocation. For a Firebase Gen 2 `onRequest` function, the deployment's `invoker` option controls IAM access:
+For **HTTP + NONE**, the deployed function must allow unauthenticated invocation.
 
-```javascript
-const { onRequest } = require("firebase-functions/v2/https");
+**To get a Firebase user ID token for a callable function:**
 
-exports.httpEcho = onRequest(
-  {
-    region: "us-central1",
-    invoker: "public", // Change to "private" for the Google ID token test.
-    maxInstances: 1
-  },
-  (req, res) => res.json({ received: req.body })
-);
-```
+1. In Firebase Console, go to **Authentication** > **Sign-in method** and enable a provider. For **Email/Password**, create a user under **Users**.
+2. Go to **Project settings** > **General** > **Your apps** and select or register a web app.
+3. Under **SDK setup and configuration**, select **Config** and copy the app's configuration.
+4. Sign in using the [Firebase Authentication SDK](https://firebase.google.com/docs/auth/web/password-auth) and obtain the token with `getIdToken()`. Alternatively, use the app's `apiKey` with the [sign-in REST API](https://firebase.google.com/docs/reference/rest/auth#section-sign-in-email-password) and copy `idToken`.
+5. Copy the token for **Callable Firebase ID Token**. API keys, refresh tokens, and unexchanged custom tokens cannot be used here.
 
-For `GOOGLE_ID_TOKEN`, make the endpoint private, grant the calling service account **Cloud Run Invoker** on its backing service, and obtain a Google-signed ID token. A Firebase user ID token or Firebase custom token is not a Google IAM invocation token.
+**To get an App Check token for a callable function (optional):**
 
-For a Gen 2 function, these Cloud Shell commands retrieve the backing service and URL, then grant invocation permission. Substitute your own values:
+1. In Firebase Console, go to **Build** > **App Check**, select your app, and register its attestation provider.
+2. Configure the [App Check SDK](https://firebase.google.com/docs/app-check/web/recaptcha-enterprise-provider) and obtain the token using `getToken()`.
+3. Copy the token for **Callable App Check Token**. For development, use the [debug provider](https://firebase.google.com/docs/app-check/web/debug-provider); supply its App Check token, not the debug secret.
 
-```bash
-PROJECT_ID="your-firebase-project"
-REGION="us-central1"
-FUNCTION_NAME="httpEcho"
-CALLER_SERVICE_ACCOUNT="caller@your-firebase-project.iam.gserviceaccount.com"
+App Check works with either callable authentication mode. Functions enforcing App Check require its token; functions requiring a Firebase user must validate `request.auth`. Selecting NONE in Conductor does not disable these requirements.
 
-SERVICE_RESOURCE=$(gcloud functions describe "$FUNCTION_NAME" \
-  --project="$PROJECT_ID" --region="$REGION" --gen2 \
-  --format="value(serviceConfig.service)")
+:::note
+Conductor stores token fields as integration secrets. Supply raw tokens without a `Bearer ` prefix. Obtain replacement tokens externally and update the integration when they expire; this provider does not generate or refresh tokens.
+:::
 
-FUNCTION_URL=$(gcloud functions describe "$FUNCTION_NAME" \
-  --project="$PROJECT_ID" --region="$REGION" --gen2 \
-  --format="value(serviceConfig.uri)")
+## Step 2: Add an integration for Firebase Cloud Functions
 
-gcloud run services add-iam-policy-binding "${SERVICE_RESOURCE##*/}" \
-  --project="$PROJECT_ID" \
-  --region="$REGION" \
-  --member="serviceAccount:$CALLER_SERVICE_ACCOUNT" \
-  --role="roles/run.invoker"
-```
+After obtaining the credentials, add a Firebase Cloud Functions integration to your Conductor cluster.
 
-Use `FUNCTION_URL` as both the integration's HTTP Function URL and the audience when generating a test token:
+**To create an integration:**
 
-```bash
-gcloud auth print-identity-token \
-  --project="$PROJECT_ID" \
-  --impersonate-service-account="$CALLER_SERVICE_ACCOUNT" \
-  --audiences="$FUNCTION_URL" \
-  --include-email
-```
-
-The signed-in user needs **Service Account Token Creator** on the service account to run this impersonation command. An administrator can grant it on that account:
-
-```bash
-gcloud iam service-accounts add-iam-policy-binding "$CALLER_SERVICE_ACCOUNT" \
-  --project="$PROJECT_ID" \
-  --member="user:YOUR_GOOGLE_ACCOUNT_EMAIL" \
-  --role="roles/iam.serviceAccountTokenCreator"
-```
-
-Allow time for IAM changes to propagate before retrying. Paste the generated token into **HTTP Google ID Token**, without the `Bearer ` prefix. See [Google's invocation authentication guide](https://cloud.google.com/functions/docs/securing/authenticating).
-
-### Callable functions: Firebase Authentication and App Check
-
-Callable functions use Firebase's `data` / `result` / `error` protocol. They do not use the HTTP integration's Google IAM ID token mode.
-
-For a callable, allow requests to reach Firebase's handler and enforce the required Firebase tokens there. This example can exercise all four callable combinations by changing the two flags and redeploying:
-
-```javascript
-const { onCall, HttpsError } = require("firebase-functions/v2/https");
-
-const REQUIRE_FIREBASE_AUTH = true;
-const REQUIRE_APP_CHECK = false;
-
-exports.callableEcho = onCall(
-  {
-    region: "us-central1",
-    invoker: "public",
-    enforceAppCheck: REQUIRE_APP_CHECK,
-    maxInstances: 1
-  },
-  (request) => {
-    if (REQUIRE_FIREBASE_AUTH && !request.auth) {
-      throw new HttpsError("unauthenticated", "Firebase sign-in required");
-    }
-    return {
-      uid: request.auth?.uid ?? null,
-      appId: request.app?.appId ?? null,
-      received: request.data
-    };
-  }
-);
-```
-
-`invoker: "public"` permits the request to reach the callable handler. The `request.auth` check requires an authenticated Firebase user; `enforceAppCheck: true` rejects missing or invalid App Check tokens. Firebase Authentication is not enforced merely by declaring `onCall`. See [callable authentication](https://firebase.google.com/docs/functions/callable) and [App Check enforcement](https://firebase.google.com/docs/app-check/cloud-functions).
-
-#### Get a Firebase user ID token
-
-For `FIREBASE_ID_TOKEN`, obtain an ID token for a user in the same Firebase project. You can use the Firebase client SDK's sign-in and `getIdToken()` flow or the [Firebase Authentication REST API](https://firebase.google.com/docs/reference/rest/auth#section-sign-in-email-password).
-
-For an email/password test:
-
-1. In **Firebase Console** > **Authentication** > **Sign-in method**, enable **Email/Password**.
-2. Under **Users**, create or select a test user.
-3. Open **Project settings** > **General** > **Your apps** and select a web app. Under **SDK setup and configuration**, select **Config** and copy only the `apiKey` value. If no web app exists, register one using **Add app** > **Web**. Registering a web app does not enable App Check.
-4. Run the following script in Cloud Shell. It prompts for the key, email, and password without adding them to shell history:
-
-```bash
-python3 - <<'PY'
-import getpass
-import json
-import urllib.error
-import urllib.parse
-import urllib.request
-
-api_key = getpass.getpass("Firebase Web API Key: ").strip()
-email = getpass.getpass("Test user email: ").strip()
-password = getpass.getpass("Test user password: ")
-url = (
-    "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key="
-    + urllib.parse.quote(api_key, safe="")
-)
-request = urllib.request.Request(
-    url,
-    data=json.dumps({
-        "email": email,
-        "password": password,
-        "returnSecureToken": True
-    }).encode(),
-    headers={"Content-Type": "application/json"},
-    method="POST"
-)
-try:
-    with urllib.request.urlopen(request, timeout=30) as response:
-        result = json.load(response)
-except urllib.error.HTTPError as error:
-    print(error.read().decode())
-    raise SystemExit("Firebase sign-in failed")
-print("Firebase ID token:")
-print(result["idToken"])
-print("Expires in", result["expiresIn"], "seconds")
-PY
-```
-
-Paste only the returned ID token into **Callable Firebase ID Token**. A Web API Key, Google service-account ID token, refresh token, or unexchanged Firebase custom token cannot be used in that field.
-
-#### Get an App Check token for testing
-
-For production callers, obtain an App Check token through the Firebase App Check SDK and your app's attestation provider. For local verification, the [App Check debug provider](https://firebase.google.com/docs/app-check/web/debug-provider) can issue a test token. The debug secret itself is not the App Check token sent to the function.
-
-The following script registers a temporary debug credential and exchanges it for an App Check token. It works for either callable authentication mode. Update `PROJECT_ID` and `APP_ID` using your web app's configuration. The signed-in Google Cloud user needs permission to manage App Check debug tokens (for example, **Firebase App Check Admin**) and to use the project as a quota project.
-
-Enable the API first:
-
-```bash
-gcloud services enable firebaseappcheck.googleapis.com --project=YOUR_PROJECT_ID
-```
-
-Then generate the token:
-
-```bash
-python3 - <<'PY'
-import getpass
-import json
-import subprocess
-import urllib.error
-import urllib.parse
-import urllib.request
-import uuid
-
-PROJECT_ID = "your-firebase-project"
-APP_ID = "1:123456789012:web:YOUR_WEB_APP_ID"
-APP = f"projects/{APP_ID.split(':')[1]}/apps/{APP_ID}"
-BASE = "https://firebaseappcheck.googleapis.com/v1"
-
-api_key = getpass.getpass("Firebase Web API Key: ").strip()
-access_token = subprocess.check_output(
-    ["gcloud", "auth", "print-access-token"], text=True
-).strip()
-
-def post(url, payload, headers):
-    request = urllib.request.Request(
-        url,
-        data=json.dumps(payload).encode(),
-        headers={"Content-Type": "application/json", **headers},
-        method="POST"
-    )
-    try:
-        with urllib.request.urlopen(request, timeout=30) as response:
-            return json.load(response)
-    except urllib.error.HTTPError as error:
-        print(error.read().decode())
-        raise SystemExit("App Check request failed")
-
-debug_secret = str(uuid.uuid4())
-created = post(
-    f"{BASE}/{APP}/debugTokens",
-    {"displayName": "connected-apps-test", "token": debug_secret},
-    {
-        "Authorization": f"Bearer {access_token}",
-        "x-goog-user-project": PROJECT_ID
-    }
-)
-print("Debug credential to remove after testing:", created["name"])
-result = post(
-    f"{BASE}/{APP}:exchangeDebugToken?key=" + urllib.parse.quote(api_key, safe=""),
-    {"debugToken": debug_secret},
-    {}
-)
-print("App Check token:")
-print(result["token"])
-print("Token lifetime:", result.get("ttl"))
-PY
-```
-
-The explicit quota-project header avoids the missing-quota-project error when creating the debug credential. Paste the returned **App Check token**, not the UUID debug secret, into **Callable App Check Token**. After testing, revoke the temporary credential under the app's **App Check** > **Manage debug tokens**, or use the [debug-token delete API](https://firebase.google.com/docs/reference/appcheck/rest/v1/projects.apps.debugTokens/delete) with the resource name printed by the script.
-
-### Token lifetime and storage
-
-Conductor stores the configured token fields as integration secrets. This provider does not sign users in, mint tokens, exchange custom tokens, or refresh expired tokens. Obtain replacement tokens externally and update the integration when they expire.
-
-Supply raw tokens without a `Bearer ` prefix or embedded whitespace. An empty optional App Check field is treated as absent. When changing authentication to **NONE**, clear the corresponding identity-token field; an App Check token may remain configured for a callable.
-
-## Step 2: Add a Firebase Cloud Functions integration
-
-1. In Conductor, go to **Integrations** > **Connected Apps** > **+ New integration**.
-2. Under **Cloud**, select **Firebase Cloud Functions** and select **+ Add**.
-3. Configure the fields below. The selected function type and authentication mode determine which fields are shown.
+<ol>
+<li>Go to <strong>Integrations</strong> &gt; <strong>Connected Apps</strong> from the left navigation menu on your Conductor cluster.</li>
+<li>Select <strong>+ New integration</strong>.</li>
+<li>In the <strong>Cloud</strong> section, choose <strong>Firebase Cloud Functions</strong>.</li>
+<li>Select <strong>+ Add</strong> and enter the following parameters:</li>
+</ol>
 
 | Parameter | Description | Required/Optional |
 | --------- | ----------- | ----------------- |
-| Integration name | A name for this function endpoint and authentication configuration. | Required. |
-| Function type | **HTTP** or **Callable**. | Required. |
-| HTTP Function URL | Exact deployed HTTP function URL. | Required for HTTP. |
+| Integration name | A name for the integration. | Required. |
+| Function type | The type of function to invoke: **HTTP** or **Callable**. Determines which configuration fields are shown. | Required. |
+| HTTP Function URL | The deployed HTTP function URL retrieved in [Step 1](/content/integrations/firebase#step-1-get-the-firebase-credentials). | Required for HTTP. |
 | HTTP Authentication | `NONE` or `GOOGLE_ID_TOKEN`. | Required for HTTP. |
-| HTTP Google ID Token | Externally issued Google IAM ID token for the configured endpoint. Stored as a secret. | Required for GOOGLE_ID_TOKEN. |
-| Callable Function URL | Exact deployed callable function URL. | Required for Callable. |
+| HTTP Google ID Token | The Google IAM ID token obtained in Step 1. Leave empty for NONE. | Required for GOOGLE_ID_TOKEN. |
+| Callable Function URL | The deployed callable function URL retrieved in Step 1. | Required for Callable. |
 | Callable Authentication | `NONE` or `FIREBASE_ID_TOKEN`. | Required for Callable. |
-| Callable Firebase ID Token | Externally issued Firebase Authentication user ID token. Stored as a secret. | Required for FIREBASE_ID_TOKEN. |
-| Callable App Check Token | Externally issued App Check token. Independent of Callable Authentication; stored as a secret. | Optional in the integration; required when the function enforces App Check. |
+| Callable Firebase ID Token | The Firebase Authentication user ID token obtained in Step 1. Leave empty for NONE. | Required for FIREBASE_ID_TOKEN. |
+| Callable App Check Token | The App Check token obtained in Step 1. Supported with either callable authentication mode; leave empty when not needed. | Optional unless the function enforces App Check. |
 | Description | A description of the integration. | Required. |
 
-4. Select **Save**. Create separate integrations for different endpoints or authentication configurations.
+<ol start="5">
+<li>(Optional) Toggle the <strong>Active</strong> button off if you don't want to activate the integration instantly.</li>
+<li>Select <strong>Save</strong>.</li>
+</ol>
 
-## Step 3: Use Firebase functions in workflows
+## Step 3: Use Firebase Cloud Functions integration in workflows
 
-1. Go to **Definitions** > **Workflow** and select **+ Define workflow**.
-2. Add a task using **Connected Apps** > **Firebase Cloud Functions** and select the saved integration.
-3. Select the operation matching the integration's function type.
-4. In **Data (JSON)**, enter a JSON payload, for example `{"hello":"firebase"}`.
-5. Save and execute the workflow.
+Once the integration is ready, this can be used directly within the workflows.
 
-For HTTP functions, the provider sends the payload as a JSON POST body. For callable functions, it adds the required `data` envelope automatically; enter the function's data, not an additional `{ "data": ... }` wrapper.
+**To use Firebase Cloud Functions integration in a workflow:**
+
+<ol>
+<li>Go to <strong>Definitions</strong> &gt; <strong>Workflow</strong> from the left navigation menu on your Conductor cluster.</li>
+<li>Select <strong>+ Define workflow</strong>.</li>
+<li>In your workflow, select the (<strong>+</strong>) icon and select <strong>Connected Apps</strong>.</li>
+<li>In <strong>Add Task</strong> panel on the right, search for <strong>Firebase Cloud Functions</strong>, and select the integration created in <a href="/content/integrations/firebase#step-2-add-an-integration-for-firebase-cloud-functions">Step 2</a>.</li>
+</ol>
+
+The following operations are available for use with this integration.
 
 | Operation | Description |
 | --------- | ----------- |
-| [Invoke HTTP Function](/content/integrations/firebase-operations#invoke-http-function) | POST JSON to the configured HTTP endpoint. |
-| [Invoke Callable Function](/content/integrations/firebase-operations#invoke-callable-function) | Invoke the configured callable with Firebase's request and response protocol. |
+| [Invoke HTTP Function](/content/integrations/firebase-operations#invoke-http-function) | Invokes the configured HTTP function with a JSON POST body. |
+| [Invoke Callable Function](/content/integrations/firebase-operations#invoke-callable-function) | Invokes the configured callable function using Firebase's callable protocol. |
 
-### Verify the authentication combinations
+<ol start="5">
+<li>Select the operation matching your integration's function type, configure the parameters, and select <strong>Save</strong> &gt; <strong>Confirm</strong>.</li>
+<li>Select <strong>Execute</strong> to run the workflow.</li>
+</ol>
 
-Use the matching function configuration from Step 1 for each row. A successful invocation should return `status: "success"` and HTTP 200 for the echo examples. The optional `uid` and `appId` values below come from the example callable handler, not from fields added by Conductor.
-
-| Combination | Positive check | Negative check |
-| ----------- | -------------- | -------------- |
-| HTTP + NONE | Public echo endpoint returns the submitted payload. | The same request to an IAM-protected endpoint is denied. |
-| HTTP + GOOGLE_ID_TOKEN | Private endpoint succeeds with a valid token and invocation grant. | Missing, expired, or wrong-audience token is denied. |
-| Callable + NONE, no App Check | Handler allows anonymous requests; `uid` and `appId` are null. | A handler that requires a user rejects a request without a Firebase ID token. |
-| Callable + FIREBASE_ID_TOKEN, no App Check | Handler returns the Firebase user's `uid`; `appId` is null. | Missing or invalid Firebase ID token fails when the handler requires authentication. |
-| Callable + NONE + App Check | App Check is enforced, user authentication is not required, and the handler returns `appId` with `uid: null`. | Missing or invalid App Check token is rejected. |
-| Callable + FIREBASE_ID_TOKEN + App Check | Handler returns both `uid` and `appId`. | Missing either required token is rejected. |
-
-### Troubleshooting
-
-- **401/403 on HTTP:** Verify the token's audience, expiry, service account, and invocation grant. Selecting NONE does not make a private function public.
-- **UNAUTHENTICATED on callable:** Check the Firebase user ID token and, when enforced, the App Check token. They are separate tokens and are not interchangeable.
-- **API_KEY_INVALID during sign-in:** Copy only the web app configuration's `apiKey` value. The API key is not the Firebase ID token or App ID.
-- **Permission denied generating a Google ID token:** Verify Service Account Token Creator is granted to the signed-in user on the account being impersonated. Allow time for IAM propagation.
-- **App Check quota-project error:** Include the project header as shown in the token-generation script.
-- **Invalid callable response:** Confirm the URL identifies an `onCall` endpoint. A plain HTTP function response does not satisfy the callable protocol.
-- **Function returns HTTP 500:** The task includes the function's response and a redacted failure diagnostic. Server-side exception tracebacks remain in the cloud provider's logs; this integration does not fetch those logs.
-
-For operation parameters, output fields, and workflow JSON, see [Firebase Cloud Functions Operations Reference](/content/integrations/firebase-operations).
+For the complete operations parameters and output reference, see [Firebase Cloud Functions Operations Reference](/content/integrations/firebase-operations).
