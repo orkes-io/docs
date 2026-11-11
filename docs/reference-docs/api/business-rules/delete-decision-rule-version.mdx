@@ -1,0 +1,45 @@
+---
+sidebar_position: 7
+slug: "/reference-docs/api/business-rules/delete-decision-rule-version"
+description: "Learn how to delete a specific version of a decision rule."
+---
+
+# Delete Decision Rule Version
+
+**Endpoint**: `DELETE /api/business-rules/{name}/{version}`
+
+Deletes a specific version of a decision rule. If you delete the last remaining version, the decision rule and its tags are also removed.
+
+## Path parameters
+
+| Parameter | Description | Type | Required/ Optional |
+| --------- | ----------- | ---- | ------------------ |
+| name | The name of the decision rule to delete. | string | Required. |
+| version | The version of the decision rule to delete. | integer | Required. |
+
+## Response
+
+* Returns 200 OK, indicating that the decision rule version was deleted successfully. The response has no body.
+* Returns 404 Not Found if no decision rule exists with the given name and version.
+* Returns 403 Forbidden if you do not have permission to delete the decision rule.
+* Returns 401 Unauthorized if the token is missing or invalid.
+
+## Examples
+
+<details markdown="1">
+<summary>Delete a decision rule version</summary>
+
+**Request**
+
+```shell
+curl -X 'DELETE' \
+  'https://<YOUR-SERVER-URL>/api/business-rules/shipping-rules/1' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the decision rule version was deleted successfully.
+
+</details>

@@ -1,0 +1,81 @@
+---
+sidebar_position: 1
+slug: "/reference-docs/api/business-rules/create-decision-rule"
+description: "Learn how to create a decision rule or save a new version of an existing decision rule."
+---
+
+# Create Decision Rule
+
+**Endpoint**: `POST /api/business-rules`
+
+Creates a decision rule. If a rule with the same name already exists, the call updates its latest version, or creates a new version when `newVersion` is `true`. The user who creates the rule is automatically granted all permissions on it.
+
+## Query parameters
+
+| Parameter | Description | Type | Required/ Optional |
+| --------- | ----------- | ---- | ------------------ |
+| newVersion | Whether to save the rule as a new version. Default is `false`. When `true` and the rule exists, a new version is created with the next version number. | boolean | Optional. |
+
+## Request body
+
+Format the request body with the following parameters.
+
+| Parameter | Description | Type | Required/ Optional |
+| --------- | ----------- | ---- | ------------------ |
+| name | The name of the decision rule. The name cannot be changed after the rule is created. | string | Required. |
+| csvData | The decision table in CSV format, with the column names in the first row. | string | Optional. |
+
+## Response
+
+* Returns 200 OK, indicating that the decision rule was saved successfully. The response has no body.
+* Returns 400 Bad Request if the name is blank.
+* Returns 403 Forbidden if you do not have permission to create or update decision rules.
+* Returns 401 Unauthorized if the token is missing or invalid.
+
+## Examples
+
+<details markdown="1">
+<summary>Create a decision rule</summary>
+
+**Request**
+
+```shell
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/business-rules' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name": "shipping-rules",
+  "csvData": "shippingMethod,containerSize,shippingCharge\nmail,Any,10\nmail,small,15\nAny,small,20"
+}'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the decision rule was saved successfully.
+
+</details>
+
+<details markdown="1">
+<summary>Save a new version of the decision rule</summary>
+
+**Request**
+
+```shell
+curl -X 'POST' \
+  'https://<YOUR-SERVER-URL>/api/business-rules?newVersion=true' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name": "shipping-rules",
+  "csvData": "shippingMethod,containerSize,shippingCharge\nmail,Any,12\nmail,small,15\nAny,small,20"
+}'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the decision rule was saved successfully.
+
+</details>

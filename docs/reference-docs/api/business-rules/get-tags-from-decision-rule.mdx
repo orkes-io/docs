@@ -1,0 +1,54 @@
+---
+sidebar_position: 9
+slug: "/reference-docs/api/business-rules/get-tags-from-decision-rule"
+description: "Learn how to retrieve the tags applied to a decision rule."
+---
+
+# Get Tags from Decision Rule
+
+**Endpoint**: `GET /api/business-rules/{name}/tags`
+
+Retrieves the tags applied to a decision rule.
+
+## Path parameters
+
+| Parameter | Description | Type | Required/ Optional |
+| --------- | ----------- | ---- | ------------------ |
+| name | The name of the decision rule to retrieve tags from. | string | Required. |
+
+## Response
+
+* Returns 200 OK with a list of the tags applied to the decision rule. Each tag has a key and a value.
+* Returns 403 Forbidden if you do not have access to the decision rule.
+* Returns 401 Unauthorized if the token is missing or invalid.
+
+## Examples
+
+<details markdown="1">
+<summary>Get tags from a decision rule</summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/business-rules/shipping-rules/tags' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+[
+  {
+    "key": "env",
+    "value": "test"
+  },
+  {
+    "key": "team",
+    "value": "docs"
+  }
+]
+```
+
+</details>
