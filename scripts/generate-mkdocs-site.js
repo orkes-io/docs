@@ -1703,6 +1703,25 @@ function enhancePositioningPage(body, route) {
     );
   }
 
+  if (route === "developer-guides/scheduling-workflows") {
+    // Orkes-only version note after the cronSchedules paragraph. Throws if the
+    // anchor disappears so an upstream rewrite cannot silently drop it.
+    const cronSchedulesAnchor = "each entry has its own `zoneId` defaulting to UTC.";
+    if (!output.includes(cronSchedulesAnchor)) {
+      throw new Error("Scheduling workflows page: cronSchedules anchor not found; update the Orkes-only content.");
+    }
+    output = output.replace(
+      cronSchedulesAnchor,
+      [
+        cronSchedulesAnchor,
+        "",
+        '!!! note "Multi-cron expression support is available since v5.6.0"',
+        "",
+        "    On Orkes Conductor, the `cronSchedules` form is available from v5.6.0.",
+      ].join("\n"),
+    );
+  }
+
   if (route === "reference-docs/system-tasks/http") {
     // Orkes-only HTTP task content: a Remote Services paragraph before the
     // parameters table, and extra parameter rows after the last OSS table row.
