@@ -25,6 +25,7 @@ Orkes Conductor provides role-based access control (RBAC) for individual users a
 - Webhooks
 - Domains
 - Schemas
+- Decision rules
 - Remote services
 
 To get started with RBAC, familiarize yourself with the concepts of users, groups, applications, tags, roles, and permissions.
@@ -69,6 +70,7 @@ If multiple roles are granted, they will have all granted role-level permissions
 | Human Task Manager <TableNote title="Available since"><ul><li>v5.5.6 and later</li></ul></TableNote> | Can view, claim, reassign, release, and complete any human task in the cluster, including tasks assigned to or claimed by other users. Does not grant access to user forms.                                                                                                            |
 | Event Handler Manager <TableNote title="Available since"><ul><li>v5.5.5 and later</li></ul></TableNote> | Can create, view, update, and delete all event handlers in the cluster.                                                                                                            |
 | Schedule Manager <TableNote title="Available since"><ul><li>v5.5.5 and later</li></ul></TableNote> | Can create, view, update, and delete all workflow schedules in the cluster.                                                                                                            |
+| Business Rule Manager <TableNote title="Available since"><ul><li>v5.6.0 and later</li></ul></TableNote> | Can create, view, update, and delete all decision rules in the cluster.                                                                                                            |
 | Queue Monitor Viewer <TableNote title="Available since"><ul><li>v5.6.0 and later</li></ul></TableNote> | Can view the Queue Monitor, including task queue sizes and worker poll data, in read-only mode. |
 | Integration Manager <TableNote title="Available since"><ul><li>v5.6.0 and later</li></ul></TableNote> | Can create, view, update, delete, and execute all integration providers and integrations in the cluster. |
 | Read Only User   | Can view applications, metadata, workflows, API gateway, and search workflows. |
@@ -88,6 +90,7 @@ If multiple roles are granted, they will have all granted role-level permissions
 | Human Task Manager <TableNote title="Available since"><ul><li>v5.5.6 and later</li></ul></TableNote> | Can view, claim, reassign, release, and complete any human task in the cluster, including tasks assigned to or claimed by other users. Does not grant access to user forms. <br/> <br/> This role can only be granted by an Admin.                                                                                           |
 | Event Handler Manager <TableNote title="Available since"><ul><li>v5.5.5 and later</li></ul></TableNote> | Can create, view, update, and delete all event handlers in the cluster. <br/> <br/> This role can only be granted by an Admin.                                                                                           |
 | Schedule Manager <TableNote title="Available since"><ul><li>v5.5.5 and later</li></ul></TableNote> | Can create, view, update, and delete all workflow schedules in the cluster. <br/> <br/> This role can only be granted by an Admin.                                                                                           |
+| Business Rule Manager <TableNote title="Available since"><ul><li>v5.6.0 and later</li></ul></TableNote> | Can create, view, update, and delete all decision rules in the cluster. <br/> <br/> This role can only be granted by an Admin.                                                                                           |
 | Queue Monitor Viewer <TableNote title="Available since"><ul><li>v5.6.0 and later</li></ul></TableNote> | Can view the Queue Monitor, including task queue sizes and worker poll data, in read-only mode. <br/> <br/> This role can only be granted by an Admin. |
 | Integration Manager <TableNote title="Available since"><ul><li>v5.6.0 and later</li></ul></TableNote> | Can create, view, update, delete, and execute all integration providers and integrations in the cluster. <br/> <br/> This role can only be granted by an Admin. |
 | Application Manager | Can create, update, and delete any application in the cluster. Can also view and manage API Gateway configurations. <br/> <br/> This role can only be granted by an Admin.                                                                                                               |
@@ -109,6 +112,7 @@ Besides the role-based permissions, you can add granular permissions to **groups
 - Domains
 - Integrations
 - Prompts
+- Decision rules
 
 Unlike other permission targets, **tags** and **domains** provide bulk access to multiple resources. Tags can be used to grant resources across almost every resource type. When you grant access for a tag “x”, all resources with the tag “x” will be made available to the group or application.
 

@@ -5,6 +5,8 @@ description: "Learn how the Business Rule task evaluates business rules defined 
 ---
 
 import TableNote from '@site/src/components/TableNote';
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
 # Business Rule
 
@@ -12,14 +14,47 @@ The Business Rule task allows the evaluation of business rules defined in spread
 
 The Business Rule task evaluates business rules using a specified rule file. The file can be stored on the web, AWS S3, Azure Blob, or elsewhere. The task supports various execution strategies, including cache timeout, as well as input and output columns. The rules can be configured to apply multiple logical operations, such as comparison, string, list, and date operations.
 
+:::info Prerequisites
+- If the rule file is not publicly available, you must create an integration for the storage where the file is stored, with the required access keys or tokens:
+    - For Google Cloud Storage or Google Sheets: Create a [GCP integration](https://orkes.io/content/integrations/cloud-provider/gcp), then set its name in the `gcpIntegrationName` parameter.
+- Alternatively, upload the rule file to your cluster by creating a decision rule in Orkes Conductor. No integration is needed. See [Create a decision rule in Orkes Conductor](#create-a-decision-rule-in-orkes-conductor) below.
+:::
+
+## Create a decision rule in Orkes Conductor
+
+:::info Available since
+- v5.6.0 and later
+:::
+
+Instead of hosting a rule file on external storage, you can save the decision table in Orkes Conductor and reference it by name in the Business Rule task. Only CSV is supported.
+
+<details markdown="1">
+<summary>Create and use a decision rule</summary>
+
+Use the [**Save business rule**](/content/reference-docs/api/business-rules/create-decision-rule) API (`POST /api/business-rules`) or navigate to **Definitions** > **Decision Rules**, and configure the decision rule using the following parameters:
+
+| Parameter | Description |
+| --------- | ----------- |
+| Rule Name | A unique name for the decision rule. Use this name as `ruleName` in the Business Rule task. The name cannot be changed after the rule is created. |
+| Rule Data | Optional. Upload a CSV file to start with a decision table. You can also add rows and columns after creating the rule. In the API, pass the table as CSV text. |
+
+You can version the decision rules, add tags, and grant READ, UPDATE, and DELETE access to other groups/applications by providing access via respective applications/groups. [Learn more on RBAC](/content/category/access-control-and-security).
+
+Once created, in the Business Rule task, set `ruleName` instead of `ruleFileLocation`. Set `ruleVersion` to use a specific version. If you leave it out, the latest version is used.
+
+</details>
+
 ## Task parameters
 
 Configure these parameters for the Business Rule task.
 
 | Parameter                              | Description                                                                                                                                                                                                                                                                                                                                                                                                                              | Required/ Optional |
 | -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
-| inputParameters.**ruleFileLocation**  | URL of the spreadsheet to be evaluated, in CSV, XLS, or XLSX format. The file can be stored on the web, AWS S3, Azure Blob, etc.<br/><br/>**Note:** A spreadsheet without an explicitly-defined .csv, .xls, or .xlsx extension can also be processed as long as its `Content-Type` indicates a supported format, such as a Google spreadsheet published to the web.                                                                       | Required.          |
-| inputParameters.**executionStrategy** | Strategy for rule execution. Supported types:<ul><li>**FIRE_FIRST**: Uses the first rule that matches to generate the output.</li><li>**FIRE_ALL**: Uses all matching rules to generate the output, with subsequent rules overwriting previous values.</li></ul>**Note:** When you update the rule for any files, there will be a default caching period of 60 mins, causing the updated rules to reflect with a delay of up to 60 mins. Override this delay by configuring `cacheTimeoutMinutes` parameter. | Required.          |
+| inputParameters.**gcpIntegrationName** <TableNote title="Available since"><ul><li>v5.6.0 and later</li></ul></TableNote> | The name of the [GCP integration](/content/integrations/cloud-provider/gcp) used to read the rule file from a private Google Cloud Storage bucket or a private Google Sheet. The integration’s service account must have read access to the file. If the integration does not exist, the task fails. | Optional. |
+| inputParameters.**ruleFileLocation**  | URL of the spreadsheet to be evaluated, in CSV, XLS, or XLSX format. The file can be stored on the web, AWS S3, Azure Blob, Google Cloud Storage, Google Sheets, etc.<br/><br/>For private Google Cloud Storage and Google Sheets files, create a [GCP integration](/content/integrations/cloud-provider/gcp).<ul><li>Google Cloud Storage files can use either of these URL formats: gs://bucket/file.csv or https://<wbr />storage.<wbr />googleapis.<wbr />com/<wbr />bucket/<wbr />file.csv.</li><li>Google Sheets files can use the standard spreadsheet URL: https://<wbr />docs.<wbr />google.<wbr />com/<wbr />spreadsheets/<wbr />d/<wbr />YOUR_SPREADSHEET_ID/<wbr />edit.</li></ul>**Note:** A spreadsheet without an explicitly-defined .csv, .xls, or .xlsx extension can also be processed as long as its `Content-Type` indicates a supported format, such as a Google spreadsheet published to the web.                                                                       | Required if the rule is stored as a file, at a public or private URL. |
+| inputParameters.**ruleName** <TableNote title="Available since"><ul><li>v5.6.0 and later</li></ul></TableNote> | Name of a decision rule saved in Orkes Conductor. | Required if using a decision rule saved in Orkes Conductor. |
+| inputParameters.**ruleVersion** <TableNote title="Available since"><ul><li>v5.6.0 and later</li></ul></TableNote> | Version of the decision rule to use. If not provided, the latest version is used. | Optional. |
+| inputParameters.**executionStrategy** | Strategy for rule execution. Supported types:<ul><li>**FIRE_FIRST**: Uses the first rule that matches to generate the output.</li><li>**FIRE_ALL**: Uses all matching rules to generate the output, with subsequent rules overwriting previous values.</li></ul>**Note:** When you update the rule for any files, there will be a default caching period of 60 mins, causing the updated rules to reflect with a delay of up to 60 mins. Override this delay by configuring `cacheTimeoutMinutes` parameter. Rules saved in Orkes Conductor are not affected by this delay. Updates take effect from the next execution. | Required.          |
 | inputParameters.**cacheTimeoutMinutes** <TableNote title="Available since"><ul><li>v5.2.1 and later</li><li>v4.1.69 and later</li></ul></TableNote> | The cache timeout, in minutes, which is the duration for which rule files are cached. If not configured, the task uses the default timeout of 60 minutes. Changes to a rule file take effect only after the cached copy expires. <br/><br/>**Note**: When multiple tasks access the same rule file, the timeout is determined by the first task that loads the file. Subsequent tasks use the same cached file until it expires. [See an example of cacheTimeoutMinutes in use](/content/reference-docs/system-tasks/business-rule#examples). | Optional. | 
 | inputParameters.**inputColumns**      | The inputs to the rule file, which can be fixed or [passed as a dynamic variable](/developer-guides/passing-inputs-to-task-in-conductor). Supports string, number, boolean, null, and object/array.                                                                                                                                                                                                                       | Required.          |
 | inputParameters.**outputColumns**     | List of columns that will be present in the task output, which can be fixed or [passed as a dynamic variable](/developer-guides/passing-inputs-to-task-in-conductor).                                                                                                                                                                                                                                                                                                                                                                                 | Required.          |
@@ -78,12 +113,16 @@ The Business Rule task supports the following operators:
 | String | `length` <br/><br/>**Available since**<ul><li>v5.2.3 and later</li><li>v4.1.72 and later</li></ul> |  Compares the length of a string with a numerical value. | `password length >= 8` ensures a password has at least eight characters. | 
 | List | `inList` | Checks if a value is in a specified list. | `productName inList({"phone","laptop"})` will match if productName is a phone or laptop. | 
 | List | `!=inList` | Checks if a value is not in a specified list. | `productName !=inList({"phone","laptop"})` | 
-| Others | `createList` | Generates a list with the specified elements. | `createList({"A","B","C"})` will generate a list `{"A", "B", "C"}` in output. | 
+| Others | `createList` | Generates a list with the specified elements. | `createList({"A","B","C"})` will generate a list `{"A", "B", "C"}` in output. |
+| Date comparison | - | Compares date values in supported formats: yyyy-MM-dd, yyyy-MMM-dd, yyyy-MM-dd HH:mm:ss. | `purchaseDate >= 2025-01-01` | 
 
 
 ## Task configuration
 
 This is the task configuration for a Business Rule task.
+
+<Tabs>
+<TabItem value="public-url" label="Using public URL">
 
 ```json
 {
@@ -105,6 +144,56 @@ This is the task configuration for a Business Rule task.
 }
 ```
 
+</TabItem>
+<TabItem value="private-file" label="Using private file (GCP integration)">
+
+```json
+{
+     "name": "business_rule",
+     "taskReferenceName": "business_rule_ref",
+     "inputParameters": {
+       "gcpIntegrationName": "my-gcp-integration",
+       "ruleFileLocation": "gs://my-bucket/rules.csv",
+       "executionStrategy": "FIRE_FIRST",
+       "cacheTimeoutMinutes": "30",
+       "inputColumns": {
+         "InputVariable1": "${workflow.input.InputVariable1}",
+         "InputVariable2": "${workflow.input.InputVariable2}"
+       },
+       "outputColumns": [
+         "OutputVariable1"
+       ]
+     },
+     "type": "BUSINESS_RULE"
+}
+```
+
+</TabItem>
+<TabItem value="decision-rule" label="Using decision rule">
+
+```json
+{
+     "name": "business_rule",
+     "taskReferenceName": "business_rule_ref",
+     "inputParameters": {
+       "ruleName": "pricing-rule",
+       "ruleVersion": 1,
+       "executionStrategy": "FIRE_FIRST",
+       "inputColumns": {
+         "InputVariable1": "${workflow.input.InputVariable1}",
+         "InputVariable2": "${workflow.input.InputVariable2}"
+       },
+       "outputColumns": [
+         "OutputVariable1"
+       ]
+     },
+     "type": "BUSINESS_RULE"
+}
+```
+
+</TabItem>
+</Tabs>
+
 ## Task output
 
 The Business rule task will return the following parameters.
@@ -112,9 +201,12 @@ The Business rule task will return the following parameters.
 | Parameter | Description                                                                                                                                                                        |
 | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | result    | Contains the evaluated parameters based on the matching rule. The specific parameters inside the `result` object depend on the output columns specified in the task configuration. |
-| matchedRows <TableNote title="Available since"><ul><li>v5.5.2 and later</li></ul></TableNote> | A list containing one entry per rule that fired, in fire order. Each entry has the same output columns as `result`.<br/><br/>With `FIRE_FIRST`, `matchedRows` has at most one entry. With `FIRE_ALL`, it can have several. `result` keeps its last-wins behavior, so existing workflows are unaffected. |
+| matchedRows <TableNote title="Available since"><ul><li>v5.5.2 and later</li></ul></TableNote> | A list containing one entry per rule that fired, in fire order. Each entry has the same output columns as `result`.<br/><br/>Regardless of `executionStrategy`, `matchedRows` lists every rule that fired, one entry per row, in fire order, and is empty if none matched. `result` keeps its last-wins behavior unchanged, so existing workflows are unaffected. With `FIRE_FIRST`, `matchedRows` has at most one entry. With `FIRE_ALL`, it can have several. |
 | message | Returned only when no rule matches the input. States that no rules fired and lists any rule file columns that are missing from both `inputColumns` and `outputColumns`. |
 | missingColumns | Returned only when no rule matches the input. A list of the rule file columns that are in neither `inputColumns` nor `outputColumns`. These columns are treated as inputs with empty values. |
+| _ruleName | Name of the decision rule that was evaluated. Returned only for rules saved in Orkes Conductor. |
+| _ruleVersion | Version of the decision rule that was evaluated. Returned only for rules saved in Orkes Conductor. |
+| _ruleUpdateTime | Time the evaluated version was last updated. Returned only for rules saved in Orkes Conductor. |
 
 If no rule matches the input, the task still completes, with an empty `result` and `matchedRows`.
 
@@ -393,6 +485,110 @@ With `executionStrategy` changed to `FIRE_FIRST` and the same input, all three r
   "matchedRows": [
     { "shippingCharge": "10" }
   ]
+}
+```
+
+</details>
+
+<details markdown="1">
+<summary>Using a saved decision rule</summary>
+
+To illustrate the use of a decision rule saved in Orkes Conductor, consider the following rule table. Save it as **Product.csv** on your device:
+
+```
+productType,productCategory,purchaseDate,itemCount,price,Discount,ShippingCharges
+electronics,cellphone,<=2022-04-22,8,!= 100,11%,5$
+electronics,cellphone,<=2022-04-22,8,< 100,13%,15$
+electronics,laptop,> 2022-mar-12,>10,<10.2,5%,4$
+beauty,powder,= 2022-01-01,>15,>=10.3,15%,2$
+food,pizza,< 2022-03-22 12:20:22,25,>300,7%,10$
+```
+
+Next, go to **Definitions** > **Decision Rules** and create a decision rule named `product-pricing` by uploading the CSV file.
+
+Then, create a workflow that utilizes this saved decision rule. Go to **Definitions** > **Workflow** and create a workflow using the following definition:
+
+```json
+{
+  "name": "BusinessRuleDecisionRuleDemo",
+  "description": "Sample workflow demonstrating a Business Rule task with a saved decision rule",
+  "version": 1,
+  "tasks": [
+    {
+      "name": "rule",
+      "taskReferenceName": "rule",
+      "inputParameters": {
+        "ruleName": "product-pricing",
+        "ruleVersion": 1,
+        "executionStrategy": "FIRE_FIRST",
+        "inputColumns": {
+          "productType": "${workflow.input.productType}",
+          "productCategory": "${workflow.input.productCategory}",
+          "price": "${workflow.input.price}",
+          "itemCount": "${workflow.input.itemCount}",
+          "purchaseDate": "${workflow.input.purchaseDate}"
+        },
+        "outputColumns": [
+          "Discount",
+          "ShippingCharges"
+        ]
+      },
+      "type": "BUSINESS_RULE"
+    }
+  ],
+  "schemaVersion": 2
+}
+```
+
+Run the workflow with the following input:
+
+```json
+{
+  "productType": "electronics",
+  "productCategory": "cellphone",
+  "price": "5",
+  "itemCount": "8",
+  "purchaseDate": "2022-04-22"
+}
+```
+
+The input matches the first and second rows. With `FIRE_FIRST`, the first matching rule is used, so the output generated is:
+
+```json
+{
+  "result": {
+    "ShippingCharges": "5$",
+    "Discount": "11%"
+  },
+  "matchedRows": [
+    {
+      "Discount": "11%",
+      "ShippingCharges": "5$"
+    }
+  ],
+  "_ruleName": "product-pricing",
+  "_ruleVersion": "1",
+  "_ruleUpdateTime": "1793885657239"
+}
+```
+
+Next, let's update the rule and run the workflow again to see how changes take effect. Go to **Definitions** > **Decision Rules**, open `product-pricing`, change the Discount in the first row to 12%, and save. Run the workflow again with the same input. The updated rule is used from the next execution, and `_ruleUpdateTime` has a new value:
+
+```json
+{
+  "result": {
+    "ShippingCharges": "5$",
+    "Discount": "12%"
+  },
+  "matchedRows": [
+    {
+      "Discount": "12%",
+      "ShippingCharges": "5$"
+    }
+  ],
+  "_ruleName": "product-pricing",
+  "_ruleVersion": "1",
+  "_ruleUpdateTime": "1793885921368"
 }
 ```
 

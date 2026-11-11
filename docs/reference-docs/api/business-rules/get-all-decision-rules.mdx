@@ -1,0 +1,81 @@
+---
+sidebar_position: 5
+slug: "/reference-docs/api/business-rules/get-all-decision-rules"
+description: "Learn how to retrieve all decision rules, including every version of each rule."
+---
+
+# Get All Decision Rules
+
+**Endpoint**: `GET /api/business-rules`
+
+Retrieves all decision rules, including every version of each rule. The list is ordered by name, then by version.
+
+## Response
+
+* Returns 200 OK with a list of all versions of the decision rules you have access to. Each entry includes its name, version, decision table in CSV format, create and update times in epoch milliseconds, the users who created and last updated it, and its tags. Users with the Admin, Metadata Manager, or Business Rule Manager role see all decision rules. Other users see only the decision rules they have READ access to.
+* Returns 401 Unauthorized if the token is missing or invalid.
+
+The response includes the full decision table of every version, so it can be large when you have many rules or large tables. To retrieve a single rule, use [Get Latest Version of Decision Rule](/content/reference-docs/api/business-rules/get-latest-version-of-decision-rule) or [Get All Versions of Decision Rule](/content/reference-docs/api/business-rules/get-all-versions-of-decision-rule).
+
+## Examples
+
+<details markdown="1">
+<summary>Get all decision rules</summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/business-rules' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+[
+  {
+    "name": "discount-rules",
+    "version": 1,
+    "csvData": "customerTier,orderValue,discountPct\ngold,>=100,15\nsilver,>=100,10\nbronze,>=100,5",
+    "createTime": 1793949101245,
+    "updateTime": 1793949101245,
+    "createdBy": "john.doe@acme.com",
+    "updatedBy": "john.doe@acme.com",
+    "tags": []
+  },
+  {
+    "name": "loan-eligibility",
+    "version": 1,
+    "csvData": "creditScore,annualIncome,eligible\n>=750,>=50000,true\n>=650,>=80000,true\n>=0,>=0,false",
+    "createTime": 1793949254890,
+    "updateTime": 1793949254890,
+    "createdBy": "jane.smith@acme.com",
+    "updatedBy": "jane.smith@acme.com",
+    "tags": []
+  },
+  {
+    "name": "shipping-rules-api-test",
+    "version": 1,
+    "csvData": "shippingMethod,containerSize,shippingCharge\nmail,Any,10\nmail,small,15\nAny,small,20",
+    "createTime": 1793949407317,
+    "updateTime": 1793949407317,
+    "createdBy": "john.doe@acme.com",
+    "updatedBy": "john.doe@acme.com",
+    "tags": []
+  },
+  {
+    "name": "shipping-rules-api-test",
+    "version": 2,
+    "csvData": "shippingMethod,containerSize,shippingCharge\nmail,Any,77\nmail,small,15\nAny,small,20",
+    "createTime": 1793949447712,
+    "updateTime": 1793949903387,
+    "createdBy": "john.doe@acme.com",
+    "updatedBy": "john.doe@acme.com",
+    "tags": []
+  }
+]
+```
+
+</details>

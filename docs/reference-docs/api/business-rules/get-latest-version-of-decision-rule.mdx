@@ -1,0 +1,55 @@
+---
+sidebar_position: 2
+slug: "/reference-docs/api/business-rules/get-latest-version-of-decision-rule"
+description: "Learn how to retrieve the latest version of a decision rule by its name."
+---
+
+# Get Latest Version of Decision Rule
+
+**Endpoint**: `GET /api/business-rules/{name}`
+
+Retrieves the latest version of a decision rule by its name.
+
+## Path parameters
+
+| Parameter | Description | Type | Required/ Optional |
+| --------- | ----------- | ---- | ------------------ |
+| name | The name of the decision rule to retrieve. | string | Required. |
+
+## Response
+
+* Returns 200 OK with the latest version of the decision rule, including its name, version, decision table in CSV format, create and update times in epoch milliseconds, the users who created and last updated it, and its tags.
+* Returns 404 Not Found if no decision rule exists with the given name.
+* Returns 403 Forbidden if you do not have access to the decision rule.
+* Returns 401 Unauthorized if the token is missing or invalid.
+
+## Examples
+
+<details markdown="1">
+<summary>Get the latest version of a decision rule</summary>
+
+**Request**
+
+```shell
+curl -X 'GET' \
+  'https://<YOUR-SERVER-URL>/api/business-rules/shipping-rules-api-test' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>'
+```
+
+**Response**
+
+```json
+{
+  "name": "shipping-rules-api-test",
+  "version": 2,
+  "csvData": "shippingMethod,containerSize,shippingCharge\nmail,Any,77\nmail,small,15\nAny,small,20",
+  "createTime": 1793949447712,
+  "updateTime": 1793949903387,
+  "createdBy": "john.doe@acme.com",
+  "updatedBy": "john.doe@acme.com",
+  "tags": []
+}
+```
+
+</details>
