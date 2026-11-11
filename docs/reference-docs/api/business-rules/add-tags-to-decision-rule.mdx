@@ -1,0 +1,63 @@
+---
+sidebar_position: 8
+slug: "/reference-docs/api/business-rules/add-tags-to-decision-rule"
+description: "Learn how to add tags to a decision rule."
+---
+
+# Add Tags to Decision Rule
+
+**Endpoint**: `PUT /api/business-rules/{name}/tags`
+
+Adds tags to a decision rule. Existing tags are kept. A tag with the same key but a different value is added as a separate tag.
+
+## Path parameters
+
+| Parameter | Description | Type | Required/ Optional |
+| --------- | ----------- | ---- | ------------------ |
+| name | The name of the decision rule to add tags to. | string | Required. |
+
+## Request body
+
+Format the request body as an array of tags, each with the following parameters.
+
+| Parameter | Description | Type | Required/ Optional |
+| --------- | ----------- | ---- | ------------------ |
+| key | The tag key. | string | Required. |
+| value | The tag value. | string | Required. |
+
+## Response
+
+* Returns 200 OK, indicating that the tags were added successfully. The response has no body.
+* Returns 403 Forbidden if you do not have permission to update the decision rule.
+* Returns 401 Unauthorized if the token is missing or invalid.
+
+## Examples
+
+<details markdown="1">
+<summary>Add tags to a decision rule</summary>
+
+**Request**
+
+```shell
+curl -X 'PUT' \
+  'https://<YOUR-SERVER-URL>/api/business-rules/shipping-rules/tags' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  {
+    "key": "env",
+    "value": "test"
+  },
+  {
+    "key": "team",
+    "value": "docs"
+  }
+]'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the tags were added successfully.
+
+</details>

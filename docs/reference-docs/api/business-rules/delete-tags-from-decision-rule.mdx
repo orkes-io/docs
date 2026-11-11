@@ -1,0 +1,59 @@
+---
+sidebar_position: 10
+slug: "/reference-docs/api/business-rules/delete-tags-from-decision-rule"
+description: "Learn how to remove tags from a decision rule."
+---
+
+# Delete Tags from Decision Rule
+
+**Endpoint**: `DELETE /api/business-rules/{name}/tags`
+
+Removes tags from a decision rule. Tags that are not applied to the rule are ignored.
+
+## Path parameters
+
+| Parameter | Description | Type | Required/ Optional |
+| --------- | ----------- | ---- | ------------------ |
+| name | The name of the decision rule to delete tags from. | string | Required. |
+
+## Request body
+
+Format the request body as an array of tags, each with the following parameters.
+
+| Parameter | Description | Type | Required/ Optional |
+| --------- | ----------- | ---- | ------------------ |
+| key | The tag key. | string | Required. |
+| value | The tag value. | string | Required. |
+
+## Response
+
+* Returns 200 OK, indicating that the tags were deleted successfully. The response has no body.
+* Returns 403 Forbidden if you do not have permission to update the decision rule.
+* Returns 401 Unauthorized if the token is missing or invalid.
+
+## Examples
+
+<details markdown="1">
+<summary>Delete tags from a decision rule</summary>
+
+**Request**
+
+```shell
+curl -X 'DELETE' \
+  'https://<YOUR-SERVER-URL>/api/business-rules/shipping-rules/tags' \
+  -H 'accept: application/json' \
+  -H 'X-Authorization: <TOKEN>' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  {
+    "key": "env",
+    "value": "test"
+  }
+]'
+```
+
+**Response**
+
+Returns 200 OK, indicating that the tags were deleted successfully.
+
+</details>
