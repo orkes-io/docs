@@ -14,7 +14,7 @@ This page covers the parameters and expected output for each operation available
 
 ## List Functions
 
-Lists functions from the Cloud Functions API and merges Cloud Run service results, deduplicating by short name. Cloud Run discovery is best-effort: if that API is unavailable or permission is denied, the provider retains the Cloud Functions results. Failure of the primary Cloud Functions API request fails the operation.
+Lists serverless functions in a project and location, including 1st gen, 2nd gen, and Cloud Run functions.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
@@ -23,12 +23,12 @@ Lists functions from the Cloud Functions API and merges Cloud Run service result
 | --------- | ----------- | ---- | ----------------- |
 | Project ID | The Google Cloud project ID. If not provided, defaults to the [project ID configured in the integration](/content/integrations/google-cloud-functions#step-2-add-an-integration-for-google-cloud-functions). | string | Optional. |
 | Location | The region where the functions are deployed. For example: `us-central1`.  If not provided, defaults to the [location configured in the integration](/content/integrations/google-cloud-functions#step-2-add-an-integration-for-google-cloud-functions). | string | Optional. |
-| Page Size | Page size requested from each discovery API. Defaults to 100 and is capped at 500. The merged result can exceed one API page size. The operation does not follow subsequent pages. | integer | Optional. |
+| Page Size | The maximum number of functions to return. Accepted values: 1–500. | integer | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-In Conductor task output, `data` is an array of function objects. Entries returned by the Cloud Functions API retain their metadata, nested build/source configuration, service configuration, event trigger details, and labels when present. Entries discovered only through Cloud Run contain synthesized function metadata and the label `{"orkes:source": "cloud_run"}`; do not expect build configuration on those entries.
+Returns an array of Cloud Function objects, each containing metadata (name, state, environment), build configuration (runtime, entry point, source), service configuration (memory, CPU, timeout, environment variables), event trigger details, and labels.
 
 </TabItem>
 </Tabs>
@@ -42,14 +42,14 @@ Invokes an HTTP-triggered Google Cloud Function with an optional JSON payload.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Function URL | The deployed `.cloudfunctions.net/FUNCTION_NAME` or `.run.app` HTTPS URL. If not provided, defaults to the function URL configured in the integration. The provider generates an ID token for the function audience; see [URL formats and authentication](/content/integrations/google-cloud-functions#api-access-and-function-invocation). | string | Optional. |
-| Request Method | The HTTP method. Defaults to `POST`. Use `GET` for an invocation without a request body. | string | Optional. |
+| Function URL | The HTTPS trigger URL of the Cloud Function. If not provided, defaults to the function URL configured in the integration. | string | Optional. |
+| Request Method | The HTTP method. For example, `POST`, `GET`. | string | Optional. |
 | Payload JSON | The JSON payload to send as the request body. | string | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-Returns `statusCode`, `body`, and `isError`. The response body is parsed as JSON when valid, otherwise returned as text. HTTP 4xx/5xx responses set `isError: true` and fail the Conductor task. A generic HTTP 500 response does not contain the function's server-side traceback; inspect Google Cloud Logging for that traceback.
+Returns an object containing the HTTP status code returned by the function and the response body; parsed as JSON if valid, otherwise returned as a raw string.
 
 </TabItem>
 </Tabs>

@@ -29,12 +29,15 @@ To integrate Google Cloud Functions with Orkes Conductor, you need a Google Clou
 1. Go to the [Google Cloud Console](https://console.cloud.google.com) and select your project.
 2. Navigate to **IAM & Admin** > **Service Accounts**.
 3. Select **+ Create service account**, enter a name and description, and select **Create and continue**.
-4. Assign **Cloud Functions Viewer** for listing and viewing functions. Also assign **Cloud Run Viewer** if you need discovery through the Cloud Run Admin API. Cloud Run Developer alone does not grant `cloudfunctions.functions.list`.
+4. Assign the IAM roles based on the access level required:
+   - **Cloud Functions Viewer**: List and view functions.
+   - **Cloud Functions Invoker**: Invoke HTTP functions (1st gen).
+   - **Cloud Run Invoker**: Invoke 2nd gen and Cloud Run functions.
 5. Select **Continue**, then **Done**.
 6. Select the newly created service account, go to the **Keys** tab, and select **Add Key** > **Create new key**.
 7. Choose **JSON** as the key type and select **Create**. The key file downloads automatically.
 
-Keep the downloaded JSON file ready; you'll need its full contents in the next step. Supply it in the integration's **Service Account JSON** secret field, not in workflow task inputs. Credential fields are handled by Conductor secret storage.
+Keep the downloaded JSON file ready; you'll need its full contents in the next step.
 
 Next, enable the following APIs for the project.
 
@@ -44,31 +47,6 @@ Next, enable the following APIs for the project.
 2. Select **+ Enable APIs and services**.
 3. Search **Cloud Functions API** and select **Enable**.
 4. Search **Cloud Run Admin API** and select **Enable**.
-
-### API access and function invocation
-
-The provider uses the `https://www.googleapis.com/auth/cloud-platform` OAuth scope internally. There is no Scope dropdown; IAM roles determine what the service account may do.
-
-For HTTPS endpoints ending in `.run.app` or `.cloudfunctions.net`, the provider generates a Google ID token from the configured service-account credentials. You do not paste an ID token into this integration.
-
-Both endpoint formats are supported:
-
-| Function URL | ID-token audience used by the provider |
-| ------------ | -------------------------------------- |
-| `https://SERVICE-HASH-REGION.a.run.app` | The Cloud Run service origin. Additional paths and query parameters are excluded. |
-| `https://REGION-PROJECT_ID.cloudfunctions.net/FUNCTION_NAME` | The complete function URL, including `FUNCTION_NAME`. Additional paths and query parameters are excluded. |
-
-For an authenticated Gen 2 function, grant invocation on its backing Cloud Run service. In Cloud Shell, substitute your own values:
-
-```bash
-gcloud run services add-iam-policy-binding SERVICE_NAME \
-  --project=PROJECT_ID \
-  --region=REGION \
-  --member="serviceAccount:SERVICE_ACCOUNT_EMAIL" \
-  --role="roles/run.invoker"
-```
-
-Use the deployed service name, which may differ from the function entry point in your source code. For an authenticated 1st gen endpoint, grant **Cloud Functions Invoker** on the function instead. See [Google's invocation authentication guide](https://cloud.google.com/functions/docs/securing/authenticating).
 
 ## Step 2: Add an integration for Google Cloud Functions
 
@@ -86,6 +64,7 @@ After obtaining the credentials, add a Google Cloud Functions integration to you
 | Parameter | Description | Required/Optional |
 | --------- | ----------- | ----------------- |
 | Integration name | A name for the integration. | Required. |
+| Scope | The OAuth2 scope for Cloud Functions / Cloud Platform API access. Supported values:<ul><li>**Cloud Functions (read-only)**: Grants read-only access to cloud functions.</li><li>**Cloud Functions (full control)**: Grants full access to cloud functions.</li></ul> | Required. |
 | Service Account JSON | Paste the full contents of the Google Cloud service account key JSON file downloaded in [Step 1](/content/integrations/google-cloud-functions#step-1-get-the-google-cloud-credentials). | Required. |
 | Default Project ID | The default Google Cloud Project ID to use when a project ID is not explicitly provided in a workflow task. | Optional. |
 | Default Location | The default region for the cloud function. For example: **us-central1**. | Optional. |
@@ -123,9 +102,3 @@ The following operations are available for use with this integration.
 </ol>
 
 For the complete operations parameters and output reference, see [Google Cloud Functions Operations Reference](/content/integrations/google-cloud-functions-operations).
-
-## Troubleshooting
-
-- **403 on List Functions:** The service account needs `cloudfunctions.functions.list`, such as through Cloud Functions Viewer. A Cloud Run role alone does not provide this permission.
-- **401/403 on invocation:** Verify the invocation role on the deployed function or backing Cloud Run service, the service-account identity, and the function URL. A different OAuth scope cannot replace an invocation permission or correct a wrong ID-token audience.
-- **Wrong function name or URL:** Use the deployed name and URL, not the handler's entry-point name. Cloud Functions URLs include the function-name path; Cloud Run URLs identify the service in the hostname.
