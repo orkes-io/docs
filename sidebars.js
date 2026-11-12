@@ -506,6 +506,14 @@ const sidebars = {
         },
         {
             type: 'category',
+            label: 'Multi-Region and Multi-Cloud',
+            link: { type: 'doc', id: 'orkes-cloud/multi-region' },
+            items: [
+                { type: 'doc', id: 'orkes-cloud/multi-region/manage-pairs', label: 'Manage Multi-Region Pairs' },
+            ],
+        },
+        {
+            type: 'category',
             label: 'Cluster Management',
             link: { type: 'doc', id: 'orkes-cloud/managing-your-cluster' },
             items: [
@@ -529,10 +537,9 @@ const sidebars = {
             label: 'Single Sign-On',
             link: { type: 'doc', id: 'orkes-cloud/sso' },
             items: [
-                { type: 'doc', id: 'orkes-cloud/sso/entra-id', label: 'Microsoft Entra ID' },
                 { type: 'doc', id: 'orkes-cloud/sso/oidc', label: 'OpenID Connect (OIDC)' },
+                { type: 'doc', id: 'orkes-cloud/sso/entra-id', label: 'Microsoft Entra ID' },
                 { type: 'doc', id: 'orkes-cloud/sso/okta', label: 'Okta' },
-                { type: 'doc', id: 'orkes-cloud/sso/azure-federation', label: 'Azure Federation' },
             ],
         },
         {

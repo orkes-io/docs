@@ -1,0 +1,119 @@
+---
+slug: "/orkes-cloud/multi-region"
+description: "Learn how multi-region and multi-cloud pairs work in Orkes Cloud: replication, failover, recovery objectives, and worker setup."
+---
+
+# Multi-Region and Multi-Cloud Deployments
+
+**Multi-region pairs two Orkes Conductor clusters**, in different regions or on different cloud providers, into an active-standby setup, so your workflows keep running if the active cluster becomes unavailable. A pair has one primary and one replica. The primary runs your workflows. The other is a read-only replica that holds a continuous copy, serves reads, and can take over if the primary fails, either automatically when automatic failover is on or when you manually promote it.
+
+Both clusters sit behind one stable hostname, the multiregion name. Your applications and workers connect to that name and follow the primary automatically, so a failover doesn't require changing any configuration.
+
+With this, you can:
+
+- Peer two clusters
+- Promote a replica to primary, which is how you manually trigger a failover
+- Enable/disable automatic failover
+- Rename the multiregion name
+- Unpeer the clusters
+
+:::note Notes
+- Available across AWS, Azure and Google Cloud, in both Orkes-hosted and customer-hosted deployments.
+- Only Orkes Cloud portal organization admins and root users can perform these actions.
+:::
+
+## How multi-region works
+
+![Multi-region architecture](/img/multi-region-architecture.png)
+
+- **Primary:** The cluster that is currently active. It accepts all reads and writes and runs your workflows.
+- **Replica:** The standby cluster is read-only. It receives a continuous copy of the primary and does not accept changes of its own.
+
+The two clusters are peered to form a pair. When you peer them, you choose which one starts as the primary and give the pair a multiregion name, a hostname such as `acme-prod.orkesconductor.io`.
+
+### Cluster addresses
+
+Each pair of clusters has two kinds of address:
+
+- **The multiregion name** always points to the current primary. Use it in your applications and workers so they follow the primary automatically.
+- **Each cluster's own name** still works and always points to that particular cluster.
+
+### Replica behavior
+
+The primary continuously copies the following to the replica:
+
+**Runtime execution data:**
+
+- Active tasks and workflow executions
+- Changes to running workflows
+- Execution history (starting from the time clusters are peered)
+- Audit logs
+
+**Definitions and configuration:**
+
+- Workflow definitions
+- Task definitions
+- Event handlers
+- Schedules
+- Secrets
+- Variables
+- Webhook configurations
+- AI prompts, including all their versions
+- Integrations, with their models
+- Schemas
+- User forms
+- Tags
+- API gateway services and routes
+
+**Identity and access:**
+
+- Applications, with access keys and permissions
+- Users
+- Groups and roles, with their members, and permissions
+
+The replica is read-only while the clusters are peered. You can view the definitions and executions on it, but changes made there are rejected. Changes you make on the primary reach the replica quickly, usually within a few seconds.
+
+**What does not transfer:** Workflow execution history completed before peering is not copied. The replica holds the history of executions that happen after peering.
+
+**Existing data on a cluster is not deleted:** Peering never wipes a cluster. If a cluster already has workflows, schedules, secrets or other artifacts, they stay in place, and the artifacts from the primary are copied alongside them.
+
+**Replication is not a backup:** A deletion or a mistake on the primary is copied to the replica too. Keep your own backups if you need to recover from them.
+
+## Failover
+
+If the primary becomes unavailable and automatic failover is enabled for the pair, Orkes detects it and promotes the replica automatically. Automatic failover is off by default. You can also promote the replica yourself at any time. The multiregion name then points to the new primary, so applications and workers that use it need no changes. The former primary becomes a replica once it can be reached.
+
+![How failover works](/img/multi-region-failover.png)
+
+### Automatic failover
+
+Automatic failover lets Orkes promote the replica without anyone starting it. It is a setting of the pair, so it applies to both clusters. An automatic promotion is listed in the **Actions History** tab of the promoted cluster.
+
+Orkes continuously checks the health of both clusters in a pair. When automatic failover is on and the checks show that the primary is down, the replica is promoted with no human involved. The promoted cluster goes through a rolling restart, and some in-flight tasks may be retried.
+
+**Keep these limits in mind:**
+
+- After a cluster becomes primary, either through a promotion or when the pair is first peered, automatic failover will not promote the other cluster for 15 minutes. During the cooldown you can still promote a replica yourself.
+- With the setting off, Orkes does not promote the replica even if the primary is down. Promote it yourself using the [Promote to Primary](/orkes-cloud/multi-region/manage-pairs#promote-a-replica-to-primary) action.
+
+### Failover time and data loss
+
+These are the typical recovery objectives for an automatic failover:
+
+- **Recovery time objective (RTO):** 10 minutes.
+- **Recovery point objective (RPO)** for asynchronous workflow executions: A maximum of 90 seconds of recent execution progress.
+- **Recovery point objective (RPO)** for synchronous workflow executions run through the API: near zero data loss.
+
+## Configure workers
+
+Multi-region covers the Conductor clusters, not your workers. Workers run on your side, and a cluster assigns tasks only to the workers that poll it, so your workers must be able to reach the active cluster.
+
+Set the server URL in your worker configuration to the multiregion name. Workers using the multiregion name follow the primary automatically, so no change is needed after a promotion. A worker with a long-lived connection or a cached DNS entry can keep reaching the old primary until it reconnects or the cache expires. Workers that poll only a cluster's own name stop receiving tasks once that cluster is no longer the primary.
+
+Some in-flight tasks may be retried after a failover, so design your workers to be idempotent. A retried task can repeat work the old primary had already accepted, so a task that performs a business action, such as issuing a payment, should not repeat the action when it runs again.
+
+![Which workers keep receiving tasks](/img/multi-region-worker.png)
+
+## Next steps
+
+To peer clusters, promote a replica, turn automatic failover on or off, rename the multiregion name, or unpeer, see [Manage Multi-Region Pairs](/orkes-cloud/multi-region/manage-pairs).
