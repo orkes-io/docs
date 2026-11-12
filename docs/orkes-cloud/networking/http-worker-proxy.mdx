@@ -1,11 +1,11 @@
 ---
 slug: "/orkes-cloud/networking/http-worker-proxy"
-description: "Configure outbound proxy settings for HTTP tasks in Orkes Conductor so workers can communicate securely in environments with restricted network access."
+description: "Configure an outbound proxy for HTTP and HTTP Poll tasks in Orkes Conductor, for environments with restricted network access."
 ---
 
 # Configure Proxy for HTTP Workers
 
-Orkes Conductor lets you configure outbound proxy settings for HTTP tasks, enabling secure communication in environments with restricted network access.
+Orkes Conductor lets you configure **outbound proxy settings** for HTTP tasks, enabling secure communication in environments with restricted network access.
 
 In enterprise environments, direct outbound internet access is often restricted. To comply with security and compliance policies, all external HTTP requests must pass through a proxy server. Orkes Conductor enables proxy configuration for [HTTP](/content/reference-docs/system-tasks/http) and [HTTP Poll](/content/reference-docs/system-tasks/http-poll) tasks, allowing workflows to interact with external systems while adhering to corporate networking policies.
 
@@ -16,43 +16,34 @@ Enable proxy settings for HTTP workers when:
 - You’re running an Orkes Conductor deployment behind a firewall or proxy.
 - Your organization mandates that all outbound requests go through a proxy.
 
-## Enabling proxy for HTTP workers
-
-For Cloud-deployed clusters, the proxy settings must be configured via the Cloud portal.
-
-### Proxy configuration parameters
-
-Use the following properties to define proxy settings for HTTP workers:
-
-| Property | Description | Required/Optional |
-| --- | --- | --- |
-| conductor.http.proxy.host | Hostname or IP address of the server. For example, proxy.mycompany.com or 192.168.1.100. | Required. |
-| conductor.http.proxy.port | Port number for the proxy server. | Required. |
-| conductor.http.proxy.type | The proxy protocol type. Supported values: HTTP, SOCKS. Default is HTTP. | Optional. |
-| conductor.http.proxy.username | The username for proxy authentication. | Optional. |
-| conductor.http.proxy.password | The password for proxy authentication. | Optional. |
-| conductor.http.proxy.non-proxy-hosts | Comma-separated hosts that bypass the proxy. It can be hostnames, IP addresses, or wildcard patterns. | Optional. |
-
-### Configuring HTTP proxy settings
+## Configuring HTTP proxy settings
 
 :::note
 Proxy configuration requires Conductor v5.1.13 or later.
 :::
 
-To configure proxy settings in Cloud-deployed clusters, update your cluster’s application properties from the Cloud portal.
-
-You can either:
-
-- Contact your Orkes account representative to enable proxy settings for your cluster.
-- Enable it manually from your Cloud portal using the following steps. Orkes Cloud access is required to perform this action.
+To configure proxy settings, update your cluster’s application properties from the Cloud portal:
 
 1. Go to **Clusters** from the left navigation menu on your [Orkes Cloud portal](https://cloud.orkes.io/).
 2. Select your cluster and go to **Select an Action** > **Upgrade Deployment**.
 3. In **Resource Type**, select **Conductor Server**.
 4. Select **+** button, and add the proxy configuration as key-value pairs:
+
+    | Property | Description | Required/Optional |
+    | --- | --- | --- |
+    | conductor.http.proxy.host | Hostname or IP address of the server. For example, proxy.mycompany.com or 192.168.1.100. | Required. |
+    | conductor.http.proxy.port | Port number for the proxy server. | Required. |
+    | conductor.http.proxy.type | The proxy protocol type. Supported values:<ul><li>HTTP</li><li>SOCKS</li></ul>Default is HTTP. | Optional. |
+    | conductor.http.proxy.username | The username for proxy authentication. | Optional. |
+    | conductor.http.proxy.password | The password for proxy authentication. | Optional. |
+    | conductor.http.proxy.non-proxy-hosts | Comma-separated hosts that bypass the proxy. Each entry can be a hostname, an IP address, or a domain wildcard that starts with `*.`, such as `*.example.com`. | Optional. |
+
 5. Select **Confirm**.
+
+    Conductor Workers reads its proxy settings separately from Conductor Server, so repeat the configuration there.
+
 6. In **Resource Type**, select **Conductor Workers**.
-7. Select the **+** button, and add the proxy configuration as key-value pairs.
+7. Select the **+** button, and add the same proxy configuration as key-value pairs.
 8. Select **Confirm**.
 
 Once done, [create workflows](/content/reference-docs/api/metadata/creating-workflow-definition) with HTTP or HTTP Poll tasks. Outbound calls from these tasks will be routed through the configured proxy.
@@ -67,7 +58,7 @@ conductor.http.proxy.host=proxy.acmecorp.com
 conductor.http.proxy.port=8080
 conductor.http.proxy.type=HTTP
 conductor.http.proxy.username=conductor-service
-conductor.http.proxy.password=${PROXY_PASSWORD}
+conductor.http.proxy.password=your-proxy-password
 conductor.http.proxy.non-proxy-hosts=*.acmecorp.com,*.orkesconductor.com,localhost
 ```
 
@@ -79,16 +70,6 @@ conductor.http.proxy.host=localhost
 conductor.http.proxy.port=8888
 conductor.http.proxy.type=HTTP
 conductor.http.proxy.non-proxy-hosts=localhost,127.0.0.1,*.local
-```
-
-### Environment-specific proxy
-
-```properties
-# Use different proxies for different environments
-conductor.http.proxy.host=${PROXY_HOST:proxy.default.com}
-conductor.http.proxy.port=${PROXY_PORT:8080}
-conductor.http.proxy.username=${PROXY_USER:}
-conductor.http.proxy.password=${PROXY_PASS:}
 ```
 
 ### Next Steps

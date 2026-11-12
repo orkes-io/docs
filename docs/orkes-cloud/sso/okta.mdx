@@ -1,6 +1,6 @@
 ---
 slug: "/orkes-cloud/sso/okta"
-description: "Set up Okta single sign-on for a Conductor cluster. Create an app integration in Okta, then switch the cluster to Okta login."
+description: "Set up Okta single sign-on for a Conductor cluster. Create an app integration in Okta, then connect the cluster to it with Generic OpenId Connect."
 ---
 
 # Configure Single-Sign-On (SSO) with Okta
@@ -19,19 +19,19 @@ In this section, you create an app integration in Okta, then copy the values Ork
 2. Under **Grant type**, select:
     - Authorization Code
     - Refresh Token
-    - Interaction Code
-3. For **Sign-in redirect URI**, enter `https://[your cluster host]/login/callback`.
+3. For **Sign-in redirect URI**, enter `https://[your cluster host]/login/oidc/callback`.
 4. For **Sign-out redirect URI**, enter `https://[your cluster host]`.
 5. Add `https://[your cluster host]` as a **Trusted Origin**.
 6. Grant access to the people in your organization who'll use Orkes Conductor.
-7. Save the app integration. On the **General** tab, copy and store the **Application Client ID** from the **Client Credentials** section.
+7. Confirm that **DPoP** (Demonstrating Proof of Possession) is disabled for the app. Leaving it enabled is a common cause of sign-in failures.
+8. Save the app integration. On the **General** tab, copy and store the **Application Client ID** from the **Client Credentials** section.
 
 Next, set up and copy the values from the Authorization Server:
 
-<ol start="8">
+<ol start="9">
 <li>Go to <strong>Security</strong> &gt; <strong>API</strong> and select or create an <strong>Authorization Server</strong>.</li>
 <li>Copy and store the <strong>Issuer URI</strong> from the Authorization Servers list, and the <strong>Audience</strong> from the Authorization Server's Settings tab.</li>
-<li>In the Authorization Server's access policies, create or update a policy to include the <strong>Authorization Code</strong> grant type, and the <strong>Interaction Code</strong>.</li>
+<li>In the Authorization Server's access policies, create or update a policy to include the <strong>Authorization Code</strong> grant type.</li>
 </ol>
 
 ## Changing authentication via Orkes Cloud portal
@@ -41,10 +41,12 @@ To switch the authentication method:
 1. Go to the [Orkes Cloud portal](https://cloud.orkes.io/).
 2. Go to **Clusters** > select your cluster.
 3. Open the **Authentication** tab and select **Change Authentication Type**.
-    1. Choose **Okta OIDC Connect** and enter the values from the previous section:
+    1. From the **Authentication Type** dropdown, choose **Generic OpenId Connect** and enter the values from the previous section:
         1. **Audience**: The Authorization Server audience.
         2. **Client Id**: The Application Client ID.
         3. **Issuer**: The Authorization Server issuer URI.
+        4. **OIDC Configuration URL**: `https://[your Okta domain]/oauth2/[authorization server ID]/.well-known/openid-configuration`
+        5. **Email Claim**: The name of the claim in the ID token that holds the user's email. This is pre-filled with `email`, which is the claim name Okta uses, so you can leave it as it is.
 4. Select **Confirm**.
 
 Wait for the change to take effect in the cluster, usually within 5 to 10 minutes. Force-refresh your browser to see the new authentication type. If you see errors, try using an incognito window.

@@ -1,16 +1,14 @@
 ---
 slug: "/orkes-cloud/sso"
-description: "Sign in to Conductor clusters with your own identity provider. Supports Microsoft Entra ID, Okta, and OIDC, plus Azure Federation for service principals."
+description: "Sign in to Conductor clusters with your own identity provider. Supports OIDC, Microsoft Entra ID, and Okta."
 ---
 
 # Single Sign-On for Conductor Clusters
 
 Every Conductor cluster ships with **its own login**, independent of the Orkes Cloud portal. By default, a cluster is managed through Conductor's own role-based access control: you add users directly to the cluster and assign them roles and permissions there.
 
-Single sign-on replaces that authentication step with your organization's own identity provider, users still get access according to the roles and permissions you've set up in Conductor; only how they prove their identity changes. Orkes Conductor supports:
+Single sign-on replaces that authentication step with your organization's own identity provider. Users still get access according to the roles and permissions you've set up in Conductor; only how they prove their identity changes. Orkes Conductor supports:
 
+- [OIDC Setup](/content/orkes-cloud/sso/oidc): For any OIDC-compliant identity provider, connect your Conductor cluster directly via OIDC (client ID, audience, issuer, and metadata URL).
 - [Microsoft Entra ID (Azure AD)](/content/orkes-cloud/sso/entra-id): Use Entra ID as your identity provider for cluster login. Configured as an OIDC connection pointed at your Entra ID tenant.
 - [Okta](/content/orkes-cloud/sso/okta): Use Okta as your identity provider for cluster login.
-- [OIDC Setup](/content/orkes-cloud/sso/oidc): For any OIDC-compliant identity provider, connect your Conductor cluster directly via OIDC (client ID, audience, issuer, and metadata URL).
-
-[Azure Federation](/content/orkes-cloud/sso/azure-federation) lets Azure service principals (applications) authenticate to the Conductor API using their native Azure JWT tokens, obtained via the OAuth2 client credentials flow, instead of an Orkes API key/secret. It works alongside your cluster login and doesn't replace it.

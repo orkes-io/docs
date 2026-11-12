@@ -1,18 +1,18 @@
 ---
 slug: "/orkes-cloud/networking"
-description: "Keep Conductor cluster traffic off the public internet with private connectivity through AWS PrivateLink, Azure Private Link, GCP Private Service Connect, or GCP VPC peering."
+description: "Keep Conductor cluster traffic off the public internet with private connectivity on AWS, Azure, and GCP, in either direction."
 ---
 
 # Networking & Connectivity
 
-By default, your Conductor cluster communicates over the public internet: your team logs in to Conductor through a public endpoint, and any HTTP tasks your workflows run reach external systems the same way. When your organization's security requirements call for keeping cluster traffic off the public internet, in either direction, Orkes supports private connectivity through your cloud provider's own networking primitives.
+By default, your Conductor cluster communicates **over the public internet**: your team logs in to Conductor through a public endpoint, and any HTTP tasks your workflows run reach external systems the same way. When your organization's security requirements call for keeping cluster traffic off the public internet, in either direction, Orkes supports private connectivity through your cloud provider's own networking primitives.
 
 ## Two directions of private connectivity
 
 Private connectivity between your network and your Conductor cluster can run in either direction, and you can set up one or both, depending on your needs:
 
 - **User network → Conductor cluster**: Your team and systems reach the Conductor cluster privately, without traffic leaving your cloud provider's network. This lets you disable the cluster's public-facing ingress entirely.
-- **Conductor cluster → User network**: Conductor's HTTP tasks reach your internal APIs privately, without those APIs being exposed to the public internet.
+- **Conductor cluster → User network**: Your workflows reach private services on your side, such as internal APIs through HTTP tasks, without those services being exposed to the public internet.
 
 ## Choosing the right guide
 
