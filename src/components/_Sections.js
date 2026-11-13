@@ -338,7 +338,7 @@ export const CommunitySection = ({}) => (
               <a
                 className={"aClass"}
                 href={
-                  "https://join.slack.com/t/orkes-conductor/shared_invite/zt-3dpcskdyd-W895bJDm8psAV7viYG3jFA"
+                  "https://join.slack.com/t/orkes-conductor/shared_invite/zt-4gilmdmpj-Fu_PxACC60BG4ctur8OeDg"
                 }
                 target={"_blank"}
               >
