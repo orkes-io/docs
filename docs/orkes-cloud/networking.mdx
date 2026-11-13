@@ -5,7 +5,7 @@ description: "Keep Conductor cluster traffic off the public internet with privat
 
 # Networking & Connectivity
 
-By default, your Conductor cluster communicates **over the public internet**: your team logs in to Conductor through a public endpoint, and any HTTP tasks your workflows run reach external systems the same way. When your organization's security requirements call for keeping cluster traffic off the public internet, in either direction, Orkes supports private connectivity through your cloud provider's own networking primitives.
+By default, your Conductor cluster communicates **over the public internet**: your team logs in to Conductor through a public endpoint, and any HTTP tasks your workflows run reach external systems over the public internet. When your organization's security requirements call for keeping cluster traffic off the public internet, in either direction, you can set up private connectivity between your network and your Conductor cluster, using private networking services such as AWS PrivateLink, Azure Private Link, or GCP Private Service Connect.
 
 ## Two directions of private connectivity
 
@@ -20,11 +20,11 @@ The private networking technology you'll use depends on your cloud provider and 
 
 | Cloud provider | Technology | Directions supported |
 | --- | --- | --- |
-| AWS | AWS PrivateLink | Both directions, set up separately for each direction you need |
-| Azure | Azure Private Link | Both directions, set up separately for each direction you need |
-| GCP | GCP Private Service Connect | One-way per connection, set up separately for each direction you need. Use this if you only need one-way access. |
+| AWS | AWS PrivateLink | Both directions, set up separately for each direction you need. |
+| Azure | Azure Private Link | Both directions, set up separately for each direction you need. |
+| GCP | GCP Private Service Connect | Both directions, set up separately for each direction you need. |
 
-Setting up private connectivity is a collaborative process between the user and Orkes: some steps happen in your cloud account, others happen in ours, so your Orkes contact will work with you through each guide.
+Setting up private connectivity is a joint effort between you and Orkes: some steps happen in your cloud account and others in ours, so your Orkes contact will work with you throughout.
 
 ## Routing outbound traffic through a proxy
 

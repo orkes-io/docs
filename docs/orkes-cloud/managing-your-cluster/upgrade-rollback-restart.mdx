@@ -1,6 +1,6 @@
 ---
 slug: "/orkes-cloud/managing-your-cluster/upgrade-rollback-restart"
-description: "Learn how to upgrade, roll back, and restart Orkes Cloud cluster components, update Kubernetes, and pull pod logs to troubleshoot issues."
+description: "Learn how to upgrade, roll back, and restart the cluster components, update Kubernetes, and pull pod logs to troubleshoot issues."
 ---
 
 # Upgrade, Roll Back, and Restart Deployments
@@ -8,7 +8,7 @@ description: "Learn how to upgrade, roll back, and restart Orkes Cloud cluster c
 Your cluster runs several **components**, each at its own version: Conductor, Workers, Agent, and Metrics Proxy. The components available are:
 
 - **Conductor**: The orchestration server that runs and manages your workflows and agents.
-- **Workers**: The services that execute the individual tasks within those workflows.
+- **Workers**: The services that execute the system tasks within those workflows.
 - **Agent**: The component that polls the Orkes control plane for updates, without needing any inbound access to your cluster.
 - **Metrics Proxy**: The component that routes monitoring requests to Prometheus and Grafana.
 
@@ -72,7 +72,7 @@ Orkes triggers the change to apply it to your cluster's components in the backgr
 
 ## Update Kubernetes
 
-For AWS Enterprise clusters, you can also update the underlying Kubernetes (EKS) version your cluster runs on, separately from any Conductor component.
+For AWS clusters, you can also update the underlying Kubernetes (EKS) version your cluster runs on, separately from any Conductor component.
 
 1. From your cluster's detail view, open **Select an Action** and choose **Update Kubernetes**.
 2. The dialog shows your cluster's current Kubernetes version. From the **Target Version** dropdown, select a version to update to; the next available version is marked "(recommended)."

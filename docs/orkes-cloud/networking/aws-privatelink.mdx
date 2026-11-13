@@ -69,12 +69,17 @@ You create an Endpoint Service (the side being reached) on your side and share i
 Your Endpoint Service must be set up in a VPC in the same AWS region as your Conductor cluster. If the service you want Orkes to reach lives in a different VPC than the one hosting your Endpoint Service, you'll need to set up peering and route tables from that VPC to the destination VPC.
 :::
 
+### Get Orkes's AWS account ID
+
+Contact your Orkes representative to get the AWS account ID Orkes will connect from. You'll allow this account on your Endpoint Service in the next section.
+
 ### Create Endpoint Service
 
 1. In the AWS Console, switch to the same region as your Conductor cluster.
 2. Select the VPC you want to provision the Endpoint Service in.
 3. Follow [AWS's instructions for creating an Endpoint Service](https://docs.aws.amazon.com/vpc/latest/privatelink/create-endpoint-service.html).
-4. Share the following with Orkes:
+4. On your Endpoint Service, open **Allow principals** and add Orkes's AWS account ID.
+5. Share the following with Orkes:
 
    | Field | Example |
    | --- | --- |

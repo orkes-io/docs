@@ -1,11 +1,11 @@
 ---
 slug: "/orkes-cloud/networking/gcp-private-service-connect"
-description: "Set up one-directional private connectivity between your network and your Conductor cluster with GCP Private Service Connect."
+description: "Set up private connectivity between your network and your Conductor cluster, in either direction, with GCP Private Service Connect."
 ---
 
 # Connect Conductor Cluster with GCP Private Service Connect
 
-GCP Private Service Connect sets up **private connectivity** in one direction at a time between your network and your Conductor cluster. Depending on your needs, you can set up:
+GCP Private Service Connect lets you set up **private connectivity** between your network and your Conductor cluster, in either direction. Depending on your needs, you can set up:
 
 - **Conductor cluster → User network**, so your workflows can reach private services on your side, such as internal APIs through HTTP tasks or message queues like Kafka
 - **User network → Conductor cluster**, to remove public internet access to your cluster

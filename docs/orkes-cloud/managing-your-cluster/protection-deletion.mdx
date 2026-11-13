@@ -18,7 +18,7 @@ Turning either toggle **on** takes effect immediately, no confirmation needed. T
 
 ## Delete a cluster
 
-Deleting a cluster is permanent. Once the deletion process completes, the cluster and its resources are removed and can't be recovered through the portal.
+Deleting a cluster is permanent. Once the deletion process completes, the cluster and its resources are removed and can't be recovered through the portal. A cluster that is part of a multi-region pair can't be deleted. If you try, the request is rejected with a message telling you to unpeer the pair first. Unpeer the clusters, then delete.
 
 1. From your cluster's detail view, select the **Details** tab.
 2. Turn off **Delete Protection**, if it's enabled.
