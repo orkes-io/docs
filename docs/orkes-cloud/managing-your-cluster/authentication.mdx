@@ -1,24 +1,21 @@
 ---
 slug: "/orkes-cloud/managing-your-cluster/authentication"
-description: "Switch your Orkes Conductor cluster from Default Orkes Authentication to your organization identity provider using OpenID Connect or Okta OIDC."
+description: "Switch your Orkes Conductor cluster from Default Orkes Authentication to your organization identity provider using OpenID Connect."
 ---
 
 # Manage Cluster Authentication
 
-Your cluster's **authentication type** controls how users log in to your Conductor cluster. You can use one of three types:
+Your cluster's **authentication type** controls how users log in to your Conductor cluster. You can use one of two types:
 
 - **Default Orkes Authentication**: Users are managed through role-based access control (RBAC) in Orkes Conductor.
 - **Generic OpenId Connect**: Users log in through any configured OIDC-compliant identity provider.
-- **Okta OIDC Connect**: Users log in through Okta.
+- **Okta OIDC Connect** (deprecated): Use Generic OpenId Connect instead.
 
 Changing the type updates the cluster's Conductor deployment. This page covers how to switch to your organization's identity provider, and the fields each provider needs.
 
 ## Before you begin
 
-Set the callback URL on your identity provider to match your authentication type:
-
-1. Generic OpenId Connect: `https://<conductor domain>/login/oidc/callback`
-2. Okta OIDC Connect: `https://<conductor domain>/login/callback`
+Set the callback URL on your identity provider to `https://<conductor domain>/login/oidc/callback`.
 
 ## Default Orkes Authentication
 
@@ -26,7 +23,7 @@ Clusters are usually provisioned with Default Orkes Authentication, so this is t
 
 How the first users get access depends on who provisions the cluster:
 
-- **Customer Hosted clusters**: The user who provisions the cluster is added to it automatically.
+- **Customer Hosted clusters**: The user who provisions the cluster is added to it automatically as an Admin.
 - **Orkes Hosted clusters**: Orkes provisions the cluster for you, and the initial admins you share with Orkes team are added to your cluster.
 
 After that, an Admin grants everyone else access through [RBAC in Orkes Conductor](/content/access-control-and-security/users-and-groups#users).
@@ -37,7 +34,7 @@ After that, an Admin grants everyone else access through [RBAC in Orkes Conducto
 
 1. From your cluster's detail view, select the **Authentication** tab.
 2. Select **Change Authentication Type**.
-3. From the **Authentication Type** dropdown, select your identity provider: **Generic OpenId Connect** for any OIDC-compliant provider, or **Okta OIDC Connect** for Okta specifically.
+3. From the **Authentication Type** dropdown, select your identity provider: **Generic OpenId Connect** for any OIDC-compliant provider, including Okta.
 4. Enter the fields for your selected provider. All fields are required.
 
     **Generic OpenId Connect:**

@@ -12,7 +12,7 @@ Every cluster has two safeguards that protect it from accidental deletion and un
 From your cluster's detail view, select the **Details** tab. Two toggles control what actions are allowed on the cluster:
 
 - **Delete Protection**: When enabled, the cluster can't be deleted. The **Delete Cluster** button is disabled while this is on. Enable this on any cluster you don't want to be removed by accident, especially production clusters.
-- **Change Protection**: When enabled, any mutating action on the cluster (deleting it, deploying, upgrading, rolling back, and more, including pod restarts) is blocked by a warning dialog. To proceed, you must check two boxes: that you have express permission to make the change, and that you're making it within the agreed change window. Both must be checked before you can continue.
+- **Change Protection**: When enabled, any mutating action on the cluster (deleting it, deploying, upgrading, rolling back, and more, including pod restarts) is blocked by a warning dialog. To proceed, you must check two boxes: that you have express permission to make the change, and that you're making it within the change window. Both must be checked before you can continue.
 
 Turning either toggle **on** takes effect immediately, no confirmation needed. Turning either toggle **off** requires typing the cluster's exact name to confirm.
 

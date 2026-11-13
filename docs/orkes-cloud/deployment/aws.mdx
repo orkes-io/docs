@@ -20,7 +20,7 @@ Before you begin, complete the following in your AWS account. The final authoriz
 
 ### VPC
 
-[Create a Virtual Private Cloud (VPC)](https://docs.aws.amazon.com/vpc/latest/userguide/create-vpc.html#Create-VPC) in your chosen region. You can use an existing VPC, but we recommend creating a new one to avoid conflicts with existing setups.
+[Create a Virtual Private Cloud (VPC)](https://docs.aws.amazon.com/vpc/latest/userguide/create-vpc.html) in your chosen region. You can use an existing VPC, but we recommend creating a new one to avoid conflicts with existing setups.
 
 - Choose one of the following subnet approaches:
 
@@ -87,7 +87,7 @@ If the **Create New Cluster** option isn't available to you in the portal, conta
 
 #### Configure cluster settings
 
-1. **Ignore VPC validation**: Leave this unchecked. It skips the validation checks on your VPC and subnets. If you selected Customer-owned networking, validation can't be skipped, and provisioning is rejected if this box is checked.
+1. **Ignore VPC validation**: Leave this unchecked. Orkes uses these checks to confirm your VPC meets the requirements before provisioning starts, and skipping them can cause provisioning to fail.
 2. In the **Region** dropdown, select the AWS region you identified earlier.
 3. In the **VPC Id** dropdown, select the VPC you created earlier.
     - Look for confirmation that Orkes has validated the VPC: "Great - We have validated this VPC and it meets the requirements for provisioning this Conductor cluster."
@@ -107,7 +107,7 @@ If the **Create New Cluster** option isn't available to you in the portal, conta
 
 1. Verify all settings are correct, select **Create Provisioning Workflow**, and confirm the pop-up dialog to proceed.
 2. The provisioning starts and most provisioning flows complete within an hour. You can check the status of cluster creation on the Orkes Cloud portal.
-3. Once the cluster is created, you can access it using the links on the cluster details page in the Orkes Cloud portal.
+3. Once the cluster is created, you can access it using the Conductor UI link on the cluster details page in the Orkes Cloud portal.
 
 ## Next Steps
 

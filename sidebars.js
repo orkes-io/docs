@@ -550,7 +550,6 @@ const sidebars = {
                 { type: 'doc', id: 'orkes-cloud/networking/aws-privatelink', label: 'AWS PrivateLink' },
                 { type: 'doc', id: 'orkes-cloud/networking/azure-private-link', label: 'Azure Private Link' },
                 { type: 'doc', id: 'orkes-cloud/networking/gcp-private-service-connect', label: 'GCP Private Service Connect' },
-                { type: 'doc', id: 'orkes-cloud/networking/gcp-vpc-peering', label: 'GCP VPC Peering' },
                 { type: 'doc', id: 'orkes-cloud/networking/http-worker-proxy', label: 'Proxy for HTTP Workers' },
             ],
         },
