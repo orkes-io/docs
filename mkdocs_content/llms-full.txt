@@ -72978,7 +72978,7 @@ End-to-end examples covering all APIs for each domain:
 
 - [Open an issue (SDK)](https://github.com/conductor-oss/conductor-java-sdk/issues) for SDK bugs, questions, and feature requests
 - [Open an issue (Conductor server)](https://github.com/conductor-oss/conductor/issues) for Conductor OSS server issues
-- [Join the Conductor Slack](https://join.slack.com/t/orkes-conductor/shared_invite/zt-2vdbx239s-Eacdyqya9giNLHfrCavfaA) for community discussion and help
+- [Join the Conductor Slack](https://join.slack.com/t/orkes-conductor/shared_invite/zt-4gilmdmpj-Fu_PxACC60BG4ctur8OeDg) for community discussion and help
 - [Orkes Community Forum](https://community.orkes.io/) for Q&A
 
 ## Frequently Asked Questions
@@ -73543,7 +73543,7 @@ See [examples/agentic-workflows/](https://github.com/conductor-oss/javascript-sd
 
 - [Open an issue (SDK)](https://github.com/conductor-oss/javascript-sdk/issues) for SDK bugs, questions, and feature requests
 - [Open an issue (Conductor server)](https://github.com/conductor-oss/conductor/issues) for Conductor OSS server issues
-- [Join the Conductor Slack](https://join.slack.com/t/orkes-conductor/shared_invite/zt-2vdbx239s-Eacdyqya9giNLHfrCavfaA) for community discussion and help
+- [Join the Conductor Slack](https://join.slack.com/t/orkes-conductor/shared_invite/zt-4gilmdmpj-Fu_PxACC60BG4ctur8OeDg) for community discussion and help
 - [Orkes Community Forum](https://community.orkes.io/) for Q&A
 
 ## Frequently Asked Questions
@@ -74093,7 +74093,7 @@ The SDK provides a test framework that uses Conductor's `POST /api/workflow/test
 
 - [Open an issue (SDK)](https://github.com/conductor-sdk/conductor-python/issues) for SDK bugs, questions, and feature requests
 - [Open an issue (Conductor server)](https://github.com/conductor-oss/conductor/issues) for Conductor OSS server issues
-- [Join the Conductor Slack](https://join.slack.com/t/orkes-conductor/shared_invite/zt-2vdbx239s-Eacdyqya9giNLHfrCavfaA) for community discussion and help
+- [Join the Conductor Slack](https://join.slack.com/t/orkes-conductor/shared_invite/zt-4gilmdmpj-Fu_PxACC60BG4ctur8OeDg) for community discussion and help
 - [Orkes Community Forum](https://community.orkes.io/) for Q&A
 
 ## License
@@ -74672,7 +74672,7 @@ Apache 2.0 - see [LICENSE](https://github.com/conductor-oss/ruby-sdk/blob/main/L
 - [Orkes Cloud](https://orkes.io)
 - [Documentation](https://conductor-oss.org)
 - [Python SDK](https://github.com/conductor-sdk/conductor-python)
-- [Community Slack](https://join.slack.com/t/orkes-conductor/shared_invite/zt-2vdbx239s-Eacdyqya9giNLHfrCavfaA)
+- [Community Slack](https://join.slack.com/t/orkes-conductor/shared_invite/zt-4gilmdmpj-Fu_PxACC60BG4ctur8OeDg)
 
 
 ## Examples
@@ -75134,7 +75134,7 @@ End-to-end examples covering all APIs for each domain:
 
 - [Open an issue (SDK)](https://github.com/conductor-oss/rust-sdk/issues) for SDK bugs, questions, and feature requests
 - [Open an issue (Conductor server)](https://github.com/conductor-oss/conductor/issues) for Conductor OSS server issues
-- [Join the Conductor Slack](https://join.slack.com/t/orkes-conductor/shared_invite/zt-2vdbx239s-Eacdyqya9giNLHfrCavfaA) for community discussion and help
+- [Join the Conductor Slack](https://join.slack.com/t/orkes-conductor/shared_invite/zt-4gilmdmpj-Fu_PxACC60BG4ctur8OeDg) for community discussion and help
 - [Orkes Community Forum](https://community.orkes.io/) for Q&A
 
 ## Frequently Asked Questions

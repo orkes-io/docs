@@ -194,7 +194,7 @@ const config = {
             "aria-label": "GitHub",
           },
           {
-            href: "https://join.slack.com/t/orkes-conductor/shared_invite/zt-3dpcskdyd-W895bJDm8psAV7viYG3jFA",
+            href: "https://join.slack.com/t/orkes-conductor/shared_invite/zt-4gilmdmpj-Fu_PxACC60BG4ctur8OeDg",
             position: "right",
             className: "navbar-icon navbar-icon--slack",
             "aria-label": "Slack",
@@ -219,7 +219,7 @@ const config = {
               },
               {
                 label: "Slack",
-                href: "https://join.slack.com/t/orkes-conductor/shared_invite/zt-3dpcskdyd-W895bJDm8psAV7viYG3jFA",
+                href: "https://join.slack.com/t/orkes-conductor/shared_invite/zt-4gilmdmpj-Fu_PxACC60BG4ctur8OeDg",
               },
               {
                 label: "YouTube",
