@@ -506,7 +506,7 @@ const sidebars = {
         },
         {
             type: 'category',
-            label: 'Multi-Region and Multi-Cloud',
+            label: 'Multi-Cloud and Multi-Region',
             link: { type: 'doc', id: 'orkes-cloud/multi-region' },
             items: [
                 { type: 'doc', id: 'orkes-cloud/multi-region/manage-pairs', label: 'Manage Multi-Region Pairs' },

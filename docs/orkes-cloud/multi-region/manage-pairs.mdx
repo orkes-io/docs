@@ -1,6 +1,6 @@
 ---
-slug: "/orkes-cloud/multi-region/manage-pairs"
-description: "Peer two Orkes Cloud clusters, promote a replica, turn automatic failover on or off, rename the multiregion name, and unpeer clusters."
+slug: "/orkes-cloud/manage-multi-region-pairs"
+description: "Peer two Orkes Conductor clusters, promote a replica, turn automatic failover on or off, rename the multiregion name, and unpeer clusters."
 ---
 
 # Manage Multi-Region Pairs
@@ -13,7 +13,7 @@ description: "Peer two Orkes Cloud clusters, promote a replica, turn automatic f
 - Renaming the multiregion name
 - Unpeering
 
-For how multi-region works, see [Multi-Region and Multi-Cloud Deployments](/orkes-cloud/multi-region).
+For how multi-region works, see [Multi-Cloud and Multi-Region Deployments](/orkes-cloud/multi-cloud-and-multi-region-deployments).
 
 ## Peer clusters
 
@@ -27,7 +27,7 @@ For how multi-region works, see [Multi-Region and Multi-Cloud Deployments](/orke
 
 Peering joins two standalone clusters into a pair. Start it from either cluster.
 
-1. From the cluster's detail view, open **Select an Action** and choose **MultiRegion > Peer**.
+1. From the cluster's detail view, open **Select an Action** and choose **Multi-Region > Peer**.
 2. In the **Peer cluster name** field, select the other cluster.
 3. In the **MultiRegion name** field, enter the hostname, for example `acme-prod.orkesconductor.io`. The name must be unused: it cannot be any cluster's hostname or another pair's multiregion name, including in other organizations. If it is taken, the action is refused.
 4. Keep **This cluster (cluster-name) is the PRIMARY** selected if this cluster should start as the primary. Clear it to make the peer cluster the primary.
@@ -37,7 +37,7 @@ After peering completes, replication starts from the primary to the replica. The
 
 ![Peering two clusters](/img/peering-clusters.png)
 
-To confirm the pair, open either cluster. Once peering completes, you see:
+To confirm the pair, open either cluster in the Cloud portal. Once peering completes, you see:
 
 - A **Multi-Region** badge in the cluster header.
 - **Replication status** on the **Details** tab, which shows PRIMARY or REPLICA. (PEERING) means peering is still in progress. (STEADY) means the pair is established and no change is in progress. Use **Replication status** to see when the pair is fully in place.
@@ -53,7 +53,7 @@ Promotion makes the replica the new primary and turns the current primary into a
 
 To promote a replica to primary:
 
-1. From the replica cluster's detail view, open **Select an Action** and choose **MultiRegion > Promote to Primary**.
+1. From the replica cluster's detail view, open **Select an Action** and choose **Multi-Region > Promote to Primary**.
 2. Type the cluster name to confirm.
 3. Select **Confirm**.
 
@@ -90,7 +90,7 @@ You can move a pair to a new multiregion name without taking it down. The new na
 
 ![How renaming the multiregion name works](/img/multi-region-renaming.png)
 
-1. From either cluster's detail view, open **Select an Action** and choose **MultiRegion > Rename Endpoint**.
+1. From either cluster's detail view, open **Select an Action** and choose **Multi-Region > Rename Endpoint**.
 2. In the **New MultiRegion name** field, enter the new hostname, for example `acme.orkesconductor.io`. The name must be unused: it cannot be any cluster's hostname or another pair's multiregion name, including in other organizations. If it is taken, the action is refused.
 3. Select **Confirm**.
 
@@ -110,7 +110,7 @@ Unpeering returns both clusters to standalone clusters and ends replication betw
 
 To unpeer the clusters:
 
-1. From either cluster's detail view, open **Select an Action** and choose **MultiRegion > Unpeer**.
+1. From either cluster's detail view, open **Select an Action** and choose **Multi-Region > Unpeer**.
 2. Type the cluster name, and select **Confirm**.
 
 To track the unpeering, open the **Details** tab, and the **Replication status** shows (UNPEERING) while it runs. When it finishes, the replication fields no longer appear.

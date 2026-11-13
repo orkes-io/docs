@@ -1,9 +1,9 @@
 ---
-slug: "/orkes-cloud/multi-region"
+slug: "/orkes-cloud/multi-cloud-and-multi-region-deployments"
 description: "Learn how multi-region and multi-cloud pairs work in Orkes Cloud: replication, failover, recovery objectives, and worker setup."
 ---
 
-# Multi-Region and Multi-Cloud Deployments
+# Multi-Cloud and Multi-Region Deployments
 
 **Multi-region pairs two Orkes Conductor clusters**, in different regions or on different cloud providers, into an active-standby setup, so your workflows keep running if the active cluster becomes unavailable. A pair has one primary and one replica. The primary runs your workflows. The other is a read-only replica that holds a continuous copy, serves reads, and can take over if the primary fails, either automatically when automatic failover is on or when you manually promote it.
 
@@ -87,22 +87,22 @@ If the primary becomes unavailable and automatic failover is enabled for the pai
 
 ### Automatic failover
 
-Automatic failover lets Orkes promote the replica without anyone starting it. It is a setting of the pair, so it applies to both clusters. An automatic promotion is listed in the **Actions History** tab of the promoted cluster.
+Automatic failover lets Orkes promote the replica without anyone starting it. It is a setting of the pair, so it applies to both clusters.
 
 Orkes continuously checks the health of both clusters in a pair. When automatic failover is on and the checks show that the primary is down, the replica is promoted with no human involved. The promoted cluster goes through a rolling restart, and some in-flight tasks may be retried.
 
 **Keep these limits in mind:**
 
 - After a cluster becomes primary, either through a promotion or when the pair is first peered, automatic failover will not promote the other cluster for 15 minutes. During the cooldown you can still promote a replica yourself.
-- With the setting off, Orkes does not promote the replica even if the primary is down. Promote it yourself using the [Promote to Primary](/orkes-cloud/multi-region/manage-pairs#promote-a-replica-to-primary) action.
+- With the setting off, Orkes does not promote the replica even if the primary is down. Promote it yourself using the [Promote to Primary](/orkes-cloud/manage-multi-region-pairs#promote-a-replica-to-primary) action.
 
 ### Failover time and data loss
 
 These are the typical recovery objectives for an automatic failover:
 
 - **Recovery time objective (RTO):** 10 minutes.
-- **Recovery point objective (RPO)** for asynchronous workflow executions: A maximum of 90 seconds of recent execution progress.
-- **Recovery point objective (RPO)** for synchronous workflow executions run through the API: near zero data loss.
+- **Recovery point objective (RPO)** for [asynchronous workflow executions](/reference-docs/api/workflow/start-workflow-execution): A maximum of 90 seconds of recent execution progress.
+- **Recovery point objective (RPO)** for [synchronous workflow executions](/reference-docs/api/workflow/synchronous-workflow-execution): ~0 sec.
 
 ## Configure workers
 
@@ -110,10 +110,10 @@ Multi-region covers the Conductor clusters, not your workers. Workers run on you
 
 Set the server URL in your worker configuration to the multiregion name. Workers using the multiregion name follow the primary automatically, so no change is needed after a promotion. A worker with a long-lived connection or a cached DNS entry can keep reaching the old primary until it reconnects or the cache expires. Workers that poll only a cluster's own name stop receiving tasks once that cluster is no longer the primary.
 
-Some in-flight tasks may be retried after a failover, so design your workers to be idempotent. A retried task can repeat work the old primary had already accepted, so a task that performs a business action, such as issuing a payment, should not repeat the action when it runs again.
-
 ![Which workers keep receiving tasks](/img/multi-region-worker.png)
+
+Some in-flight tasks may be retried after a failover, so **design your workers to be idempotent**. A retried task can repeat work the old primary had already accepted, so a task that performs a business action, such as issuing a payment, should not repeat the action when it runs again.
 
 ## Next steps
 
-To peer clusters, promote a replica, turn automatic failover on or off, rename the multiregion name, or unpeer, see [Manage Multi-Region Pairs](/orkes-cloud/multi-region/manage-pairs).
+To peer clusters, promote a replica, turn automatic failover on or off, rename the multiregion name, or unpeer, see [Manage Multi-Region Pairs](/orkes-cloud/manage-multi-region-pairs).
