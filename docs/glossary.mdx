@@ -13,13 +13,17 @@ In Orkes Conductor, an AI agent is implemented as a workflow that uses a large l
 
 Instruction-driven reasoning techniques such as Reason and Act (ReAct), Chain-of-Thought (CoT), or Tree-of-Thoughts (ToT) can be used to guide the agent’s decision-making within the workflow.
 
+## AI Assistant
+
+A built-in [assistant](/content/developer-guides/ai-assistant) in the Conductor UI that builds, edits, runs, and debugs workflows from natural-language descriptions. It adds tasks to a workflow, explains failed executions, writes starter worker code, and answers questions about Conductor.
+
 ## AI Prompts
 
 An [AI Prompt](/content/developer-guides/creating-and-managing-gen-ai-prompt-templates) is a  set of instructions and context used in Orkes Conductor workflows to guide the behavior and output of a large language model.
 
 ## AI Tasks
 
-[AI Tasks](/content/category/reference-docs/ai-tasks) are a family of built-in system tasks for AI and LLM workloads, such as calling a chat completion model, generating or storing embeddings, indexing documents, and searching a vector index. Like other system tasks, they run without custom worker code — you configure the task type and its parameters directly in the workflow definition.
+[AI Tasks](/content/category/reference-docs/ai-tasks) are a family of built-in system tasks for AI and LLM workloads, such as calling a chat completion model, generating or storing embeddings, indexing documents, and searching a vector index. Like other system tasks, they run without custom worker code, and you configure the task type and its parameters directly in the workflow definition.
 
 ## Agentic Workflow
 
@@ -33,7 +37,7 @@ An agentic workflow is flexible and can be used for many scenarios:
 
 ## Agentspan (legacy name)
 
-Agentspan was the earlier name for Conductor's agent runtime. Agents are now a first-class part of Conductor; see Agents.
+Agentspan was the earlier name for Conductor's agent runtime. Agents are now a first-class part of Conductor; see [Agents](/content/devguide/ai).
 
 The agent runtime is not the same as Conductor Skills. Conductor Skills are authoring and operations instructions that help AI coding agents create, run, monitor, debug, and manage Conductor workflows and workers.
 
@@ -52,13 +56,17 @@ The agent runtime is not the same as Conductor Skills. Conductor Skills are auth
 [Starts a Conductor workflow](/content/reference-docs/api/workflow/start-workflow-execution) and returns the workflow (execution) ID to the system immediately. This ID can be used to check on the workflow progress and result.
 
 
+## Audit Logs
+
+[Records](/content/access-control-and-security/audit-logs) of who changed what and when in your cluster's configuration and management resources, such as workflow definitions, secrets, and access control settings. Audit logs do not capture workflow or task executions. Only administrators can view them. They are disabled by default, so contact Orkes support to enable them.
+
 ## Change Data Capture (CDC)
 
 In Orkes Conductor, [Change Data Capture (CDC)](/content/developer-guides/enabling-cdc-on-conductor-workflows) is a pattern that streams workflow state changes to external eventing systems such as Kafka or other message brokers. When CDC is enabled on a workflow, Conductor emits events whenever the workflow state changes, so downstream systems can react in real time, enabling responsive, decoupled architectures.  ￼
 
-## Conductor Cluster
+## Compensation Workflow
 
-A deployment of the Orkes Conductor platform that hosts definitions, configurations, and executions. A Conductor cluster provides the runtime environment where workflows are executed and managed.
+A workflow that runs when another workflow fails and needs to undo, mitigate, or record partial work. Compensation workflows are commonly used to release inventory, void payments, close duplicate tickets, revoke external operations, notify operators, or mark an agent action as failed for audit.
 
 ## Correlation ID
 
@@ -67,6 +75,10 @@ In Orkes Conductor, a correlation ID is a unique identifier used to associate re
 ## Cron Expression
 
 A string that defines a recurring schedule using a fixed syntax of time and date fields. In Orkes Conductor, cron expressions are used to configure the Workflow Scheduler to trigger workflows at specified intervals, such as daily, hourly, or on a custom schedule.
+
+## Decision Rules
+
+A [decision table](/content/reference-docs/system-tasks/business-rule#create-a-decision-rule-in-orkes-conductor) saved in your Orkes Conductor cluster, in CSV format, that a Business Rule task references by name. Saving the rule in the cluster means you don't need to host the file in external storage or set up an integration. Decision rules are versioned and can be managed through the Decision Rules APIs.
 
 ## Domain
 
@@ -98,17 +110,13 @@ Event-driven architecture facilitates loose coupling between services and respon
 
 A module that listens for specific events in an event-driven system. This can be a piece of code, as simple as a callback function, or in Conductor, a JSON configuration. As its name implies, the [event handler](/content/developer-guides/event-handler) reacts to specific events and triggers subsequent actions, such as starting a workflow or updating a workflow variable.
 
-## Fencing Token
-
-A value attached to a distributed lock that prevents a node with an expired or stale lock from applying updates after another node has taken over. In a multi-node Conductor cluster, fencing tokens stop a server that briefly lost its lock (due to a slow GC pause or network blip, for example) from writing stale workflow state once a different node has already taken ownership of that evaluation.
-
 ## Gateway
 
 Gateway enables exposing any Conductor workflow as APIs or MCP tools.  Workflows can be exposed as HTTP APIs via the [API Gateway](/content/developer-guides/api-gateway) or as MCP tools via the [MCP Gateway](/content/developer-guides/mcp-gateway) for AI agent integration.
 
-## MCP Gateway
+## Human Task
 
-The Orkes Gateway capability that exposes Conductor workflows as Model Context Protocol tools. MCP Gateway lets AI agents call governed workflows instead of raw internal APIs, with schema validation, access control, retries, human approval, execution history, and auditability handled by Conductor.
+A [task](/content/developer-guides/orchestrating-human-tasks) that pauses a workflow until a person submits input. It is linked to a user form that defines the data to collect, and it is assigned to a user or group by an assignment policy. When the form is submitted, the task completes and the workflow continues.
 
 ## Idempotency
 
@@ -134,9 +142,9 @@ A standard Java API for connecting to relational databases such as PostgreSQL. I
 
 An AI model trained on large volumes of data that can understand and generate natural language using deep learning architectures. In Orkes Conductor, LLMs are used within workflows to perform tasks such as text generation, translation, question answering, and reasoning. Orkes Conductor supports [integrations with multiple LLM providers](/content/category/integrations/ai-llm).
 
-## Loop Condition
+## Multi-Region and Multi-Cloud
 
-The `loopCondition` parameter of a [Do While](/content/reference-docs/operators/do-while) task. Conductor evaluates it after every iteration to decide whether the loop continues; it commonly checks an agent's completion flag, an iteration count against a maximum, or a token/cost budget. It is a common building block for agent loops and other iterative or budget-capped patterns.
+A setup that pairs two Orkes Conductor clusters, in different regions (multi-region) or on different cloud providers (multi-cloud), into an [active-standby pair](/content/orkes-cloud/multi-cloud-and-multi-region-deployments). One cluster is the primary and runs your workflows. The other is a read-only replica with a continuous copy of the primary, ready to take over if the primary fails. Both clusters sit behind one multiregion name that always points to the current primary, so applications and workers keep the same address after a failover.
 
 ## Operator
 
@@ -147,6 +155,17 @@ The `loopCondition` parameter of a [Do While](/content/reference-docs/operators/
 The process of coordinating distributed software components, systems, agents, and humans so that they execute seamlessly as an automated, repeatable process. For example, an order management process may involve coordinating across an inventory system, a payment service, multiple notification channels, and even the logistics and shipping partner.
 
 Orchestration facilitates state tracking and reliable execution of interdependent tasks.
+
+## Orkes Cloud Portal
+
+The web console at [cloud.orkes.io](https://cloud.orkes.io/) where you create and manage your Conductor clusters. From the portal you deploy clusters, [view their configuration and health](/content/orkes-cloud/monitoring-your-cluster), and manage authentication, certificates, and team access. Portal organization admins and root users control these actions. The portal has its own login, separate from the login on each cluster.
+
+## Orkes Conductor Cluster
+
+A deployment of the Orkes Conductor platform that hosts your definitions, configurations, and executions, and provides the runtime where workflows run. Each cluster has its own login and its own role-based access control, separate from the Orkes Cloud portal. A cluster is [deployed](/content/orkes-cloud/deployment) in one of two ways:
+
+* **Orkes Hosted:** Orkes provisions, operates, and scales the cluster inside Orkes Cloud, in a virtual network dedicated to your organization. It can run on AWS, GCP, or Azure. Orkes handles upgrades, scaling, patching, and infrastructure monitoring.
+* **Customer Hosted:** The cluster runs inside your own cloud account (AWS, Azure, or GCP), on your infrastructure and under your own security and compliance controls. You create it from the Orkes Cloud portal.
 
 ## RBAC (Role Based Access Control)
 
@@ -180,10 +199,6 @@ A workflow that executes within another workflow (usually referred to as the par
 
 [Sub-workflows](/content/reference-docs/operators/sub-workflow) promote modularity and reusability of common processes across different workflows. For example, a notification workflow can be used as a sub-workflow across CI/CD pipelines or system monitoring workflows.
 
-## Sweeper Service
-
-A background process on the Conductor server that continuously scans for stalled work and requeues it. If a task is `IN_PROGRESS` but its worker has gone silent past `responseTimeoutSeconds`, the sweeper requeues the task. If the server itself restarts, the sweeper re-evaluates all in-progress workflows on startup and resumes them from their last persisted state. This is part of what makes Conductor workflows [durable](#durable-execution) — server or worker restarts do not lose in-flight work.
-
 ## Synchronous Execution
 
 [Starts a workflow](/content/reference-docs/api/workflow/synchronous-workflow-execution) and returns its output either once the workflow has reached a terminal state or when a certain duration has elapsed.
@@ -200,13 +215,13 @@ A [task](/content/developer-guides/tasks) is a unit in a Conductor workflow that
 
 A workflow-specific configuration, specifying the task type, reference name, input parameters, and other details about the task to be executed. The [task configuration](/content/developer-guides/tasks#task-configuration) is part of the workflow definition and it is an ordered array that describes the order and control flow of tasks, the data flow between tasks, and task behaviour like optionality, caching, and schema enforcement.
 
-## Compensation Workflow
-
-A workflow that runs when another workflow fails and needs to undo, mitigate, or record partial work. Compensation workflows are commonly used to release inventory, void payments, close duplicate tickets, revoke external operations, notify operators, or mark an agent action as failed for audit.
-
 ## Task Definition
 
 A [task definition](/content/developer-guides/tasks#task-definition) is a configuration that is general to a specific task type or name, and applies to all instances of the task across workflows. It contains general implementation details, like rate limits, expected input and output keys, and failure-handling behavior, like retries and timeouts. 
+
+## Task Guardrails
+
+[Settings on an LLM task](/content/developer-guides/guardrails) that scrub or validate text before it goes into the model (input guardrail) or after the model responds (output guardrail). They keep PII and other sensitive content away from the model or the caller, without adding an extra task to the workflow.
 
 ## Task Queue
 
