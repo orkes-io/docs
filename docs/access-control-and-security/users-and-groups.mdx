@@ -5,11 +5,11 @@ description: "Learn how to create and manage users and groups to assign roles an
 
 # Managing Users and Groups
 
-:::info
-This feature is only available to Admins.
+:::note
+Role based access control is an Orkes Conductor Enterprise feature. Managing users, groups, and role assignments is available only to Admins.
 :::
 
-Users and groups control human access to an Orkes Conductor cluster. Use users for individual identities and groups for team-level permissions that should apply consistently across workflows, tasks, agents, secrets, environment variables, tags, domains, integrations, prompts, decision rules, and gateway services.
+Users and groups control human access to an Orkes Conductor cluster. Use users for individual identities and groups for team-level permissions that should apply consistently across workflows, tasks, agents, secrets, environment variables, tags, domains, integrations, prompts, and decision rules.
 
 ## Users
 
@@ -21,11 +21,7 @@ Use direct user roles sparingly. For production clusters, prefer groups so acces
 
 Users must be added to your Orkes Conductor cluster before they can sign up or log in.
 
-**To add a user to your cluster:**
-
-1. Go to **Access Control** > **Users** from the left navigation menu on your Conductor cluster.
-2. Select **+ Create user**.
-3. Enter the following details:
+Use the [Create User API](/reference-docs/api/users/create-user) or navigate to **Access Control** > **Users**, and create a new user with the following parameters:
 
 | Parameter | Description                                                                                                                                                                                                                                                     |
 | ------ |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -34,7 +30,9 @@ Users must be added to your Orkes Conductor cluster before they can sign up or l
 | Roles | The user role, which governs the basic access level for the user. The available roles are: <ul><li>**Admin**: Superuser. Full access to the system and resources. Can manage users and groups.</li> <li>**User**: Regular user with permissions to create workflow definitions, task definitions, applications, integrations, secrets, and user forms. Has full API Gateway access, including view and management permissions. Can search workflows.</li> <li>**Metadata Manager**: Can manage all workflow and task definitions in the cluster, including performing any action regardless of workflow or task ownership. Can view and manage API Gateway configurations. Can create integrations and secrets.</li> <li>**Workflow Manager**: Can view, execute, and manage all workflow executions in the system, including start, pause, resume, rerun, retry, restart, terminate, and delete actions. Has execute and read access to workflow and task definitions.</li> <li>**Human Task Manager**: Can view, claim, reassign, release, and complete any human task in the cluster, including tasks assigned to or claimed by other users. Does not grant access to user forms.</li> <li>**Event Handler Manager**: Can create, view, update, and delete all event handlers in the cluster.</li> <li>**Schedule Manager**: Can create, view, update, and delete all workflow schedules in the cluster.</li> <li>**Queue Monitor Viewer**: Can view the Queue Monitor, including task queue sizes and worker poll data, in read-only mode.</li> <li>**Business Rule Manager**: Can create, view, update, and delete all decision rules in the cluster.</li> <li>**Integration Manager**: Can create, view, update, delete, and execute all integration providers and integrations in the cluster.</li> <li>**Read Only User**: Can view applications, metadata, workflows, API gateway, and search workflows.</li></ul>                                                                                |
 | Groups | The groups that the user should be part of. This provides additional group-level permissions to the user.                                               |
 
-4. Select **Save**.
+:::note
+Read Only User must be the only role assigned to a user. It cannot be combined with other roles, and Read Only Users cannot be added to groups. If you change an existing user to Read Only User, their granular permissions are removed.
+:::
 
 ### Editing user information
 
@@ -53,7 +51,7 @@ Manage users programmatically with the [Users API](/reference-docs/api/users), i
 Groups are the preferred way to grant access to teams. A user added to a group inherits the group's roles and permissions; removing the user removes those inherited permissions.
 
 :::note
-Read Only Users cannot be added to groups.
+Read Only Users cannot be added to any groups.
 :::
 
 Design groups around operational responsibilities, not individual projects. For example:
@@ -67,38 +65,36 @@ Design groups around operational responsibilities, not individual projects. For 
 
 ### Configuring groups
 
-**To configure a group:**
+Use the [Create Group API](/reference-docs/api/groups/create-group) or navigate to **Access Control** > **Groups**, and create a new group with the following parameters:
 
-1. Create a group.
+| Parameter | Description                                                                                                                                                                                                                                                     |
+| ------ |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Name | A name to identify your group. For example, “Engineering”. This cannot be changed later.                                                                     |
+| Description | A description of the group.                                        |
+| Default group role | Optional. Roles that all group members inherit in addition to their individually assigned roles. The available roles are: <ul><li>**Admin**: Superuser. Full access to the system and resources. Can manage users and groups.</li> <li>**User**: Regular user group with permissions to create workflow definitions, task definitions, applications, integrations, secrets, and user forms. Has full API Gateway access, including view and management permissions. Can search workflows.</li> <li>**Metadata Manager**: Can manage all workflow and task definitions in the cluster, including performing any action regardless of workflow or task ownership. Can view and manage API Gateway configurations. Can create integrations and secrets.</li> <li>**Workflow Manager**: Can view, execute, and manage all workflow executions in the system, including start, pause, resume, rerun, retry, restart, terminate, and delete actions. Has execute and read access to workflow and task definitions.</li> <li>**Human Task Manager**: Can view, claim, reassign, release, and complete any human task in the cluster, including tasks assigned to or claimed by other users. Does not grant access to user forms.</li> <li>**Event Handler Manager**: Can create, view, update, and delete all event handlers in the cluster.</li> <li>**Schedule Manager**: Can create, view, update, and delete all workflow schedules in the cluster.</li> <li>**Queue Monitor Viewer**: Can view the Queue Monitor, including task queue sizes and worker poll data, in read-only mode.</li> <li>**Business Rule Manager**: Can create, view, update, and delete all decision rules in the cluster.</li> <li>**Integration Manager**: Can create, view, update, delete, and execute all integration providers and integrations in the cluster.</li> <li>**Read Only User**: Can view applications, metadata, workflows, API gateway, and search workflows.</li></ul>                           |
 
-   <ol>
-   <li>Go to <strong>Access Control</strong> &gt; <strong>Groups</strong> from the left navigation menu on your Conductor cluster.</li>
-   <li>Select <strong>+ Create group</strong>.</li>
-   <li>Enter the following details:</li>
-   </ol>
+:::note
+Read Only User must be the only default role for a group. A group that already has granular permissions cannot be given Read Only User.
+:::
 
-   | Parameter | Description                                                                                                                                                                                                                                                     |
-   | ------ |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-   | Name | A name to identify your group. For example, “Engineering”. This cannot be changed later.                                                                     |
-   | Description | A description of the group.                                        |
-   | Default group role | Optional. Roles that all group members inherit in addition to their individually assigned roles. The available roles are: <ul><li>**Admin**: Superuser. Full access to the system and resources. Can manage users and groups.</li> <li>**User**: Regular user group with permissions to create workflow definitions, task definitions, applications, integrations, secrets, and user forms. Has full API Gateway access, including view and management permissions. Can search workflows.</li> <li>**Metadata Manager**: Can manage all workflow and task definitions in the cluster, including performing any action regardless of workflow or task ownership. Can view and manage API Gateway configurations. Can create integrations and secrets.</li> <li>**Workflow Manager**: Can view, execute, and manage all workflow executions in the system, including start, pause, resume, rerun, retry, restart, terminate, and delete actions. Has execute and read access to workflow and task definitions.</li> <li>**Human Task Manager**: Can view, claim, reassign, release, and complete any human task in the cluster, including tasks assigned to or claimed by other users. Does not grant access to user forms.</li> <li>**Event Handler Manager**: Can create, view, update, and delete all event handlers in the cluster.</li> <li>**Schedule Manager**: Can create, view, update, and delete all workflow schedules in the cluster.</li> <li>**Queue Monitor Viewer**: Can view the Queue Monitor, including task queue sizes and worker poll data, in read-only mode.</li> <li>**Business Rule Manager**: Can create, view, update, and delete all decision rules in the cluster.</li> <li>**Integration Manager**: Can create, view, update, delete, and execute all integration providers and integrations in the cluster.</li> <li>**Read Only User**: Can view applications, metadata, workflows, API gateway, and search workflows.</li></ul>                           |
+Next, add members or permissions to the group.
 
-   <ol start="4">
-   <li>Select <strong>Save</strong>. The group has been created. You can proceed to add members or permissions to the group.</li>
-   </ol>
+1. Add members to the group.
 
-2. Add members to the group.
-    1. In the **Members** section, select **+ Add User** to add an existing user to the group. If the user you are looking for does not exist, you must first add them to your cluster.
-3. Add permissions to grant group-level access to resources such as Workflows, Tasks, Agents, Secrets, Environment Variables, Tags, Domains, Integrations, Prompts, and Decision Rules.
-    1. In the **Permissions** section, select **+ Add Permission**.
-    2. Toggle between each resource type and select the resources to provide access to.
-    3. Toggle the access levels for your selected resource:
+    Use the [Add User to Group API](/reference-docs/api/groups/add-user-to-group) or go to the **Members** section, select **+ Add User** to add an existing user to the group. If the user you are looking for does not exist, you must first add them to your cluster.
+
+2. Add permissions to grant group-level access to resources such as Workflows, Agents, Tasks, Secrets, Environment Variables, Tags, Domains, Integrations, Prompts, and Decision Rules.
+
+    Use the [Grant Access API](/reference-docs/api/authorization/grant-access), or go to the **Permissions** section, select **+ Add Permission**.
+
+    * Toggle between each resource type and select the resources to provide access to.
+    * Toggle the access levels for your selected resource:
         * **Read**: Users will be able to view the resource.
         * **Update**: Users will be able to update the resource.
         * **Execute**: Users will be able to execute the resource.
         * **Delete**: Users will be able to delete the resource.
 
-  All group members will now have these roles and permissions, on top of their existing user-based permissions.
+All group members will now have these roles and permissions, on top of their existing user-based permissions.
 
 :::tip
 You can grant permissions to **tags**, rather than to individual resources. Tags can be added to multiple resources, so that when you grant a permission to a tag, it instantly provides access to all tagged resources. Learn more about tags in [Managing Tags](/access-control-and-security/tags).
