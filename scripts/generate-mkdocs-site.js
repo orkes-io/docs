@@ -3117,6 +3117,16 @@ function transformSharedBody(body, entry) {
       "/content/sdks/authentication#retrieving-access-keys",
     )
     .replace(/\[https?:\/\/localhost:8080\]\(https?:\/\/localhost:8080\)/g, "<YOUR-CLUSTER-URL>")
+    // OSS links into a local Conductor UI ("[Executions](http://localhost:8080/executions)")
+    // can't stay links here: once the host becomes <YOUR-CLUSTER-URL> they are
+    // relative hrefs that 404. Show the address as code instead.
+    .replace(
+      /(?<!!)\[([^\]]+)\]\(https?:\/\/localhost:8080(\/[^)\s]*)?\)/g,
+      (_all, text, urlPath = "") => {
+        const address = `\`<YOUR-CLUSTER-URL>${urlPath}\``;
+        return /^https?:\/\/localhost:8080/.test(text) ? address : `${text} (${address})`;
+      },
+    )
     .replace(/https?:\/\/localhost:8080/g, "<YOUR-CLUSTER-URL>")
     .replace(/`localhost:8080`/g, "`<YOUR-CLUSTER-URL>`");
 
