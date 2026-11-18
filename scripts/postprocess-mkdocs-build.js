@@ -115,10 +115,14 @@ function toCanonicalPath(href, currentRoute) {
 function rewriteHtml(file) {
   const currentRoute = routeForHtml(file);
   let html = fs.readFileSync(file, "utf8");
-  html = html.replace(
-    /\b(href|src|content)=["']([^"']+)["']/g,
-    (all, attr, href) => `${attr}="${toCanonicalPath(href, currentRoute)}"`,
-  );
+  html = html.replace(/\b(href|src|content)=["']([^"']+)["']/g, (all, attr, href) => {
+    // A meta refresh's content is "<delay>; url=<target>", not a URL. Rewrite
+    // only the target; rewriting the whole value produced "/content/0; url=…",
+    // which browsers ignore (so no-JS visitors and crawlers weren't redirected).
+    const refresh = attr === "content" && href.match(/^(\d+;\s*url=)(.+)$/i);
+    if (refresh) return `${attr}="${refresh[1]}${toCanonicalPath(refresh[2], currentRoute)}"`;
+    return `${attr}="${toCanonicalPath(href, currentRoute)}"`;
+  });
   // Tag the generated "Enterprise" nav sections so CSS can style the
   // enterprise seam differently from ordinary topical sections. Material
   // emits no per-section class, so match the section whose title is exactly
