@@ -8,6 +8,10 @@ import TabItem from '@theme/TabItem';
 
 # Managing Tags
 
+:::note
+Role based access control is an Orkes Conductor Enterprise feature. Managing users, groups, and role assignments is available only to Admins.
+:::
+
 Tags organize resources and make access control easier to manage at scale. A tag uses the `key:value` format and can be applied to workflows, tasks, user forms, event handlers, schedules, secrets, webhooks, prompts, environment variables, integrations, applications, decision rules, and API/MCP Gateway services.
 
 Common tag patterns:
@@ -31,30 +35,37 @@ Guidelines:
 - Avoid personal tags for production access control.
 - Review tag membership before granting broad permissions to a tag.
 
-You can add or remove multiple tags to various resources.
+You can add tags from the UI or through the API.
 
-**To add or remove a tag:**
+From the UI, go to the resource's page, select the **Tag** icon in the **Actions** column, enter tags in the `key:value` format, and select **Save**.
 
-1. In the left navigation menu, go to one of the following locations based on the resource you want to tag:
-    - **Definitions** > **Workflow** / **Task** / **User Forms** / **Event Handler** / **Scheduler** / **Secrets** / **Webhook** / **AI Prompts**  /  **Environment Variables** / **Decision Rules**
-    - **Integrations**
-    - **APIs** > **Services**
-    - **Access Control** > **Applications**
-2. Locate the specific resource.
-3. In the **Actions** column, select the **Tag** icon. <br/>A pop-up window for Edit Tags appears.
-4. To create a tag, enter a tag in the `key:value` format and select **Enter.**
-5. To remove a tag, select **x** next to the tag.
-6. Once tagged, select **Save**.
+Use the corresponding API to add tags to a resource:
+
+- [Workflow](/reference-docs/api/tags/add-tag-to-a-workflow-definition)
+- [Task](/reference-docs/api/tags/add-tags-to-a-task-definition)
+- [User form](/reference-docs/api/human-tasks/add-tags-to-user-form)
+- [Secret](/reference-docs/api/secrets/add-tags-to-secret)
+- [Webhook](/reference-docs/api/webhooks/add-tags-to-webhook)
+- [AI prompt](/reference-docs/api/prompts/add-tags-to-prompt)
+- [Environment variable](/reference-docs/api/environment-variables/add-tags-to-environment-variable)
+- [Application](/reference-docs/api/applications/add-tag-to-application)
+- [Decision rule](/reference-docs/api/business-rules/add-tags-to-decision-rule)
+- [Integration provider](/reference-docs/api/integrations/add-tags-to-integration-provider)
+- [Integration](/reference-docs/api/integrations/add-tags-to-integration-resource)
+- [Gateway service](/reference-docs/api/gateway/add-or-replace-tags-in-gateway-service)
+- [Gateway service routes](/reference-docs/api/gateway/add-or-replace-tags-in-gateway-service-routes)
 
 ## Tags dashboard
 
+:::info Available since
+- v5.2.75 and later
+:::
+
 The tags dashboard provides a complete overview of all tags in the cluster and the resources associated with each tag. Use it to audit whether tag-based permissions are still scoped correctly.
 
-**To view the tags dashboard:**
+To view the tags dashboard from Conductor UI, go to **Definitions** > **Tags Dashboard** from the left navigation menu on your Conductor cluster.
 
-1. Go to **Definitions** > **Tags Dashboard** from the left navigation menu on your Conductor cluster.
-
-The page displays the total number of tags in the cluster, along with the count of resources associated with each tag.
+The page displays the total number of tags in the cluster, along with the count of resources of each type associated with each tag. Use the Quick search box to find a tag, and select a count to see the resources.
 
 ## Bulk-access to resources using tags
 
@@ -91,10 +102,6 @@ Before granting tag permissions, confirm that the resources already using the ta
 <Tabs>
 <TabItem value="group-level" label="For Groups">
 
-:::info
-This feature is only available to Admins.
-:::
-
 **To add permissions to a group:**
 
 1. Go to **Access Control** > **Groups** from the left navigation menu on your Conductor cluster.
@@ -108,7 +115,7 @@ This feature is only available to Admins.
     - **Delete**: Users will be able to delete the resource.
 6. Select **Add permissions**.
 
-All users in the group now have access to all resources associated with the tag. You can select the drop-down icon to view all of the tagged resources.
+All users in the group now have access to all resources associated with the tag.
 
 </TabItem>
 
@@ -127,10 +134,12 @@ All users in the group now have access to all resources associated with the tag.
     - **Delete**: The application will be able to delete the resource.
 6. Select **Add permissions**.
 
-The application now has access to all resources associated with the tag. You can select the drop-down icon to view all of the tagged resources.
+The application now has access to all resources associated with the tag.
 
 </TabItem>
 </Tabs>
+
+Access follows the tag. It applies when the tag is added to a resource and ends when the tag is removed. A user or application can access a resource if it has been granted the access on any one of the resource's tags, or on the resource itself.
 
 ## APIs
 
