@@ -33,6 +33,16 @@ This guide explains how to set up and use the integration. Here’s an overview:
 
 ## Step 1: Get the AWS credentials
 
+The integration in Orkes Conductor supports three authentication modes.
+
+| Authentication mode | Description |
+| ------------------- | ----------- |
+| Access Key | Uses the access key of an IAM user. Follow the steps below to create the user and its access keys. |
+| Conductor Role (worker identity) | Uses the AWS credentials already available to the worker (environment variables, credentials file, or IAM role). No credentials are entered in the integration. |
+| Assume Role (from worker identity) | Uses the worker's AWS credentials to assume an IAM role. You provide the Role ARN and External ID of the role in the integration. |
+
+### Access Key
+
 To integrate AWS S3 with Orkes Conductor, create an IAM user in AWS and generate access keys with the required S3 permissions.
 
 **To create an IAM user and generate access keys:**
@@ -76,6 +86,19 @@ To integrate AWS S3 with Orkes Conductor, create an IAM user in AWS and generate
 
 4. Give the policy a name and select **Create policy**.
 
+If you use temporary AWS credentials, you also need the session token that comes with them. You can enter it in the optional **Session Token** field in [Step 2](/content/integrations/aws-s3#step-2-add-an-integration-for-aws-s3).
+
+### Conductor Role (worker identity)
+
+No credentials are needed from AWS. The integration uses the AWS credentials already available to the worker.
+
+### Assume Role (from worker identity)
+
+Get the **Role ARN** and the **External ID** of the IAM role to assume. You enter both in [Step 2](/content/integrations/aws-s3#step-2-add-an-integration-for-aws-s3).
+
+- **Role ARN:** In the AWS console, go to **IAM** > **Roles**, select the role, and copy the **Role ARN** from the Summary section.
+- **External ID:** The value required by the role's trust policy through the `sts:ExternalId` condition. For details, see [Access to AWS accounts owned by third parties](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_common-scenarios_third-party.html) in the AWS documentation.
+
 ## Step 2: Add an integration for AWS S3
 
 After obtaining the credentials, add an AWS S3 integration to your Conductor cluster.
@@ -92,9 +115,12 @@ After obtaining the credentials, add an AWS S3 integration to your Conductor clu
 | Parameter | Description | Required/Optional |
 | --------- | ----------- | ----------------- |
 | Integration name | A name for the integration. | Required. | 
-| Access Key ID | The AWS Access Key ID generated from [Step 1](/content/integrations/aws-s3#step-1-get-the-aws-credentials).<br/>If left empty, it uses any AWS credentials already configured in the environment (environment variables, credentials file, or IAM role). | Required. | 
-| Secret Access Key | The Secret Access Key generated from [Step 1](/content/integrations/aws-s3#step-1-get-the-aws-credentials).<br/>If left empty, it uses any AWS credentials already configured in the environment (environment variables, credentials file, or IAM role). | Required. | 
-| Region | The AWS region of your S3 bucket. For example `us-east-1`. | Required. | 
+| Authentication | The authentication mode. Supported values:<ul><li>`Access Key`</li><li>`Conductor Role (worker identity)`</li><li>`Assume Role (from worker identity)`</li></ul> | Required. | 
+| Access Key ID | The AWS Access Key ID generated from [Step 1](/content/integrations/aws-s3#step-1-get-the-aws-credentials). | Required if *Authentication* is set as *Access Key*. | 
+| Secret Access Key | The Secret Access Key generated from [Step 1](/content/integrations/aws-s3#step-1-get-the-aws-credentials). | Required if *Authentication* is set as *Access Key*. | 
+| Session Token | The session token that comes with temporary AWS credentials. | Optional. | 
+| Role ARN | The ARN of the IAM role to assume. | Required if *Authentication* is set as *Assume Role*. | 
+| External ID | The external ID of the IAM role to assume. | Required if *Authentication* is set as *Assume Role*. | 
 | Description | A description of the integration. | Required. | 
 
 <ol start="5">
