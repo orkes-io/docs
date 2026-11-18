@@ -14,7 +14,7 @@ This page covers the parameters and expected output for each operation available
 
 ## Upload Object From Base64
 
-Upload a file to a Google Cloud Storage bucket using base64-encoded content.
+Upload a file to a Google Cloud Storage bucket using base64-encoded content. If an object with the same name already exists in the bucket, it is replaced.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
@@ -22,9 +22,9 @@ Upload a file to a Google Cloud Storage bucket using base64-encoded content.
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
 | Object Name | The name of the object to upload, including any folder path (e.g., `folder/file.txt`). | string | Required. |
-| Content Type | The MIME type of the object (e.g., `text/plain`, `image/png`). | string | Optional. |
+| Content Type | The MIME type of the object (e.g., `text/plain`, `image/png`). Defaults to `application/octet-stream`. | string | Optional. |
 | Base 64 Content | The base64-encoded content of the file to upload. | string | Required. |
-| Bucket Name | The name of the bucket to upload the object to. If not specified, uses the default bucket configured in the integration. | string | Optional. |
+| Bucket Name | The name of the bucket to upload the object to. | string | Required. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -44,7 +44,7 @@ Retrieve an object's content from a Google Cloud Storage bucket as base64-encode
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
 | Object Name | The name of the object to retrieve, including any folder path (e.g., `folder/file.txt`). | string | Required. |
-| Bucket Name | The name of the bucket to retrieve the object from. If not specified, uses the default bucket configured in the integration. | string | Optional. |
+| Bucket Name | The name of the bucket to retrieve the object from. | string | Required. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -63,14 +63,14 @@ List objects in a Google Cloud Storage bucket, with optional prefix filtering.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Bucket Name | The name of the bucket to list objects from. If not specified, uses the default bucket configured in the integration. | string | Optional. |
+| Bucket Name | The name of the bucket to list objects from. | string | Required. |
 | Prefix | A prefix to filter objects by (e.g., `reports/2025/`). Returns all objects if not specified. | string | Optional. |
 | Max Results | The maximum number of objects to return. Defaults to 100. | integer | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-The output contains a list of objects in the bucket, where each object includes its bucket name, object name and path, file size in bytes, MIME type, generation number for versioning, a direct download URL, and the creation and last-updated timestamps in Unix milliseconds.
+The output contains an `objects` array, where each object includes its bucket name, object name and path, file size in bytes, MIME type, generation number for versioning, a direct download URL, and the creation and last-updated timestamps in Unix milliseconds.
 
 </TabItem>
 </Tabs>
@@ -87,7 +87,7 @@ Replace an object's content or update its metadata in Google Cloud Storage. If b
 | Object Name | The name of the object to update, including any folder path (e.g., `folder/file.txt`). | string | Required. |
 | Content Type | The new MIME type for the object (e.g., `application/json`). | string | Optional. |
 | Base 64 Content | The new base64-encoded content to replace the object's data. Omit to update metadata only. | string | Optional. |
-| Bucket Name | The name of the bucket containing the object. If not specified, uses the default bucket configured in the integration. | string | Optional. |
+| Bucket Name | The name of the bucket containing the object. | string | Required. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -107,12 +107,12 @@ Permanently remove an object from a Google Cloud Storage bucket.
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
 | Object Name | The name of the object to delete, including any folder path (e.g., `folder/file.txt`). | string | Required. |
-| Bucket Name | The name of the bucket containing the object. If not specified, uses the default bucket configured in the integration. | string | Optional. |
+| Bucket Name | The name of the bucket containing the object. | string | Required. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-Returns `true` if the object was successfully deleted.
+Returns `{"deleted": true}` if the object was deleted, or `{"deleted": false}` if the object does not exist.
 
 </TabItem>
 </Tabs>
@@ -126,12 +126,13 @@ List all Google Cloud Storage buckets in the project.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Max Results | The maximum number of buckets to return. Defaults to 100. | integer | Optional. |
+| Project ID | The ID of the Google Cloud project whose buckets to list. | string | Required. |
+| Max Results | The maximum number of buckets to return. | integer | Required. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-The output contains a list of buckets in the project, where each bucket includes its name, geographic location, storage class, whether object versioning is enabled, and the creation and last-updated timestamps in Unix milliseconds.
+The output contains a `buckets` array, where each bucket includes its name, geographic location, storage class, whether object versioning is enabled (`null` if versioning has never been set), the creation and last-updated timestamps in Unix milliseconds, and a self-link URL for the bucket resource.
 
 </TabItem>
 </Tabs>
@@ -145,14 +146,15 @@ Provision a new Google Cloud Storage bucket.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
+| Project ID | The ID of the Google Cloud project in which to create the bucket. | string | Required. |
 | Bucket Name | A globally unique name for the new bucket. | string | Required. |
-| Location | The geographic location for the bucket (e.g., `US`, `EU`, `ASIA`). | string | Optional. |
+| Location | The geographic location for the bucket (e.g., `US`, `EU`, `ASIA`). | string | Required. |
 | Storage Class | The storage class for the bucket. Supported values:<ul><li>`STANDARD`</li><li>`NEARLINE`</li><li>`COLDLINE`</li><li>`ARCHIVE`</li></ul>. | string | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-The output contains the name, geographic location, storage class, whether object versioning is enabled, and the creation and last-updated timestamps in Unix milliseconds for the newly created bucket.
+The output contains the name, geographic location, storage class, whether object versioning is enabled (`null` if versioning has never been set), the creation and last-updated timestamps in Unix milliseconds, and a self-link URL for the newly created bucket.
 
 </TabItem>
 </Tabs>
@@ -171,7 +173,7 @@ Retrieve metadata for a specific Google Cloud Storage bucket, including location
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-The output contains the bucket name, geographic location, storage class, whether object versioning is enabled, the creation and last-updated timestamps in Unix milliseconds, and a self-link URL for the bucket resource.
+The output contains the bucket name, geographic location, storage class, whether object versioning is enabled (`null` if versioning has never been set), the creation and last-updated timestamps in Unix milliseconds, and a self-link URL for the bucket resource.
 
 </TabItem>
 </Tabs>
@@ -186,7 +188,7 @@ Modify a Google Cloud Storage bucket's settings, such as versioning or storage c
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
 | Bucket Name | The name of the bucket to update. | string | Required. |
-| Versioning Enabled | Set to `true` to enable object versioning or `false` to disable it. | boolean | Optional. |
+| Versioning Enabled | Set to `true` to enable object versioning or `false` to disable it. | boolean | Required. |
 | Storage Class | The new storage class for the bucket. Supported values:<ul><li>`STANDARD`</li><li>`NEARLINE`</li><li>`COLDLINE`</li><li>`ARCHIVE`</li></ul> | string | Optional. |
 
 </TabItem>
@@ -211,7 +213,7 @@ Remove a Google Cloud Storage bucket. Can delete only empty buckets.
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-Returns `true` if the bucket was successfully deleted.
+Returns `{"deleted": true}` if the bucket was deleted, or `{"deleted": false}` if the bucket does not exist.
 
 </TabItem>
 </Tabs>

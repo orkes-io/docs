@@ -85,9 +85,7 @@ After obtaining the credentials, add a Google Cloud Storage integration to your 
 | Parameter | Description | Required/Optional |
 | --------- | ----------- | ----------------- |
 | Integration name | A name for the integration. | Required. |
-| Scope | The OAuth2 scope for Cloud Storage API access. Supported values:<ul><li>**Read Only**:Grants read-only access to buckets and objects.</li><li>**Read & Write**: Grants read and write access to buckets and objects.</li><li>**Full Control**: Grants full control over buckets and objects, including updating and deleting.</li></ul> | Required. |
 | Service Account JSON | Paste the full contents of the Google Cloud service account key JSON file downloaded in [Step 1](/content/integrations/google-cloud-storage#step-1-get-the-google-cloud-console-credentials). | Required. |
-| Default Bucket Name | The default Google Cloud Storage bucket to use when a bucket is not explicitly provided in a workflow task. | Optional. |
 | Description | A description of the integration. | Required. |
 
 <ol start="5">
@@ -110,18 +108,18 @@ Once the integration is ready, this can be used directly within the workflows.
 
 The following operations are available for use with this integration.
 
-| Operation | Description | Supported Scopes |
-| --------- | ----------- | ---------------- |
-| [Upload Object From Base64](/content/integrations/google-cloud-storage-operations#upload-object-from-base64) | Upload a file to a Google Cloud Storage bucket using base64-encoded content. | <ul><li>Full Control</li><li>Read & Write</li></ul> |
-| [Download Object Base64](/content/integrations/google-cloud-storage-operations#download-object-base64) | Retrieve an object's content from a Google Cloud Storage bucket as base64-encoded data. | <ul><li>Full Control</li><li>Read & Write</li><li>Read Only</li></ul> |
-| [List Objects](/content/integrations/google-cloud-storage-operations#list-objects) | List objects in a Google Cloud Storage bucket, with optional prefix filtering. | <ul><li>Full Control</li><li>Read & Write</li><li>Read Only</li></ul> |
-| [Update Object](/content/integrations/google-cloud-storage-operations#update-object) | Replace an object's content or update its metadata in Google Cloud Storage. | <ul><li>Full Control</li></ul> |
-| [Delete Object](/content/integrations/google-cloud-storage-operations#delete-object) | Permanently remove an object from a Google Cloud Storage bucket. | <ul><li>Full Control</li><li>Read & Write</li></ul> |
-| [List Buckets](/content/integrations/google-cloud-storage-operations#list-buckets) | List all Google Cloud Storage buckets in the project. | <ul><li>Full Control</li><li>Read & Write</li><li>Read Only</li></ul> |
-| [Create Bucket](/content/integrations/google-cloud-storage-operations#create-bucket) | Provision a new Google Cloud Storage bucket. | <ul><li>Full Control</li><li>Read & Write</li></ul> |
-| [Get Bucket](/content/integrations/google-cloud-storage-operations#get-bucket) | Retrieve metadata for a specific Google Cloud Storage bucket, including location, storage class, and versioning settings. | <ul><li>Full Control</li><li>Read & Write</li><li>Read Only</li></ul> |
-| [Update Bucket](/content/integrations/google-cloud-storage-operations#update-bucket) | Modify a Google Cloud Storage bucket's settings, such as versioning or storage class. | <ul><li>Full Control</li></ul> |
-| [Delete Bucket](/content/integrations/google-cloud-storage-operations#delete-bucket) | Remove a Google Cloud Storage bucket. | <ul><li>Full Control</li><li>Read & Write</li></ul> |
+| Operation | Description |
+| --------- | ----------- |
+| [Upload Object From Base64](/content/integrations/google-cloud-storage-operations#upload-object-from-base64) | Upload a file to a Google Cloud Storage bucket using base64-encoded content. |
+| [Download Object Base64](/content/integrations/google-cloud-storage-operations#download-object-base64) | Retrieve an object's content from a Google Cloud Storage bucket as base64-encoded data. |
+| [List Objects](/content/integrations/google-cloud-storage-operations#list-objects) | List objects in a Google Cloud Storage bucket, with optional prefix filtering. |
+| [Update Object](/content/integrations/google-cloud-storage-operations#update-object) | Replace an object's content or update its metadata in Google Cloud Storage. |
+| [Delete Object](/content/integrations/google-cloud-storage-operations#delete-object) | Permanently remove an object from a Google Cloud Storage bucket. |
+| [List Buckets](/content/integrations/google-cloud-storage-operations#list-buckets) | List all Google Cloud Storage buckets in the project. |
+| [Create Bucket](/content/integrations/google-cloud-storage-operations#create-bucket) | Provision a new Google Cloud Storage bucket. |
+| [Get Bucket](/content/integrations/google-cloud-storage-operations#get-bucket) | Retrieve metadata for a specific Google Cloud Storage bucket, including location, storage class, and versioning settings. |
+| [Update Bucket](/content/integrations/google-cloud-storage-operations#update-bucket) | Modify a Google Cloud Storage bucket's settings, such as versioning or storage class. |
+| [Delete Bucket](/content/integrations/google-cloud-storage-operations#delete-bucket) | Remove a Google Cloud Storage bucket. |
 
 <ol start="5">
 <li>Select the required operation, configure the parameters, and select <strong>Save</strong> &gt; <strong>Confirm</strong>.</li>
