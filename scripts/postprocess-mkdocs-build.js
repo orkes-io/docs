@@ -112,52 +112,17 @@ function toCanonicalPath(href, currentRoute) {
   return href;
 }
 
-// Point links at the final URL when they target a URL listed in
-// docs-redirects.json, so pages do not link through a redirect hop.
-let redirectTargets = null;
-function loadRedirectTargets() {
-  if (redirectTargets) return redirectTargets;
-  redirectTargets = new Map();
-  const file = path.join(ROOT, "docs-redirects.json");
-  if (fs.existsSync(file)) {
-    const raw = JSON.parse(fs.readFileSync(file, "utf8"));
-    for (const [from, to] of Object.entries(raw)) {
-      redirectTargets.set(from.replace(/^\/+|\/+$/g, ""), to.replace(/^\/+|\/+$/g, ""));
-    }
-  }
-  return redirectTargets;
-}
-
-function resolveRedirectedHref(href) {
-  let prefix = null;
-  if (href.startsWith(`${BASE_URL}/`)) prefix = `${BASE_URL}/`;
-  else if (href.startsWith(SITE_URL)) prefix = SITE_URL;
-  if (!prefix) return href;
-  const match = href.slice(prefix.length).match(/^([^?#]*?)\/?([?#].*)?$/);
-  if (!match) return href;
-  let route = match[1];
-  const rest = match[2] || "";
-  const targets = loadRedirectTargets();
-  for (let hops = 0; hops < 5 && targets.has(route); hops++) {
-    const target = targets.get(route);
-    if (target.includes("#") && rest.startsWith("#")) return href;
-    route = target;
-  }
-  return `${prefix}${route}${rest}`;
-}
-
 function rewriteHtml(file) {
   const currentRoute = routeForHtml(file);
   let html = fs.readFileSync(file, "utf8");
-  const isRedirectStub = html.includes("<title>Redirecting");
-  html = html.replace(
-    /\b(href|src|content)=["']([^"']+)["']/g,
-    (all, attr, href) => {
-      const canonical = toCanonicalPath(href, currentRoute);
-      const final = attr === "href" && !isRedirectStub ? resolveRedirectedHref(canonical) : canonical;
-      return `${attr}="${final}"`;
-    },
-  );
+  html = html.replace(/\b(href|src|content)=["']([^"']+)["']/g, (all, attr, href) => {
+    // A meta refresh's content is "<delay>; url=<target>", not a URL. Rewrite
+    // only the target; rewriting the whole value produced "/content/0; url=…",
+    // which browsers ignore (so no-JS visitors and crawlers weren't redirected).
+    const refresh = attr === "content" && href.match(/^(\d+;\s*url=)(.+)$/i);
+    if (refresh) return `${attr}="${refresh[1]}${toCanonicalPath(refresh[2], currentRoute)}"`;
+    return `${attr}="${toCanonicalPath(href, currentRoute)}"`;
+  });
   // Tag the generated "Enterprise" nav sections so CSS can style the
   // enterprise seam differently from ordinary topical sections. Material
   // emits no per-section class, so match the section whose title is exactly
