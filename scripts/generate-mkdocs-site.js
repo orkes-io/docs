@@ -1543,21 +1543,6 @@ function insertAfterIntro(body, addition) {
   return body.replace(match[0], `${match[0]}${cleanAddition}\n\n`);
 }
 
-const CONNECTED_APPS_NOTE = [
-  '!!! note "Connected Apps must be enabled on your cluster"',
-  "",
-  "    Connected Apps are enabled per cluster. If **Integrations > Connected Apps** is not in",
-  "    the left navigation, contact Orkes support to enable it before following these steps.",
-].join("\n");
-
-// Every connected-app guide page (not the *-operations references) gets the
-// enablement note right after its "Available since" admonition.
-function injectConnectedAppsNote(body, sourceRel) {
-  if (!sourceRel.startsWith("integrations/connected-apps/")) return body;
-  if (/-operations\.mdx?$/.test(sourceRel)) return body;
-  return insertAfterIntro(body, CONNECTED_APPS_NOTE);
-}
-
 function insertBeforeHeading(body, heading, addition) {
   const cleanAddition = addition.trim();
   if (!cleanAddition) return body;
@@ -3113,10 +3098,7 @@ function convertEntry(entry) {
   const title = extractTitle(body, frontMatter, route);
   const pageTitle = pageTitleForRoute(route, title);
   const sourceBody = entry.shared ? transformSharedBody(body, entry) : body;
-  const cleaned = injectConnectedAppsNote(
-    enhancePositioningPage(cleanMdx(sourceBody, sourceRel), route),
-    sourceRel,
-  );
+  const cleaned = enhancePositioningPage(cleanMdx(sourceBody, sourceRel), route);
   const related = relatedPagesBlock(route, cleaned);
   return `${buildFrontMatter(frontMatter, route, pageTitle)}${cleaned}${related}`;
 }
