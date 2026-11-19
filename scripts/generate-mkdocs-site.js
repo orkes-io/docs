@@ -35,9 +35,35 @@ const ANALYTICS_ENABLED = /^(1|true|yes)$/i.test(process.env.DOCS_ENABLE_ANALYTI
 const AGENT_RUNTIME_RELATIONSHIP_COPY =
   "Conductor OSS is the durable workflow engine with a built-in agent runtime. Orkes Conductor is the enterprise platform built on it, available as a fully managed cloud or deployed in your own environment.";
 
-// Home page only — Sora + JetBrains Mono, scoped to .home-wrapper via CSS (rest of the site keeps the OSS base font)
-const HOME_PAGE_FONT_IMPORT =
-  "@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');\n";
+// Home page only — Sora + JetBrains Mono, scoped to .home-wrapper via CSS (rest of the site keeps the OSS base font).
+// Loaded with a <link> on the home page only (see fontLinksBlock), not an @import in the shared custom.css.
+const HOME_PAGE_FONT_URL =
+  "https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap";
+
+// Google Fonts @imports in the OSS custom.css. An @import inside a stylesheet is only
+// discovered after that stylesheet downloads, chaining a render-blocking request; we
+// strip them and emit the same URLs as <link> tags in <head> so they load in parallel.
+const GOOGLE_FONT_IMPORT_RE = /@import\s+url\(\s*['"]?(https:\/\/fonts\.googleapis\.com\/[^'")\s]+)['"]?\s*\)\s*;?[ \t]*\n?/g;
+
+function extractGoogleFontImports(css) {
+  const urls = [];
+  const stripped = css.replace(GOOGLE_FONT_IMPORT_RE, (_all, url) => {
+    urls.push(url);
+    return "";
+  });
+  return { css: stripped, urls };
+}
+
+function fontLinksBlock(ossFontUrls) {
+  const link = (url) => `<link rel="stylesheet" href="${url.replace(/&/g, "&amp;")}">`;
+  return [
+    ...ossFontUrls.map((url) => `  ${link(url)}`),
+    // Root index.md only. page.is_homepage is false here: the nav nests it under a section.
+    `  {% if page and page.url in ["", ".", "./", "index.html"] %}`,
+    `    ${link(HOME_PAGE_FONT_URL)}`,
+    `  {% endif %}`,
+  ].join("\n");
+}
 
 const ORKES_COLOR_REPLACEMENTS = [
   [/Zinc \+ Orange Theme/g, "Zinc + Orkes Purple Theme"],
@@ -4659,6 +4685,7 @@ function writeOverrides() {
 
   const mainPath = path.join(OVERRIDES_DIR, "main.html");
   let main = read(mainPath);
+  const ossFontUrls = extractGoogleFontImports(read(path.join(OSS_DOCS, "css", "custom.css"))).urls;
   main = main.replace(
     /{% block extrahead %}/,
     `{% block site_meta %}
@@ -4702,6 +4729,7 @@ function writeOverrides() {
 {% endblock %}
 
 {% block extrahead %}
+${fontLinksBlock(ossFontUrls)}
   {% if page and page.url %}
     {% if page.url == "index.html" or page.url.endswith("/index.html") %}
       {% set page_path = page.url[:-10] %}
@@ -5012,7 +5040,9 @@ function prepareOutput() {
   for (const [pattern, replacement] of ORKES_COLOR_REPLACEMENTS) {
     customCss = customCss.replace(pattern, replacement);
   }
-  write(path.join(OUT_DIR, "css", "custom.css"), HOME_PAGE_FONT_IMPORT + customCss);
+  // Font @imports move to <head> <link>s (see fontLinksBlock in the main.html patch).
+  customCss = extractGoogleFontImports(customCss).css;
+  write(path.join(OUT_DIR, "css", "custom.css"), customCss);
   copyRecursive(path.join(OSS_DOCS, "img", "og-conductor.png"), path.join(OUT_DIR, "img", "og-conductor.png"));
   // Mirror every OSS non-markdown asset (images, svgs, json snippets, …) into the
   // docs dir at its original OSS-relative path. copySharedAssets() only colocates
@@ -5410,6 +5440,13 @@ a.repo-link:hover {
   .resource-card {
     min-height: 0;
   }
+}
+
+/* OSS .faq-section { padding: 32px 0 } comes after .home-section and drops its
+   side padding, so the FAQ text touches the edges of its tinted card. */
+.home-section.faq-section { padding: 48px 32px; }
+@media (max-width: 900px) {
+  .home-section.faq-section { padding: 36px 18px; }
 }
 
 /* ---------- Home page tokens (Sora + JetBrains Mono, scoped) ---------- */
