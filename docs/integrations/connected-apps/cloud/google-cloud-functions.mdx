@@ -5,13 +5,19 @@ description: "Learn how to integrate Google Cloud Functions with Orkes Conductor
 
 # Google Cloud Functions Integration with Orkes Conductor
 
-:::info Available since
-- v5.3.0 and later
+:::info Notes
+- **Available since:** v5.7.0 and later
+- Connected Apps are enabled per cluster. If **Integrations > Connected Apps** is not in the left navigation, contact Orkes support to enable it.
 :::
 
 Integrating Google Cloud Functions with Orkes Conductor lets you build workflows that interact with your Google Cloud Functions using the following operations:
 
 - List Functions
+- Get Function Details
+- Create Function
+- Update Function Configuration
+- Get Deployment Status
+- Delete Function
 - Invoke HTTP Function
 
 This guide explains how to set up and use the integration. Here's an overview:
@@ -26,27 +32,32 @@ To integrate Google Cloud Functions with Orkes Conductor, you need a Google Clou
 
 **To create a service account and generate a key:**
 
-1. Go to the [Google Cloud Console](https://console.cloud.google.com) and select your project.
+1. Go to the [Google Cloud Console](https://console.cloud.google.com/) and select your project.
 2. Navigate to **IAM & Admin** > **Service Accounts**.
 3. Select **+ Create service account**, enter a name and description, and select **Create and continue**.
 4. Assign the IAM roles based on the access level required:
-   - **Cloud Functions Viewer**: List and view functions.
-   - **Cloud Functions Invoker**: Invoke HTTP functions (1st gen).
-   - **Cloud Run Invoker**: Invoke 2nd gen and Cloud Run functions.
+    - **Cloud Functions Developer**: List, view, create, update, and delete functions, and read operation status.
+    - **Service Account User**: Run a new function as a service account. Grant it on the runtime service account.
+    - **Cloud Run Invoker**: Invoke 2nd gen functions.
 5. Select **Continue**, then **Done**.
 6. Select the newly created service account, go to the **Keys** tab, and select **Add Key** > **Create new key**.
 7. Choose **JSON** as the key type and select **Create**. The key file downloads automatically.
 
-Keep the downloaded JSON file ready; you'll need its full contents in the next step.
+Keep the downloaded JSON file ready. You'll need its full contents in the next step.
 
-Next, enable the following APIs for the project.
+Enable these APIs for the project (**APIs & Services** > **Enabled APIs & services** > **+ Enable APIs and services**): **Cloud Functions API**, **Cloud Build API**, **Cloud Run Admin API**, and **Artifact Registry API**.
 
-**To enable the APIs for the project:**
+### Finding the function URL
 
-1. Go to **APIs & Services** > **Enabled APIs & services**.
-2. Select **+ Enable APIs and services**.
-3. Search **Cloud Functions API** and select **Enable**.
-4. Search **Cloud Run Admin API** and select **Enable**.
+*For [Invoke HTTP Function](/content/integrations/google-cloud-functions-operations#invoke-http-function).*
+
+You enter the function's HTTPS URL in this operation. It must be `.cloudfunctions.net` or `.run.app` and have no fragment.
+
+1. Go to the [Google Cloud Console](https://console.cloud.google.com/) and select your project.
+2. Go to **Cloud Run** > **Services** and select the function.
+3. Copy the URL shown at the top of the **Service details** page.
+
+For a function created with the [Create Function](/content/integrations/google-cloud-functions-operations#create-function) operation, use the `url` field of the [Get Function Details](/content/integrations/google-cloud-functions-operations#get-function-details) output, or `functionUrl` of [Get Deployment Status](/content/integrations/google-cloud-functions-operations#get-deployment-status) once the function is `READY`.
 
 ## Step 2: Add an integration for Google Cloud Functions
 
@@ -64,17 +75,15 @@ After obtaining the credentials, add a Google Cloud Functions integration to you
 | Parameter | Description | Required/Optional |
 | --------- | ----------- | ----------------- |
 | Integration name | A name for the integration. | Required. |
-| Scope | The OAuth2 scope for Cloud Functions / Cloud Platform API access. Supported values:<ul><li>**Cloud Functions (read-only)**: Grants read-only access to cloud functions.</li><li>**Cloud Functions (full control)**: Grants full access to cloud functions.</li></ul> | Required. |
 | Service Account JSON | Paste the full contents of the Google Cloud service account key JSON file downloaded in [Step 1](/content/integrations/google-cloud-functions#step-1-get-the-google-cloud-credentials). | Required. |
-| Default Project ID | The default Google Cloud Project ID to use when a project ID is not explicitly provided in a workflow task. | Optional. |
-| Default Location | The default region for the cloud function. For example: **us-central1**. | Optional. |
-| Default Function URL | The default HTTP trigger URL to use when the function URL is not explicitly provided in a workflow task. | Optional. |
 | Description | A description of the integration. | Required. |
 
 <ol start="5">
 <li>(Optional) Toggle the <strong>Active</strong> button off if you don't want to activate the integration instantly.</li>
 <li>Select <strong>Save</strong>.</li>
 </ol>
+
+The integration is created successfully.
 
 ## Step 3: Use Google Cloud Functions integration in workflows
 
@@ -93,8 +102,13 @@ The following operations are available for use with this integration.
 
 | Operation | Description |
 | --------- | ----------- |
-| [List Functions](/content/integrations/google-cloud-functions-operations#list-functions) | Lists serverless functions in a project and location, including 1st gen, 2nd gen, and Cloud Run functions. |
-| [Invoke HTTP Function](/content/integrations/google-cloud-functions-operations#invoke-http-function) | Invokes an HTTP-triggered Google Cloud Function with an optional JSON payload. |
+| [List Functions](/content/integrations/google-cloud-functions-operations#list-functions) | Lists the functions in a project and region, including Cloud Functions and Cloud Run functions. |
+| [Get Function Details](/content/integrations/google-cloud-functions-operations#get-function-details) | Gets the deployed configuration and metadata of a function. |
+| [Create Function](/content/integrations/google-cloud-functions-operations#create-function) | Creates a 2nd gen HTTP function from a ZIP source. It never overwrites an existing function. |
+| [Update Function Configuration](/content/integrations/google-cloud-functions-operations#update-function-configuration) | Updates a function's runtime configuration without changing its source or invocation access. |
+| [Get Deployment Status](/content/integrations/google-cloud-functions-operations#get-deployment-status) | Reads the status of a create, update, or delete operation. |
+| [Delete Function](/content/integrations/google-cloud-functions-operations#delete-function) | Deletes a function and its managed resources. |
+| [Invoke HTTP Function](/content/integrations/google-cloud-functions-operations#invoke-http-function) | Invokes an HTTP-triggered function with a JSON payload. |
 
 <ol start="5">
 <li>Select the required operation, configure the parameters, and select <strong>Save</strong> &gt; <strong>Confirm</strong>.</li>

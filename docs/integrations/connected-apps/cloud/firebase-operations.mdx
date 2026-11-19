@@ -170,7 +170,7 @@ Invokes an HTTP function with a JSON POST body. Use an integration with Function
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Function URL | The HTTPS URL of the function, on `cloudfunctions.net` or `run.app`, with no query parameters or fragment. | string | Required. |
+| Function URL | The HTTPS URL of the function, on `cloudfunctions.net` or `run.app`, with no query parameters or fragment. To find it, see [Finding the function URL](/content/integrations/firebase#finding-the-function-url). | string | Required. |
 | Data (JSON) | The JSON request body as text. If omitted or blank, `{}` is sent. | string | Optional. |
 
 </TabItem>
@@ -190,7 +190,7 @@ Invokes a callable function using the callable request and response format. Use 
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Function URL | The HTTPS URL of the callable function, on `cloudfunctions.net` or `run.app`, with no query parameters or fragment. | string | Required. |
+| Function URL | The HTTPS URL of the callable function, on `cloudfunctions.net` or `run.app`, with no query parameters or fragment. To find it, see [Finding the function URL](/content/integrations/firebase#finding-the-function-url). | string | Required. |
 | Data (JSON) | The callable data as JSON text. Conductor adds the required `data` envelope. If omitted or blank, null is sent. | string | Optional. |
 
 </TabItem>
