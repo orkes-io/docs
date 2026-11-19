@@ -1,78 +1,75 @@
 ---
 slug: "/integrations/firebase"
-description: "Learn how to integrate Firebase Cloud Functions with Orkes Conductor to invoke HTTP and callable functions with authentication and optional App Check."
+description: "Learn how to integrate Firebase Cloud Functions with Orkes Conductor to deploy, manage, and invoke HTTP and callable functions directly from your workflows."
 ---
 
 # Firebase Cloud Functions Integration with Orkes Conductor
 
-:::info Availability
-Your cluster must include the Firebase Cloud Functions provider under Connected Apps.
+:::info Available since
+- v5.7.0 and later
 :::
 
-Integrating Firebase Cloud Functions with Orkes Conductor lets you build workflows that invoke your Firebase functions using the following operations:
+Integrating Firebase Cloud Functions with Orkes Conductor lets you build workflows that deploy, manage, and invoke your Firebase functions using the following operations:
 
+- List Functions
+- Get Function Details
+- Create Function
+- Update Function Configuration
+- Get Deployment Status
+- Delete Function
 - Invoke HTTP Function
 - Invoke Callable Function
 
 This guide explains how to set up and use the integration. Here's an overview:
 
-1. Get the required function URL and authentication credentials.
+1. Get the required credentials from Google Cloud Console.
 2. Configure a new Firebase Cloud Functions integration in Orkes Conductor.
 3. Use Firebase Cloud Functions integration in workflows.
 
-## Step 1: Get the Firebase credentials
+## Step 1: Get the Google Cloud credentials
 
-To integrate Firebase Cloud Functions with Orkes Conductor, you need a deployed function URL and its required authentication tokens. Each integration connects to one function.
+The integration uses up to three separate service account keys, depending on the function type and authentication you choose.
 
-**Prerequisites:**
-- A Firebase project with a deployed HTTP or callable function.
+| You want to | Credentials you need |
+| ----------- | -------------------- |
+| Manage functions (all operations except invoke) | Management service account key (always needed). |
+| Invoke an HTTP function with **Google ID token** | HTTP invocation service account key. |
+| Invoke a callable function with **App Check** | Firebase App ID and an App Check service account key. |
+| Invoke an HTTP function with **None**, or a callable function with App Check **Disabled** | Nothing extra. |
 
-**To get the function URL:**
+**1. Management service account key** *(for Management Google Credentials (JSON))*
 
-1. Go to the [Firebase Console](https://console.firebase.google.com) and select your project.
-2. Go to **Build** > **Functions** and select the function.
-3. Copy its HTTPS trigger URL (`.cloudfunctions.net` or `.run.app`), without query parameters or a fragment.
+1. Go to the [Google Cloud Console](https://console.cloud.google.com/) and select your Firebase project.
+2. Navigate to **IAM & Admin** > **Service Accounts**.
+3. Select **+ Create service account**, enter a name and description, and select **Create and continue**.
+4. Assign the IAM roles required to manage Cloud Functions, then select **Continue** and **Done**.
+5. Select the new service account, go to the **Keys** tab, and select **Add Key** > **Create new key**.
+6. Choose **JSON** as the key type and select **Create**. The key file downloads automatically.
 
-Get credentials based on the function's authentication requirements:
+Enable these APIs for the project (**APIs & Services** > **Enabled APIs & services** > **+ Enable APIs and services**): **Cloud Functions API**, **Cloud Build API**, **Cloud Run Admin API**, and **Artifact Registry API**. Cloud Build requires a project with billing.
 
-| Function type | Authentication | App Check Token | Required configuration |
-| ------------- | -------------- | --------------- | ---------------------- |
-| HTTP | `NONE` | Not applicable. | A public HTTP function; no identity token. |
-| HTTP | `GOOGLE_ID_TOKEN` | Not applicable. | A Google IAM ID token and invocation permission on the private function. |
-| Callable | `NONE` | Empty. | A callable function that accepts anonymous requests. |
-| Callable | `FIREBASE_ID_TOKEN` | Empty. | A Firebase user ID token; App Check enforcement disabled. |
-| Callable | `NONE` | Provided. | An App Check token; the callable requires App Check but not a Firebase user. |
-| Callable | `FIREBASE_ID_TOKEN` | Provided. | A Firebase user ID token and an App Check token. |
+**2. HTTP invocation service account key** *(for HTTP Invocation Google Credentials (JSON), only for the Google ID token option)*
 
-**To get a Google ID token for a private HTTP function:**
+1. Create a service account, or select an existing one, in **IAM & Admin** > **Service Accounts**.
+2. Grant it permission to invoke your function: **Cloud Run Invoker** on the function's Cloud Run service for 2nd gen functions.
+3. Create a **JSON** key for it, as in steps 5–6 above.
 
-1. In [Google Cloud Console](https://console.cloud.google.com), select your project and go to **IAM & Admin** > **Service Accounts**.
-2. Create or select the calling service account.
-3. Grant **Cloud Run Invoker** on the backing Cloud Run service for Gen 2, or **Cloud Functions Invoker** on the function for 1st gen.
-4. Obtain a token using the [Google authentication library or impersonation](https://cloud.google.com/docs/authentication/get-id-token). For Gen 2, use the Cloud Run service URL as the integration endpoint and token audience. Impersonation requires **Service Account Token Creator** on the service account.
-5. Copy the token for **HTTP Google ID Token**. A Firebase user token cannot be used here.
+**3. App Check credentials** *(for Firebase App ID and App Check Google Credentials (JSON), only for the Service Account option)*
 
-For **HTTP + NONE**, the deployed function must allow unauthenticated invocation.
+1. In the Firebase Console, go to **Project settings** > **General** > **Your apps** and register a web app. Copy its **App ID**, for example `1:123456789:web:abcdef`.
+2. Enable the **Firebase App Check API** for the project.
+3. In **IAM & Admin** > **Service Accounts** of the same project, select or create a service account and grant it **Firebase App Check Admin**.
+4. Create a **JSON** key for that service account, as in steps 5–6 above.
 
-**To get a Firebase user ID token for a callable function:**
+**Finding the function URL (for invoke operations)**
 
-1. In Firebase Console, go to **Authentication** > **Sign-in method** and enable a provider. For **Email/Password**, create a user under **Users**.
-2. Go to **Project settings** > **General** > **Your apps** and select or register a web app.
-3. Under **SDK setup and configuration**, select **Config** and copy the app's configuration.
-4. Sign in using the [Firebase Authentication SDK](https://firebase.google.com/docs/auth/web/password-auth) and obtain the token with `getIdToken()`. Alternatively, use the app's `apiKey` with the [sign-in REST API](https://firebase.google.com/docs/reference/rest/auth#section-sign-in-email-password) and copy `idToken`.
-5. Copy the token for **Callable Firebase ID Token**. API keys, refresh tokens, and unexchanged custom tokens cannot be used here.
+You enter the function's HTTPS URL in the invoke operation. It must be `.cloudfunctions.net` or `.run.app` and have no query parameters or fragment.
 
-**To get an App Check token for a callable function (optional):**
+1. Go to the [Firebase Console](https://console.firebase.google.com/) and select your project.
+2. Go to **Hosting & Serverless** > **Functions** and select the function.
+3. Copy its HTTPS trigger URL.
 
-1. In Firebase Console, go to **Build** > **App Check**, select your app, and register its attestation provider.
-2. Configure the [App Check SDK](https://firebase.google.com/docs/app-check/web/recaptcha-enterprise-provider) and obtain the token using `getToken()`.
-3. Copy the token for **Callable App Check Token**. For development, use the [debug provider](https://firebase.google.com/docs/app-check/web/debug-provider); supply its App Check token, not the debug secret.
-
-App Check works with either callable authentication mode. Functions enforcing App Check require its token; functions requiring a Firebase user must validate `request.auth`. Selecting NONE in Conductor does not disable these requirements.
-
-:::note
-Conductor stores token fields as integration secrets. Supply raw tokens without a `Bearer ` prefix. Obtain replacement tokens externally and update the integration when they expire; this provider does not generate or refresh tokens.
-:::
+For a function created with the Create Function operation, use the `url` field of the **Get Function Details** output, or `functionUrl` of **Get Deployment Status** once the function is `READY`.
 
 ## Step 2: Add an integration for Firebase Cloud Functions
 
@@ -90,20 +87,22 @@ After obtaining the credentials, add a Firebase Cloud Functions integration to y
 | Parameter | Description | Required/Optional |
 | --------- | ----------- | ----------------- |
 | Integration name | A name for the integration. | Required. |
-| Function type | The type of function to invoke: **HTTP** or **Callable**. Determines which configuration fields are shown. | Required. |
-| HTTP Function URL | The deployed HTTP function URL retrieved in [Step 1](/content/integrations/firebase#step-1-get-the-firebase-credentials). | Required for HTTP. |
-| HTTP Authentication | `NONE` or `GOOGLE_ID_TOKEN`. | Required for HTTP. |
-| HTTP Google ID Token | The Google IAM ID token obtained in Step 1. Leave empty for NONE. | Required for GOOGLE_ID_TOKEN. |
-| Callable Function URL | The deployed callable function URL retrieved in Step 1. | Required for Callable. |
-| Callable Authentication | `NONE` or `FIREBASE_ID_TOKEN`. | Required for Callable. |
-| Callable Firebase ID Token | The Firebase Authentication user ID token obtained in Step 1. Leave empty for NONE. | Required for FIREBASE_ID_TOKEN. |
-| Callable App Check Token | The App Check token obtained in Step 1. Supported with either callable authentication mode; leave empty when not needed. | Optional unless the function enforces App Check. |
+| Function type | The type of function to invoke. **HTTP** uses Invoke HTTP Function; **Callable** uses Invoke Callable Function. It decides which of the fields below appear. | Required. |
+| Management Google Credentials (JSON) | The full contents of the service account key JSON from [Step 1](/content/integrations/firebase#step-1-get-the-google-cloud-credentials). Used by the management operations, independent of invocation authentication. | Required. |
+| HTTP Authentication | **None** sends no identity token. **Google ID token** gets a fresh, audience-specific token for each invocation. Shown for HTTP. | Required for HTTP. |
+| HTTP Invocation Google Credentials (JSON) | The service account key JSON used to get Google ID tokens. Shown when HTTP Authentication is Google ID token. | Required for Google ID token. |
+| App Check | **Disabled** sends no App Check token. **Service Account** gets an App Check token for each invocation. Shown for Callable. | Required for Callable. |
+| Firebase App ID | The registered Firebase app ID, for example `1:123456789:web:abcdef`. Shown when App Check is Service Account. | Required for Service Account. |
+| App Check Google Credentials (JSON) | The service account key JSON authorized to mint App Check tokens. Shown when App Check is Service Account. | Required for Service Account. |
+| App Check Token Type | **Session**, or **Limited Use (Replay Protection)** for callable functions that enforce replay protection. Shown when App Check is Service Account. | Required for Service Account. |
 | Description | A description of the integration. | Required. |
 
 <ol start="5">
 <li>(Optional) Toggle the <strong>Active</strong> button off if you don't want to activate the integration instantly.</li>
 <li>Select <strong>Save</strong>.</li>
 </ol>
+
+The integration is created successfully.
 
 ## Step 3: Use Firebase Cloud Functions integration in workflows
 
@@ -122,11 +121,17 @@ The following operations are available for use with this integration.
 
 | Operation | Description |
 | --------- | ----------- |
-| [Invoke HTTP Function](/content/integrations/firebase-operations#invoke-http-function) | Invokes the configured HTTP function with a JSON POST body. |
-| [Invoke Callable Function](/content/integrations/firebase-operations#invoke-callable-function) | Invokes the configured callable function using Firebase's callable protocol. |
+| [List Functions](/content/integrations/firebase-operations#list-functions) | Lists the Cloud Functions in a Firebase project and region. |
+| [Get Function Details](/content/integrations/firebase-operations#get-function-details) | Gets the deployed configuration and metadata of a function. |
+| [Create Function](/content/integrations/firebase-operations#create-function) | Creates a 2nd gen HTTP or callable function from a ZIP source. |
+| [Update Function Configuration](/content/integrations/firebase-operations#update-function-configuration) | Updates a function's runtime configuration without changing its source. |
+| [Get Deployment Status](/content/integrations/firebase-operations#get-deployment-status) | Reads the status of a create, update, or delete operation. |
+| [Delete Function](/content/integrations/firebase-operations#delete-function) | Deletes a function and its managed resources. |
+| [Invoke HTTP Function](/content/integrations/firebase-operations#invoke-http-function) | Invokes an HTTP function with an optional JSON body. Available when Function type is HTTP. |
+| [Invoke Callable Function](/content/integrations/firebase-operations#invoke-callable-function) | Invokes a callable function. Available when Function type is Callable. |
 
 <ol start="5">
-<li>Select the operation matching your integration's function type, configure the parameters, and select <strong>Save</strong> &gt; <strong>Confirm</strong>.</li>
+<li>Select the required operation, configure the parameters, and select <strong>Save</strong> &gt; <strong>Confirm</strong>.</li>
 <li>Select <strong>Execute</strong> to run the workflow.</li>
 </ol>
 

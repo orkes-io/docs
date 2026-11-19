@@ -8,46 +8,193 @@ import TabItem from '@theme/TabItem';
 
 # Firebase Cloud Functions Operations Reference
 
-Orkes Conductor integrates with Firebase Cloud Functions to let you invoke HTTP and callable functions directly from your workflows. Once you configure the Firebase Cloud Functions integration, you can use the following operations to invoke your functions.
+Orkes Conductor integrates with Firebase Cloud Functions to let you deploy, manage, and invoke your Firebase functions directly from your workflows. This page covers the parameters and expected output for each operation available in the [Firebase Cloud Functions integration](/content/integrations/firebase).
 
-This page covers the parameters and expected output for each operation available in the [Firebase Cloud Functions integration](/content/integrations/firebase).
+## List Functions
 
-## Invoke HTTP Function
-
-Invokes the HTTP function configured in the integration using a JSON POST request. Select `invoke_http_function` and use an integration configured for HTTP. Authentication is determined by the saved integration.
+Lists the Cloud Functions in a Firebase project and region.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Data (JSON) | JSON request body as text. For example, `{"hello":"firebase"}`. Uses the input key `dataJson`; if omitted or blank, sends `{}` unless direct `data` is supplied. | string | Optional. |
-| Data | Alternative for hand-authored workflows: supply a JSON value under `data` instead of `dataJson`. Do not combine it with nonblank Data (JSON). | JSON value | Optional. |
+| Project Id | The Firebase Google Cloud project ID. | string | Required. |
+| Location | The region where the functions are deployed. For example: `us-central1`. | string | Required. |
+| Page Size | The maximum number of functions to return per page. Accepted values: 1–500. Defaults to 100. | integer | Optional. |
+| Page Token | The continuation token returned by the previous List Functions response. | string | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-Returns `status`, `statusCode`, `result`, and `error`. For HTTP 2xx, `status` is `success`, `result` contains the response body, and `error` is null. The body is parsed as JSON when valid, otherwise returned as text. For an unsuccessful HTTP response, `status` is `error`, `result` is null, and `error` contains the response body. An error outcome fails the Conductor task.
+Returns `functions`, an array of function objects (name, description, environment, state, url, createTime, updateTime, labels, buildConfig, serviceConfig, stateMessages), and `nextPageToken`, which is null on the last page.
+
+</TabItem>
+</Tabs>
+
+## Get Function Details
+
+Gets the deployed configuration and metadata of a function.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Project Id | The Firebase Google Cloud project ID. | string | Required. |
+| Location | The region where the function is deployed. | string | Required. |
+| Function Name | The function ID, without a URL or project path. | string | Required. |
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+Returns the function's name, description, environment, state, url, createTime, updateTime, labels, build configuration (runtime, entry point, build, service account, source), service configuration (service, uri, revision, memory, CPU, timeout, instance counts, environment variables), and stateMessages.
+
+</TabItem>
+</Tabs>
+
+## Create Function
+
+Creates a 2nd gen HTTP or callable function from a ZIP source. It never overwrites an existing function. It returns an operation, so use [Get Deployment Status](#get-deployment-status) until the state is `READY`.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Project Id | The Google Cloud project ID. | string | Required. |
+| Location | The region to deploy to. | string | Required. |
+| Function Name | The ID of the new function. | string | Required. |
+| Function Type | `HTTP` or `CALLABLE`. Must match the source package. | string | Required. |
+| Runtime | The runtime. For example: `nodejs22` or `python312`. | string | Required. |
+| Entry Point | The exported function entry point. | string | Required. |
+| Runtime Service Account | The email of the service account the function runs as. This is not credentials. | string | Required. |
+| Source type | `BASE64` or `CLOUD_LOCATION`. | string | Required. |
+| ZIP file (Base64) | The ZIP archive encoded as Base64. Required for `BASE64`. Up to 10 MiB. | string | Conditional. |
+| Source location | A Cloud Storage ZIP archive, as `gs://bucket/object`. Required for `CLOUD_LOCATION`. | string | Conditional. |
+| Object version | A numeric Cloud Storage object generation. Used with a Cloud Storage source location. | string | Optional. |
+| Build Service Account | The Cloud Build service account resource name. | string | Optional. |
+| Memory | The runtime memory. For example: `256Mi`. | string | Optional. |
+| Timeout Seconds | The request timeout, in seconds. | integer | Optional. |
+| Max Instances | The maximum number of instances. | integer | Optional. |
+| Environment Variables Json | The runtime environment variables as JSON text. For example: `{"KEY":"value"}`. | string | Optional. |
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+Returns `state` (`ACCEPTED`), `deploymentId` (the full operation name), `resourceName`, `functionUrl` (null until the function is ready), `isError`, and `errorMessage`.
+
+Creating a function that already exists is rejected with "Function already exists; creation never overwrites it". Functions created with this operation are private. Configure invocation access outside Conductor.
+
+</TabItem>
+</Tabs>
+
+## Update Function Configuration
+
+Updates a function's runtime configuration without changing its source. Only the fields you supply change. It returns an operation, so use [Get Deployment Status](#get-deployment-status) until the state is `READY`.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Project Id | The Google Cloud project ID. | string | Required. |
+| Location | The region where the function is deployed. | string | Required. |
+| Function Name | The function ID, not a URL or resource path. | string | Required. |
+| Memory | The runtime memory. For example: `256Mi` or `1Gi`. | string | Optional. |
+| Timeout Seconds | The request timeout, 1–3600. | integer | Optional. |
+| Max Instances | The maximum number of instances. | integer | Optional. |
+| Environment Variables Json | Replaces the entire environment variable map. `{}` clears all variables. | string | Optional. |
+| Description | The function description. An empty string clears it. | string | Optional. |
+
+At least one of the optional fields is required.
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+Returns `state` (`ACCEPTED`), `deploymentId` (the full operation name), `resourceName`, `functionUrl`, `isError`, and `errorMessage`. After `{}`, the function can still show variables that Google sets itself, such as `LOG_EXECUTION_ID`.
+
+</TabItem>
+</Tabs>
+
+## Get Deployment Status
+
+Reads the status of a create, update, or delete operation.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Project Id | The Google Cloud project ID. | string | Required. |
+| Location | The region of the operation. | string | Required. |
+| Operation Id | The full operation name returned as `deploymentId` by Create Function, Update Function Configuration, or Delete Function. | string | Required. |
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+Returns `state` (`ACCEPTED` or `DEPLOYING` while pending, `READY` when the operation finished successfully, `FAILED`, or `UNKNOWN`), `deploymentId`, `resourceName`, `functionUrl` (set when a created function is `READY`), `isError`, and `errorMessage`.
+
+</TabItem>
+</Tabs>
+
+## Delete Function
+
+Deletes a function and its managed resources. It returns an operation, so use [Get Deployment Status](#get-deployment-status) until the state is `READY`, which means the deletion finished. It does not delete arbitrary Cloud Run services.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Project Id | The Google Cloud project ID. | string | Required. |
+| Location | The region where the function is deployed. | string | Required. |
+| Function Name | The function ID, not a URL or resource path. | string | Required. |
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+Returns `state` (`ACCEPTED`), `deploymentId` (the full operation name), `resourceName`, `functionUrl`, `isError`, and `errorMessage`.
+
+</TabItem>
+</Tabs>
+
+## Invoke HTTP Function
+
+Invokes an HTTP function with a JSON POST body. Use an integration with Function type HTTP. Authentication comes from the saved integration.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Function URL | The HTTPS URL of the function, on `cloudfunctions.net` or `run.app`, with no query parameters or fragment. | string | Required. |
+| Data (JSON) | The JSON request body as text. If omitted or blank, `{}` is sent. | string | Optional. |
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+Returns `status`, `statusCode`, `result`, and `error`. For an HTTP 2xx response, `status` is `success` and `result` holds the response body (parsed as JSON if valid, otherwise text). For any other response, `status` is `error`, `result` is null, and `error` holds the response body. An error outcome fails the task.
 
 </TabItem>
 </Tabs>
 
 ## Invoke Callable Function
 
-Invokes the callable function configured in the integration. Select `invoke_callable_function` and use an integration configured for Callable. Firebase user authentication and App Check are determined by the saved integration.
+Invokes a callable function using the callable request and response format. Use an integration with Function type Callable. App Check is determined by the saved integration.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Data (JSON) | Callable data as JSON text. For example, `{"hello":"firebase"}`. Uses the input key `dataJson`. Conductor adds the required `data` envelope automatically. If omitted or blank and no direct `data` is supplied, sends null as the callable data. | string | Optional. |
-| Data | Alternative for hand-authored workflows: supply a JSON value under `data` instead of `dataJson`. Do not combine it with nonblank Data (JSON). | JSON value | Optional. |
+| Function URL | The HTTPS URL of the callable function, on `cloudfunctions.net` or `run.app`, with no query parameters or fragment. | string | Required. |
+| Data (JSON) | The callable data as JSON text. Conductor adds the required `data` envelope. If omitted or blank, null is sent. | string | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-Returns `status`, `statusCode`, `result`, and `error`. On success, `result` contains the callable's result without the protocol envelope, and `error` is null. On failure, `error` contains the callable error or a protocol-error description. A callable error, unsuccessful HTTP status, or invalid callable response fails the Conductor task, including a callable error returned with HTTP 200.
+Returns `status`, `statusCode`, `result`, and `error`. On success, `result` holds the callable's result without the envelope. If the callable returns an error, `error` holds it. If the response is not a valid callable response, or the HTTP status is not successful, `error` is `{"status": "INTERNAL", "message": "Invalid callable response or unsuccessful HTTP status"}`. An error outcome fails the task.
 
 </TabItem>
 </Tabs>
