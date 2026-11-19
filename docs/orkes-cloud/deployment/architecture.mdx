@@ -14,7 +14,7 @@ When you deploy a **customer-hosted Conductor cluster**, the Conductor server an
 Your Conductor cluster is reachable in two ways:
 
 - **Public access:** Clients (the Conductor UI in a browser, or SDK-based workers) connect over HTTPS to a load balancer in front of your Kubernetes cluster. A DNS record points at this load balancer.
-- **Private access:** If you've set up private network connectivity (for example VPC/VNet peering, a VPN, or a private endpoint service such as AWS PrivateLink), traffic reaches the same load balancer over that private path instead of the public internet.
+- **Private access:** If you've set up private network connectivity (for example VPC/VNet peering, a VPN, or a private endpoint service such as AWS PrivateLink), traffic reaches the load balancer serving your cluster, over that private path instead of the public internet.
 
 Either way, the load balancer forwards traffic toward your cluster. For most deployments, TLS is terminated at ingress-nginx, the Kubernetes Ingress controller running inside your cluster. For AWS clusters configured for private (VPC-only) access, TLS is instead terminated at the load balancer itself, using a certificate provisioned for your domain, with plain HTTP forwarded on to ingress-nginx.
 
