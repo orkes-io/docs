@@ -74,7 +74,7 @@ Creates a 2nd gen HTTP function from a ZIP source. It never overwrites an existi
 | ZIP file (Base64) | The ZIP archive encoded as Base64. Required for `BASE64`. Up to 10 MiB. | string | Conditional. |
 | Source location | A Cloud Storage ZIP archive, as `gs://bucket/object`. Required for `CLOUD_LOCATION`. | string | Conditional. |
 | Object version | A numeric Cloud Storage object generation. Used with a Cloud Storage source location. | string | Optional. |
-| Build Service Account | The Cloud Build service account resource name. | string | Optional. |
+| Build Service Account | The Cloud Build service account resource name, in the format `projects/<project>/serviceAccounts/<email>`. A plain email address is rejected. | string | Optional. |
 | Memory | The runtime memory. For example: `256Mi`. | string | Optional. |
 | Timeout Seconds | The request timeout, 1–3600. | integer | Optional. |
 | Max Instances | The maximum number of instances. | integer | Optional. |
