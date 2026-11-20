@@ -39,30 +39,30 @@ To integrate Google Cloud Storage with Orkes Conductor, you need a Google Cloud 
 2. Navigate to **IAM & Admin** > **Service Accounts**.
 3. Select **+ Create service account**, enter a name and description, and select **Create and continue**.
 4. Assign one of the following IAM roles based on the access level required:
-   - **Storage Object Viewer**: Read-only access to objects.
-   - **Storage Object User**: Read and write access to objects.
-   - **Storage Admin**: Full control over buckets and objects.
+    - **Storage Object Viewer**: Read-only access to objects.
+    - **Storage Object User**: Read and write access to objects.
+    - **Storage Admin**: Full control over buckets and objects.
 
-   Refer to the following table for the minimum IAM role required for each operation:
+    Refer to the following table for the minimum IAM role required for each operation:
 
-   | Operation | Minimum IAM Role |
-   | --------- | ---------------- |
-   | Upload Object From Base64 | Storage Object Creator |
-   | Download Object Base64 | Storage Object Viewer |
-   | List Objects | Storage Object Viewer |
-   | Update Object | Storage Object Admin |
-   | Delete Object | Storage Object Admin |
-   | Get Bucket | Storage Object Viewer |
-   | Update Bucket | Storage Admin |
-   | Delete Bucket | Storage Admin |
-   | List Buckets | Storage Admin |
-   | Create Bucket | Storage Admin |
+    | Operation | Minimum IAM Role |
+    | --------- | ---------------- |
+    | Upload Object From Base64 | Storage Object Creator |
+    | Download Object Base64 | Storage Object Viewer |
+    | List Objects | Storage Object Viewer |
+    | Update Object | Storage Object Admin |
+    | Delete Object | Storage Object Admin |
+    | Get Bucket | Storage Object Viewer |
+    | Update Bucket | Storage Admin |
+    | Delete Bucket | Storage Admin |
+    | List Buckets | Storage Admin |
+    | Create Bucket | Storage Admin |
 
-<br/>
-   :::note
-   The List Buckets and Create Bucket operations require project-level IAM permissions. If your service account only has bucket-level permissions, these operations will fail with a 403 error.
-   :::
-<br/>
+    <br/>
+    :::note
+    The List Buckets and Create Bucket operations require project-level IAM permissions. If your service account only has bucket-level permissions, these operations will fail with a 403 error.
+    :::
+    <br/>
 
 5. Select **Continue**, then **Done**.
 6. Click on the newly created service account, go to the **Keys** tab, and select **Add Key** > **Create new key**.
