@@ -36,7 +36,7 @@ Next, copy the metadata document and issuer from the same application:
 <li>For the <strong>Issuer</strong>, use <code>https://login.microsoftonline.com/&lt;tenantid&gt;/v2.0</code>, replacing <code>&lt;tenantid&gt;</code> with your <strong>Directory (tenant) ID</strong>.</li>
 </ol>
 
-Then add an email claim if your token doesn't have one:
+Next, make sure your users have an email:
 
 <ol start="11">
 <li>Every user who signs in must have an email set in Microsoft Entra ID (<strong>Users</strong> → select the user → <strong>Edit properties</strong> → <strong>Contact information</strong> → <strong>Email</strong>). Users without an email can't sign in.</li>
@@ -55,8 +55,8 @@ To switch to this authentication method:
     1. Choose **Generic OpenId Connect** and enter the values from the previous section:
         1. **Audience**: The Application ID (the same value as Client ID).
         2. **Client Id**: The Application ID. (Audience and Client ID are the same value for Microsoft Entra ID).
-        3. **Issuer**: The issuer value. Use the actual URL, not the templated value.
-        4. **OIDC Configuration URL**: The OpenID Connect metadata document.
+        3. **Issuer**: The Issuer from step 10.
+        4. **OIDC Configuration URL**: The OpenID Connect metadata document URL from step 9.
         5. **Email Claim**: email (the pre-filled default).
 3. Select **Confirm**.
 
