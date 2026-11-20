@@ -17,9 +17,9 @@ In this section, you create an app integration in Okta, then copy the values Ork
 
 1. In Okta, create a new App Integration. Select **OIDC - OpenID Connect** as the sign-in method and **Single-Page Application** as the application type.
 2. Under **Grant type**, select **Implicit (hybrid)** (under **Advanced**) and check **Allow ID Token with implicit grant type**.
-3. For **Sign-in redirect URI**, enter `https://[your cluster host]/login/oidc/callback`.
-4. For **Sign-out redirect URI**, enter `https://[your cluster host]`.
-5. Add `https://[your cluster host]` as a **Trusted Origin**.
+3. For **Sign-in redirect URI**, enter `https://[your cluster url]/login/oidc/callback`.
+4. For **Sign-out redirect URI**, enter `https://[your cluster url]`.
+5. Add `https://[your cluster url]` as a **Trusted Origin**.
 6. Grant access to the people in your organization who'll use Orkes Conductor.
 7. Save the app integration. On the **General** tab, copy and store the **Application Client ID** from the **Client Credentials** section.
 
