@@ -14,46 +14,52 @@ This page covers the parameters and expected output for each operation available
 
 ## List Functions
 
-Lists all Lambda functions in your AWS account.
+Lists the Lambda functions in a region.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
+| Region | The AWS region containing the functions. For example: `us-east-1`. | string | Required. |
 | Max Items | Maximum number of functions to return. Defaults to 50. | integer | Optional. |
+| Marker | The continuation marker returned as `nextMarker` by the previous List Functions response. | string | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-Returns `count`, `nextMarker`, and a `functions` array where each entry contains `functionName`, `functionArn`, `runtime`, `role`, `handler`, `codeSize`, `description`, `timeout`, `memorySize`, `lastModified`, `codeSha256`, `version`, `state`, and `stateReason`.
+Returns `functions`, `count`, and `nextMarker`, which is null on the last page. Each entry in `functions` contains `functionName`, `functionArn`, `runtime`, `role`, `handler`, `codeSize`, `description`, `timeout`, `memorySize`, `lastModified`, `codeSha256`, `version`, `state`, and `stateReason`. `state` and `stateReason` are null in list results.
 
 </TabItem>
 </Tabs>
 
 ## Create Function
 
-Creates a new Lambda function from a base64-encoded ZIP package.
+Creates a new Lambda function from a base64-encoded ZIP package or a ZIP archive in Amazon S3. It never overwrites an existing function. The function starts in the `Pending` state, so use [Get Deployment Status](#get-deployment-status) until it is `READY`.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
+| Region | The AWS region to create the function in. For example: `us-east-1`. | string | Required. |
 | Function Name | Name of the Lambda function to create. | string | Required. |
 | Runtime | Runtime environment. For example, `python3.12`, `nodejs20.x`, `java21`. | string | Required. |
-| Role | ARN of the IAM role that Lambda assumes during execution.<br/><br/>**To create one**:<ol><li>Go to **IAM** > **Roles** > **Create role**.</li><li>Select **AWS service**, choose **Lambda**, and click **Next**.</li><li>Search for and attach **AWSLambdaBasicExecutionRole**, then click **Next**.</li><li>Enter a role name, for example `lambda-execution-role`, and click **Create role**.</li><li>Open the created role and copy the ARN. For example: `arn:aws:iam::1234567890:role/lambda-execution-role`.</li></ol> | string | Required. |
 | Handler | Function entry point.<br/><br/>For example, `index.lambda_handler` for Python, `index.handler` for Node.js, or `com.example.Handler::handleRequest` for Java. | string | Required. |
-| Zip File Base 64 | Function code as a base64-encoded ZIP file.<br/><br/> Create a ZIP of your code, then run `base64 -i function.zip \| tr -d '\n'` (Mac/Linux) or `[Convert]::ToBase64String([IO.File]::ReadAllBytes("function.zip"))` (Windows PowerShell) to get the encoded string.| string | Required. |
-| Description | A description of the function's purpose. | string | Optional. |
+| Role | ARN of the IAM role that Lambda assumes during execution.<br/><br/>**To create one**:<ol><li>Go to **IAM** > **Roles** > **Create role**.</li><li>Select **AWS service**, choose **Lambda**, and click **Next**.</li><li>Search for and attach **AWSLambdaBasicExecutionRole**, then click **Next**.</li><li>Enter a role name, for example `lambda-execution-role`, and click **Create role**.</li><li>Open the created role and copy the ARN. For example: `arn:aws:iam::1234567890:role/lambda-execution-role`.</li></ol> | string | Required. |
+| Source type | The source of the function code. Supported values:<ul><li>`BASE64` for a base64-encoded ZIP file.</li><li>`CLOUD_LOCATION` for a ZIP archive in Amazon S3.</li></ul> | string | Required. |
+| ZIP file (Base64) | Function code as a base64-encoded ZIP file. Required when Source type is `BASE64`.<br/><br/>Create a ZIP of your code, then run<br/><br/>`base64 -i function.zip \| tr -d '\n'` (Mac/Linux)<br/><br/>or<br/><br/>`[Convert]::ToBase64String([IO.File]::ReadAllBytes("function.zip"))` (Windows PowerShell)<br/><br/>to get the encoded string. | string | Conditional. |
+| Source location | An Amazon S3 ZIP archive, as `s3://bucket/object`. Required when Source type is `CLOUD_LOCATION`. The bucket must be in the same region as the function. | string | Conditional. |
+| Object version | The S3 object version ID, to use a specific version of the archive. Applies when Source type is `CLOUD_LOCATION`. | string | Optional. |
 | Memory Size | Memory allocated in MB (128–10240). Defaults to 128. | integer | Optional. |
 | Timeout | Maximum execution time in seconds (1–900). Defaults to 3. | integer | Optional. |
 | Environment Variables | Key-value pairs injected as environment variables, as a JSON string. For example, `{"KEY":"value"}`. | string | Optional. |
+| Description | A description of the function's purpose. | string | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-Returns the function's `status`, `functionName`, `functionArn`, `runtime`, `role`, `handler`, `codeSize`, `description`, `timeout`, `memorySize`, `lastModified`, `codeSha256`, `version`, and `state`.
+Returns the function's `status`, which is `accepted`, and its `functionName`, `functionArn`, `runtime`, `role`, `handler`, `codeSize`, `description`, `timeout`, `memorySize`, `lastModified`, `codeSha256`, `version`, and `state`.
 
 </TabItem>
 </Tabs>
@@ -67,35 +73,59 @@ Retrieves full configuration and code details of a specific Lambda function.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Function Name | Name of the Lambda function to retrieve. | string | Required. |
+| Region | The AWS region containing the function. | string | Required. |
+| Function Name | Name or ARN of the Lambda function to retrieve. | string | Required. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-Returns the function's `status`, `functionName`, `functionArn`, `runtime`, `role`, `handler`, `codeSize`, `description`, `timeout`, `memorySize`, `lastModified`, `codeSha256`, `version`, `state`, `stateReason`, `lastUpdateStatus`, `packageType`, `code.location`, and `code.repositoryType`.
+Returns the function's `status`, `functionName`, `functionArn`, `runtime`, `role`, `handler`, `codeSize`, `description`, `timeout`, `memorySize`, `lastModified`, `codeSha256`, `version`, `state`, `stateReason`, `lastUpdateStatus`, `packageType`, `code.location`, `code.repositoryType`, `message`, and `isError`. `code.location` is a short-lived URL.
+
+If the function does not exist, it returns `status` as `error` and `message` as `Function not found`, and the task ends as completed with errors.
 
 </TabItem>
 </Tabs>
 
-## Update Function Configuration
+## Get Deployment Status
 
-Updates the configuration of an existing Lambda function without redeploying code.
+Retrieves the readiness of a Lambda function after creation. A function in the `Pending` state is not ready for invocation.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Function Name | Name of the Lambda function to update. | string | Required. |
-| Memory Size | Updated memory allocated in MB (128–10240). | integer | Optional. |
-| Timeout | Updated maximum execution time in seconds (1–900). | integer | Optional. |
-| Description | Updated description of the function's purpose. | string | Optional. |
-| Environment Variables | Updated key-value pairs injected as environment variables, as a JSON string. For example, `{"KEY":"value"}`. | string | Optional. |
+| Region | The AWS region containing the function. | string | Required. |
+| Function Name | Name or ARN of the function returned by Create Function. | string | Required. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-Returns the function's updated `functionName`, `functionArn`, `memorySize`, `timeout`, `description`, and `lastModified`.
+Returns `state`, `deploymentId`, `resourceName`, `functionUrl`, `isError`, and `errorMessage`. `state` is `READY` when the function is `Active`, `DEPLOYING` when it is `Pending`, `FAILED` when it is `Failed`, and `UNKNOWN` otherwise. `deploymentId` and `resourceName` are the function ARN, and `functionUrl` is null.
+
+</TabItem>
+</Tabs>
+
+## Update Function Configuration
+
+Updates the configuration of an existing Lambda function without redeploying code. AWS applies the update asynchronously.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Region | The AWS region containing the function. | string | Required. |
+| Function Name | Name or ARN of the Lambda function to update. | string | Required. |
+| Memory Size | Updated memory allocated in MB (128–10240). | integer | Optional. |
+| Timeout Seconds | Updated maximum execution time in seconds (1–900). | integer | Optional. |
+| Environment Variables | Updated key-value pairs injected as environment variables, as a JSON string. For example, `{"KEY":"value"}`.<br/><br/>This replaces the existing set. Pass `{}` to remove all environment variables. | string | Optional. |
+| Description | Updated description of the function's purpose. | string | Optional. |
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+Returns the function's `status`, `functionName`, `functionArn`, `memorySize`, `timeout`, `description`, and `lastModified`. Environment variables are not returned.
 
 </TabItem>
 </Tabs>
@@ -109,14 +139,17 @@ Invokes a Lambda function synchronously or asynchronously with a JSON payload.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Function Name | Name of the Lambda function to invoke. | string | Required. |
-| Payload | Input payload as a JSON string. For example, `{"message": "Hello from Lambda!"}`. | string | Required. |
+| Region | The AWS region containing the function. | string | Required. |
+| Function Name | Name or ARN of the Lambda function to invoke. | string | Required. |
 | Invocation Type | The invocation type for the request. Supported values:<ul><li>`RequestResponse` for synchronous (waits for response)</li><li>`Event` for asynchronous (returns immediately)</li></ul> Defaults to `RequestResponse`. | string | Optional. |
+| Payload | Input payload as a JSON string. For example, `{"message": "Hello from Lambda!"}`. | string | Required. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-Returns the function's `statusCode`, `requestId`, `response`, `functionError`, and `error`.
+Returns the function's `statusCode`, `requestId`, `response`, `functionError`, `error`, and `status`. `status` is `success` for a completed synchronous call, `accepted` for an `Event` call, and `error` if the function fails. For an `Event` call, `statusCode` is 202 and `response` is null.
+
+If the function fails, `functionError` is set, `response` contains the error details, and the task ends as completed with errors.
 
 </TabItem>
 </Tabs>
@@ -130,12 +163,15 @@ Permanently deletes an existing Lambda function.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Function Name | Name of the Lambda function to delete. | string | Required. |
+| Region | The AWS region containing the function. | string | Required. |
+| Function Name | Name or ARN of the Lambda function to delete. | string | Required. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-Returns the `status`, `functionName`, and `message` confirming deletion.
+Returns the `status`, `functionName`, `message`, and `isError`.
+
+If the function does not exist, it returns `status` as `error` and `message` as `Function not found`, and the task ends as completed with errors.
 
 </TabItem>
 </Tabs>
