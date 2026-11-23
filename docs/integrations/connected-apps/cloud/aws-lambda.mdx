@@ -87,23 +87,11 @@ For authenticating using access keys, get the Access Key ID and Secret Access Ke
 
 ### Using assume role
 
-For authenticating using assume role, get the Role ARN and External ID of the IAM role that Conductor assumes.
-
-**To get the role ARN and external ID:**
-
-1. In the [AWS Console](https://console.aws.amazon.com), go to **IAM** > **Roles** and select the role.
-2. Copy the role's **ARN**.
-3. Open the **Trust relationships** tab. The external ID is the value of the `sts:ExternalId` condition in the trust policy. If the trust policy has no such condition, add one with an external ID of your choice.
-
-The trust policy must allow the Conductor worker identity to assume the role.
-
-**To attach IAM policy to the role:**
-
-Attach the same Lambda policy as in [Using access keys](#using-access-keys) to the role.
+TBD
 
 ### Using the Conductor role
 
-For authenticating using the Conductor role, you do not need any credentials. Orkes Conductor uses the identity of the Conductor worker. Attach the same Lambda policy as in [Using access keys](#using-access-keys) to the worker's role.
+TBD
 
 ## Step 2: Add an integration for AWS Lambda
 
