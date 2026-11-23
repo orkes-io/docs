@@ -21,13 +21,14 @@ Creates a new S3 bucket.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
+| Region | The AWS region to create the bucket in. For example: `us-east-1`. | string | Required. |
+| Service Endpoint | A custom service endpoint, when required. | string | Optional. |
 | Bucket Name | The name of the bucket to create. Must be unique across all accounts globally, i.e., no two buckets anywhere can share the same name. | string | Required. |
-| Bucket Region | The AWS region for the bucket. Defaults to the region configured in the integration if not specified. | string | Optional. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-The operation returns the `status`, `name`, and `location` of the created bucket.
+Returns the `status`, `bucketName`, and `location` of the created bucket.
 
 </TabItem>
 </Tabs>
@@ -39,31 +40,36 @@ Lists all S3 buckets in the AWS account.
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
-This operation has no input parameters.
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Region | The AWS region the operation runs in. For example: `us-east-1`. | string | Required. |
+| Service Endpoint | A custom service endpoint, when required. | string | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-The operation returns a `buckets` array, where each entry includes the bucket `name` and `creationDate`.
+Returns a `buckets` array, where each entry includes the bucket `name` and `creationDate`.
 
 </TabItem>
 </Tabs>
 
 ## Search Buckets
 
-Searches for S3 buckets by partial name match.
+Searches for S3 buckets by partial name match. The match is not case-sensitive.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
+| Region | The AWS region the operation runs in. For example: `us-east-1`. | string | Required. |
+| Service Endpoint | A custom service endpoint, when required. | string | Optional. |
 | Search Pattern | The partial bucket name to search for. Returns all buckets if not specified. | string | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-The operation returns a `buckets` array, where each entry includes the bucket `name` and `creationDate`, along with a `count` of the total matching buckets.
+Returns a `buckets` array, where each entry includes the bucket `name` and `creationDate`, along with a `count` of the total matching buckets.
 
 </TabItem>
 </Tabs>
@@ -77,34 +83,38 @@ Deletes an empty S3 bucket.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Bucket Name | The name of the bucket to delete. | string | Required. | 
+| Region | The AWS region containing the bucket. | string | Required. |
+| Service Endpoint | A custom service endpoint, when required. | string | Optional. |
+| Bucket Name | The name of the bucket to delete. | string | Required. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-The operation returns the `status` of the deletion and the `bucketName` of the deleted bucket.
+Returns the `status` of the deletion and the `bucketName` of the deleted bucket.
 
 </TabItem>
 </Tabs>
 
 ## Upload Object
 
-Uploads content as an S3 object to a specified bucket.
+Uploads content as an S3 object to a specified bucket. If the key already exists, the object is replaced.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Bucket Name | The name of the bucket to upload the object to. | string | Required. | 
-| Key | The object key (filename or path) of the object in S3. For nested objects, include the full path. For example, `folder/file.txt`. | string | Required. | 
-| Content | The file content to upload as a string. | string | Required. | 
-| Content Type | The MIME type of the object. For example, `text/plain` or `application/json`. | string | Optional. | 
+| Region | The AWS region containing the bucket. | string | Required. |
+| Service Endpoint | A custom service endpoint, when required. | string | Optional. |
+| Bucket Name | The name of the bucket to upload the object to. | string | Required. |
+| Key | The object key (filename or path) of the object in S3. For nested objects, include the full path. For example, `folder/file.txt`. | string | Required. |
+| Content | The file content to upload as a string. | string | Required. |
+| Content Type | The MIME type of the object. For example, `text/plain` or `application/json`. | string | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-The operation returns the `status` of the upload, the `bucket` name, the object `key`, and the `size` of the uploaded object in bytes.
+Returns the `status` of the upload, the `bucket` name, the object `key`, and the `size` of the uploaded object in bytes.
 
 </TabItem>
 </Tabs>
@@ -118,14 +128,16 @@ Lists objects in an S3 bucket, optionally filtered by prefix.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Bucket Name | The name of the bucket to list objects from. | string | Required. | 
-| Prefix | The prefix to filter objects by. For example, `documents/`. | string | Optional. | 
-| Max Keys | The maximum number of objects to return. Defaults to 1000. | integer | Optional. | 
+| Region | The AWS region containing the bucket. | string | Required. |
+| Service Endpoint | A custom service endpoint, when required. | string | Optional. |
+| Bucket Name | The name of the bucket to list objects from. | string | Required. |
+| Prefix | The prefix to filter objects by. For example, `documents/`. | string | Optional. |
+| Max Keys | The maximum number of objects to return. Defaults to 1000. | integer | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-The operation returns an `objects` array, where each entry includes the object `key`, `size` in bytes, `etag`, and `lastModified` timestamp. Also returns `isTruncated` to indicate if there are more results, and `nextContinuationToken` for pagination.
+Returns an `objects` array, where each entry includes the object `key`, `size` in bytes, `etag`, and `lastModified` timestamp. Also returns `isTruncated`, which is true when more objects exist, and `nextContinuationToken`. This operation has no input to continue from the token.
 
 </TabItem>
 </Tabs>
@@ -139,13 +151,17 @@ Downloads an S3 object and returns its content as a string.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Bucket Name | The name of the bucket containing the object. | string | Required. | 
-| Key | The object key (filename or path) of the object in S3. For nested objects, include the full path. For example, `folder/file.txt`. | string | Required. | 
+| Region | The AWS region containing the bucket. | string | Required. |
+| Service Endpoint | A custom service endpoint, when required. | string | Optional. |
+| Bucket Name | The name of the bucket containing the object. | string | Required. |
+| Key | The object key (filename or path) of the object in S3. For nested objects, include the full path. For example, `folder/file.txt`. | string | Required. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-The operation returns the `status` of the download, the `bucket` name, the object `key`, the `content` of the object as a string, and the `size` in bytes.
+Returns the `status` of the download, the `bucket` name, the object `key`, the `content` of the object as a string, the `size` in bytes, and a `message`.
+
+If the object does not exist, it returns `status` as `error` and `message` as `Object not found`, and the task ends as completed with errors.
 
 </TabItem>
 </Tabs>
@@ -159,13 +175,17 @@ Retrieves metadata about an S3 object, including size, last modified date, and c
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Bucket Name | The name of the bucket containing the object. | string | Required. | 
-| Key | The object key (filename or path) of the object in S3. For nested objects, include the full path. For example, `folder/file.txt`. | string | Required. | 
+| Region | The AWS region containing the bucket. | string | Required. |
+| Service Endpoint | A custom service endpoint, when required. | string | Optional. |
+| Bucket Name | The name of the bucket containing the object. | string | Required. |
+| Key | The object key (filename or path) of the object in S3. For nested objects, include the full path. For example, `folder/file.txt`. | string | Required. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-The operation returns the `bucket` name, object `key`, `size` in bytes, `lastModified` timestamp, `contentType`, `etag`, `userMetadata`, and the `status` of the operation.
+Returns the `bucket` name, object `key`, `size` in bytes, `lastModified` timestamp, `contentType`, `etag`, `userMetadata`, `status`, and a `message`.
+
+If the object does not exist, it returns `status` as `error` and `message` as `Object not found`, and the task ends as completed with errors.
 
 </TabItem>
 </Tabs>
@@ -173,7 +193,6 @@ The operation returns the `bucket` name, object `key`, `size` in bytes, `lastMod
 ## Copy Object
 
 Copies an S3 object to a destination bucket in the same AWS region.
-
 :::note
 The source and destination buckets must be in the same AWS region. Cross-region copying is not supported.
 :::
@@ -183,35 +202,39 @@ The source and destination buckets must be in the same AWS region. Cross-region 
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Source Bucket | The name of the source bucket. | string | Required. | 
-| Source Key | The object key (filename or path) of the source object. For nested objects, include the full path. For example, `folder/file.txt`. | string | Required. | 
-| Destination Bucket | The name of the destination bucket. | string | Required. | 
-| Destination Key | The object key (filename or path) for the copied object in the destination bucket. For nested objects, include the full path. For example, `folder/file.txt`. | string | Required. | 
+| Region | The AWS region containing both buckets. | string | Required. |
+| Service Endpoint | A custom service endpoint, when required. | string | Optional. |
+| Source Bucket | The name of the source bucket. | string | Required. |
+| Source Key | The object key (filename or path) of the source object. For nested objects, include the full path. For example, `folder/file.txt`. | string | Required. |
+| Destination Bucket | The name of the destination bucket. | string | Required. |
+| Destination Key | The object key (filename or path) for the copied object in the destination bucket. For nested objects, include the full path. For example, `folder/file.txt`. | string | Required. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-The operation returns the `status` of the copy, the `sourceBucket`, `sourceKey`, `destinationBucket`, `destinationKey`, and the `etag` of the copied object.
+Returns the `status` of the copy, the `sourceBucket`, `sourceKey`, `destinationBucket`, `destinationKey`, and the `etag` of the copied object.
 
 </TabItem>
 </Tabs>
 
 ## Delete Object
 
-Deletes an object from an S3 bucket.
+Deletes an object from an S3 bucket. If the key does not exist, it still returns `success`.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Bucket Name | The name of the bucket containing the object to delete. | string | Required. | 
-| Key | The object key (filename or path) of the object in S3. For nested objects, include the full path. For example, `folder/file.txt`. | string | Required. | 
+| Region | The AWS region containing the bucket. | string | Required. |
+| Service Endpoint | A custom service endpoint, when required. | string | Optional. |
+| Bucket Name | The name of the bucket containing the object to delete. | string | Required. |
+| Key | The object key (filename or path) of the object in S3. For nested objects, include the full path. For example, `folder/file.txt`. | string | Required. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-The operation returns the `status` of the deletion, the `bucket` name, and the object `key`.
+Returns the `status` of the deletion, the `bucket` name, and the object `key`.
 
 </TabItem>
 </Tabs>
@@ -225,33 +248,37 @@ Creates an empty folder in an S3 bucket.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Bucket Name | The name of the bucket to create the folder in. | string | Required. | 
-| Folder Path | The path of the folder to create. For example, `documents/subfolder/`. | string | Required. | 
+| Region | The AWS region containing the bucket. | string | Required. |
+| Service Endpoint | A custom service endpoint, when required. | string | Optional. |
+| Bucket Name | The name of the bucket to create the folder in. | string | Required. |
+| Folder Path | The path of the folder to create. For example, `documents/subfolder/`. A trailing `/` is added if you leave it out. | string | Required. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-The operation returns the `status` of the operation, the `bucket` name, and the `folderPath` of the created folder.
+Returns the `status` of the operation, the `bucket` name, and the `folderPath` of the created folder, including the trailing `/`.
 
 </TabItem>
 </Tabs>
 
 ## List Folders
 
-Lists folders in an S3 bucket.
+Lists the folders in an S3 bucket, meaning the objects whose key ends with `/`. An object nested under a path with no folder marker is not listed as a folder.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Bucket Name | The name of the bucket to list folders from. | string | Required. | 
-| Max Folders | The maximum number of folders to return. Defaults to 1000. | integer | Optional. | 
+| Region | The AWS region containing the bucket. | string | Required. |
+| Service Endpoint | A custom service endpoint, when required. | string | Optional. |
+| Bucket Name | The name of the bucket to list folders from. | string | Required. |
+| Max Folders | The maximum number of folders to return. Defaults to 1000. | integer | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-The operation returns a `folders` array, where each entry includes the folder `key`, `lastModified` timestamp, `etag`, `size`, and `storageClass`.
+Returns a `folders` array, where each entry includes the folder `key`, `lastModified` timestamp, `etag`, `size`, `storageClass`, `checksumAlgorithm`, and `checksumType`.
 
 </TabItem>
 </Tabs>
@@ -265,13 +292,15 @@ Deletes a folder and all objects within it.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Bucket Name | The name of the bucket containing the folder to delete. | string | Required. | 
-| Folder Path | The path of the folder to delete. All contents within the folder will be removed. | string | Required. | 
+| Region | The AWS region containing the bucket. | string | Required. |
+| Service Endpoint | A custom service endpoint, when required. | string | Optional. |
+| Bucket Name | The name of the bucket containing the folder to delete. | string | Required. |
+| Folder Path | The path of the folder to delete. All contents within the folder will be removed. A trailing `/` is added if you leave it out. | string | Required. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-The operation returns the `status` of the deletion, the `bucket` name, the `folderPath`, the number of `deletedObjects`, and a `deletedKeys` array listing all deleted object keys.
+Returns the `status` of the deletion, the `bucket` name, the `folderPath`, the number of `deletedObjects`, and a `deletedKeys` array listing all deleted object keys. If the folder has no objects, it still returns `success` with `deletedObjects` as 0.
 
 </TabItem>
 </Tabs>
