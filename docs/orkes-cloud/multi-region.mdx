@@ -5,7 +5,7 @@ description: "Learn how multi-region and multi-cloud pairs work in Orkes Cloud: 
 
 # Multi-Cloud and Multi-Region Deployments
 
-**Multi-region pairs two Orkes Conductor clusters**, in different regions or on different cloud providers, into an active-standby setup, so your workflows keep running if the active cluster becomes unavailable. A pair has one primary and one replica. The primary runs your workflows. The other is a read-only replica that holds a continuous copy, serves reads, and can take over if the primary fails, either automatically when automatic failover is on or when you manually promote it.
+**Multi-region pairs two Orkes Conductor clusters**, in different regions or on different cloud providers, into an active-standby setup backed by a 99.99% availability SLA, so your workflows keep running if the active cluster becomes unavailable. A pair has one primary and one replica. The primary runs your workflows. The other is a read-only replica that holds a continuous copy, serves reads, and can take over if the primary fails, either automatically when automatic failover is on or when you manually promote it.
 
 Both clusters sit behind one stable hostname, the multiregion name. Your applications and workers connect to that name and follow the primary automatically, so a failover doesn't require changing any configuration.
 
@@ -77,7 +77,7 @@ The replica is read-only while the clusters are peered. You can view the definit
 
 **Existing data on a cluster is not deleted:** Peering never wipes a cluster. If a cluster already has workflows, schedules, secrets or other artifacts, they stay in place, and the artifacts from the primary are copied alongside them.
 
-**Replication is not a backup:** A deletion or a mistake on the primary is copied to the replica too. Keep your own backups if you need to recover from them.
+**Replication is not a backup:** A deletion or a mistake on the primary is copied to the replica too. Keep your own backups if you need to recover from them. On Orkes-managed deployments, Orkes maintains backups separately.
 
 ## Failover
 
@@ -96,7 +96,7 @@ Orkes continuously checks the health of both clusters in a pair. When automatic 
 - After a cluster becomes primary, either through a promotion or when the pair is first peered, automatic failover will not promote the other cluster for 15 minutes. During the cooldown you can still promote a replica yourself.
 - With the setting off, Orkes does not promote the replica even if the primary is down. Promote it yourself using the [Promote to Primary](/orkes-cloud/manage-multi-region-pairs#promote-a-replica-to-primary) action.
 
-### Failover time and data loss
+### Recovery time and data loss
 
 These are the typical recovery objectives for an automatic failover:
 
@@ -112,7 +112,7 @@ Set the server URL in your worker configuration to the multiregion name. Workers
 
 ![Which workers keep receiving tasks](/img/multi-region-worker.png)
 
-Some in-flight tasks may be retried after a failover, so **design your workers to be idempotent**. A retried task can repeat work the old primary had already accepted, so a task that performs a business action, such as issuing a payment, should not repeat the action when it runs again.
+Some in-flight tasks may be retried after a failover, so **[design your workers to be idempotent](/idempotency#worker-idempotency)**. A retried task can repeat work the old primary had already accepted, so a task that performs a business action, such as issuing a payment, should not repeat the action when it runs again.
 
 ## Next steps
 

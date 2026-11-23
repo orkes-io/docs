@@ -19,7 +19,7 @@ For how multi-region works, see [Multi-Cloud and Multi-Region Deployments](/orke
 
 **Prerequisites:**
 
-- Your subscription includes Multi-Region. Each cluster must fit a multi-region allocation that matches its size, cloud, and environment. If your subscription doesn't include Multi-Region, contact your Orkes representative.
+- Your subscription includes Multi-Region. If your subscription doesn't include Multi-Region, contact your Orkes representative.
 - Both clusters run Orkes Conductor v5.6.0 or later.
 - Both clusters are fully provisioned and have no other change in progress.
 - Neither cluster is already part of a pair.
@@ -40,7 +40,10 @@ After peering completes, replication starts from the primary to the replica. The
 To confirm the pair, open either cluster in the Cloud portal. Once peering completes, you see:
 
 - A **Multi-Region** badge in the cluster header.
-- **Replication status** on the **Details** tab, which shows PRIMARY or REPLICA. (PEERING) means peering is still in progress. (STEADY) means the pair is established and no change is in progress. Use **Replication status** to see when the pair is fully in place.
+- **Replication status** on the **Details** tab, which shows PRIMARY or REPLICA followed by the state of the pair in brackets:
+    - (PEERING) means peering is still in progress.
+    - (STEADY) means the pair is established and no change is in progress.
+    - (BEHIND) is shown on the replica when it has fallen more than 90 seconds behind the primary. It returns to (STEADY) once the replica catches up.
 - A **MultiRegion UI** link above **Conductor UI**, which appears once the multiregion name is set up.
 
 ## Promote a replica to primary
