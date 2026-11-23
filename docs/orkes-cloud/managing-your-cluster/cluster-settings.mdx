@@ -28,7 +28,7 @@ What you add here is another hostname for your existing Conductor UI, not a sepa
 
 1. From your cluster's detail view, select the **URLs** tab.
 2. Select **Add Another**.
-3. Enter the sub-domain label you want to add; lowercase letters, numbers, and hyphens only, and it must start and end with a letter or number (for example, `staging`). Orkes appends it to your cluster's existing domain.
+3. Enter the sub-domain label you want to add; lowercase letters, numbers, and hyphens only, and it must start and end with a letter or number (for example, `staging`). Orkes adds it in front of your cluster's base domain, so `staging` becomes `staging.yourdomain.com`.
 4. Select **Confirm**.
 
 Orkes sets up the DNS record for the new hostname, so no action is needed on your end. This takes several minutes to complete and propagate.
@@ -42,7 +42,7 @@ You can't remove a sub-domain if it's the only one your cluster has; at least on
 
 ## Enable/Disable API Gateway
 
-You can enable or disable the API Gateway for your cluster.
+You can enable or disable the [API Gateway](/content/developer-guides/mcp-api-gateway) for your cluster.
 
 #### To enable the API Gateway:
 

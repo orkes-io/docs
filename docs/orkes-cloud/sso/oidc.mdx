@@ -5,7 +5,7 @@ description: "Set up single sign-on for a Conductor cluster with any OIDC-compli
 
 # Configure Single-Sign-On (SSO) with OpenID Connect (OIDC)
 
-Orkes supports **any OIDC-compliant identity provider** as your identity provider. This doc covers the generic path. If your provider has a dedicated setup doc (such as Microsoft Entra ID, Okta), use that one instead.
+Orkes supports **any OIDC-compliant identity provider**. This page covers the generic setup. For Microsoft Entra ID or Okta, follow the dedicated setup page for that provider instead.
 
 :::note
 Once you configure SSO with OIDC, the cluster's current login method **stops working**. Before you make this change, make sure at least one user is both an Admin on the Conductor cluster and a user in your OIDC provider with the same email address, or you could lock yourself out of the cluster entirely.
@@ -26,7 +26,7 @@ Use the Cloud portal to configure your Conductor cluster's authentication:
 3. Select **Change Authentication Type**.
 4. From the **Authentication Type** dropdown, select **Generic OpenId Connect**.
 5. Fill in the following fields:
-    1. **Audience**: The value of the aud claim in the ID token your provider issues. It must match exactly. For most providers this is the client ID.
+    1. **Audience**: The value of the `aud` claim in the ID token your provider issues. It must match exactly. For most providers this is the client ID.
     2. **Client Id**: The ID generated when you registered the application with your OIDC provider.
     3. **Issuer**: The JWT token issuer.
     4. **OIDC Configuration URL**: Your provider's OpenID configuration URL.

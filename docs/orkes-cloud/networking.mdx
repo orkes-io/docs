@@ -28,7 +28,7 @@ Setting up private connectivity is a joint effort between you and Orkes: some st
 
 ## Routing outbound traffic through a proxy
 
-Separately from private connectivity, your organization may require all outbound requests, including those from Conductor's HTTP and HTTP Poll tasks, to pass through a proxy server. Orkes Conductor supports proxy configuration for these tasks, for both customer-hosted and Orkes Cloud-deployed clusters.
+Separately from private connectivity, you can send outbound requests from Conductor's HTTP and HTTP Poll tasks through a proxy server. To set one up, see [Configure Proxy for HTTP Workers](/content/orkes-cloud/networking/http-worker-proxy).
 
 ## Next Steps
 
@@ -37,4 +37,5 @@ Pick the guide for your cloud provider:
 - [AWS PrivateLink](/content/orkes-cloud/networking/aws-privatelink)
 - [Azure Private Link](/content/orkes-cloud/networking/azure-private-link)
 - [GCP Private Service Connect](/content/orkes-cloud/networking/gcp-private-service-connect)
-- [Configure Proxy for HTTP Workers](/content/orkes-cloud/networking/http-worker-proxy)
+
+To route outbound traffic from HTTP tasks through a proxy, see [Configure Proxy for HTTP Workers](/content/orkes-cloud/networking/http-worker-proxy).

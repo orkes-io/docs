@@ -29,11 +29,11 @@ In this section, you [register an application in Microsoft Entra ID](https://lea
 7. Select **Authentication (Preview)**, then the **Settings** tab, and under **Implicit grant and hybrid flows**, make sure **ID tokens** is selected, and save your changes.
 8. Go to **Overview** and copy and store the **Application (client) ID**.
 
-Next, copy the metadata document and issuer from the same application:
+Next, copy the metadata document, then build the issuer from your tenant ID:
 
 <ol start="9">
 <li>Select <strong>Endpoints</strong> from the top navigation and copy the <strong>OpenID Connect metadata document</strong> value, <code>https://login.microsoftonline.com/&lt;tenantid&gt;/v2.0/.well-known/openid-configuration</code>, which is the <strong>OIDC Configuration URL</strong> you'll enter in Orkes.</li>
-<li>For the <strong>Issuer</strong>, use <code>https://login.microsoftonline.com/&lt;tenantid&gt;/v2.0</code>, replacing <code>&lt;tenantid&gt;</code> with your <strong>Directory (tenant) ID</strong>.</li>
+<li>The <strong>Issuer</strong> isn't shown in Entra ID. Enter <code>https://login.microsoftonline.com/&lt;tenantid&gt;/v2.0</code> as the <strong>Issuer</strong> in Orkes, replacing <code>&lt;tenantid&gt;</code> with your <strong>Directory (tenant) ID</strong>.</li>
 </ol>
 
 Next, make sure your users have an email:
@@ -55,8 +55,8 @@ To switch to this authentication method:
     1. Choose **Generic OpenId Connect** and enter the values from the previous section:
         1. **Audience**: The Application ID (the same value as Client ID).
         2. **Client Id**: The Application ID. (Audience and Client ID are the same value for Microsoft Entra ID).
-        3. **Issuer**: The Issuer from step 10.
-        4. **OIDC Configuration URL**: The OpenID Connect metadata document URL from step 9.
+        3. **Issuer**: The issuer from step 10, in the format `https://login.microsoftonline.com/<tenantid>/v2.0`.
+        4. **OIDC Configuration URL**: The metadata document URL from step 9, in the format `https://login.microsoftonline.com/<tenantid>/v2.0/.well-known/openid-configuration`.
         5. **Email Claim**: email (the pre-filled default).
 3. Select **Confirm**.
 

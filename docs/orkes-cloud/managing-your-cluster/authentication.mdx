@@ -10,11 +10,11 @@ Your cluster's **authentication type** controls how users log in to your Conduct
 - **Default Orkes Authentication**: Users are managed through role-based access control (RBAC) in Orkes Conductor.
 - **Generic OpenId Connect**: Users log in through any configured OIDC-compliant identity provider.
 
-Changing the type updates the cluster's Conductor deployment. This page covers how to switch to your organization's identity provider, and the fields each provider needs.
+Changing the type updates the cluster's Conductor deployment. This page covers how to switch to your organization's identity provider, and the fields it needs.
 
 ## Before you begin
 
-Set the callback URL on your identity provider to `https://<conductor domain>/login/oidc/callback`.
+Set the callback URL on your identity provider to `https://<your-cluster-url>/login/oidc/callback`.
 
 ## Default Orkes Authentication
 
@@ -33,7 +33,7 @@ After that, the Admin can grant access to everyone else through [RBAC in Orkes C
 
 1. From your cluster's detail view, select the **Authentication** tab.
 2. Select **Change Authentication Type**.
-3. From the **Authentication Type** dropdown, select your identity provider: **Generic OpenId Connect** for any OIDC-compliant provider, including Okta.
+3. From the **Authentication Type** dropdown, select **Generic OpenId Connect** for any OIDC-compliant provider.
 4. Enter the fields for your selected provider. All fields are required.
 
     **Generic OpenId Connect:**
@@ -47,3 +47,5 @@ After that, the Admin can grant access to everyone else through [RBAC in Orkes C
     | Email Claim | The JWT claim field containing the user's unique email address. Defaults to `email`; customize it if your provider uses a different claim name. |
 
 5. Select **Confirm**.
+
+Wait for the change to take effect in the cluster, usually within 5 to 10 minutes. Force-refresh your browser to see the new authentication type. If you see errors, try using an incognito window.

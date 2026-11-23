@@ -45,7 +45,7 @@ To switch organizations:
 
 ## Conductor cluster access
 
-Access to a Conductor cluster's UI is separate from portal access, and is configured independently for that cluster. Human users who log into the cluster UI authenticate through single sign-on (SSO) via your identity provider.
+Access to a Conductor cluster's UI is separate from portal access, and is configured independently for that cluster. By default, users log in to the cluster UI with Default Orkes Authentication, and you can switch to single sign-on (SSO) through your own identity provider.
 
 Applications, such as task workers or automation scripts calling the Conductor API directly, are a separate principal type with their own permissions, and can authenticate using access keys or a federated identity from your cloud provider.
 
@@ -59,7 +59,7 @@ To add users directly to the Conductor cluster, refer to the [RBAC documentation
 
 ### SSO Setup
 
-Connect your Conductor cluster to your organization's identity provider so users log in with their existing credentials, or so applications authenticate directly without an Orkes-issued key. See [Single Sign-On for Conductor Clusters](/content/orkes-cloud/sso) for more information.
+Connect your Conductor cluster to your organization's identity provider so users log in with their existing credentials. See [Single Sign-On for Conductor Clusters](/content/orkes-cloud/sso) for more information.
 
 ## Next Steps
 

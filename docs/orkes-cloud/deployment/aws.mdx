@@ -14,7 +14,7 @@ Before you begin, complete the following in your AWS account. The final authoriz
 ### AWS account and region
 
 - Identify the AWS account that will host the Conductor cluster.
-- Identify the AWS region where the cluster will be deployed.
+- Identify the AWS region where the cluster will be deployed. Get in touch with your Orkes Account representative for selecting your preferred region.
 
 ***Info**: We recommend choosing a region that's the same as, or close to, where most of your task workers are located, to minimize latency between the cluster and workers.*
 
@@ -76,7 +76,7 @@ If the **Create New Cluster** option isn't available to you in the portal, conta
     - Leave it unchecked if you want Orkes to create the VPC networking (subnet approach 1).
     - Check it if you created your own subnets, route tables, and gateways (subnet approach 2). The generated authorization grants Orkes no permission to create, modify, or delete any of them.
 
-        This choice can't be changed once you authorize Orkes in the next step. To switch approaches later, you'd need to start over with a new cluster name.
+        This choice can't be changed once you authorize Orkes in the next step. To switch approaches later, you'd need to start over with a new cluster.
 
 7. Select **Authorize Orkes**. This step creates a CloudFormation Template (CFT) that, when run, creates an IAM role with the permissions specified in it. You can download the CFT to inspect the configuration.
 8. Select **Authorize (Opens AWS Console)**. A new window opens in the AWS Management Console with the CloudFormation Create Stack page.
@@ -97,7 +97,7 @@ If the **Create New Cluster** option isn't available to you in the portal, conta
 6. In the **Ingress Type** dropdown:
     - Select **Internet - Access using Credentials** to access this cluster through the internet.
     - Select **VPC Only - Access via VPN or Peering** to access this cluster through the private IP endpoint.
-7. Optionally, select the **Enable API Gateway** checkbox to deploy an API Gateway for this cluster. It is unchecked by default.
+7. Optionally, select the **Enable API Gateway** checkbox to deploy an [API Gateway](/content/developer-guides/mcp-api-gateway) for this cluster. It is unchecked by default.
 8. In the **Cluster Capacity** dropdown, select the desired workflow capacity, for example, ***Small - 100s - 1000s of Workflows / Day***.
 9. In the **Environment Type** dropdown, select a tag for the type of workloads you plan to run in this cluster, for example, *Production*, *Staging*, *Development*, *Test*, or *Proof of Concept*.
 10. In the **Enable authentication** field, select **Yes** to protect access to your Conductor cluster. A default authorization configuration is added, which you can later change to your own OpenID Connect (OIDC) identity provider.
