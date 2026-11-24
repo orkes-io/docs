@@ -192,17 +192,14 @@ If the object does not exist, it returns `status` as `error` and `message` as `O
 
 ## Copy Object
 
-Copies an S3 object to a destination bucket in the same AWS region.
-:::note
-The source and destination buckets must be in the same AWS region. Cross-region copying is not supported.
-:::
+Copies an S3 object to a destination bucket.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Region | The AWS region containing both buckets. | string | Required. |
+| Region | The AWS region containing the destination bucket. | string | Required. |
 | Service Endpoint | A custom service endpoint, when required. | string | Optional. |
 | Source Bucket | The name of the source bucket. | string | Required. |
 | Source Key | The object key (filename or path) of the source object. For nested objects, include the full path. For example, `folder/file.txt`. | string | Required. |
