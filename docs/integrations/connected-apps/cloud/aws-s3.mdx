@@ -92,7 +92,76 @@ For authenticating using access keys, get the Access Key ID and Secret Access Ke
 
 ### Using assume role
 
-TBD
+For authenticating using the assumed role, get the ARN of an IAM role that Conductor can assume, and the external ID set in that role's trust policy.
+
+**To create the role and get its ARN and external ID:**
+
+1. In the AWS Console, go to **IAM** > **Policies** and select **Create policy**.
+2. Switch to the **JSON** tab, and paste a policy granting at minimum: `s3:ListBucket`, `s3:GetObject`, `s3:PutObject`, `s3:DeleteObject`, `s3:CreateBucket`, `s3:DeleteBucket`, and `s3:ListAllMyBuckets`. For example:
+
+    ```json
+    {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Action": [
+            "s3:ListAllMyBuckets"
+          ],
+          "Resource": "*"
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "s3:CreateBucket",
+            "s3:DeleteBucket",
+            "s3:ListBucket"
+          ],
+          "Resource": "arn:aws:s3:::*"
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "s3:GetObject",
+            "s3:PutObject",
+            "s3:DeleteObject"
+          ],
+          "Resource": "arn:aws:s3:::*/*"
+        }
+      ]
+    }
+    ```
+
+3. Give the policy a name and select **Create policy**.
+4. Go to **IAM** > **Roles** and select **Create role**.
+5. For **Trusted entity type**, select **Custom trust policy**.
+6. In the **Custom trust policy** editor, paste a trust policy that allows the Conductor worker role to assume this role, with an `sts:ExternalId` condition. For example:
+
+    ```json
+    {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "arn:aws:iam::<AWS account ID>:role/<Cloud Environment Tag>-worker-role"
+          },
+          "Action": "sts:AssumeRole",
+          "Condition": {
+            "StringEquals": {
+              "sts:ExternalId": "<external ID>"
+            }
+          }
+        }
+      ]
+    }
+    ```
+
+    The external ID is a value you choose. Use the same value in [Step 2](/content/integrations/aws-s3#step-2-add-an-integration-for-aws-s3). Select **Next**.
+
+7. On **Add permissions**, select the policy created in step 3 and select **Next**.
+8. Give the role a name and select **Create role**.
+9. Open the role and copy its **ARN** from the summary page.
 
 ### Using the Conductor role
 
@@ -118,7 +187,7 @@ After obtaining the credentials, add an AWS S3 integration to your Conductor clu
 | Access Key ID | The AWS Access Key ID generated from [Step 1](/content/integrations/aws-s3#using-access-keys). | Required if Authentication is *Access Key*. |
 | Secret Access Key | The Secret Access Key generated from [Step 1](/content/integrations/aws-s3#using-access-keys). | Required if Authentication is *Access Key*. |
 | Session Token | The AWS session token for temporary credentials.<br/><br/>If you use temporary credentials, enter the Access Key ID, Secret Access Key, and Session Token from the same output. To get them, run `aws sts get-session-token --duration-seconds 43200` in the AWS CLI and copy `AccessKeyId`, `SecretAccessKey`, and `SessionToken`.<br/><br/>If you use long-lived access keys, leave this field empty. | Optional. |
-| Role ARN | The ARN of the IAM role to assume, from [Step 1](/content/integrations/aws-s3#using-assume-role). | Required if Authentication is *Assume Role*. |
+| Role ARN | The ARN of the IAM role you created in [Step 1](/content/integrations/aws-s3#using-assume-role) for Conductor to assume. | Required if Authentication is *Assume Role*. |
 | External ID | The external ID required to assume the role, from [Step 1](/content/integrations/aws-s3#using-assume-role). | Required if Authentication is *Assume Role*. |
 | Description | A description of the integration. | Required. |
 
