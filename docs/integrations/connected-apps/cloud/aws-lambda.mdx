@@ -87,7 +87,77 @@ For authenticating using access keys, get the Access Key ID and Secret Access Ke
 
 ### Using assume role
 
-TBD
+For authenticating using the assumed role, get the ARN of an IAM role that Conductor can assume, and the external ID set in that role's trust policy.
+
+**To create the role and get its ARN and external ID:**
+
+1. In the AWS Console, go to **IAM** > **Policies** and select **Create policy**.
+2. Switch to the **JSON** tab, and paste a policy granting at minimum: `lambda:InvokeFunction`, `lambda:ListFunctions`, `lambda:GetFunction`, `lambda:CreateFunction`, `lambda:UpdateFunctionConfiguration`, `lambda:DeleteFunction`, and `iam:PassRole`. For example:
+
+    ```json
+    {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Action": [
+            "lambda:ListFunctions"
+          ],
+          "Resource": "*"
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "lambda:InvokeFunction",
+            "lambda:GetFunction",
+            "lambda:CreateFunction",
+            "lambda:UpdateFunctionConfiguration",
+            "lambda:DeleteFunction"
+          ],
+          "Resource": "arn:aws:lambda:*:*:function:*"
+        },
+        {
+          "Effect": "Allow",
+          "Action": [
+            "iam:PassRole"
+          ],
+          "Resource": "arn:aws:iam::*:role/lambda-execution-role"
+        }
+      ]
+    }
+    ```
+
+3. To create functions from a ZIP archive in Amazon S3, also grant `s3:GetObject` on the bucket objects, and `s3:GetObjectVersion` if you specify an object version.
+4. Give the policy a name and select **Create policy**.
+5. Go to **IAM** > **Roles** and select **Create role**.
+6. For **Trusted entity type**, select **Custom trust policy**.
+7. In the **Custom trust policy** editor, paste a trust policy that allows the Conductor worker role to assume this role, with an `sts:ExternalId` condition. For example:
+
+    ```json
+    {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "arn:aws:iam::<AWS account ID>:role/<Cloud Environment Tag>-worker-role"
+          },
+          "Action": "sts:AssumeRole",
+          "Condition": {
+            "StringEquals": {
+              "sts:ExternalId": "<external ID>"
+            }
+          }
+        }
+      ]
+    }
+    ```
+
+    The external ID is a value you choose. Use the same value in [Step 2](/content/integrations/aws-lambda#step-2-add-an-integration-for-aws-lambda). Select **Next**.
+
+8. On **Add permissions**, select the policy created in step 4 and select **Next**.
+9. Give the role a name and select **Create role**.
+10. Open the role and copy its **ARN** from the summary page.
 
 ### Using the Conductor role
 
@@ -113,7 +183,7 @@ After obtaining the credentials, add an AWS Lambda integration to your Conductor
 | Access Key ID | The AWS Access Key ID generated from [Step 1](/content/integrations/aws-lambda#using-access-keys). | Required if Authentication is *Access Key*. |
 | Secret Access Key | The Secret Access Key generated from [Step 1](/content/integrations/aws-lambda#using-access-keys). | Required if Authentication is *Access Key*. |
 | Session Token | The AWS session token for temporary credentials.<br/><br/>If you use temporary credentials, enter the Access Key ID, Secret Access Key, and Session Token from the same output. To get them, run `aws sts get-session-token --duration-seconds 43200` in the AWS CLI and copy `AccessKeyId`, `SecretAccessKey`, and `SessionToken`.<br/><br/>If you use long-lived access keys, leave this field empty. | Optional. |
-| Role ARN | The ARN of the IAM role to assume, from [Step 1](/content/integrations/aws-lambda#using-assume-role). | Required if Authentication is *Assume Role*. |
+| Role ARN | The ARN of the IAM role you created in [Step 1](/content/integrations/aws-lambda#using-assume-role) for Conductor to assume. | Required if Authentication is *Assume Role*. |
 | External ID | The external ID required to assume the role, from [Step 1](/content/integrations/aws-lambda#using-assume-role). | Required if Authentication is *Assume Role*. |
 | Description | A description of the integration. | Required. |
 
