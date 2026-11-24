@@ -33,10 +33,9 @@ To integrate Google Calendar with Orkes Conductor, you need a Google Cloud servi
 
 1. Go to the [Google Cloud Console](https://console.cloud.google.com/) and select your project.
 2. Navigate to **IAM & Admin** > **Service Accounts**.
-3. Select **+ Create service account**, enter a name and description, and select **Create and continue**.
-4. Select **Continue**, then **Done**. No IAM roles are needed, because access comes from sharing the calendar.
-5. Select the new service account, go to the **Keys** tab, and select **Add Key** > **Create new key**.
-6. Choose **JSON** as the key type and select **Create**. The key file downloads automatically.
+3. Select **+ Create service account**, enter a name and description, and select **Create and close**. No IAM roles are needed, because access comes from sharing the calendar.
+4. Select the new service account, go to the **Keys** tab, and select **Add Key** > **Create new key**.
+5. Choose **JSON** as the key type and select **Create**. The key file downloads automatically.
 
 Keep the JSON file ready. You need its full contents in Step 2.
 
@@ -54,8 +53,6 @@ The integration can only access calendars that are shared with the service accou
 2. Under **Share with specific people or groups**, select **+ Add people and groups**.
 3. Enter the service account's email (the `client_email` value in the JSON key file), set the permission to **Make changes and see all event details**, and select **Send**.
 4. Scroll to **Integrate calendar** and copy the **Calendar ID**. You enter it in each operation.
-
-Read-only sharing (**See event details**) works only for the Get Event, Check Availability, and List Upcoming Events operations.
 
 ## Step 2: Add an integration for Google Calendar
 

@@ -22,7 +22,7 @@ Create a new event in a Google Calendar with details including title, descriptio
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Calendar Id | The ID of the calendar to use. The calendar must be shared with the service account. `primary` is not accepted. | string | Required. |
+| Calendar Id | The ID of the calendar to use. The calendar must be shared with the service account. | string | Required. |
 | Summary | The title of the event. | string | Required. |
 | Description | The detailed description of the event. | string | Optional. | 
 | Location | The event location, such as an address or meeting room name. | string | Optional. | 
@@ -47,10 +47,10 @@ Retrieve a list of upcoming events from a Google Calendar within a specified tim
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Calendar Id | The ID of the calendar to use. The calendar must be shared with the service account. `primary` is not accepted. | string | Required. |
+| Calendar Id | The ID of the calendar to use. The calendar must be shared with the service account. | string | Required. |
 | Max Results | The maximum number of events to return. | integer | Required. |
 | Time Min ISO 8601 | The lower bound (inclusive) for the event’s start time in ISO 8601 format. For example: **2025-09-22T15:00:00-07:00**. | string | Required. |
-| Time Zone Id | The time zone ID in IANA format. Defaults to **UTC** if not specified. This value is validated, but it is not applied to the request. Include the UTC offset in the ISO 8601 value.<br/>For example: **America/Los_Angeles**. | string | Optional. |
+| Time Zone Id | The time zone ID in IANA format. Defaults to **UTC** if not specified. Include the UTC offset in the ISO 8601 value.<br/>For example: **America/Los_Angeles**. | string | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -62,26 +62,21 @@ The output contains a list of upcoming calendar events and associated metadata. 
 
 ## Update Event
 
-Update an existing event with details including title, description, location, and time. Use it when you need a full update.
+Update an existing event with details including title, description, location, and time. Use it when you need a full update. Events that have attendees can't be updated with this operation.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Calendar Id | The ID of the calendar to use. The calendar must be shared with the service account. `primary` is not accepted. | string | Required. |
+| Calendar Id | The ID of the calendar to use. The calendar must be shared with the service account. | string | Required. |
 | Event Id | The event ID of the calendar event to update. You can get the event ID from the `id` field in the output of the [Add Event](/content/integrations/google-calendar-operations#add-event) or [List Upcoming Events](/content/integrations/google-calendar-operations#list-upcoming-events) operation. | string | Required. |
-| Summary | The updated title of the event. | string | Optional. |
-| Description | The updated description of the event. | string | Optional. | 
-| Location | The event location, such as an address or meeting room name. | string | Optional. | 
+| Summary | The updated title of the event. An empty value leaves the title unchanged. | string | Optional. |
+| Description | The updated description of the event. Pass an empty value to clear the description. | string | Optional. | 
+| Location | The event location, such as an address or meeting room name. Pass an empty value to clear the location. | string | Optional. | 
 | Start ISO 8601 | The updated event start time in ISO 8601 format. For example: **2025-09-22T15:00:00-07:00**. | string | Optional. |
 | End ISO 8601 | The updated event end time in ISO 8601 format. For example: **2025-09-22T16:00:00-07:00**. | string | Optional. |
 | Time Zone Id | The updated time zone ID in IANA format. Defaults to **UTC** if not specified.<br/>For example: **America/Los_Angeles**. | string | Optional. |
-
-:::note
-- Events that have attendees can't be updated with this operation.
-- To clear **Description** or **Location**, pass an empty value. An empty **Summary** leaves the title unchanged.
-:::
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -95,21 +90,18 @@ The output contains the updated event's details. For a full list of output param
 
 Update the start and end times of an existing calendar event by its event ID. Use it when meetings need to be rescheduled, time zones adjusted, or event durations modified in response to changing requirements.
 
+Events that have attendees can't be updated with this operation. Using it on an all-day event changes it into a timed event.
+
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Calendar Id | The ID of the calendar to use. The calendar must be shared with the service account. `primary` is not accepted. | string | Required. |
+| Calendar Id | The ID of the calendar to use. The calendar must be shared with the service account. | string | Required. |
 | Event Id | The event ID of the calendar event to update. You can get the event ID from the `id` field in the output of the [Add Event](/content/integrations/google-calendar-operations#add-event) or [List Upcoming Events](/content/integrations/google-calendar-operations#list-upcoming-events) operation. | string | Required. |
 | Start ISO 8601 | The updated event start time in ISO 8601 format. For example: **2025-09-22T15:00:00-07:00**. | string | Required. |
 | End ISO 8601 | The updated event end time in ISO 8601 format. For example: **2025-09-22T16:00:00-07:00**. | string | Required. |
 | Time Zone Id | The updated time zone ID in IANA format. Defaults to **UTC** if not specified.<br/>For example: **America/Los_Angeles**. | string | Optional. |
-
-:::note
-- Events that have attendees can't be updated with this operation.
-- Using it on an all-day event changes it into a timed event.
-:::
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -128,7 +120,7 @@ Retrieve a calendar event by its unique event ID. Use it when you need event det
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Calendar Id | The ID of the calendar to use. The calendar must be shared with the service account. `primary` is not accepted. | string | Required. |
+| Calendar Id | The ID of the calendar to use. The calendar must be shared with the service account. | string | Required. |
 | Event Id | The event ID of the calendar event to retrieve. You can get the event ID from the `id` field in the output of the [Add Event](/content/integrations/google-calendar-operations#add-event) or [List Upcoming Events](/content/integrations/google-calendar-operations#list-upcoming-events) operation. | string | Required. |
 
 </TabItem>
@@ -148,10 +140,10 @@ Check calendar availability for a time slot. Use it when you need to know if a s
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Calendar Id | The ID of the calendar to use. The calendar must be shared with the service account. `primary` is not accepted. | string | Required. |
+| Calendar Id | The ID of the calendar to use. The calendar must be shared with the service account. | string | Required. |
 | Start ISO 8601 | The event start time to check for availability in ISO 8601 format. For example: **2025-09-22T15:00:00-07:00**. | string | Required. |
 | End ISO 8601 | The event end time to check for availability in ISO 8601 format. For example: **2025-09-22T16:00:00-07:00**. | string | Required. |
-| Time Zone Id | The time zone ID in IANA format. Defaults to **UTC** if not specified. This value is validated, but it is not applied to the request. Include the UTC offset in the ISO 8601 values.<br/>For example: **America/Los_Angeles**. | string | Optional. |
+| Time Zone Id | The time zone ID in IANA format. Defaults to **UTC** if not specified. Include the UTC offset in the ISO 8601 values.<br/>For example: **America/Los_Angeles**. | string | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -174,7 +166,7 @@ Delete a calendar event by its unique event ID. Use it when you need to cancel m
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Calendar Id | The ID of the calendar to use. The calendar must be shared with the service account. `primary` is not accepted. | string | Required. |
+| Calendar Id | The ID of the calendar to use. The calendar must be shared with the service account. | string | Required. |
 | Event Id | The event ID of the calendar event to delete. You can get the event ID from the `id` field in the output of the [Add Event](/content/integrations/google-calendar-operations#add-event) or [List Upcoming Events](/content/integrations/google-calendar-operations#list-upcoming-events) operation. | string | Required. |
 
 </TabItem>
