@@ -82,6 +82,8 @@ For authenticating using access keys, get the Access Key ID and Secret Access Ke
     }
     ```
 
+    The `iam:PassRole` resource must be the ARN of the execution role you pass in **Create Function**.
+
 4. To create functions from a ZIP archive in Amazon S3, also grant `s3:GetObject` on the bucket objects, and `s3:GetObjectVersion` if you specify an object version.
 5. Give the policy a name and select **Create policy**.
 
@@ -126,6 +128,8 @@ For authenticating using the assumed role, get the ARN of an IAM role that Condu
       ]
     }
     ```
+
+    The `iam:PassRole` resource must be the ARN of the execution role you pass in **Create Function**.
 
 3. To create functions from a ZIP archive in Amazon S3, also grant `s3:GetObject` on the bucket objects, and `s3:GetObjectVersion` if you specify an object version.
 4. Give the policy a name and select **Create policy**.
