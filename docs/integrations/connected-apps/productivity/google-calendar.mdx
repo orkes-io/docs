@@ -5,8 +5,8 @@ description: "Learn how to integrate Google Calendar with Orkes Conductor to aut
 
 # Google Calendar Integration with Orkes Conductor
 
-:::info Available since
-- v5.3.0 and later
+:::info Notes
+- **Available since:** v5.7.0 and later
 :::
 
 Integrating Google Calendar with Orkes Conductor lets you build workflows that interact with your Google Calendar using the following operations:
@@ -19,36 +19,43 @@ Integrating Google Calendar with Orkes Conductor lets you build workflows that i
 - Check Availability
 - Delete Event
 
-This guide explains how to set up and use the integration. Here’s an overview:
+This guide explains how to set up and use the integration. Here's an overview:
 
-1. Get the required credentials from Google Console.
+1. Get the required credentials from Google Cloud Console.
 2. Configure a new Google Calendar integration in Orkes Conductor.
 3. Use Google Calendar integration in workflows.
 
-## Step 1: Get the Google Console credentials
+## Step 1: Get the Google Cloud credentials
 
-To integrate Google Calendar with Orkes Conductor, retrieve the OAuth client ID and secret from the Google console, and enable the Google Calendar API.
+To integrate Google Calendar with Orkes Conductor, you need a Google Cloud service account and its JSON key file, with the Google Calendar API enabled. You also need to share your calendar with the service account.
 
-### Get OAuth Client credentials
+**To create a service account and generate a key:**
 
-**To get the credentials:**
+1. Go to the [Google Cloud Console](https://console.cloud.google.com/) and select your project.
+2. Navigate to **IAM & Admin** > **Service Accounts**.
+3. Select **+ Create service account**, enter a name and description, and select **Create and continue**.
+4. Select **Continue**, then **Done**. No IAM roles are needed, because access comes from sharing the calendar.
+5. Select the new service account, go to the **Keys** tab, and select **Add Key** > **Create new key**.
+6. Choose **JSON** as the key type and select **Create**. The key file downloads automatically.
 
-1. Go to the [Google Cloud Console](https://console.cloud.google.com).
-2. Select your project or create a new one.
-3. In the left navigation menu, go to **APIs & Services** > **Credentials**
-4. Select **+ Create credentials** > **OAuth client ID**.
-5. Choose your application type as **Web application**, and enter a **Name**.
-6. In **Authorized redirect URIs**, select **+Add URI** and enter your redirect URI in the format `https://<YOUR-CONDUCTOR-CLUSTER-NAME>/integrations/oauth/callback`.
-7. Select **+ Create**.
-8. Note the generated OAuth Client ID and secret, or download and save the JSON.
+Keep the JSON file ready. You need its full contents in Step 2.
 
-### Enable Google Calendar API
-
-**To enable Google Calendar API access:**
+**To enable the Google Calendar API:**
 
 1. Go to **APIs & Services** > **Enabled APIs & services**.
 2. Select **+ Enable APIs and services**.
 3. Search for **Google Calendar API** and enable it.
+
+### Share the calendar with the service account
+
+The integration can only access calendars that are shared with the service account.
+
+1. Open **Google Calendar**, hover over the calendar, and select **⋮** > **Settings and sharing**.
+2. Under **Share with specific people or groups**, select **+ Add people and groups**.
+3. Enter the service account's email (the `client_email` value in the JSON key file), set the permission to **Make changes and see all event details**, and select **Send**.
+4. Scroll to **Integrate calendar** and copy the **Calendar ID**. You enter it in each operation.
+
+Read-only sharing (**See event details**) works only for the Get Event, Check Availability, and List Upcoming Events operations.
 
 ## Step 2: Add an integration for Google Calendar
 
@@ -65,23 +72,18 @@ After obtaining the credentials, add a Google Calendar integration to your Condu
 
 | Parameter | Description | Required/Optional |
 | --------- | ----------- | ----------------- |
-| Integration name | A name for the integration. | Required. | 
-| Scope | The OAuth2 scope for Google Calendar API access. The scope you select determines the level of access Google grants to the integration. Supported values:<ul><li>**Read Only**: Grants read-only access to calendar.</li><li>**Read & Write**: Grants full read and write access to calendar.</li></ul> | Required. |
-| OAuth Client ID | The OAuth client ID generated from [Step 1](/content/integrations/google-calendar#step-1-get-the-google-console-credentials). | Required. |
-| OAuth Client Secret | The OAuth client secret generated from [Step 1](/content/integrations/google-calendar#step-1-get-the-google-console-credentials). | Required.
-| Calendar Id | The default calendar ID to use. Enter `primary` to access the user’s primary calendar, or specify a specific calendar.<br/>To get the calendar ID, open **Google Calendar**:<ul><li>On the **left sidebar**, find **My calendars**.</li><li>Hover over the calendar you want.</li><li>Click the **three dots (⋮)** next to the calendar name.</li><li>Select **Settings and sharing**.</li><li>Scroll down to the **Integrate calendar** section.</li><li>Copy the value shown under **Calendar ID**.</li></ul> | Required. | 
-| Description | A description of the integration. | Required. | 
+| Integration name | A name for the integration. | Required. |
+| Service Account JSON | Paste the full contents of the service account key JSON file downloaded in [Step 1](/content/integrations/google-calendar#step-1-get-the-google-cloud-credentials). | Required. |
+| Description | A description of the integration. | Required. |
 
 <ol start="5">
 <li>(Optional) Toggle the <strong>Active</strong> button off if you don't want to activate the integration instantly.</li>
 <li>Select <strong>Save</strong>.</li>
 </ol>
 
-This takes you to the Google sign-in page, where you can authorize the connection with your Google account. Once authorized, the integration is created successfully.
-
 ## Step 3: Use Google Calendar integration in workflows
 
-Once the integration is ready, this can be used directly within the workflows. 
+Once the integration is ready, this can be used directly within the workflows.
 
 **To use Google Calendar integration in a workflow:**
 
@@ -94,15 +96,15 @@ Once the integration is ready, this can be used directly within the workflows.
 
 The following operations are available for use with this integration.
 
-| Operation | Description | Supported Integration Scopes |
-| --------- | ----------- | ---------------------------- |
-| [Add Event](/content/integrations/google-calendar-operations#add-event) | Create a new event to a Google Calendar with details including title, description, location, and time. | <ul><li>Read & Write</li></ul> |
-| [List Upcoming Events](/content/integrations/google-calendar-operations#list-upcoming-events) | Retrieve a list of upcoming events from a Google Calendar within a specified time range. | <ul><li>Read & Write</li><li>Read Only</li></ul> |
-| [Update Event](/content/integrations/google-calendar-operations#update-event) | Update an existing event with details including title, description, location, and time. | <ul><li>Read & Write</li></ul> |
-| [Update Event Time](/content/integrations/google-calendar-operations#update-event-time) | Update the start and end times of an existing calendar event by its event ID. | <ul><li>Read & Write</li></ul> |
-| [Get Event](/content/integrations/google-calendar-operations#get-event) | Retrieve a calendar event by its unique event ID. | <ul><li>Read & Write</li><li>Read Only</li></ul> |
-| [Check Availability](/content/integrations/google-calendar-operations#check-availability) | Check calendar availability for a time slot. | <ul><li>Read & Write</li><li>Read Only</li></ul> |
-| [Delete Event](/content/integrations/google-calendar-operations#delete-event) | Delete a calendar event by its unique event ID. | <ul><li>Read & Write</li></ul> |
+| Operation | Description |
+| --------- | ----------- |
+| [Add Event](/content/integrations/google-calendar-operations#add-event) | Create a new event in a Google Calendar with details including title, description, location, and time. |
+| [List Upcoming Events](/content/integrations/google-calendar-operations#list-upcoming-events) | Retrieve a list of upcoming events from a Google Calendar within a specified time range. |
+| [Update Event](/content/integrations/google-calendar-operations#update-event) | Update an existing event with details including title, description, location, and time. |
+| [Update Event Time](/content/integrations/google-calendar-operations#update-event-time) | Update the start and end times of an existing calendar event by its event ID. |
+| [Get Event](/content/integrations/google-calendar-operations#get-event) | Retrieve a calendar event by its unique event ID. |
+| [Check Availability](/content/integrations/google-calendar-operations#check-availability) | Check calendar availability for a time slot. |
+| [Delete Event](/content/integrations/google-calendar-operations#delete-event) | Delete a calendar event by its unique event ID. |
 
 <ol start="5">
 <li>Select the required operation, configure the parameters, and select <strong>Save</strong> &gt; <strong>Confirm</strong>.</li>

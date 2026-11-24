@@ -3145,19 +3145,6 @@ description: "Orkes Conductor documentation for building durable workflows, API 
 ${body}`;
 }
 
-// Connected Apps category pages (the hub and its per-type subcategories) carry
-// the same per-cluster enablement note as the guide pages.
-function isConnectedAppsCategory(route, flatChildren) {
-  if (route === "category/integrations/connected-apps") return true;
-  return flatChildren.some((child) => {
-    const childRoute =
-      child.route || (child.outRel ? routeFromOutRel(child.outRel) : "") || "";
-    return (sourceRelByRoute.get(childRoute) || "").startsWith(
-      "integrations/connected-apps/",
-    );
-  });
-}
-
 function generatedPageCopy(route, title, description, flatChildren) {
   if (route === "category/tutorials") {
     return cookbookPageCopy();
@@ -3185,12 +3172,6 @@ function generatedPageCopy(route, title, description, flatChildren) {
   if (description) lines.push(description, "");
   lines.push(intro, "");
   lines.push(outcome, "");
-  if (isConnectedAppsCategory(route, flatChildren)) {
-    lines.push(
-      "Connected Apps were introduced in v5.3.0 and are enabled per cluster; each app's page lists its own minimum version. If **Integrations > Connected Apps** is not in your cluster's left navigation, contact Orkes support to enable it.",
-      "",
-    );
-  }
   lines.push(...apiIndexQuickReferenceLines(route, flatChildren));
 
   if (childLabels.length) {
