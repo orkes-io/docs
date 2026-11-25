@@ -5,8 +5,8 @@ description: "Learn how to integrate Google Sheets with Orkes Conductor to autom
 
 # Google Sheets Integration with Orkes Conductor
 
-:::info Available since
-- v5.3.0 and later
+:::info Available since:
+- v5.7.0 and later
 :::
 
 Integrating Google Sheets with Orkes Conductor lets you build workflows that interact with your Google Sheets using the following operations:
@@ -17,7 +17,7 @@ Integrating Google Sheets with Orkes Conductor lets you build workflows that int
 - Append Row
 - Append or Update Row
 - Read Values
-- Get Row
+- Get Rows
 - Update Row
 - Clear Range
 - Clear Sheet
@@ -33,40 +33,51 @@ This guide explains how to set up and use the integration. Here’s an overview:
 
 ## Step 1: Get the Google Console credentials
 
-To integrate Google Sheets with Orkes Conductor, retrieve the OAuth client ID and secret from the Google console, and enable the Google Sheets API and Google Drive API.
+To integrate Google Sheets with Orkes Conductor, create a service account in Google Cloud Console, enable the required APIs, and download its JSON key.
 
-### Get OAuth Client credentials
+**To get the service account:**
 
-**To get the credentials:**
-
-1. Go to the [Google Cloud Console](https://console.cloud.google.com).
+1. Go to the [Google Cloud Console](https://console.cloud.google.com/).
 2. Select your project or create a new one.
-3. In the left navigation menu, go to **APIs & Services** > **Credentials**
-4. Select **+ Create credentials** > **OAuth client ID**.
-5. Choose your application type as **Web application**, and enter a **Name**.
-6. In **Authorized redirect URIs**, select **+Add URI** and enter your redirect URI in the format `https://<YOUR-CONDUCTOR-CLUSTER-NAME>/integrations/oauth/callback`.
-7. Select **+ Create**.
-8. Note the generated OAuth Client ID and secret, or download and save the JSON.
+3. Go to **IAM & Admin** > **Service Accounts**.
+4. Select **+ Create service account**, enter a **Name**, and select **Create and continue** > **Done**.
+5. Open the service account and go to the **Keys** tab.
+6. Select **Add key** > **Create new key** > **JSON** > **Create**. The key file downloads to your computer.
+7. Copy the `client_email` value from the JSON file.
 
-### Enable Google Sheets API
-
-**To enable Google Sheets API access:**
+**To enable the API access:**
 
 1. Go to **APIs & Services** > **Enabled APIs & services**.
 2. Select **+ Enable APIs and services**.
-3. Search for **Google Sheets API** and enable it.
+3. Enable **Google Sheets API** and **Google Drive API**.
 
-### Enable Google Drive API
+### Share the spreadsheet with the service account
 
-:::info Note
-This is required only if you want to use the **Read & Write + Drive** scope for spreadsheet deletion.
-:::
+The service account can only access spreadsheets that are shared with it. Use one of the following:
 
-**To enable Google Drive API access:**
+<ol>
+<li><strong>Share a spreadsheet.</strong> Share the Google Sheet with the <code>client_email</code> as <strong>Editor</strong>. Use <strong>Viewer</strong> if the workflow only reads spreadsheets.
+  <ol type="a">
+  <li>In Google Drive, open the spreadsheet and select <strong>Share</strong>.</li>
+  <li>Enter the <code>client_email</code> (from the JSON file downloaded previously), set the role, and select <strong>Share</strong>.</li>
+  </ol>
+</li>
+<li><strong>Share a folder.</strong> Share a folder in My Drive with the <code>client_email</code> as <strong>Editor</strong>. Spreadsheets in the folder are accessible.
+  <ol type="a">
+  <li>In Google Drive, open the folder and select <strong>Share</strong>.</li>
+  <li>Enter the <code>client_email</code> (from the JSON file downloaded previously), set the role, and select <strong>Share</strong>.</li>
+  </ol>
+</li>
+<li><strong>Add it to a Shared Drive.</strong> Add the <code>client_email</code> to the Shared Drive as <strong>Content manager</strong> or higher. Spreadsheets in the drive are accessible.
+  <ol type="a">
+  <li>In Google Drive, open the Shared Drive and select <strong>Manage members</strong>.</li>
+  <li>Enter the <code>client_email</code> (from the JSON file downloaded previously), set the role to <strong>Content manager</strong> or higher, and select <strong>Send</strong>.</li>
+  <li>To delete spreadsheets, the service account must be a <strong>Manager</strong> of the Shared Drive. See <a href="/content/integrations/google-sheets-operations#delete-spreadsheet">Delete Spreadsheet</a>.</li>
+  </ol>
+</li>
+</ol>
 
-1. Go to **APIs & Services** > **Enabled APIs & services**.
-2. Select **+ Enable APIs and services**.
-3. Search for **Google Drive API** and enable it.
+With **Viewer** access, read operations succeed and write operations fail with a 403 permission error.
 
 ## Step 2: Add an integration for Google Sheets
 
@@ -81,26 +92,20 @@ After obtaining the credentials, add a Google Sheets integration to your Conduct
 <li>Select <strong>+ Add</strong> and enter the following parameters:</li>
 </ol>
 
-| Parameter | Description | Required/Optional |
+| Parameters | Description | Required/Optional |
 | --------- | ----------- | ----------------- |
-| Integration name | A name for the integration. | Required. | 
-| Scope | The OAuth2 scope for Google Sheets API access. The scope you select determines the level of access Google grants to the integration. Supported values: <ul><li>**Read Only**: Grants read-only access to sheets.</li><li>**Read & Write**: Grants full read and write access to sheets.</li><li>**Read & Write + Drive**: Grants full read and write access to sheets and drive. This is required for spreadsheet deletion permission.</li></ul> | Required. |
-| OAuth Client ID | The OAuth client ID generated from [Step 1](/content/integrations/google-sheets#step-1-get-the-google-console-credentials). | Required. |
-| OAuth Client Secret | The OAuth client secret generated from [Step 1](/content/integrations/google-sheets#step-1-get-the-google-console-credentials). | Required.
-| Default Spreadsheet Id | The default spreadsheet ID to use. To get the spreadsheet ID, open the spreadsheet in Google Sheets. The ID is the string of characters at the end of the URL: `https://docs.google.com/spreadsheets/d/<YOUR-SPREADSHEET-ID>/`. | Optional. | 
-| Description | A description of the integration. | Required. | 
+| Integration name | A name for the integration. | Required. |
+| Service Account JSON | Paste the full contents of the service account key JSON file downloaded in [Step 1](/content/integrations/google-sheets#step-1-get-the-google-console-credentials). | Required. |
+| Description | A description of the integration. | Required. |
 
 <ol start="5">
-<li>(Optional) Toggle the <strong>Active</strong> button off if you don't want to activate the integration instantly.</li>
+<li>(Optional) Toggle the <strong>Active</strong> button off if you don’t want to activate the integration instantly.</li>
 <li>Select <strong>Save</strong>.</li>
 </ol>
 
-
-This takes you to the Google sign-in page, where you can authorize the connection with your Google account. Once authorized, the integration is created successfully.
-
 ## Step 3: Use Google Sheets integration in workflows
 
-Once the integration is ready, this can be used directly within the workflows. 
+Once the integration is ready, this can be used directly within the workflows.
 
 **To use Google Sheets integration in a workflow:**
 
@@ -113,21 +118,21 @@ Once the integration is ready, this can be used directly within the workflows.
 
 The following operations are available for use with this integration.
 
-| Operation | Description | Supported Integration Scopes |
-| --------- | ----------- | ---------------------------- |
-| [Create Spreadsheet](/content/integrations/google-sheets-operations#create-spreadsheet) | Create a new Google Sheets spreadsheet with the provided title. | <ul><li>Read & Write + Drive</li><li>Read & Write</li></ul> | 
-| [Delete Spreadsheet](/content/integrations/google-sheets-operations#delete-spreadsheet) | Delete an entire spreadsheet by ID. | <ul><li>Read & Write + Drive</li></ul> | 
-| [Append Values](/content/integrations/google-sheets-operations#append-values) | Append multiple rows to a specified range in a sheet. | <ul><li>Read & Write + Drive</li><li>Read & Write</li></ul> | 
-| [Append Row](/content/integrations/google-sheets-operations#append-row) | Append a single row to a sheet. | <ul><li>Read & Write + Drive</li><li>Read & Write</li></ul> | 
-| [Append or Update Row](/content/integrations/google-sheets-operations#append-or-update-row) | Append a row if it doesn't exist, or update it if it does. | <ul><li>Read & Write + Drive</li><li>Read & Write</li></ul> | 
-| [Read Values](/content/integrations/google-sheets-operations#read-values) | Read values from a specified range in a sheet. | <ul><li>Read & Write + Drive</li><li>Read & Write</li><li>Read Only</li></ul> | 
-| [Get Rows](/content/integrations/google-sheets-operations#get-rows) | Read all rows from a sheet. | <ul><li>Read & Write + Drive</li><li>Read & Write</li><li>Read Only</li></ul> | 
-| [Update Row](/content/integrations/google-sheets-operations#update-row) | Update a specific row by index. | <ul><li>Read & Write + Drive</li><li>Read & Write</li></ul> | 
-| [Clear Range](/content/integrations/google-sheets-operations#clear-range) | Clear values from a specified range in a sheet. | <ul><li>Read & Write + Drive</li><li>Read & Write</li></ul> | 
-| [Clear Sheet](/content/integrations/google-sheets-operations#clear-sheet) | Clear all values from a sheet while keeping the sheet structure. | <ul><li>Read & Write + Drive</li><li>Read & Write</li></ul> | 
-| [Create Sheet](/content/integrations/google-sheets-operations#create-sheet) | Create a new sheet (tab) within a spreadsheet. | <ul><li>Read & Write + Drive</li><li>Read & Write</li></ul> | 
-| [Delete Sheet](/content/integrations/google-sheets-operations#delete-sheet) | Delete a sheet (tab) from a spreadsheet. | <ul><li>Read & Write + Drive</li><li>Read & Write</li></ul> | 
-| [Delete Rows or Columns](/content/integrations/google-sheets-operations#delete-rows-or-columns) | Delete a range of rows or columns from a sheet. | <ul><li>Read & Write + Drive</li><li>Read & Write</li></ul> | 
+| Operations | Description |
+| ---------- | ----------- |
+| [Create Spreadsheet](/content/integrations/google-sheets-operations#create-spreadsheet) | Create a new Google Sheets spreadsheet in the Shared Drive with the provided title. |
+| [Delete Spreadsheet](/content/integrations/google-sheets-operations#delete-spreadsheet) | Permanently delete a spreadsheet by its ID, without moving it to the trash. |
+| [Append Values](/content/integrations/google-sheets-operations#append-values) | Append multiple rows to a specified range in a sheet. |
+| [Append Row](/content/integrations/google-sheets-operations#append-row) | Append a single row to a sheet. |
+| [Append or Update Row](/content/integrations/google-sheets-operations#append-or-update-row) | Update a row at the given index if it exists, or append a new row at the end of the sheet if it doesn't. |
+| [Read Values](/content/integrations/google-sheets-operations#read-values) | Read values from a specified range in a sheet. |
+| [Get Rows](/content/integrations/google-sheets-operations#get-rows) | Read all rows from a sheet. |
+| [Update Row](/content/integrations/google-sheets-operations#update-row) | Update a specific row by index. |
+| [Clear Range](/content/integrations/google-sheets-operations#clear-range) | Clear values from a specified range in a sheet. |
+| [Clear Sheet](/content/integrations/google-sheets-operations#clear-sheet) | Clear all values from a sheet while keeping the sheet structure. |
+| [Create Sheet](/content/integrations/google-sheets-operations#create-sheet) | Create a new sheet (tab) within a spreadsheet. |
+| [Delete Sheet](/content/integrations/google-sheets-operations#delete-sheet) | Delete a sheet (tab) from a spreadsheet. |
+| [Delete Rows or Columns](/content/integrations/google-sheets-operations#delete-rows-or-columns) | Delete a range of rows or columns from a sheet. |
 
 <ol start="5">
 <li>Select the required operation, configure the parameters, and select <strong>Save</strong> &gt; <strong>Confirm</strong>.</li>
