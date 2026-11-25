@@ -5,8 +5,8 @@ description: "Learn how to integrate Google Docs with Orkes Conductor to automat
 
 # Google Docs Integration with Orkes Conductor
 
-:::info Available since
-- v5.3.0 and later
+:::info Available since:
+- v5.7.0 and later
 :::
 
 Integrating Google Docs with Orkes Conductor lets you build workflows that interact with your Google Docs using the following operations:
@@ -25,28 +25,50 @@ This guide explains how to set up and use the integration. Here’s an overview:
 
 ## Step 1: Get the Google Console credentials
 
-To integrate Google Docs with Orkes Conductor, retrieve the OAuth client ID and secret from the Google console, and enable the Google Docs API.
+To integrate Google Docs with Orkes Conductor, create a service account in Google Cloud Console, enable the required APIs, and download its JSON key.
 
-### Get OAuth Client credentials
+**To get the service account:**
 
-**To get the credentials:**
-
-1. Go to the [Google Cloud Console](https://console.cloud.google.com).
+1. Go to the [Google Cloud Console](https://console.cloud.google.com/).
 2. Select your project or create a new one.
-3. In the left navigation menu, go to **APIs & Services** > **Credentials**
-4. Select **+ Create credentials** > **OAuth client ID**.
-5. Choose your application type as **Web application**, and enter a **Name**.
-6. In **Authorized redirect URIs**, select **+Add URI** and enter your redirect URI in the format `https://<YOUR-CONDUCTOR-CLUSTER-NAME>/integrations/oauth/callback`.
-7. Select **+ Create**.
-8. Note the generated OAuth Client ID and secret, or download and save the JSON.
+3. Go to **IAM & Admin** > **Service Accounts**.
+4. Select **+ Create service account**, enter a **Name**, and select **Create and continue** > **Done**.
+5. Open the service account and go to the **Keys** tab.
+6. Select **Add key** > **Create new key** > **JSON** > **Create**. The key file downloads to your computer.
+7. Copy the `client_email` value from the JSON file.
 
-### Enable Google Docs API
-
-**To enable Google Docs API access:**
+**To enable the API access:**
 
 1. Go to **APIs & Services** > **Enabled APIs & services**.
 2. Select **+ Enable APIs and services**.
-3. Search for **Google Docs API** and enable it.
+3. Enable **Google Docs API** and **Google Drive API**.
+
+### Share the docs with the service account
+
+The service account can only access documents that are shared with it. Use one of the following:
+
+<ol>
+<li><strong>Share a document.</strong> Share the Google Doc with the <code>client_email</code> as <strong>Editor</strong>. Use <strong>Viewer</strong> if the workflow only reads documents.
+  <ol type="a">
+  <li>In Google Drive, open the document and select <strong>Share</strong>.</li>
+  <li>Enter the <code>client_email</code> (from the JSON file downloaded previously), set the role, and select <strong>Share</strong>.</li>
+  </ol>
+</li>
+<li><strong>Share a folder.</strong> Share a folder in My Drive with the <code>client_email</code> as <strong>Editor</strong>. Documents in the folder are accessible.
+  <ol type="a">
+  <li>In Google Drive, open the folder and select <strong>Share</strong>.</li>
+  <li>Enter the <code>client_email</code> (from the JSON file downloaded previously), set the role, and select <strong>Share</strong>.</li>
+  </ol>
+</li>
+<li><strong>Add it to a Shared Drive.</strong> Add the <code>client_email</code> to the Shared Drive as <strong>Content manager</strong> or higher. Documents in the drive are accessible.
+  <ol type="a">
+  <li>In Google Drive, open the Shared Drive and select <strong>Manage members</strong>.</li>
+  <li>Enter the <code>client_email</code> (from the JSON file downloaded previously), set the role to <strong>Content manager</strong> or higher, and select <strong>Send</strong>.</li>
+  </ol>
+</li>
+</ol>
+
+The [Create Document](/content/integrations/google-docs-operations#create-document) operation works only with option 3, because documents can be created only in a Shared Drive.
 
 ## Step 2: Add an integration for Google Docs
 
@@ -61,25 +83,20 @@ After obtaining the credentials, add a Google Docs integration to your Conductor
 <li>Select <strong>+ Add</strong> and enter the following parameters:</li>
 </ol>
 
-| Parameter | Description | Required/Optional |
-| --------- | ----------- | ----------------- |
-| Integration name | A name for the integration. | Required. | 
-| Scope | The OAuth2 scope for Google Docs API access. The scope you select determines the level of access Google grants to the integration. Supported values:<ul><li>**Read Only**: Grants read-only access to documents.</li><li>**Read & Write**: Grants full read and write access to documents.</li></ul> | Required. |
-| OAuth Client ID | The OAuth client ID generated from [Step 1](/content/integrations/google-docs#step-1-get-the-google-console-credentials). | Required. |
-| OAuth Client Secret | The OAuth client secret generated from [Step 1](/content/integrations/google-docs#step-1-get-the-google-console-credentials). | Required.
-| Default Document Id | The default document ID to use. To get the document ID, open the document. The ID is the string of characters at the end of the URL: `https://docs.google.com/document/d/<YOUR-DOC-ID>/edit?tab=t.0`. | Optional. | 
-| Description | A description of the integration. | Required. | 
+| Parameters | Description | Required/Optional |
+| ---------- | ----------- | ----------------- |
+| Integration name | A name for the integration. | Required. |
+| Service Account JSON | Paste the full contents of the service account key JSON file downloaded in [Step 1](/content/integrations/google-docs#step-1-get-the-google-console-credentials). | Required. |
+| Description | A description of the integration. | Required. |
 
 <ol start="5">
-<li>(Optional) Toggle the <strong>Active</strong> button off if you don't want to activate the integration instantly.</li>
+<li>(Optional) Toggle the <strong>Active</strong> button off if you don’t want to activate the integration instantly.</li>
 <li>Select <strong>Save</strong>.</li>
 </ol>
 
-This takes you to the Google sign-in page, where you can authorize the connection with your Google account. Once authorized, the integration is created successfully.
-
 ## Step 3: Use Google Docs integration in workflows
 
-Once the integration is ready, this can be used directly within the workflows. 
+Once the integration is ready, this can be used directly within the workflows.
 
 **To use Google Docs integration in a workflow:**
 
@@ -92,13 +109,13 @@ Once the integration is ready, this can be used directly within the workflows.
 
 The following operations are available for use with this integration.
 
-| Operation | Description | Supported Integration Scopes |
-| --------- | ----------- | ---------------------------- |
-| [Create Document](/content/integrations/google-docs-operations#create-document) | Create a new Google Doc with a title and content. | <ul><li>Read & Write</li></ul> | 
-| [Update Document](/content/integrations/google-docs-operations#update-document) | Replace all document content with new text. | <ul><li>Read & Write</li></ul> | 
-| [Get Document](/content/integrations/google-docs-operations#get-document) | Fetch a Google Doc by ID, including structure and content metadata. | <ul><li>Read & Write</li><li>Read Only</li></ul> | 
-| [Replace Text](/content/integrations/google-docs-operations#replace-text) | Find and replace all occurrences of target text in a Google Doc. | <ul><li>Read & Write</li></ul> | 
-| [Append Text](/content/integrations/google-docs-operations#append-text) | Append text to the end of an existing Google Doc. | <ul><li>Read & Write</li></ul> | 
+| Operations | Description |
+| ---------- | ----------- |
+| [Create Document](/content/integrations/google-docs-operations#create-document) | Create a new Google Doc in a Shared Drive, with a title and content. |
+| [Update Document](/content/integrations/google-docs-operations#update-document) | Replace all document content with new text. |
+| [Get Document](/content/integrations/google-docs-operations#get-document) | Fetch a Google Doc by ID, including structure and content metadata. |
+| [Replace Text](/content/integrations/google-docs-operations#replace-text) | Find and replace all occurrences of target text in a Google Doc. |
+| [Append Text](/content/integrations/google-docs-operations#append-text) | Append text to the end of an existing Google Doc. |
 
 <ol start="5">
 <li>Select the required operation, configure the parameters, and select <strong>Save</strong> &gt; <strong>Confirm</strong>.</li>

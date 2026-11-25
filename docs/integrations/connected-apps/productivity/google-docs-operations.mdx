@@ -14,13 +14,14 @@ This page covers the parameters and expected output for each operation available
 
 ## Create Document
 
-Create a new Google Doc with a title and optional initial content. Use this when a workflow needs a fresh document for authoring, summarizing, or templated output.
+Create a new Google Doc in a Shared Drive, with a title and optional initial content. Use this when a workflow needs a fresh document for authoring, summarizing, or templated output.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
+| Parent Folder Id | The ID of a folder in a Shared Drive that the service account is a member of. | string | Required. |
 | Title | The title of the Google Doc. | string | Required. | 
 | Initial Content | The plain text content to place in the Google Doc. | string | Optional. | 
 
@@ -41,8 +42,8 @@ Replace all document content with new text. The existing content is fully delete
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Document ID | The ID of the document to update. If left empty/blank, it falls back to the default document ID provided in the integration.<br/>To get the document ID, open the Google doc. The ID is the string of characters at the end of the URL: `https://docs.google.com/document/d/1<YOUR-DOC-IS>/edit?tab=t.0`. | string | Optional. | 
-| Text | The new plain text content to replace the entire document body. | string | Optional. | 
+| Document Id | The ID of the document to update.<br/>To get the document ID, open the Google doc. The ID is the string of characters at the end of the URL: `https://docs.google.com/document/d/<YOUR-DOC-ID>/edit?tab=t.0`. | string | Required. | 
+| Text | The new plain text content to replace the entire document body. If left empty, the document content is cleared. | string | Optional. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -64,7 +65,7 @@ Fetch a Google Doc by ID, including structure and content metadata. Use this whe
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Document ID | The ID of the Google Doc to retrieve. If left empty/blank, it falls back to the default document provided in the integration.<br/>To get the document ID, open the document. The ID is the string of characters at the end of the URL: `https://docs.google.com/document/d/<YOUR-DOC-ID>/edit?tab=t.0`. | string | Optional. | 
+| Document Id | The ID of the Google Doc to retrieve.<br/>To get the document ID, open the document. The ID is the string of characters at the end of the URL: `https://docs.google.com/document/d/<YOUR-DOC-ID>/edit?tab=t.0`. | string | Required. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -83,10 +84,10 @@ Find and replace all occurrences of target text in a Google Doc. Use this when y
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Document Id | The Google Doc ID where text is to be replaced. If left empty/blank, it falls back to the default document provided in the integration.<br/>To get the document ID, open the document. The ID is the string of characters at the end of the URL: `https://docs.google.com/document/d/<YOUR-DOC-ID>/edit?tab=t.0`. | string | Optional. | 
-| Search Text | The target text to search for in the Google Doc. | string | Required. | 
-| Replacement Text | The text to replace in the Google Doc. Defaults to empty if not provided. | string | Optional. | 
-| Match Case | Set to `true` for case-sensitive matching, or `false` to ignore case. | boolean | Optional. | 
+| Document Id | The Google Doc ID where text is to be replaced.<br/>To get the document ID, open the document. The ID is the string of characters at the end of the URL: `https://docs.google.com/document/d/<YOUR-DOC-ID>/edit?tab=t.0`. | string | Required. | 
+| Search Text | The target text to search for in the Google Doc. Must not be empty. | string | Required. | 
+| Replacement Text | The text to replace the matches with. If left empty, the matched text is removed. | string | Optional. | 
+| Match Case | Set to `true` for case-sensitive matching, or `false` to ignore case. Defaults to `false`. | boolean | Optional. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -94,7 +95,7 @@ Find and replace all occurrences of target text in a Google Doc. Use this when y
 | Parameter | Description | 
 | --------- | ----------- | 
 | documentId | The ID of the document where the replacement was made. | 
-| replies.replaceAllText.**occurrencesChanged** | The number of occurrences replaced in the document. | 
+| replies.replaceAllText.**occurrencesChanged** | The number of occurrences replaced in the document. Not returned when no text matched. | 
 | writeControl.**requiredRevisionId** | The revision ID of the document after the replacement. | 
 
 </TabItem>
@@ -109,8 +110,8 @@ Append text to the end of an existing Google Doc. Use this when you want to prog
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Document Id | The Google Doc ID where text will be appended. If left empty/blank, it falls back to the default document provided in the integration.<br/>To get the document ID, open the document. The ID is the string of characters at the end of the URL: `https://docs.google.com/document/d/<YOUR-DOC-ID>/edit?tab=t.0`. | string | Optional. | 
-| Text | The text to append at the end of the document. Defaults to empty if not provided. | string | Required. | 
+| Document Id | The Google Doc ID where text will be appended.<br/>To get the document ID, open the document. The ID is the string of characters at the end of the URL: `https://docs.google.com/document/d/<YOUR-DOC-ID>/edit?tab=t.0`. | string | Required. | 
+| Text | The text to append at the end of the document. | string | Required. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
