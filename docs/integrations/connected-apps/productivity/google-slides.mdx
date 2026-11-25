@@ -5,8 +5,8 @@ description: "Learn how to integrate Google Slides with Orkes Conductor to autom
 
 # Google Slides Integration with Orkes Conductor
 
-:::info Available since
-- v5.3.0 and later
+:::info Available since:
+- v5.7.0 and later
 :::
 
 Integrating Google Slides with Orkes Conductor lets you build workflows that interact with your Google Slides using the following operations:
@@ -28,28 +28,44 @@ This guide explains how to set up and use the integration. Here’s an overview:
 
 ## Step 1: Get the Google Console credentials
 
-To integrate Google Slides with Orkes Conductor, retrieve the OAuth client ID and secret from the Google console, and enable the Google Slides API.
+To integrate Google Slides with Orkes Conductor, create a service account in Google Cloud Console, enable the required APIs, and download its JSON key.
 
-### Get OAuth Client credentials
+**To get the service account:**
 
-**To get the credentials:**
-
-1. Go to the [Google Cloud Console](https://console.cloud.google.com).
+1. Go to the [Google Cloud Console](https://console.cloud.google.com/).
 2. Select your project or create a new one.
-3. In the left navigation menu, go to **APIs & Services** > **Credentials**
-4. Select **+ Create credentials** > **OAuth client ID**.
-5. Choose your application type as **Web application**, and enter a **Name**.
-6. In **Authorized redirect URIs**, select **+Add URI** and enter your redirect URI in the format `https://<YOUR-CONDUCTOR-CLUSTER-NAME>/integrations/oauth/callback`.
-7. Select **+ Create**.
-8. Note the generated OAuth Client ID and secret, or download and save the JSON.
+3. Go to **IAM & Admin** > **Service Accounts**.
+4. Select **+ Create service account**, enter a **Name**, and select **Create and continue** > **Done**.
+5. Open the service account and go to the **Keys** tab.
+6. Select **Add key** > **Create new key** > **JSON** > **Create**. The key file downloads to your computer.
+7. Copy the `client_email` value from the JSON file.
 
-### Enable Google Slides API
-
-**To enable Google Slides API access:**
+**To enable the API access:**
 
 1. Go to **APIs & Services** > **Enabled APIs & services**.
 2. Select **+ Enable APIs and services**.
-3. Search for **Google Slides API** and enable it.
+3. Enable **Google Slides API** and **Google Drive API**.
+
+### Share the presentation with the service account
+
+The service account can only access presentations that are shared with it. Use one of the following:
+
+<ol>
+<li><strong>Share a presentation.</strong> Share the Google Slides presentation with the <code>client_email</code> as <strong>Editor</strong>. Use <strong>Viewer</strong> if the workflow only reads presentations.
+  <ol type="a">
+  <li>In Google Drive, open the presentation and select <strong>Share</strong>.</li>
+  <li>Enter the <code>client_email</code> (from the JSON file downloaded previously), set the role, and select <strong>Share</strong>.</li>
+  </ol>
+</li>
+<li><strong>Add it to a Shared Drive.</strong> Add the <code>client_email</code> to the Shared Drive as <strong>Contributor</strong> or higher. Presentations in the drive are accessible.
+  <ol type="a">
+  <li>In Google Drive, open the Shared Drive and select <strong>Manage members</strong>.</li>
+  <li>Enter the <code>client_email</code> (from the JSON file downloaded previously), set the role to <strong>Contributor</strong> or higher, and select <strong>Send</strong>.</li>
+  </ol>
+</li>
+</ol>
+
+[Create Presentation](/content/integrations/google-slides-operations#create-presentation) creates the presentation in a Shared Drive folder, so it requires the second option. With the **Commenter** or **Viewer** role, read operations succeed and write operations fail with a 403 permission error.
 
 ## Step 2: Add an integration for Google Slides
 
@@ -66,19 +82,14 @@ After obtaining the credentials, add a Google Slides integration to your Conduct
 
 | Parameter | Description | Required/Optional |
 | --------- | ----------- | ----------------- |
-| Integration name | A name for the integration. | Required. | 
-| Scope | The OAuth2 scope for Google Slides API access. The scope you select determines the level of access Google grants to the integration. Supported values: <ul><li>**Read Only**: Grants read-only access to slides.</li><li>**Read & Write**: Grants full read and write access to slides.</li></ul> | Required. |
-| OAuth Client ID | The OAuth client ID generated from [Step 1](/content/integrations/google-slides#step-1-get-the-google-console-credentials). | Required. |
-| OAuth Client Secret | The OAuth client secret generated from [Step 1](/content/integrations/google-slides#step-1-get-the-google-console-credentials). | Required.
-| Default Presentation Id | The default presentation ID to use. To get the presentation ID, open the presentation in Google Slides. The ID is the string of characters at the end of the URL: `https://docs.google.com/presentation/d/<YOUR-PRESENTATION-ID>`. | Optional. | 
-| Description | A description of the integration. | Required. | 
+| Integration name | A name for the integration. | Required. |
+| Service Account JSON | Paste the full contents of the service account key JSON file downloaded in [Step 1](/content/integrations/google-slides#step-1-get-the-google-console-credentials). | Required. |
+| Description | A description of the integration. | Required. |
 
 <ol start="5">
 <li>(Optional) Toggle the <strong>Active</strong> button off if you don't want to activate the integration instantly.</li>
 <li>Select <strong>Save</strong>.</li>
 </ol>
-
-This takes you to the Google sign-in page, where you can authorize the connection with your Google account. Once authorized, the integration is created successfully.
 
 ## Step 3: Use Google Slides integration in workflows
 
@@ -90,21 +101,21 @@ Once the integration is ready, this can be used directly within the workflows.
 <li>Go to <strong>Definitions</strong> &gt; <strong>Workflow</strong> from the left navigation menu on your Conductor cluster.</li>
 <li>Select <strong>+ Define workflow</strong>.</li>
 <li>In your workflow, select the (<strong>+</strong>) icon and select <strong>Connected Apps</strong>.</li>
-<li>In <strong>Add Task</strong> panel on the right, search for <strong>Google Slides</strong>, and select the integration created in <a href="/content/integrations/google-calendar#step-2-add-an-integration-for-google-calendar">Step 2</a>.</li>
+<li>In <strong>Add Task</strong> panel on the right, search for <strong>Google Slides</strong>, and select the integration created in <a href="/content/integrations/google-slides#step-2-add-an-integration-for-google-slides">Step 2</a>.</li>
 </ol>
 
 The following operations are available for use with this integration.
 
-| Operation | Description | Supported Integration Scopes |
-| --------- | ----------- | ---------------------------- |
-| [Create Presentation](/content/integrations/google-slides-operations#create-presentation) | Create a new Google Slides presentation with the provided title. | <ul><li>Read & Write</li></ul> | 
-| [Add Slide](/content/integrations/google-slides-operations#add-slide) | Add a new slide with a predefined layout to a presentation. | <ul><li>Read & Write</li></ul> | 
-| [Add Text Box](/content/integrations/google-slides-operations#add-text-box) | Add a text box with content to a slide. | <ul><li>Read & Write</li></ul> | 
-| [Get Presentation Slides](/content/integrations/google-slides-operations#get-presentation-slides) | List slide page IDs and types in a presentation. | <ul><li>Read & Write</li><li>Read Only</li></ul> | 
-| [Get Presentation](/content/integrations/google-slides-operations#get-presentation) | Retrieve presentation metadata, including slides. | <ul><li>Read & Write</li><li>Read Only</li></ul> |  
-| [Get Page](/content/integrations/google-slides-operations#get-page) | Fetch a single page (slide) by its object ID. | <ul><li>Read & Write</li><li>Read Only</li></ul> |  
-| [Replace Text in Presentation](/content/integrations/google-slides-operations#replace-text-in-presentation) | Replace all occurrences of text in a presentation. | <ul><li>Read & Write</li></ul> | 
-| [Get Thumbnail](/content/integrations/google-slides-operations#get-thumbnail) | Fetch a page thumbnail URL. | <ul><li>Read & Write</li><li>Read Only</li></ul> |  
+| Operation | Description |
+| --------- | ----------- |
+| [Create Presentation](/content/integrations/google-slides-operations#create-presentation) | Create a new Google Slides presentation in a Shared Drive, with the provided title. |
+| [Add Slide](/content/integrations/google-slides-operations#add-slide) | Add a new slide with a predefined layout to a presentation. |
+| [Add Text Box](/content/integrations/google-slides-operations#add-text-box) | Add a text box with content to a slide. |
+| [Get Presentation Slides](/content/integrations/google-slides-operations#get-presentation-slides) | List the slide page IDs in a presentation. |
+| [Get Presentation](/content/integrations/google-slides-operations#get-presentation) | Retrieve presentation metadata, including slides. |
+| [Get Page](/content/integrations/google-slides-operations#get-page) | Fetch a single page (slide) by its object ID. |
+| [Replace Text in Presentation](/content/integrations/google-slides-operations#replace-text-in-presentation) | Replace all occurrences of text in a presentation. |
+| [Get Thumbnail](/content/integrations/google-slides-operations#get-thumbnail) | Fetch a page thumbnail URL. |
 
 <ol start="5">
 <li>Select the required operation, configure the parameters, and select <strong>Save</strong> &gt; <strong>Confirm</strong>.</li>

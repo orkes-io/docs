@@ -10,18 +10,19 @@ import TabItem from '@theme/TabItem';
 
 Orkes Conductor integrates with Google Slides to let you create and manage presentations directly from your workflows. You can use the following operations to create, read, update, and modify content in Google Slides, without leaving your workflow.
 
-This page covers the parameters and expected output for each operation available in the [Google Slides integration](/content/integrations/google-slides).\
+This page covers the parameters and expected output for each operation available in the [Google Slides integration](/content/integrations/google-slides).
 
 ## Create Presentation
 
-Create a new Google Slides presentation with the provided title. Use this when a workflow needs a fresh deck to populate with generated content.
+Create a new Google Slides presentation in a Shared Drive, with the provided title. Use this when a workflow needs a fresh deck to populate with generated content.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Title | The title of the Google Slide. | string | Required. | 
+| Parent Folder ID | The ID of the Shared Drive folder to create the presentation in. The service account must be a member of the Shared Drive with the **Contributor** role or higher.<br/>To get the folder ID, open the folder in the Shared Drive. The ID is the string of characters at the end of the URL: `https://drive.google.com/drive/u/0/folders/<FOLDER-ID>?ths=true`. | string | Required. |
+| Title | The title of the presentation. | string | Required. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -40,8 +41,8 @@ Add a new slide with a predefined layout to a presentation. Use this when you wa
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
+| Presentation ID | The ID of the presentation to add the slide to.<br/>To get the presentation ID, open the presentation in Google Slides. The ID is the string of characters after `/d/` in the URL: `https://docs.google.com/presentation/d/<YOUR-PRESENTATION-ID>/edit`. Enter only the ID, not the full URL. | string | Required. |
 | Layout | The predefined layout for the slide. Supported values:<ul><li>`BLANK`</li><li>`CAPTION_ONLY`</li><li>`TITLE`</li><li>`TITLE_AND_BODY`</li><li>`TITLE_AND_TWO_COLUMNS`</li><li>`TITLE_ONLY`</li><li>`SECTION_HEADER`</li><li>`SECTION_TITLE_AND_DESCRIPTION`</li><li>`ONE_COLUMN_TEXT`</li><li>`MAIN_POINT`</li><li>`BIG_NUMBER`</li></ul> Defaults to `BLANK` if empty. | string | Optional. | 
-| Presentation ID | The ID of the presentation to add the slide to. If left empty/blank, it falls back to the default presentation provided in the integration.<br/>To get the presentation ID, open the presentation in Google Slides. The ID is the string of characters at the end of the URL: `https://docs.google.com/presentation/d/<YOUR-PRESENTATION-ID>`. | string | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -64,12 +65,12 @@ Add a text box with content to a slide. Use this when you want to position AI-ge
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Presentation ID | The ID of the presentation. If left empty/blank, it falls back to the default presentation provided in the integration.<br/> To get the presentation ID, open the presentation in Google Slides. The ID is the string of characters at the end of the URL: `https://docs.google.com/presentation/d/<YOUR-PRESENTATION-ID>`. | string | Optional. | 
+| Presentation ID | The ID of the presentation.<br/>To get the presentation ID, open the presentation in Google Slides. The ID is the string of characters after `/d/` in the URL: `https://docs.google.com/presentation/d/<YOUR-PRESENTATION-ID>/edit`. Enter only the ID, not the full URL. | string | Required. | 
 | Page Object ID | The slide page object ID where the text box will be placed.<br/>To get the page object ID, open the presentation in Google Slides and select the slide. The ID is the string after `?slide=id`. in the URL: `https://docs.google.com/presentation/d/<YOUR-PRESENTATION-ID>/edit?slide=id.<PAGE-OBJECT-ID>`.<br/>For example, if the URL contains `?slide=id.slide_abc123`, enter `slide_abc123`. | string | Required. | 
-| Translate Y | The Y offset of the text box in points. Defaults to 50. | number (double) | Optional. | 
-| Translate X | The X offset of the text box in points. Defaults to 50. | number (double) | Optional. | 
-| Width | The width of the text box in points. Defaults to 400. | number (double) | Optional. | 
 | Text | The text content to insert in the text box. Defaults to an empty string if null. | string | Optional. | 
+| Translate X | The X offset of the text box in points. Defaults to 50. | number (double) | Optional. | 
+| Translate Y | The Y offset of the text box in points. Defaults to 50. | number (double) | Optional. | 
+| Width | The width of the text box in points. Defaults to 400. | number (double) | Optional. | 
 | Height | The height of the text box in points. Defaults to 100. | number (double) | Optional. | 
 
 </TabItem>
@@ -86,14 +87,14 @@ Add a text box with content to a slide. Use this when you want to position AI-ge
 
 ## Get Presentation Slides
 
-List slide page IDs and types in a presentation. Use this when you need a concise slide inventory.
+List the slide page IDs in a presentation. Use this when you need a concise slide inventory.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Presentation Id | The ID of the presentation to retrieve. If left empty/blank, it falls back to the default presentation provided in the integration.<br/>To get the presentation ID, open the presentation in Google Slides. The ID is the string of characters at the end of the URL: `https://docs.google.com/presentation/d/<YOUR-PRESENTATION-ID>`. | string | Optional. | 
+| Presentation ID | The ID of the presentation to retrieve.<br/>To get the presentation ID, open the presentation in Google Slides. The ID is the string of characters after `/d/` in the URL: `https://docs.google.com/presentation/d/<YOUR-PRESENTATION-ID>/edit`. Enter only the ID, not the full URL. | string | Required. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -103,7 +104,6 @@ List slide page IDs and types in a presentation. Use this when you need a concis
 | presentationId | The ID of the presentation. | 
 | slides | An array of slide objects in the presentation. | 
 | slides.**objectId** | The unique object ID of the slide. | 
-| slides.**pageType** | The type of the slide page. | 
 
 </TabItem>
 </Tabs>
@@ -117,7 +117,7 @@ Retrieve a presentation's full metadata, including slide structure and page iden
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Presentation Id | The ID of the presentation to retrieve. If left empty/blank, it falls back to the default presentation provided in the integration.<br/>To get the presentation ID, open the presentation in Google Slides. The ID is the string of characters at the end of the URL: `https://docs.google.com/presentation/d/<YOUR-PRESENTATION-ID>`. | string | Optional. | 
+| Presentation ID | The ID of the presentation to retrieve.<br/>To get the presentation ID, open the presentation in Google Slides. The ID is the string of characters after `/d/` in the URL: `https://docs.google.com/presentation/d/<YOUR-PRESENTATION-ID>/edit`. Enter only the ID, not the full URL. | string | Required. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -136,13 +136,13 @@ Fetch a single slide by its page object ID. Use this when you need details about
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Presentation Id | The ID of the presentation. If left empty/blank, it falls back to the default presentation provided in the integration.<br/>To get the presentation ID, open the presentation in Google Slides. The ID is the string of characters at the end of the URL: `https://docs.google.com/presentation/d/<YOUR-PRESENTATION-ID>`. | string | Optional. | 
-| Page Object Id | The object ID of the slide to retrieve.<br/>To get the page object ID, open the presentation in Google Slides and select the slide. The ID is the string after `?slide=id`. in the URL: `https://docs.google.com/presentation/d/<YOUR-PRESENTATION-ID>/edit?slide=id.<PAGE-OBJECT-ID>`. | string | Required. | 
+| Presentation ID | The ID of the presentation.<br/>To get the presentation ID, open the presentation in Google Slides. The ID is the string of characters after `/d/` in the URL: `https://docs.google.com/presentation/d/<YOUR-PRESENTATION-ID>/edit`. Enter only the ID, not the full URL. | string | Required. | 
+| Page Object ID | The object ID of the slide to retrieve.<br/>To get the page object ID, open the presentation in Google Slides and select the slide. The ID is the string after `?slide=id`. in the URL: `https://docs.google.com/presentation/d/<YOUR-PRESENTATION-ID>/edit?slide=id.<PAGE-OBJECT-ID>`. | string | Required. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-Returns a `Page` object containing `presentationId`, `pageObjectId`, `pageType`, and `pageElements`. For the complete schema, refer to the [Google Slides API documentation](https://developers.google.com/workspace/slides/api/reference/rest/v1/presentations#Presentation).
+Returns a `Page` object containing `presentationId`, `pageObjectId`, `pageType`, and `pageElements`. The `pageType` value is the type of the page, such as `LAYOUT` or `MASTER`. The value is null for a slide. For the complete schema, refer to the [Google Slides API documentation](https://developers.google.com/workspace/slides/api/reference/rest/v1/presentations#Presentation).
 
 </TabItem>
 </Tabs>
@@ -156,10 +156,10 @@ Replace all occurrences of a text string across a presentation. Use this when yo
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Presentation Id | The ID of the presentation. If left empty/blank, it falls back to the default presentation provided in the integration.<br/>To get the presentation ID, open the presentation in Google Slides. The ID is the string of characters at the end of the URL: `https://docs.google.com/presentation/d/<YOUR-PRESENTATION-ID>`. | string | Optional. | 
+| Presentation ID | The ID of the presentation.<br/>To get the presentation ID, open the presentation in Google Slides. The ID is the string of characters after `/d/` in the URL: `https://docs.google.com/presentation/d/<YOUR-PRESENTATION-ID>/edit`. Enter only the ID, not the full URL. | string | Required. | 
 | Search Text | The target text to search for in the Google Slide. | string | Required. | 
-| Replacement Text | The text to replace in the Google Slide. Defaults to empty if not provided. | string | Optional. | 
-| Match Case | Set to `true` for case-sensitive matching, or `false` to ignore case. | boolean | Optional. | 
+| Replacement Text | The text to replace in the Google Slide. If empty, the matched text is removed. | string | Optional. | 
+| Match Case | Set to `true` for case-sensitive matching, or `false` to ignore case. Defaults to `false` (case-insensitive) if not set. | boolean | Optional. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -181,10 +181,10 @@ Fetch a thumbnail image URL for a slide. Use this when you need a preview image 
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Presentation Id | The ID of the presentation. If left empty/blank, it falls back to the default presentation provided in the integration.<br/>To get the presentation ID, open the presentation in Google Slides. The ID is the string of characters at the end of the URL: `https://docs.google.com/presentation/d/<YOUR-PRESENTATION-ID>`. | string | Optional. | 
-| Page Object Id | The object ID of the slide to retrieve the thumbnail for.<br/>To get the page object ID, open the presentation in Google Slides and select the slide. The ID is the string after `?slide=id`. in the URL: `https://docs.google.com/presentation/d/<YOUR-PRESENTATION-ID>/edit?slide=id.<PAGE-OBJECT-ID>`. | string | Required. | 
-| Thumbnail Size | The size of the thumbnail image. Supported values:<ul><li>LARGE</li><li>MEDIUM</li><li>SMALL</li></ul> | string | Optional. | 
-| Mime Type | The file format for the thumbnail image. Supported values:<ul><li>PNG</li><li>JPEG</li></ul> | string | Optional. | 
+| Presentation ID | The ID of the presentation.<br/>To get the presentation ID, open the presentation in Google Slides. The ID is the string of characters after `/d/` in the URL: `https://docs.google.com/presentation/d/<YOUR-PRESENTATION-ID>/edit`. Enter only the ID, not the full URL. | string | Required. | 
+| Page Object ID | The object ID of the slide to retrieve the thumbnail for.<br/>To get the page object ID, open the presentation in Google Slides and select the slide. The ID is the string after `?slide=id`. in the URL: `https://docs.google.com/presentation/d/<YOUR-PRESENTATION-ID>/edit?slide=id.<PAGE-OBJECT-ID>`. | string | Required. | 
+| Thumbnail Size | The size of the thumbnail image. Supported values:<ul><li>LARGE</li><li>MEDIUM</li><li>SMALL</li></ul> If empty, a 1600 x 900 thumbnail is returned. | string | Optional. | 
+| Mime Type | The file format for the thumbnail image. Supported value:<ul><li>PNG</li></ul> | string | Optional. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
