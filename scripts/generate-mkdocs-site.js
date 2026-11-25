@@ -3157,8 +3157,11 @@ function makeHomePage() {
 hide:
   - navigation
   - toc
-description: "Orkes Conductor documentation for building durable workflows, API orchestration, microservice orchestration, and AI agent orchestration."
+title: "Orkes Conductor Documentation: Durable Workflows & AI Agents"
+description: "Orkes Conductor documentation: guides, tutorials, SDK and API reference, and task and integration docs for developers."
 ---
+
+<h1 id="orkes-conductor-documentation">Orkes Conductor Documentation</h1>
 
 ${body}`;
 }
@@ -4646,7 +4649,9 @@ function writeOverrides() {
 {% endblock %}
 
 {% block htmltitle %}
-  {% if page and not page.is_homepage %}
+  {% if page and (page.is_homepage or page.url in ["", ".", "index.html"]) and page.meta and page.meta.title %}
+    <title>{{ page.meta.title | striptags }}</title>
+  {% elif page and not page.is_homepage %}
     {% set resolved_title = page.meta.title if page.meta and page.meta.title else page.title %}
     <title>{{ resolved_title | striptags }} | Orkes Docs</title>
   {% else %}
@@ -4673,7 +4678,7 @@ function writeOverrides() {
   main = main.replace(
     /{% set page_title = page\.title ~ " — " ~ config\.site_name if page and page\.title else config\.site_name ~ " — Durable Execution Engine" %}/,
     `{% set resolved_title = page.meta.title if page and page.meta and page.meta.title else page.title if page and page.title else "" %}
-  {% set page_title = resolved_title ~ " | Orkes Docs" if resolved_title else "Orkes Conductor Docs" %}`,
+  {% set page_title = resolved_title if page and (page.is_homepage or page.url in ["", ".", "index.html"]) and page.meta and page.meta.title else resolved_title ~ " | Orkes Docs" if resolved_title else "Orkes Conductor Docs" %}`,
   );
   // Define the schema/JSON-LD vars the TechArticle block needs. Anchored on the
   // page_url `{% set %}` line in whatever form the OSS main.html uses — the
@@ -4722,7 +4727,7 @@ function writeOverrides() {
       {
         "@type": "WebSite",
         "@id": "{{ config.site_url }}#website",
-        "name": "Agentic Workflow Engine",
+        "name": "Orkes Conductor Documentation",
         "url": "{{ config.site_url }}",
         "publisher": { "@id": "https://orkes.io/#organization" },
         "inLanguage": "en"
