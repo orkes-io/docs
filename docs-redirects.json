@@ -116,7 +116,7 @@
   "conceptual-guides/directed-acyclic-graph": "glossary",
   "category/developer-guides": "devguide/workflows",
   "developer-guides/building-workflows": "developer-guides/write-workflows-using-code",
-  "developer-guides/build-workflows-using-ui": "developer-guides/write-workflows-using-code",
+  "developer-guides/build-workflows-using-ui": "developer-guides/write-workflows-using-code#create-in-the-ui",
   "workers": "quickstart/workers",
   "how-to-videos/run-workflow": "developer-guides/running-workflows",
   "developer-guides/deploying-workflows": "devguide/how-tos/Workflows/choosing-a-trigger",

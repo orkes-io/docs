@@ -4280,7 +4280,11 @@ copyright: Orkes, Inc.
   if (fs.existsSync(redirectsFile)) {
     const redirects = JSON.parse(read(redirectsFile));
     const entries = Object.entries(redirects)
-      .map(([from, to]) => `        ${from}.md: ${to}.md`)
+      .map(([from, to]) => {
+        // A target may carry an anchor (page#section); the .md goes before it.
+        const [toPage, toAnchor] = to.split("#");
+        return `        ${from}.md: ${toPage}.md${toAnchor ? `#${toAnchor}` : ""}`;
+      })
       .join("\n");
     if (entries) {
       mkdocsOut = mkdocsOut.replace(
