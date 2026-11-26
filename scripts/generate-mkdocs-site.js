@@ -1132,13 +1132,45 @@ function transformUrl(rawUrl, sourceRel) {
   return rawUrl;
 }
 
+// Links that point at a URL listed in docs-redirects.json are rewritten to the
+// final URL, so pages do not link through a redirect hop.
+let redirectTargets = null;
+function loadRedirectTargets() {
+  if (redirectTargets) return redirectTargets;
+  redirectTargets = new Map();
+  const file = path.join(ROOT, "docs-redirects.json");
+  if (fs.existsSync(file)) {
+    const raw = JSON.parse(fs.readFileSync(file, "utf8"));
+    for (const [from, to] of Object.entries(raw)) {
+      redirectTargets.set(from.replace(/^\/+|\/+$/g, ""), to.replace(/^\/+|\/+$/g, ""));
+    }
+  }
+  return redirectTargets;
+}
+
+function resolveRedirectedUrl(url) {
+  const prefix = `${BASE_URL}/`;
+  if (!url.startsWith(prefix)) return url;
+  const match = url.slice(prefix.length).match(/^([^?#]*?)\/?([?#].*)?$/);
+  if (!match) return url;
+  let route = match[1];
+  const rest = match[2] || "";
+  const targets = loadRedirectTargets();
+  for (let hops = 0; hops < 5 && targets.has(route); hops++) {
+    const target = targets.get(route);
+    if (target.includes("#") && rest.startsWith("#")) return url;
+    route = target;
+  }
+  return `${prefix}${route}${rest}`;
+}
+
 function rewriteLinks(body, sourceRel) {
   let output = body.replace(/(!?\[[^\]]*\]\()([^)]+)(\))/g, (all, prefix, url, suffix) => {
-    return `${prefix}${transformUrl(url.trim(), sourceRel)}${suffix}`;
+    return `${prefix}${resolveRedirectedUrl(transformUrl(url.trim(), sourceRel))}${suffix}`;
   });
   output = output.replace(
     /\b(href|src)=["']([^"']+)["']/g,
-    (all, attr, url) => `${attr}="${transformUrl(url, sourceRel)}"`,
+    (all, attr, url) => `${attr}="${resolveRedirectedUrl(transformUrl(url, sourceRel))}"`,
   );
   return output;
 }
@@ -4921,7 +4953,7 @@ function writeOverrides() {
     let notFound = read(notFoundPath);
     notFound = notFound
       .replace(/{{ config\.site_url }}quickstart\//g, "{{ config.site_url }}quickstarts")
-      .replace(/{{ config\.site_url }}devguide\/ai\//g, "{{ config.site_url }}ai-orchestration");
+      .replace(/{{ config\.site_url }}devguide\/ai\//g, "{{ config.site_url }}developer-guides/ai-orchestration");
     write(notFoundPath, notFound);
   }
 }
