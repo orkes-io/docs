@@ -6,7 +6,7 @@ description: "Learn how to integrate Jira with Orkes Conductor to automate your 
 # Jira Integration with Orkes Conductor
 
 :::info Available since
-- v5.3.0 and later
+- v5.7.0 and later
 :::
 
 Integrating Jira with Orkes Conductor lets you build workflows that interact with your Jira using the following operations:
@@ -44,16 +44,48 @@ This guide explains how to set up and use the integration. Here’s an overview:
 
 ## Step 1: Get the Jira credentials
 
-To integrate Jira with Orkes Conductor, create an API token from your Atlassian account. If your Atlassian account uses a password or third-party login, you may receive a one-time verification code to your email before you can create or manage API tokens.
+To integrate Jira with Orkes Conductor, you need an Atlassian service account with OAuth 2.0 credentials, and the Cloud ID of your Jira site.
 
-**To get the API token:**
+### Create a service account
 
-1. Sign in with your [Atlassian account](https://id.atlassian.com/manage-profile/security/api-tokens).
-2. Select **Create API token**.
-3. Enter a label for the token.
-4. Set an expiration date (1–365 days; default is 1 year).
-5. Select **Create**.
-6. Select **Copy to clipboard** and save the token, as it will not be shown again.
+**To create a service account:**
+
+1. Go to [admin.atlassian.com](https://admin.atlassian.com) and select **Directory** > **Service accounts**.
+2. Select **Create a service account**.
+3. Enter a name (6 to 30 characters) and an optional description, then select **Next**.
+4. Under **Select app roles**, set the role for your Jira site to **User**, then select **Create**.
+
+### Create OAuth 2.0 credentials
+
+**To create the credentials:**
+
+<ol>
+<li>Open the service account and select <strong>Create credentials</strong>.</li>
+<li>Select <strong>OAuth 2.0</strong>, then select <strong>Next</strong>.</li>
+<li>Enter a name for the credentials, then select <strong>Next</strong>.</li>
+<li>Select the scopes for the operations you want to use, then select <strong>Next</strong>. You can select up to 50 scopes.</li>
+</ol>
+
+| Operations | Scope |
+| ---------- | ----- |
+| Search Issues, Get Issue, Get Issue Changelog, Get Transitions, Get Comment, Get Comments, Get Attachment, Get Issue Attachments, List Projects, Get Project | `read:jira-work` |
+| Create Issue, Update Issue, Delete Issue, Transition Issue, Notify Issue, Add Comment, Update Comment, Delete Comment, Add Attachment, Remove Attachment | `write:jira-work` |
+| Search Users, Get User | `read:jira-user` |
+| Get Sprint | `read:sprint:jira-software` |
+| Get Sprint Issues | `read:sprint:jira-software`, `read:issue-details:jira`, `read:jql:jira` |
+
+<ol start="5">
+<li>Review the credentials and select <strong>Create</strong>. You cannot modify credentials after you create them. To change the scopes, create new credentials.</li>
+<li>Copy the <strong>Client ID</strong> and <strong>Client Secret</strong>.</li>
+</ol>
+
+### Give the service account access to your projects
+
+Add the service account to each Jira space it should use, under **Space settings** > **Access**, with the **Administrator** role. This allows all operations, including Delete Issue. A service account with the Viewer role can read issues but cannot create them.
+
+### Get the Cloud ID
+
+Open `https://<your-site>.atlassian.net/_edge/tenant_info` in your browser and copy the `cloudId` value.
 
 
 ## Step 2: Add an integration for Jira
@@ -72,9 +104,9 @@ After obtaining the credentials, add a Jira integration to your Conductor cluste
 | Parameter | Description | Required/Optional |
 | --------- | ----------- | ----------------- |
 | Integration name | A name for the integration. | Required. | 
-| Base URL | The base URL of your Jira account. For example: https://your-domain.atlassian.net. | Required. | 
-| Email | The email of your Atlassian account using which the API token is generated. | Required. | 
-| API Key | The Atlassian API token generated in [Step 1](/content/integrations/jira#step-1-get-the-jira-credentials). | Required. | 
+| Cloud ID | The Cloud ID of your Jira site, in UUID format, from [Step 1](/content/integrations/jira#get-the-cloud-id). | Required. | 
+| Client ID | The OAuth 2.0 Client ID of the service account, from [Step 1](/content/integrations/jira#create-oauth-20-credentials). | Required. | 
+| Client Secret | The OAuth 2.0 Client Secret of the service account, from [Step 1](/content/integrations/jira#create-oauth-20-credentials). | Required. | 
 | Description | A description of the integration. | Required. | 
 
 <ol start="5">

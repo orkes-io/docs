@@ -31,7 +31,7 @@ Creates a new issue in a Jira project.
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-Returns the ID, key, and URL of the created issue.
+Returns the ID, key, and `self` (the REST API URL of the issue) of the created issue.
 
 </TabItem>
 </Tabs>
@@ -106,7 +106,7 @@ Searches for Jira issues using JQL (Jira Query Language).
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Jql | The JQL query string to filter issues (e.g., `project = PROJ AND status = Open`). Leave empty to retrieve all issues. | string | Optional. |
+| Jql | The JQL query string to filter issues (e.g., `project = PROJ AND status = Open`). Jira rejects an empty query, so include a search restriction, such as a project. | string | Optional. |
 | Max Results | The maximum number of results to return. Defaults to 50. | integer | Optional. |
 | Fields | A comma-separated list of fields to include in the response. Defaults to `*all` (all fields). Use `*navigable` to return only fields visible in the Jira UI (e.g., `summary`, `status`, `assignee`), or specify individual field names to further limit the response. | string | Optional. |
 | Next Page Token | The pagination cursor from a previous response. Omit for the first page. | string | Optional. |
@@ -114,7 +114,7 @@ Searches for Jira issues using JQL (Jira Query Language).
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-Returns a list of matching issues, each containing the issue ID, key, URL, summary, description, type, status, priority, assignee, reporter, creator, project details, and more, along with a `nextPageToken` for pagination and an `isLast` flag indicating whether the current page is the last.
+Returns a list of matching issues, each containing the issue ID, key, URL, summary, description, type, status, priority, assignee, reporter, creator, project details, and more, along with a `nextPageToken` for pagination and an `isLast` flag indicating whether the current page is the last. Jira returns an empty list, not an error, when the JQL refers to an unknown field or to a project the service account cannot access.
 
 </TabItem>
 </Tabs>
@@ -182,7 +182,7 @@ Returns a list of changelog entries, each containing the change ID, author detai
 
 ## Notify Issue
 
-Sends an email notification for a Jira issue and adds it to the mail queue.
+Sends an email notification for a Jira issue and adds it to the mail queue. At least one recipient is required.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
@@ -191,7 +191,7 @@ Sends an email notification for a Jira issue and adds it to the mail queue.
 | --------- | ----------- | ---- | ----------------- |
 | Issue ID or Key | The issue key or ID of the issue to send a notification for. The issue key is visible on the Jira board and in the URL. For example, in `https://your-domain.atlassian.net/browse/MT-4`, the issue ID is **MT-4**. | string | Required. |
 | Subject | The subject line of the notification email. | string | Required. |
-| HTML Body | The HTML body of the notification email. | string | Optional. |
+| HTML Body | The HTML body of the notification email. | string | Required. |
 | To User IDs | A comma-separated list of account IDs of users to notify.<br/><br/>To find the user ID, go to [Atlassian People](https://home.atlassian.com), search for the user, and copy the ID from the URL (e.g., `63610d2bfe5ff375235b6ef4` in `https://home.atlassian.com/o/{orgId}/people/63610d2bfe5ff375235b6ef4`). | string | Optional. |
 | To Group Names | A comma-separated list of Jira group names to notify.<br/><br/>Group names can be found at **admin.atlassian.com** → **Directory** → **Groups**. | string | Optional. |
 | To Reporter | Whether to include the issue reporter in the notification. | boolean | Optional. |
@@ -360,7 +360,7 @@ Retrieves metadata for a Jira attachment by its ID.
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-Returns the attachment ID, URL, filename, MIME type, file size, content URL, author details, and creation timestamp.
+Returns the attachment ID, URL, filename, MIME type, file size, content URL, author details, and creation timestamp. The author's `emailAddress` and `timeZone` are returned as null.
 
 </TabItem>
 </Tabs>
@@ -449,7 +449,7 @@ Retrieves the details of a Jira sprint by its ID, including its name, state, dat
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Sprint ID | The ID of the sprint to retrieve.<br/><br/>To find the sprint ID, open an issue in the sprint and copy the ID from the URL (e.g., `1` in `https://your-domain.atlassian.net/browse/MS-1`). | integer | Required. |
+| Sprint ID | The ID of the sprint to retrieve.<br/><br/>To find the sprint ID, run [Search Issues](/content/integrations/jira-operations#search-issues) for an issue in the sprint. The response contains the sprint details, including its `id`. | integer | Required. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -468,7 +468,7 @@ Retrieves all issues in a Jira sprint. Sprints are only available in Scrum (comp
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Sprint ID | The ID of the sprint to retrieve the issues for.<br/><br/>To find the sprint ID, open an issue in the sprint and copy the ID from the URL (e.g., `1` in `https://your-domain.atlassian.net/browse/MS-1`). | integer | Required. |
+| Sprint ID | The ID of the sprint to retrieve the issues for.<br/><br/>To find the sprint ID, run [Search Issues](/content/integrations/jira-operations#search-issues) for an issue in the sprint. The response contains the sprint details, including its `id`. | integer | Required. |
 | Max Results | The maximum number of results to return. Defaults to 50. | integer | Optional. |
 | Start At | The index of the first result to return for pagination. Defaults to 0. | integer | Optional. |
 
