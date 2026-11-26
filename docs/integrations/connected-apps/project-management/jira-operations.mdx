@@ -440,6 +440,25 @@ Returns a list of users, each containing the account ID, account type, display n
 </TabItem>
 </Tabs>
 
+## Get User
+
+Retrieves the details of a Jira user by their account ID.
+
+<Tabs>
+<TabItem value="input" label="Input Parameters">
+
+| Parameter | Description | Type | Required/Optional |
+| --------- | ----------- | ---- | ----------------- |
+| Account ID | The account ID of the user to retrieve.<br/><br/>To find the account ID, go to [Atlassian People](https://home.atlassian.com), search for the user, and copy the ID from the URL (e.g., `63610d2bfe5ff375235b6ef4` in `https://home.atlassian.com/o/{orgId}/people/63610d2bfe5ff375235b6ef4`). | string | Required. |
+
+</TabItem>
+<TabItem value="output" label="Output Parameters">
+
+Returns the user's account ID, account type, display name, email address, active status, time zone, locale, and URL.
+
+</TabItem>
+</Tabs>
+
 ## Get Sprint
 
 Retrieves the details of a Jira sprint by its ID, including its name, state, dates, and goal. Sprints are only available in Scrum (company-managed) projects with the Sprints feature enabled under **Space Settings** > **Features**.
@@ -476,25 +495,6 @@ Retrieves all issues in a Jira sprint. Sprints are only available in Scrum (comp
 <TabItem value="output" label="Output Parameters">
 
 Returns a list of issues in the sprint, each containing the issue ID, key, URL, summary, description, type, status, priority, assignee, reporter, creator, sprint details, project details, and more, along with pagination details.
-
-</TabItem>
-</Tabs>
-
-## Get User
-
-Retrieves the details of a Jira user by their account ID.
-
-<Tabs>
-<TabItem value="input" label="Input Parameters">
-
-| Parameter | Description | Type | Required/Optional |
-| --------- | ----------- | ---- | ----------------- |
-| Account ID | The account ID of the user to retrieve.<br/><br/>To find the account ID, go to [Atlassian People](https://home.atlassian.com), search for the user, and copy the ID from the URL (e.g., `63610d2bfe5ff375235b6ef4` in `https://home.atlassian.com/o/{orgId}/people/63610d2bfe5ff375235b6ef4`). | string | Required. |
-
-</TabItem>
-<TabItem value="output" label="Output Parameters">
-
-Returns the user's account ID, account type, display name, email address, active status, time zone, locale, and URL.
 
 </TabItem>
 </Tabs>
