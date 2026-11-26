@@ -6,7 +6,7 @@ description: "Learn how to integrate Notion with Orkes Conductor to automate you
 # Notion Integration with Orkes Conductor
 
 :::info Available since
-- v5.3.0 and later
+- v5.7.0 and later
 :::
 
 Integrating Notion with Orkes Conductor lets you build workflows that interact with your Notion using the following operations:
@@ -23,7 +23,7 @@ Integrating Notion with Orkes Conductor lets you build workflows that interact w
 - Retrieve Block
 - Update Block
 - Delete Block
-- Retrieve Block Children
+- List Block Children
 - Append Block Children
 - Create Comment
 - List Comments
@@ -49,25 +49,25 @@ To integrate Notion with Orkes Conductor, create a Notion integration and retrie
 1. Go to **Developers** > [**Connections**](https://app.notion.com/developers/connections).
 2. Select **+ New connection**.
 3. Enter a name for your integration.
-4. Select **Authentication method **as **Access token**.
+4. Select **Authentication method** as **API token**.
 5. Select the workspace where you want to use the integration, and select **Create connection**.
 
 Next, edit the integration to add capabilities.
 
-5. In **Capabilities**, enable the following:
+6. In **Capabilities**, enable the following:
     - **Content capabilities**: **Read content**, **Update content**, and **Insert content**.
     - **Comment capabilities**: **Read comments** and **Insert comments**.
     - **User capabilities**: **Read user information including email addresses**.
-6. Save the integration.
-7. Copy and store the **Access token**.
+7. Save the integration.
+8. Copy and store the **API token**.
 
 ### Share pages or databases with your integration
 
 After creating the integration, share the required pages or databases you want to access with it:
 
 1. Open the page or database you want to access via the integration.
-2. Select the **...** menu in the top right.
-3. Scroll down and select Connections.
+2. Select the **...** menu in the top right, and select **More**.
+3. Select **Connections**.
 4. Search for your integration name and select it.
 
 The integration now has access to that page or database and its children.
@@ -85,10 +85,10 @@ After obtaining the credentials, add a Notion integration to your Conductor clus
 <li>Select <strong>+ Add</strong> and enter the following parameters:</li>
 </ol>
 
-| Parameter | Description | Required/Optional |
+| Parameters | Description | Required/Optional |
 | --------- | ----------- | ----------------- |
 | Integration name | A name for the integration. | Required. | 
-| Notion API Token | The internal integration secret generated in [Step 1](/content/integrations/notion#step-1-get-the-notion-credentials). | Required. | 
+| Notion API Token | The API token copied in [Step 1](/content/integrations/notion#step-1-get-the-notion-credentials). Personal OAuth/PAT credentials are not supported. | Required. | 
 | Description | A description of the integration. | Required. | 
 
 <ol start="5">
