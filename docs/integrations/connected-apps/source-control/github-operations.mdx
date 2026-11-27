@@ -12,32 +12,13 @@ Orkes Conductor integrates with GitHub to let you manage repositories, issues, p
 
 This page covers the parameters and expected output for each operation available in the [GitHub integration](/content/integrations/github).
 
-## Get Current User
-
-Retrieves the authenticated GitHub user's profile information.
-
-<Tabs>
-<TabItem value="input" label="Input Parameters">
-
-This operation has no input parameters.
-
-</TabItem>
-<TabItem value="output" label="Output Parameters">
-
-| Parameter | Description |
-| --------- | ----------- | 
-| status | Status of the operation. | 
-| data.**id** | The unique numeric ID of the authenticated user. | 
-| data.**login** | The GitHub username of the authenticated user. | 
-| data.**type** | The account type. For example, User. | 
-| data.**htmlUrl** | The URL of the authenticated user's GitHub profile. | 
-
-</TabItem>
-</Tabs>
+:::note
+If a parameter that takes a fixed set of values is given any other value, GitHub ignores it and uses its default.
+:::
 
 ## List Repositories
 
-Lists the repositories accessible to the authenticated user.
+Lists the repositories accessible to the GitHub App installation.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
@@ -101,13 +82,14 @@ Returns the repository details, including `id`, `name`, `fullName`, `owner` (wit
 
 ## Create Repository
 
-Creates a new repository for the authenticated user.
+Creates a repository in an organization accessible to this GitHub App installation.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
+| Organization | The login of the organization to create the repository in. The GitHub App must have repository administration permission. | string | Required. |
 | Name | The repository name to create. | string | Required. |
 | Description | A description of the repository. | string | Optional. |
 | Is Private | Whether the repository is private. | boolean | Optional. |
@@ -123,7 +105,7 @@ Returns the created repository details, including `id`, `name`, `fullName`, `own
 
 ## Fork Repository
 
-Forks a repository to the authenticated user's account.
+Forks a repository into an organization accessible to the GitHub App.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
@@ -132,51 +114,12 @@ Forks a repository to the authenticated user's account.
 | --------- | ----------- | ---- | ----------------- |
 | Owner | The repository owner's username or organization name.For example, to retrieve https://github.com/conductor-oss/conductor, enter owner as **conductor-oss**. | string | Required. |
 | Repo | The name of the repository to fork. | string | Required. | 
+| Organization | The login of the organization to fork the repository into. | string | Required. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
 Returns the forked repository details, including `id`, `name`, `fullName`, `owner` (with `id`, `login`, `type`, and `htmlUrl`), `private`, `description`, `htmlUrl`, and `defaultBranch`.
-
-</TabItem>
-</Tabs>
-
-## Star Repository
-
-Stars a repository for the authenticated user.
-
-<Tabs>
-<TabItem value="input" label="Input Parameters">
-
-| Parameter | Description | Type | Required/Optional |
-| --------- | ----------- | ---- | ----------------- |
-| Owner | The repository owner's username or organization name.For example, to retrieve https://github.com/conductor-oss/conductor, enter owner as **conductor-oss**. | string | Required. |
-| Repo | The name of the repository to star. | string | Required. | 
-
-</TabItem>
-<TabItem value="output" label="Output Parameters">
-
-Returns `status: success` upon successfully starring the repository.
-
-</TabItem>
-</Tabs>
-
-## Unstar Repository
-
-Unstars a repository for the authenticated user.
-
-<Tabs>
-<TabItem value="input" label="Input Parameters">
-
-| Parameter | Description | Type | Required/Optional |
-| --------- | ----------- | ---- | ----------------- |
-| Owner | The repository owner's username or organization name.For example, to retrieve https://github.com/conductor-oss/conductor, enter owner as **conductor-oss**. | string | Required. |
-| Repo | The name of the repository to unstar. | string | Required. | 
-
-</TabItem>
-<TabItem value="output" label="Output Parameters">
-
-Returns `status: success` upon successfully unstarring the repository.
 
 </TabItem>
 </Tabs>
@@ -259,7 +202,7 @@ Retrieves the details of a specific issue.
 | --------- | ----------- | ---- | ----------------- |
 | Owner | The repository owner's username or organization name.For example, to retrieve https://github.com/conductor-oss/conductor, enter owner as **conductor-oss**. | string | Required. |
 | Repo | The repository name to retrieve issues from. | string | Required. | 
-| Issue Number | The issue number. You can get the issue number from the repository URL. For example, in `https://github.com/conductor-oss/conductor/issues/1090`, the issue number is `1090`. You can also retrieve it from the `number` field returned by the [List Issues](#list-issues) operation. | string | Required. | 
+| Issue Number | The issue number. You can get the issue number from the repository URL. For example, in `https://github.com/conductor-oss/conductor/issues/1090`, the issue number is `1090`. You can also retrieve it from the `number` field returned by the [List Issues](#list-issues) operation. | integer | Required. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -282,7 +225,7 @@ Creates a new issue in a repository.
 | Repo | The repository name to create the issue in. | string | Required. | 
 | Title | The issue title. | string | Required. |
 | Body | The issue body. | string | Optional. |
-| Assignees | The usernames to assign to the issue, as a comma-separated list. | string | Optional. |
+| Assignees | The usernames to assign to the issue, as a comma-separated list. Do not add spaces after the commas. | string | Optional. |
 | Labels | The labels to apply to the issue, as a comma-separated list. | string | Optional. |
 
 </TabItem>
@@ -304,11 +247,11 @@ Updates an existing issue in a repository.
 | --------- | ----------- | ---- | ----------------- |
 | Owner | The repository owner's username or organization name.For example, to retrieve https://github.com/conductor-oss/conductor, enter owner as **conductor-oss**. | string | Required. |
 | Repo | The repository name contains the issue to update. | string | Required. | 
-| Issue Number | The issue number. You can get the issue number from the repository URL. For example, in `https://github.com/conductor-oss/conductor/issues/1090`, the issue number is `1090`. You can also retrieve it from the `number` field returned by the [List Issues](#list-issues) operation. | string | Required. | 
+| Issue Number | The issue number. You can get the issue number from the repository URL. For example, in `https://github.com/conductor-oss/conductor/issues/1090`, the issue number is `1090`. You can also retrieve it from the `number` field returned by the [List Issues](#list-issues) operation. | integer | Required. | 
 | Title | The updated issue title. | string | Optional. | 
 | Body | The updated issue body. | string | Optional. |
 | State | The updated issue state. Supported values:<ul><li>open</li><li>closed</li></ul> | string | Optional. |
-| Labels | The updated labels to apply to the issue, as a comma-separated list. | string | Optional. |
+| Labels | The updated labels to apply to the issue, as a comma-separated list. Replaces all existing labels. An empty value leaves the labels unchanged. | string | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -329,7 +272,7 @@ Adds a comment to an issue.
 | --------- | ----------- | ---- | ----------------- |
 | Owner | The repository owner's username or organization name.For example, to retrieve https://github.com/conductor-oss/conductor, enter owner as **conductor-oss**. | string | Required. |
 | Repo | The repository name contains the issue to add comment to. | string | Required. | 
-| Issue Number | The issue number. You can get the issue number from the repository URL. For example, in `https://github.com/conductor-oss/conductor/issues/1090`, the issue number is `1090`. You can also retrieve it from the `number` field returned by the [List Issues](#list-issues) operation. | string | Required. | 
+| Issue Number | The issue number. You can get the issue number from the repository URL. For example, in `https://github.com/conductor-oss/conductor/issues/1090`, the issue number is `1090`. You can also retrieve it from the `number` field returned by the [List Issues](#list-issues) operation. | integer | Required. | 
 | Body | The comment text. | string | Required. | 
 
 </TabItem>
@@ -351,7 +294,7 @@ Retrieves the comments for an issue.
 | --------- | ----------- | ---- | ----------------- |
 | Owner | The repository owner's username or organization name.For example, to retrieve https://github.com/conductor-oss/conductor, enter owner as **conductor-oss**. | string | Required. |
 | Repo | The repository name contains the issue to add comment to. | string | Required. | 
-| Issue Number | The issue number. You can get the issue number from the repository URL. For example, in `https://github.com/conductor-oss/conductor/issues/1090`, the issue number is `1090`. You can also retrieve it from the `number` field returned by the [List Issues](#list-issues) operation. | string | Required. | 
+| Issue Number | The issue number. You can get the issue number from the repository URL. For example, in `https://github.com/conductor-oss/conductor/issues/1090`, the issue number is `1090`. You can also retrieve it from the `number` field returned by the [List Issues](#list-issues) operation. | integer | Required. | 
 | Per Page | Maximum number of results per page. | integer | Optional. |
 | Page | The page number. | integer | Optional. | 
 
@@ -374,7 +317,7 @@ Retrieves the parent issue of a sub-issue.
 | --------- | ----------- | ---- | ----------------- |
 | Owner | The repository owner's username or organization name.For example, to retrieve https://github.com/conductor-oss/conductor, enter owner as **conductor-oss**. | string | Required. |
 | Repo | The repository name. | string | Required. | 
-| Issue Number | The issue number. You can get the issue number from the repository URL. For example, in `https://github.com/conductor-oss/conductor/issues/1090`, the issue number is `1090`. You can also retrieve it from the `number` field returned by the [List Issues](#list-issues) operation. | string | Required. | 
+| Issue Number | The issue number. You can get the issue number from the repository URL. For example, in `https://github.com/conductor-oss/conductor/issues/1090`, the issue number is `1090`. You can also retrieve it from the `number` field returned by the [List Issues](#list-issues) operation. | integer | Required. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -384,7 +327,7 @@ Returns the parent issue details, including `id`, `number`, `title`, `body`, `st
 </TabItem>
 </Tabs>
 
-## Add Sub Issue
+## Add SubIssue
 
 Links an existing issue as a sub-issue of a parent issue. This operation does not create a new issue, both the parent and sub-issue must already exist.
 
@@ -395,18 +338,18 @@ Links an existing issue as a sub-issue of a parent issue. This operation does no
 | --------- | ----------- | ---- | ----------------- |
 | Owner | The repository owner's username or organization name.For example, to retrieve https://github.com/conductor-oss/conductor, enter owner as **conductor-oss**. | string | Required. |
 | Repo | The repository name. | string | Required. | 
-| Issue Number | The issue number. You can get the issue number from the repository URL. For example, in `https://github.com/conductor-oss/conductor/issues/1090`, the issue number is `1090`. You can also retrieve it from the `number` field returned by the [List Issues](#list-issues) operation. | string | Required. | 
+| Issue Number | The issue number. You can get the issue number from the repository URL. For example, in `https://github.com/conductor-oss/conductor/issues/1090`, the issue number is `1090`. You can also retrieve it from the `number` field returned by the [List Issues](#list-issues) operation. | integer | Required. | 
 | Sub Issue Id | The sub-issue ID. You can retrieve it from the `id` field returned by the  [List Issues](#list-issues) operation. | integer | Required. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-The operation returns the `status` of the request and a `data` object containing the parent issue details, including the issue `id`, `number`, `title`, `state`, `htmlUrl`, and the `user` who created it.
+Returns the parent issue details, including `id`, `number`, `title`, `body`, `state`, `htmlUrl`, `user` (with `id`, `login`, `type`, and `htmlUrl`), `assignees`, and `labels`.
 
 </TabItem>
 </Tabs>
 
-## Remove Sub Issue
+## Remove SubIssue
 
 Removes a sub-issue from an issue.
 
@@ -417,7 +360,7 @@ Removes a sub-issue from an issue.
 | --------- | ----------- | ---- | ----------------- |
 | Owner | The repository owner's username or organization name.For example, to retrieve https://github.com/conductor-oss/conductor, enter owner as **conductor-oss**. | string | Required. |
 | Repo | The repository name. | string | Required. | 
-| Issue Number | The issue number. You can get the issue number from the repository URL. For example, in `https://github.com/conductor-oss/conductor/issues/1090`, the issue number is `1090`. You can also retrieve it from the `number` field returned by the [List Issues](#list-issues) operation. | string | Required. | 
+| Issue Number | The issue number. You can get the issue number from the repository URL. For example, in `https://github.com/conductor-oss/conductor/issues/1090`, the issue number is `1090`. You can also retrieve it from the `number` field returned by the [List Issues](#list-issues) operation. | integer | Required. | 
 | Sub Issue Id | The sub-issue ID. You can retrieve it from the `id` field returned by the  [List Issues](#list-issues) operation. | integer | Required. | 
 
 </TabItem>
@@ -867,7 +810,7 @@ Returns `id`, `body`, `state`, `htmlUrl`, `user` (with `id`, `login`, `type`, an
 
 ## Add Pending Review Comment
 
-Adds a review comment to a pull request. Replaces any existing pending review.
+Adds a review comment to a pull request. Replaces any existing pending review, including its body, with a new pending review that contains only this comment.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
@@ -904,7 +847,7 @@ Submits a pending pull request review.
 | Pull Number | The pull request number. For example, in https://github.com/acme/docs/pull/1000, the pull request number is 1000. You can also retrieve it from the `number` field returned by the [List Pull Requests](#list-pull-requests) operation. | integer | Required. | 
 | Review Id | The ID of the pending review to submit. You can retrieve it from the `id` field returned by the [Create Pending Review](#create-pending-review) operation. | integer | Required. | 
 | Event | The review action. Supported values:<ul><li>APPROVE</li><li>REQUEST_CHANGES</li><li>COMMENT</li></ul> | string | Required. |
-| Body | The review summary text. | string | Optional. |
+| Body | The review summary text. Required when Event is REQUEST_CHANGES. | string | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -956,7 +899,7 @@ Returns the latest release details, including `id`, `tagName`, `name`, `body`, `
 </TabItem>
 </Tabs>
 
-## Get Release by Tag
+## Get Release By Tag
 
 Retrieves a release by its tag name.
 
@@ -967,7 +910,7 @@ Retrieves a release by its tag name.
 | --------- | ----------- | ---- | ----------------- |
 | Owner | The repository owner's username or organization name.For example, to retrieve https://github.com/conductor-oss/conductor, enter owner as **conductor-oss**. | string | Required. |
 | Repo | The repository name. | string | Required. | 
-| Tag Name | The tag name to retrieve the release from. | string | Required. | 
+| Tag | The tag name to retrieve the release from. | string | Required. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -1094,7 +1037,7 @@ Retrieves a specific tag by name.
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-Returns the tag details, including `ref`, `node_id`, `url`, and `object` (with `sha`, `type`, and `url`).
+Returns the tag details, including `ref`, `url`, and `object` (with `sha`, `type`, and `url`).
 
 </TabItem>
 </Tabs>
@@ -1160,7 +1103,7 @@ Retrieves the details of a specific workflow run.
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-Returns the workflow run details, including `id`, `name`, `status`, `conclusion`, `runNumber`, `event`, `headSha`, `htmlUrl`, `createdAt`, `updatedAt`, `actor`, `headCommit`, and `repository`.
+Returns the workflow run details, including `id`, `name`, `status`, `conclusion`, `run_number`, `event`, `head_sha`, `html_url`, `created_at`, `updated_at`, `actor`, `head_commit`, and `repository`.
 
 </TabItem>
 </Tabs>
@@ -1230,43 +1173,23 @@ Returns `status: success` upon successfully enabling the workflow.
 </TabItem>
 </Tabs>
 
-## Get Workflow Usage
-
-Retrieves the usage statistics and billing information for a GitHub Actions workflow.
-
-<Tabs>
-<TabItem value="input" label="Input Parameters">
-
-| Parameter | Description | Type | Required/Optional |
-| --------- | ----------- | ---- | ----------------- |
-| Owner | The repository owner's username or organization name.For example, to retrieve https://github.com/conductor-oss/conductor, enter owner as **conductor-oss**. | string | Required. |
-| Repo | The repository name. | string | Required. | 
-| Workflow Id | The workflow ID or filename. Example for  filename is `test.yml`.<br/>For workflow ID, You can retrieve it from the `id` field returned by the [List Workflows](#list-workflows) operation. | string | Required. | 
-
-</TabItem>
-<TabItem value="output" label="Output Parameters">
-
-Returns `billable`, which contains usage data broken down by operating system (for example, `UBUNTU`, `MACOS`, `WINDOWS`), each with `totalMs` (total billable milliseconds).
-
-</TabItem>
-</Tabs>
-
 ## List Teams
 
-Lists the teams for the authenticated user across all organizations
+Lists the teams in an organization accessible to the GitHub App.
 
 <Tabs>
 <TabItem value="input" label="Input Parameters">
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
+| Organization | The login of the organization to list the teams from. | string | Required. |
 | Per Page | Maximum number of results per page. | integer | Optional. |
 | Page | The page number. | integer | Optional. |
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-Returns a list of teams, where each entry includes `name`, `id`, `slug`, `description`, `privacy`, `url`, `htmlUrl`, `membersCount`, `reposCount`, and `organization` (with `login`, `id`, `email`, `createdAt`, and `updatedAt`).
+Returns a list of teams, where each entry includes `id`, `node_id`, `name`, `slug`, `description`, `privacy`, `permission`, `notification_setting`, `url`, `html_url`, `members_url`, `repositories_url`, and `parent`.
 
 </TabItem>
 </Tabs>
@@ -1289,44 +1212,6 @@ Retrieves the members of a team in an organization.
 <TabItem value="output" label="Output Parameters">
 
 Returns a list of team members, where each entry includes `id`, `login`, `type`, and `htmlUrl`.
-
-</TabItem>
-</Tabs>
-
-## List Notifications
-
-Lists the notifications for the authenticated user.
-
-<Tabs>
-<TabItem value="input" label="Input Parameters">
-
-| Parameter | Description | Type | Required/Optional |
-| --------- | ----------- | ---- | ----------------- |
-| All | Whether to show all notifications, including read ones. Defaults to showing only unread notifications. | boolean | Optional. | 
-| Per Page | Maximum number of results per page. | integer | Optional. |
-| Page | The page number. | integer | Optional. |
-
-</TabItem>
-<TabItem value="output" label="Output Parameters">
-
-Returns a list of notifications, where each entry includes details such as the notification ID, subject, repository, reason, and read status.
-
-</TabItem>
-</Tabs>
-
-## Mark Notifications Read
-
-Marks all notifications as read for the authenticated user.
-
-<Tabs>
-<TabItem value="input" label="Input Parameters">
-
-This operation has no input parameters.
-
-</TabItem>
-<TabItem value="output" label="Output Parameters">
-
-Returns `status: success` upon successfully marking all notifications as read.
 
 </TabItem>
 </Tabs>

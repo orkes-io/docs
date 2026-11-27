@@ -6,35 +6,42 @@ description: "Learn how to integrate GitHub with Orkes Conductor to automate you
 # GitHub Integration with Orkes Conductor
 
 :::info Available since
-- v5.3.0 and later
+- v5.7.0 and later
 :::
 
-Integrating GitHub with Orkes Conductor lets you build workflows that interact with your GitHub repositories by managing issues, pull requests, branches, files, releases, workflows, and more.
+Integrating GitHub with Orkes Conductor lets you build workflows that interact with your GitHub repositories by managing issues, pull requests, branches, files, releases, workflows, and more. The integration authenticates as a GitHub App.
 
 This guide explains how to set up and use the integration. Here’s an overview:
 
-1. Get the required credentials from GitHub.
+1. Create a GitHub App and get its credentials.
 2. Configure a new GitHub integration in Orkes Conductor.
 3. Use GitHub integration in workflows.
 
 ## Step 1: Get the GitHub credentials
 
-To integrate GitHub with Orkes Conductor, generate a Personal Access Token (classic) from GitHub.
+To integrate GitHub with Orkes Conductor, create a GitHub App, install it on your account or organization, and collect three values: the App ID, the Installation ID, and a private key. Installation tokens are generated automatically from these.
 
-**To generate the token:**
+**To create the app:**
 
-1. Sign in to [GitHub](https://github.com/).
-2. Select the user profile icon on the top right corner and select **Settings**.
-3. Scroll down and select **Developer settings** > **Personal access tokens** > **Tokens (classic)**. 
-4. Select **Generate new token** > **Generate new token (classic)**. 
-5. Give the token a descriptive name and set an expiration.
-6. Select the scopes as per your requirements:
-    - **repo**: Full control of private repositories 
-    - **workflow**: Update GitHub Actions workflows 
-    - **read:org**: Read organization data 
-    - **read:user**: Read user profile data 
-    - **user:email**: Access user email addresses
-7. Select **Generate token** and copy it immediately as it won't be shown again.
+1. Sign in to [GitHub](https://github.com/) and go to **Settings** > **Developer settings** > **GitHub Apps**.
+2. Select **New GitHub App**, enter a name and a homepage URL, and uncheck the **Webhook Active** option.
+3. Set the following permissions for the operations you plan to use:
+    1. **Repository permissions**:
+        1. **Contents**: *Read and write*
+        2. **Issues**: *Read and write*
+        3. **Pull requests**: *Read and write*
+        4. **Actions**: *Read and write*
+        5. **Workflows**: *Read and write*
+        6. **Administration**: *Read and write*
+    2. **Organization permissions**:
+        1. **Members**: *Read-only*
+4. Select **Create GitHub App**. The **App ID** is shown at the top of the app's General page.
+5. On the **Credentials** page, open the **Key pairs** tab and select **New key**. A .pem file downloads. This is the private key.
+6. To install the app on an organization, open your app from **Settings** > **Developer settings** > **GitHub Apps**, go to the **Advanced** page, and select **Make public** under "Make this GitHub App public". By default, an app can be installed only on the account that owns it.
+7. Select **Install App**, choose your account or organization, and select the repositories the app can access.
+8. After the installation, the number at the end of the installation settings URL (.../installations/&lt;number&gt;) is the **Installation ID**.
+
+If you change the app's permissions later, accept the updated permissions on the installation before using them.
 
 ## Step 2: Add an integration for GitHub
 
@@ -52,8 +59,10 @@ After obtaining the credentials, add a GitHub integration to your Conductor clus
 | Parameter | Description | Required/Optional |
 | --------- | ----------- | ----------------- |
 | Integration name | A name for the integration. | Required. | 
-| Personal Access Token (API Key) | The GitHub Personal Access Token generated in [Step 1](/content/integrations/github#step-1-get-the-github-credentials). | Required. | 
-| Base URL | GitHub API Base URL. Use https://api.github.com for GitHub.com, or https://github.yourcompany.com/api/v3 for GitHub Enterprise. Defaults to https://api.github.com. | Required. |
+| App ID | The GitHub App ID from [Step 1](/content/integrations/github#step-1-get-the-github-credentials), shown at the top of the app's General page. | Required. |
+| Installation ID | The ID of the app's installation in the target organization or account from [Step 1](/content/integrations/github#step-1-get-the-github-credentials), which is the number at the end of the installation settings URL. | Required. |
+| Private Key | The GitHub App RSA private key in PEM format (PKCS#1 or PKCS#8). Open the downloaded .pem file and paste its full contents, including the BEGIN and END lines. Installation tokens are generated automatically. | Required. |
+| API Base URL | The GitHub API base URL. Defaults to https://api.github.com. | Optional. |
 | Description | A description of the integration. | Required. | 
 
 <ol start="5">
@@ -80,14 +89,11 @@ The following operations are available for use with this integration.
 
 | Operation | Description | 
 | --------- | ----------- | 
-| [Get Current User](/content/integrations/github-operations#get-current-user) | Retrieves the authenticated GitHub user's profile information. |
-| [List Repositories](/content/integrations/github-operations#list-repositories) | Lists the repositories accessible to the authenticated user. |
+| [List Repositories](/content/integrations/github-operations#list-repositories) | Lists the repositories accessible to the GitHub App installation. |
 | [List Organization Repositories](/content/integrations/github-operations#list-organization-repositories) | Lists the repositories for a specific organization. |
 | [Get Repository](/content/integrations/github-operations#get-repository) | Retrieves the details of a specific repository. |
-| [Create Repository](/content/integrations/github-operations#create-repository) | Creates a new repository for the authenticated user. |
-| [Fork Repository](/content/integrations/github-operations#fork-repository) | Forks a repository to the authenticated user's account. |
-| [Star Repository](/content/integrations/github-operations#star-repository) | Stars a repository for the authenticated user. |
-| [Unstar Repository](/content/integrations/github-operations#unstar-repository) | Unstars a repository for the authenticated user. |
+| [Create Repository](/content/integrations/github-operations#create-repository) | Creates a repository in an organization accessible to this GitHub App installation. |
+| [Fork Repository](/content/integrations/github-operations#fork-repository) | Forks a repository into an organization accessible to the GitHub App. |
 | [Search Repositories](/content/integrations/github-operations#search-repositories) | Searches for repositories on GitHub matching the specified query. |
 | [Search Code](/content/integrations/github-operations#search-code) | Searches for code across GitHub repositories matching the specified query. |
 | [List Issues](/content/integrations/github-operations#list-issues) | Lists the issues in a repository. |
@@ -97,8 +103,8 @@ The following operations are available for use with this integration.
 | [Add Issue Comment](/content/integrations/github-operations#add-issue-comment) | Adds a comment to an issue. |
 | [List Issue Comments](/content/integrations/github-operations#list-issue-comments) | Retrieves the comments for an issue. |
 | [Get Parent Issue](/content/integrations/github-operations#get-parent-issue) | Retrieves the parent issue of a sub-issue. |
-| [Add Sub Issue](/content/integrations/github-operations#add-sub-issue) | Links an existing issue as a child (sub-issue) of another existing issue. |
-| [Remove Sub Issue](/content/integrations/github-operations#remove-sub-issue) | Removes a sub-issue from an issue. |
+| [Add SubIssue](/content/integrations/github-operations#add-subissue) | Links an existing issue as a child (sub-issue) of another existing issue. |
+| [Remove SubIssue](/content/integrations/github-operations#remove-subissue) | Removes a sub-issue from an issue. |
 | [Search Issues](/content/integrations/github-operations#search-issues) | Searches for issues on GitHub matching the specified query. |
 | [List Commits](/content/integrations/github-operations#list-commits) | Lists the commits in a repository. |
 | [Get Commit](/content/integrations/github-operations#get-commit) | Retrieves the details of a specific commit. |
@@ -122,7 +128,7 @@ The following operations are available for use with this integration.
 | [Submit Pending Review](/content/integrations/github-operations#submit-pending-review) | Submits a pending pull request review. |
 | [List Releases](/content/integrations/github-operations#list-releases) | Lists the releases in a repository. |
 | [Get Latest Release](/content/integrations/github-operations#get-latest-release) | Retrieves the latest published release in a repository. |
-| [Get Release by Tag](/content/integrations/github-operations#get-release-by-tag) | Retrieves a release by its tag name. |
+| [Get Release By Tag](/content/integrations/github-operations#get-release-by-tag) | Retrieves a release by its tag name. |
 | [Create Release](/content/integrations/github-operations#create-release) | Creates a new release in a repository. |
 | [Update Release](/content/integrations/github-operations#update-release) | Updates an existing release in a repository. |
 | [Delete Release](/content/integrations/github-operations#delete-release) | Deletes a release from a repository. |
@@ -134,11 +140,8 @@ The following operations are available for use with this integration.
 | [Run Workflow](/content/integrations/github-operations#run-workflow) | Triggers a workflow dispatch event to run a GitHub Actions workflow. |
 | [Disable Workflow](/content/integrations/github-operations#disable-workflow) | Disables a GitHub Actions workflow. |
 | [Enable Workflow](/content/integrations/github-operations#enable-workflow) | Enables a disabled GitHub Actions workflow. |
-| [Get Workflow Usage](/content/integrations/github-operations#get-workflow-usage) | Retrieves the usage statistics and billing information for a GitHub Actions workflow. |
-| [List Teams](/content/integrations/github-operations#list-teams) | Lists the teams for the authenticated user across all organizations. |
+| [List Teams](/content/integrations/github-operations#list-teams) | Lists the teams in an organization accessible to the GitHub App. |
 | [List Team Members](/content/integrations/github-operations#list-team-members) | Retrieves the members of a team in an organization. |
-| [List Notifications](/content/integrations/github-operations#list-notifications) | Lists the notifications for the authenticated user. |
-| [Mark Notifications Read](/content/integrations/github-operations#mark-notifications-read) | Marks all notifications as read for the authenticated user. | 
 
 <ol start="5">
 <li>Select the required operation, configure the parameters, and select <strong>Save</strong> &gt; <strong>Confirm</strong>.</li>
