@@ -24,13 +24,13 @@ Create a new topic or reply to an existing topic.
 | Raw | The post content in raw Markdown format. | string | Required. |
 | Title | The topic title. Required when creating a new topic. | string | Optional. | 
 | Topic Id | The topic ID to reply to. Required when replying to an existing post; ignore when creating a new topic.<br/>To get the topic ID, open the topic and the topic ID is the integer at the end of the URL: `https://<FORUM-BASE-URL>/t/<TOPIC-SLUG>/<TOPIC-ID>`. | integer | Optional. | 
-| Category | The category ID to which the new posts must be part of.<br/>To get the category ID, open the specific category and the ID is the integer at the end of the URL:`https://<FORUM-BASE-URL>/c/<CATEGORY-NAME>/<CATEGORY-ID>`. | integer | Optional. | 
+| Category | The category ID for the new topic. Required when creating a new topic if the forum does not allow uncategorized topics.<br/>To get the category ID, open the specific category and the ID is the integer at the end of the URL:`https://<FORUM-BASE-URL>/c/<CATEGORY-NAME>/<CATEGORY-ID>`. | integer | Optional. | 
 | Reply To Post Number | The post number within the topic to reply to.<br/>To get the post number, open the topic and navigate to the specific post using the timeline slider on the right. The post number is displayed on the slider and also appears at the end of the URL: `https://<FORUM-BASE-URL>/t/<TOPIC-SLUG>/<TOPIC-ID>/<POST-NUMBER>`. | integer | Optional. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-The operation returns the created post's details, including `id`, `topicId`, `postNumber`, `username`, `createdAt`, `updatedAt`,and more.
+The operation returns the created post's details, including `id`, `topicId`, `postNumber`, `username`, `createdAt`, `updatedAt`, and more.
 
 </TabItem>
 </Tabs>
@@ -49,7 +49,7 @@ Retrieve a single post by its ID.
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-The operation returns the retrieved post's details, including `id`, `topicId`, `postNumber`, `username`, `createdAt`, `updatedAt`,and more.
+The operation returns the retrieved post's details, including `id`, `topicId`, `postNumber`, `username`, `createdAt`, `updatedAt`, and more.
 
 </TabItem>
 </Tabs>
@@ -89,7 +89,7 @@ Update the content of an existing post.
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-The operation returns the retrieved post's details, including `id`, `topicId`, `postNumber`, `username`, `createdAt`, `updatedAt`,and more.
+The operation returns the updated post's details, including `id`, `topicId`, `postNumber`, `username`, `createdAt`, `updatedAt`, and more.
 
 </TabItem>
 </Tabs>
@@ -111,7 +111,7 @@ Create a new category in the Discourse forum.
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-The operation returns the created category's details, including `id`, `name`,` slug`, `color`, `textColor`, `topicCount`, `postCount`, and more.
+The operation returns the created category's details, including `id`, `name`, `slug`, `color`, `textColor`, `topicCount`, `postCount`, and more.
 
 </TabItem>
 </Tabs>
@@ -152,7 +152,7 @@ Update an existing category's properties.
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-The operation returns the updated category's details, including `id`, `name`,` slug`, `color`, `textColor`, `topicCount`, `postCount`, and more.
+The operation returns the updated category's details, including `id`, `name`, `slug`, `color`, `textColor`, `topicCount`, `postCount`, and more.
 
 </TabItem>
 </Tabs>
@@ -166,7 +166,7 @@ Create a new user account.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Username | The username. Alphanumeric characters and underscores are allowed. | string | Required. | 
+| Username | The username. Numbers, letters, dashes, dots, and underscores are allowed. | string | Required. | 
 | Email | The email address of the user. | string | Required. | 
 | Password | The password for the user account. | string | Required. | 
 | Name| The display name of the user. | string | Required. | 
@@ -181,7 +181,6 @@ Create a new user account.
 | success | Indicates whether the user was successfully created. | 
 | active | Indicates whether the newly created user account is active. | 
 | message | A message describing the account activation status. | 
-| userId | The ID of the created user. | 
 
 </TabItem>
 </Tabs>
@@ -200,7 +199,7 @@ Get a user profile by username.
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-The operation returns the user's profile details, including `id`, `username`, `name`, `email`, `trustLevel`, `active`, `admin`, `moderator`, `createdAt`, and more.
+The operation returns the user's profile details, including `id`, `username`, `name`, `trustLevel`, `admin`, `moderator`, `createdAt`, and more.
 
 </TabItem>
 </Tabs>
@@ -215,14 +214,14 @@ List users with optional filtering (admin only).
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
 | Flag | Filter users by status. Supported values: <ul><li>active</li><li>new</li><li>staff</li><li>suspended</li><li>blocked</li><li>suspect</li></ul>Defaults to active. | string | Optional. | 
-| Order | The field to sort results by. Supported values:<ul><li>created</li><li>last_emailed</li><li>seen</li><li>username</li><li>email</li><li>trust_level</li></ul> | string | Optional. | 
-| Ascending | Whether to sort the results in ascending order. | boolean | Optional. | 
+| Order | The field to sort results by. Supported values:<ul><li>created</li><li>last_emailed</li><li>seen</li><li>username</li><li>trust_level</li></ul> | string | Optional. | 
+| Ascending | Whether to sort the results in ascending order. Takes effect only when **Order** is set. | boolean | Optional. | 
 | Page | The page number for pagination. Defaults to 1. | integer | Optional. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
 
-The operation returns a `users` array, where each user includes `id`, `username`, `name`, `email`, `trustLevel`, `active`, `admin`, `moderator`, `createdAt`, and more.
+The operation returns a `users` array, where each user includes `id`, `username`, `name`, `trustLevel`, `active`, `admin`, `moderator`, `createdAt`, and more.
 
 </TabItem>
 </Tabs>
@@ -236,11 +235,10 @@ Create a new user group.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Name | The group name in lowercase with no spaces. Used for @mentions. | string |Required. | 
-
+| Name | The group name. Numbers, letters, dashes, dots, and underscores are allowed. Used for @mentions. | string |Required. | 
+| Full Name | The full display name of the group shown in the UI. | string | Optional. | 
 | Bio Raw | The group description in raw Markdown format. | string | Optional. | 
 | Visibility Level | The visibility level of the group. Supported values:<ul><li>0 (public)</li><li>1 (logged_in)</li><li>2 (members)</li><li>3 (staff)</li><li>4 (owners)</li></ul> | integer | Optional. | 
-| Full Name | The full display name of the group shown in the UI. | string | Optional. | 
 
 </TabItem>
 <TabItem value="output" label="Output Parameters">
@@ -295,8 +293,8 @@ Update an existing group's properties.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Id | The group ID to update.<br/>To get the group ID, navigate to the group and append `.json` to the URL: `https://<FORUM-BASE-URL>/g/<GROUP-SLUG>.json`. The `id` field in the response is the group ID.  | string | Required. | 
-| Name | The update group name in lowercase with no spaces. Used for @mentions. This also updates the group URL and the old URL will no longer work. | string | Optional. | 
+| Id | The group ID to update.<br/>To get the group ID, navigate to the group and append `.json` to the URL: `https://<FORUM-BASE-URL>/g/<GROUP-SLUG>.json`. The `id` field in the response is the group ID.  | integer | Required. |
+| Name | The updated group name. Numbers, letters, dashes, dots, and underscores are allowed. Used for @mentions. This also updates the group URL and the old URL will no longer work. | string | Optional. | 
 | Full Name | The updated display name of the group shown in the UI. | string | Optional. | 
 | Bio Raw | The updated group description in raw Markdown format. | string | Optional. | 
 
@@ -316,7 +314,7 @@ Add one or more users to a group.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Group Id | The group ID to add the users to.<br/>To get the group ID, navigate to the group and append `.json` to the URL: `https://<FORUM-BASE-URL>/g/<GROUP-SLUG>.json`. The `id` field in the response is the group ID. | string | Required. | 
+| Group Id | The group ID to add the users to.<br/>To get the group ID, navigate to the group and append `.json` to the URL: `https://<FORUM-BASE-URL>/g/<GROUP-SLUG>.json`. The `id` field in the response is the group ID. | integer | Required. | 
 | Usernames | The comma-separated list of usernames to add to the group. | string | Required. | 
 
 </TabItem>
@@ -336,7 +334,7 @@ Remove one or more users from a group.
 
 | Parameter | Description | Type | Required/Optional |
 | --------- | ----------- | ---- | ----------------- |
-| Group Id | The group ID to remove the users from.<br/> To get the group ID, navigate to the group and append `.json` to the URL: `https://<FORUM-BASE-URL>/g/<GROUP-SLUG>`. The `id` field in the response is the group ID. | string | Required. | 
+| Group Id | The group ID to remove the users from.<br/> To get the group ID, navigate to the group and append `.json` to the URL: `https://<FORUM-BASE-URL>/g/<GROUP-SLUG>.json`. The `id` field in the response is the group ID. | integer | Required. | 
 | Usernames | The comma-separated list of usernames to remove from the group. | string | Required. | 
 
 </TabItem>

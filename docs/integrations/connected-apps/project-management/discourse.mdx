@@ -6,7 +6,7 @@ description: "Learn how to integrate Discourse with Orkes Conductor to automate 
 # Discourse Integration with Orkes Conductor
 
 :::info Available since
-- v5.3.0 and later
+- v5.7.0 and later
 :::
 
 Integrating Discourse with Orkes Conductor lets you build workflows that interact with your Discourse using the following operations:
@@ -36,15 +36,17 @@ This guide explains how to set up and use the integration. Here’s an overview:
 
 ## Step 1: Get the Discourse credentials
 
-To integrate Discourse with Orkes Conductor, get the API key and username from Discourse.
+To integrate Discourse with Orkes Conductor, get the Admin API key from Discourse.
 
 **To get the API key:**
 
-1. Go to **Admin** > **Advanced** > **API Keys** from the Discourse admin account.
-2. Select **New API Key**.
-3. Enter a description, set the **User Level** to **All Users**, and set the **Scope** to **Global**.
+1. Go to **Admin** > **Advanced** > **API keys** from the Discourse admin account.
+2. Select **Add API key**.
+3. Enter a description, set the **User level** to **All users**, and set the **Scope** to **Global**.
 4. Select **Save**.
 5. Copy the generated API key and store it securely, as it is shown only once.
+
+Orkes Conductor sends requests to Discourse as the system user. The API key must be valid for the system user, so set **User level** to **All users**, or to **Single user** with the username **system**.
 
 ## Step 2: Add an integration for Discourse
 
@@ -59,12 +61,11 @@ After obtaining the credentials, add a Discourse integration to your Conductor c
 <li>Select <strong>+ Add</strong> and enter the following parameters:</li>
 </ol>
 
-| Parameter | Description | Required/Optional |
-| --------- | ----------- | ----------------- |
+| Parameters | Description | Required/Optional |
+| ---------- | ----------- | ----------------- |
 | Integration name | A name for the integration. | Required. | 
 | API Key | The Admin API key retrieved from Discourse in [Step 1](/content/integrations/discourse#step-1-get-the-discourse-credentials). | Required. | 
-| API Username | The username associated with the API key. | Required. | 
-| Base URL | The Discourse instance base URL. | Required. | 
+| Base URL | The Discourse instance base URL. For example, `https://forum.example.com`. | Required. | 
 | Description | A description of the integration. | Required. | 
 
 <ol start="5">
