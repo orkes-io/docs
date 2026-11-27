@@ -74,7 +74,7 @@ A label used in Orkes Conductor to route task executions to a specific worker po
 
 ## Directed Acyclic Graph (DAG)
 
-A type of graph where its vertices are connected in one direction and without any repeating cycles. All [Conductor workflows are directed acyclic graphs](/content/glossary#directed-acyclic-graph-dag) (DAGs), providing a clear map of the workflow and its progress through different states.
+A type of graph where its vertices are connected in one direction and without any repeating cycles. All [Conductor workflows are directed acyclic graphs](/content/glossary#directed-acyclic-graph-dag) (DAGs), providing a clear map of the workflow and its progress through different states. Workflows can still [fork](/content/reference-docs/operators/fork-join), [branch](/content/reference-docs/operators/switch), and loop with [Do While](/content/reference-docs/operators/do-while), because each loop iteration is a new task instance, so a step never returns to an earlier task.
 
 ## Durable Agent
 
