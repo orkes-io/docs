@@ -172,7 +172,7 @@ Let’s run the workflow using Conductor UI.
 
 The workflow starts and moves to the RUNNING state. The HTTP task sends the request and remains IN_PROGRESS, waiting for an external callback.
 
-For demonstration purposes, let’s mark this task as complete using the [Update Task Status](/content/reference-docs/api/task/update-task-status-in-workflow) API.
+For demonstration purposes, let’s mark this task as complete using the [Update Task Status](/content/reference-docs/api/task) API.
 
 ```shell
 POST /api/tasks/{workflowId}/{taskRefName}/{status}

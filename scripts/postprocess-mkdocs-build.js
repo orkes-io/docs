@@ -115,10 +115,19 @@ function toCanonicalPath(href, currentRoute) {
 function rewriteHtml(file) {
   const currentRoute = routeForHtml(file);
   let html = fs.readFileSync(file, "utf8");
-  html = html.replace(
-    /\b(href|src|content)=["']([^"']+)["']/g,
-    (all, attr, href) => `${attr}="${toCanonicalPath(href, currentRoute)}"`,
-  );
+  html = html.replace(/\b(href|src|content)=["']([^"']+)["']/g, (all, attr, href) => {
+    // A meta refresh's content is "<delay>; url=<target>", not a URL. Rewrite
+    // only the target; rewriting the whole value produced "/content/0; url=…",
+    // which browsers ignore (so no-JS visitors and crawlers weren't redirected).
+    const refresh = attr === "content" && href.match(/^(\d+;\s*url=)(.+)$/i);
+    if (refresh) return `${attr}="${refresh[1]}${toCanonicalPath(refresh[2], currentRoute)}"`;
+    return `${attr}="${toCanonicalPath(href, currentRoute)}"`;
+  });
+  // The search page is a utility page (search lives in the header), not a
+  // landing page: keep it out of search results, but let its links be followed.
+  if (SITEMAP_EXCLUDED_ROUTES.has(currentRoute) && !/<meta name=["']robots["']/i.test(html)) {
+    html = html.replace("<head>", '<head>\n    <meta name="robots" content="noindex, follow">');
+  }
   // Tag the generated "Enterprise" nav sections so CSS can style the
   // enterprise seam differently from ordinary topical sections. Material
   // emits no per-section class, so match the section whose title is exactly
@@ -235,14 +244,39 @@ function canonicalSiteUrl(href) {
   return route ? `${SITE_URL}${route}` : SITE_URL;
 }
 
+// Routes kept out of the sitemap: utility pages not meant to rank.
+const SITEMAP_EXCLUDED_ROUTES = new Set(["search"]);
+
+function isRedirectRoute(route) {
+  const candidates = route
+    ? [path.join(BUILD_DIR, `${route}.html`), path.join(BUILD_DIR, route, "index.html")]
+    : [path.join(BUILD_DIR, "index.html")];
+  const file = candidates.find((candidate) => fs.existsSync(candidate));
+  return Boolean(file) && /http-equiv=["']refresh["']/i.test(fs.readFileSync(file, "utf8"));
+}
+
 function rewriteSitemap(file) {
   if (!fs.existsSync(file)) return;
-  const xml = fs.readFileSync(file, "utf8").replace(
-    /<loc>([^<]+)<\/loc>/g,
-    (_all, href) => `<loc>${canonicalSiteUrl(href)}</loc>`,
-  );
+  const seen = new Set();
+  let removed = 0;
+  // Keep only final, indexable pages: drop redirect stubs (a page that is also
+  // a docs-redirects.json source is overwritten by its redirect but stays
+  // listed), duplicate URLs, and excluded utility routes.
+  const xml = fs.readFileSync(file, "utf8").replace(/\s*<url>[\s\S]*?<\/url>/g, (block) => {
+    const match = block.match(/<loc>([^<]+)<\/loc>/);
+    if (!match) return block;
+    const loc = canonicalSiteUrl(match[1]);
+    const route = loc.startsWith(SITE_URL) ? stripHtmlFromRoute(loc.slice(SITE_URL.length)).replace(/\/$/, "") : null;
+    if (seen.has(loc) || (route !== null && (SITEMAP_EXCLUDED_ROUTES.has(route) || isRedirectRoute(route)))) {
+      removed += 1;
+      return "";
+    }
+    seen.add(loc);
+    return block.replace(match[0], `<loc>${loc}</loc>`);
+  });
   fs.writeFileSync(file, xml);
   fs.writeFileSync(`${file}.gz`, zlib.gzipSync(xml));
+  console.log(`Sitemap: removed ${removed} redirect, duplicate or excluded entries.`);
 }
 
 function main() {

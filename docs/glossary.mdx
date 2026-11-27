@@ -72,10 +72,6 @@ A string that defines a recurring schedule using a fixed syntax of time and date
 
 A label used in Orkes Conductor to route task executions to a specific worker pool. Domains are assigned to workers and referenced when triggering workflows using task-to-domain mapping. In the context of RBAC, domains can also be used as a permission target to control access to task routing configurations.
 
-## Directed Acyclic Graph (DAG)
-
-A type of graph where its vertices are connected in one direction and without any repeating cycles. All [Conductor workflows are directed acyclic graphs](/content/faqs/directed-acyclic-graph) (DAGs), providing a clear map of the workflow and its progress through different states.
-
 ## Durable Agent
 
 A production AI agent whose execution state is persisted at each step. In Conductor, a durable agent can survive worker restarts, server restarts, model provider failures, long waits, human approvals, and retries without restarting from the beginning or repeating completed side effects.
@@ -162,7 +158,7 @@ An AI technique that supplements an LLM with external knowledge, enhancing its f
 
 ## Rate Limits
 
-[Rate limit](/content/rate-limits) is a method to control the number of network requests made to a server at any given time.
+[Rate limit](/content/developer-guides/rate-limits) is a method to control the number of network requests made to a server at any given time.
 
 By rate limiting workflows or their tasks, you can prevent task workers from being overloaded by requests and also gracefully handle external limits set by a service provider.
 
@@ -194,11 +190,11 @@ A background process on the Conductor server that continuously scans for stalled
 
 ## Task
 
-A [task](/content/developer-guides/tasks) is a unit in a Conductor workflow that carries out some kind of business logic or control flow logic. Each task has a well-defined input and output, and contains a status (like IN PROGRESS, COMPLETED, FAILED) for state tracking.
+A [task](/content/quickstart/tasks) is a unit in a Conductor workflow that carries out some kind of business logic or control flow logic. Each task has a well-defined input and output, and contains a status (like IN PROGRESS, COMPLETED, FAILED) for state tracking.
 
 ## Task Configuration
 
-A workflow-specific configuration, specifying the task type, reference name, input parameters, and other details about the task to be executed. The [task configuration](/content/developer-guides/tasks#task-configuration) is part of the workflow definition and it is an ordered array that describes the order and control flow of tasks, the data flow between tasks, and task behaviour like optionality, caching, and schema enforcement.
+A workflow-specific configuration, specifying the task type, reference name, input parameters, and other details about the task to be executed. The [task configuration](/content/quickstart/tasks#task-configuration) is part of the workflow definition and it is an ordered array that describes the order and control flow of tasks, the data flow between tasks, and task behaviour like optionality, caching, and schema enforcement.
 
 ## Compensation Workflow
 
@@ -206,7 +202,7 @@ A workflow that runs when another workflow fails and needs to undo, mitigate, or
 
 ## Task Definition
 
-A [task definition](/content/developer-guides/tasks#task-definition) is a configuration that is general to a specific task type or name, and applies to all instances of the task across workflows. It contains general implementation details, like rate limits, expected input and output keys, and failure-handling behavior, like retries and timeouts. 
+A [task definition](/content/quickstart/tasks#task-definition) is a configuration that is general to a specific task type or name, and applies to all instances of the task across workflows. It contains general implementation details, like rate limits, expected input and output keys, and failure-handling behavior, like retries and timeouts. 
 
 ## Task Queue
 
@@ -234,7 +230,7 @@ An event-driven integration technique where a source system sends an HTTP reques
 
 ## Worker
 
-A process or program that accomplishes some task logic. [Workers](/content/developer-guides/using-workers) poll the Conductor server for work to be done in its corresponding task queue.
+A process or program that accomplishes some task logic. [Workers](/content/quickstart/workers) poll the Conductor server for work to be done in its corresponding task queue.
 
 System workers are responsible for executing system tasks and are managed by Conductor. External workers can be created to handle custom logic beyond the scope of system tasks and can run on any environment.
 
@@ -244,11 +240,11 @@ System workers are responsible for executing system tasks and are managed by Con
 
 ## Workflow
 
-A [workflow](/content/developer-guides/workflows) is a sequence of tasks with a defined order and execution flow, aimed at carrying out a specific process in an automated fashion, such as claims processing or cloud upgrades.
+A [workflow](/content/quickstart/workflows) is a sequence of tasks with a defined order and execution flow, aimed at carrying out a specific process in an automated fashion, such as claims processing or cloud upgrades.
 
 ## Workflow Definition
 
-A [workflow definition](/content/developer-guides/workflows#workflow-definition) is a JSON structure that specifies how the workflow should be executed at runtime, such as the workflow inputs, caching behavior, the series of tasks involved, and so on.
+A [workflow definition](/content/quickstart/workflows#workflow-definition) is a JSON structure that specifies how the workflow should be executed at runtime, such as the workflow inputs, caching behavior, the series of tasks involved, and so on.
 
 ## Workflow Execution
 

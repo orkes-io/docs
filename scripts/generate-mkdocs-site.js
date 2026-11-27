@@ -35,9 +35,35 @@ const ANALYTICS_ENABLED = /^(1|true|yes)$/i.test(process.env.DOCS_ENABLE_ANALYTI
 const AGENT_RUNTIME_RELATIONSHIP_COPY =
   "Conductor OSS is the durable workflow engine with a built-in agent runtime. Orkes Conductor is the enterprise platform built on it, available as a fully managed cloud or deployed in your own environment.";
 
-// Home page only — Sora + JetBrains Mono, scoped to .home-wrapper via CSS (rest of the site keeps the OSS base font)
-const HOME_PAGE_FONT_IMPORT =
-  "@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');\n";
+// Home page only — Sora + JetBrains Mono, scoped to .home-wrapper via CSS (rest of the site keeps the OSS base font).
+// Loaded with a <link> on the home page only (see fontLinksBlock), not an @import in the shared custom.css.
+const HOME_PAGE_FONT_URL =
+  "https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap";
+
+// Google Fonts @imports in the OSS custom.css. An @import inside a stylesheet is only
+// discovered after that stylesheet downloads, chaining a render-blocking request; we
+// strip them and emit the same URLs as <link> tags in <head> so they load in parallel.
+const GOOGLE_FONT_IMPORT_RE = /@import\s+url\(\s*['"]?(https:\/\/fonts\.googleapis\.com\/[^'")\s]+)['"]?\s*\)\s*;?[ \t]*\n?/g;
+
+function extractGoogleFontImports(css) {
+  const urls = [];
+  const stripped = css.replace(GOOGLE_FONT_IMPORT_RE, (_all, url) => {
+    urls.push(url);
+    return "";
+  });
+  return { css: stripped, urls };
+}
+
+function fontLinksBlock(ossFontUrls) {
+  const link = (url) => `<link rel="stylesheet" href="${url.replace(/&/g, "&amp;")}">`;
+  return [
+    ...ossFontUrls.map((url) => `  ${link(url)}`),
+    // Root index.md only. page.is_homepage is false here: the nav nests it under a section.
+    `  {% if page and page.url in ["", ".", "./", "index.html"] %}`,
+    `    ${link(HOME_PAGE_FONT_URL)}`,
+    `  {% endif %}`,
+  ].join("\n");
+}
 
 const ORKES_COLOR_REPLACEMENTS = [
   [/Zinc \+ Orange Theme/g, "Zinc + Orkes Purple Theme"],
@@ -1132,13 +1158,45 @@ function transformUrl(rawUrl, sourceRel) {
   return rawUrl;
 }
 
+// Links that point at a URL listed in docs-redirects.json are rewritten to the
+// final URL, so pages do not link through a redirect hop.
+let redirectTargets = null;
+function loadRedirectTargets() {
+  if (redirectTargets) return redirectTargets;
+  redirectTargets = new Map();
+  const file = path.join(ROOT, "docs-redirects.json");
+  if (fs.existsSync(file)) {
+    const raw = JSON.parse(fs.readFileSync(file, "utf8"));
+    for (const [from, to] of Object.entries(raw)) {
+      redirectTargets.set(from.replace(/^\/+|\/+$/g, ""), to.replace(/^\/+|\/+$/g, ""));
+    }
+  }
+  return redirectTargets;
+}
+
+function resolveRedirectedUrl(url) {
+  const prefix = `${BASE_URL}/`;
+  if (!url.startsWith(prefix)) return url;
+  const match = url.slice(prefix.length).match(/^([^?#]*?)\/?([?#].*)?$/);
+  if (!match) return url;
+  let route = match[1];
+  const rest = match[2] || "";
+  const targets = loadRedirectTargets();
+  for (let hops = 0; hops < 5 && targets.has(route); hops++) {
+    const target = targets.get(route);
+    if (target.includes("#") && rest.startsWith("#")) return url;
+    route = target;
+  }
+  return `${prefix}${route}${rest}`;
+}
+
 function rewriteLinks(body, sourceRel) {
   let output = body.replace(/(!?\[[^\]]*\]\()([^)]+)(\))/g, (all, prefix, url, suffix) => {
-    return `${prefix}${transformUrl(url.trim(), sourceRel)}${suffix}`;
+    return `${prefix}${resolveRedirectedUrl(transformUrl(url.trim(), sourceRel))}${suffix}`;
   });
   output = output.replace(
     /\b(href|src)=["']([^"']+)["']/g,
-    (all, attr, url) => `${attr}="${transformUrl(url, sourceRel)}"`,
+    (all, attr, url) => `${attr}="${resolveRedirectedUrl(transformUrl(url, sourceRel))}"`,
   );
   return output;
 }
@@ -3085,6 +3143,16 @@ function transformSharedBody(body, entry) {
       "/content/sdks/authentication#retrieving-access-keys",
     )
     .replace(/\[https?:\/\/localhost:8080\]\(https?:\/\/localhost:8080\)/g, "<YOUR-CLUSTER-URL>")
+    // OSS links into a local Conductor UI ("[Executions](http://localhost:8080/executions)")
+    // can't stay links here: once the host becomes <YOUR-CLUSTER-URL> they are
+    // relative hrefs that 404. Show the address as code instead.
+    .replace(
+      /(?<!!)\[([^\]]+)\]\(https?:\/\/localhost:8080(\/[^)\s]*)?\)/g,
+      (_all, text, urlPath = "") => {
+        const address = `\`<YOUR-CLUSTER-URL>${urlPath}\``;
+        return /^https?:\/\/localhost:8080/.test(text) ? address : `${text} (${address})`;
+      },
+    )
     .replace(/https?:\/\/localhost:8080/g, "<YOUR-CLUSTER-URL>")
     .replace(/`localhost:8080`/g, "`<YOUR-CLUSTER-URL>`");
 
@@ -3157,8 +3225,11 @@ function makeHomePage() {
 hide:
   - navigation
   - toc
-description: "Orkes Conductor documentation for building durable workflows, API orchestration, microservice orchestration, and AI agent orchestration."
+title: "Orkes Conductor Documentation: Durable Workflows & AI Agents"
+description: "Orkes Conductor documentation: guides, tutorials, SDK and API reference, and task and integration docs for developers."
 ---
+
+<h1 id="orkes-conductor-documentation">Orkes Conductor Documentation</h1>
 
 ${body}`;
 }
@@ -4209,7 +4280,11 @@ copyright: Orkes, Inc.
   if (fs.existsSync(redirectsFile)) {
     const redirects = JSON.parse(read(redirectsFile));
     const entries = Object.entries(redirects)
-      .map(([from, to]) => `        ${from}.md: ${to}.md`)
+      .map(([from, to]) => {
+        // A target may carry an anchor (page#section); the .md goes before it.
+        const [toPage, toAnchor] = to.split("#");
+        return `        ${from}.md: ${toPage}.md${toAnchor ? `#${toAnchor}` : ""}`;
+      })
       .join("\n");
     if (entries) {
       mkdocsOut = mkdocsOut.replace(
@@ -4614,6 +4689,7 @@ function writeOverrides() {
 
   const mainPath = path.join(OVERRIDES_DIR, "main.html");
   let main = read(mainPath);
+  const ossFontUrls = extractGoogleFontImports(read(path.join(OSS_DOCS, "css", "custom.css"))).urls;
   main = main.replace(
     /{% block extrahead %}/,
     `{% block site_meta %}
@@ -4646,7 +4722,9 @@ function writeOverrides() {
 {% endblock %}
 
 {% block htmltitle %}
-  {% if page and not page.is_homepage %}
+  {% if page and (page.is_homepage or page.url in ["", ".", "index.html"]) and page.meta and page.meta.title %}
+    <title>{{ page.meta.title | striptags }}</title>
+  {% elif page and not page.is_homepage %}
     {% set resolved_title = page.meta.title if page.meta and page.meta.title else page.title %}
     <title>{{ resolved_title | striptags }} | Orkes Docs</title>
   {% else %}
@@ -4655,6 +4733,7 @@ function writeOverrides() {
 {% endblock %}
 
 {% block extrahead %}
+${fontLinksBlock(ossFontUrls)}
   {% if page and page.url %}
     {% if page.url == "index.html" or page.url.endswith("/index.html") %}
       {% set page_path = page.url[:-10] %}
@@ -4673,7 +4752,7 @@ function writeOverrides() {
   main = main.replace(
     /{% set page_title = page\.title ~ " — " ~ config\.site_name if page and page\.title else config\.site_name ~ " — Durable Execution Engine" %}/,
     `{% set resolved_title = page.meta.title if page and page.meta and page.meta.title else page.title if page and page.title else "" %}
-  {% set page_title = resolved_title ~ " | Orkes Docs" if resolved_title else "Orkes Conductor Docs" %}`,
+  {% set page_title = resolved_title if page and (page.is_homepage or page.url in ["", ".", "index.html"]) and page.meta and page.meta.title else resolved_title ~ " | Orkes Docs" if resolved_title else "Orkes Conductor Docs" %}`,
   );
   // Define the schema/JSON-LD vars the TechArticle block needs. Anchored on the
   // page_url `{% set %}` line in whatever form the OSS main.html uses — the
@@ -4722,7 +4801,7 @@ function writeOverrides() {
       {
         "@type": "WebSite",
         "@id": "{{ config.site_url }}#website",
-        "name": "Agentic Workflow Engine",
+        "name": "Orkes Conductor Documentation",
         "url": "{{ config.site_url }}",
         "publisher": { "@id": "https://orkes.io/#organization" },
         "inLanguage": "en"
@@ -4916,7 +4995,7 @@ function writeOverrides() {
     let notFound = read(notFoundPath);
     notFound = notFound
       .replace(/{{ config\.site_url }}quickstart\//g, "{{ config.site_url }}quickstarts")
-      .replace(/{{ config\.site_url }}devguide\/ai\//g, "{{ config.site_url }}ai-orchestration");
+      .replace(/{{ config\.site_url }}devguide\/ai\//g, "{{ config.site_url }}developer-guides/ai-orchestration");
     write(notFoundPath, notFound);
   }
 }
@@ -4965,7 +5044,9 @@ function prepareOutput() {
   for (const [pattern, replacement] of ORKES_COLOR_REPLACEMENTS) {
     customCss = customCss.replace(pattern, replacement);
   }
-  write(path.join(OUT_DIR, "css", "custom.css"), HOME_PAGE_FONT_IMPORT + customCss);
+  // Font @imports move to <head> <link>s (see fontLinksBlock in the main.html patch).
+  customCss = extractGoogleFontImports(customCss).css;
+  write(path.join(OUT_DIR, "css", "custom.css"), customCss);
   copyRecursive(path.join(OSS_DOCS, "img", "og-conductor.png"), path.join(OUT_DIR, "img", "og-conductor.png"));
   // Mirror every OSS non-markdown asset (images, svgs, json snippets, …) into the
   // docs dir at its original OSS-relative path. copySharedAssets() only colocates
@@ -5363,6 +5444,13 @@ a.repo-link:hover {
   .resource-card {
     min-height: 0;
   }
+}
+
+/* OSS .faq-section { padding: 32px 0 } comes after .home-section and drops its
+   side padding, so the FAQ text touches the edges of its tinted card. */
+.home-section.faq-section { padding: 48px 32px; }
+@media (max-width: 900px) {
+  .home-section.faq-section { padding: 36px 18px; }
 }
 
 /* ---------- Home page tokens (Sora + JetBrains Mono, scoped) ---------- */

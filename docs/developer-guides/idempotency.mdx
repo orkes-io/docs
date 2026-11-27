@@ -281,7 +281,7 @@ A worker is idempotent when executing the same task multiple times produces no a
 - A worker that sends a notification should track sent state to avoid re-sending.
 - A worker that charges a payment should use an external idempotency key with the payment provider.
 
-[Workers in Conductor](/content/developer-guides/using-workers) should follow these design principles:
+[Workers in Conductor](/content/quickstart/workers) should follow these design principles:
 
 - **Defined I/O**: Each worker executes a specific task with well-defined inputs and outputs.
 - **Statelessness**: Workers do not maintain workflow-specific state between executions.
